@@ -1,172 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Produtos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Produtos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body { background:#f5f5f5; }
+
+.card-produto {
+    border:1px solid #ddd;
+    border-radius:6px;
+    padding:15px;
+    background:#fff;
+    height:100%;
+}
+
+.preco {
+    font-size:18px;
+    font-weight:600;
+}
+
+.estoque {
+    font-size:13px;
+    color:#666;
+}
+</style>
+
 </head>
-<body class="container mt-4">
+<body>
 
-<h2>Produtos Cadastrados</h2>
+<div class="container mt-5">
 
-<div class="row">
+<h3 class="mb-4">Produtos</h3>
 
-    <!-- 1 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Rolamento 6204</h5>
-            <p>Rolamento industrial 20x47x14mm</p>
-            <p><strong>R$ 18.90</strong></p>
-            <p>Estoque: 80</p>
-        <button class="btn btn-primary"
-            onclick="adicionarCarrinho(1, 'Rolamento 6204', 18.90)">
-            Adicionar ao Carrinho
-        </button>
-    </div>
+<div class="row g-3">
+
+<!-- PRODUTO 1 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Rolamento 6204</h6>
+<div class="preco">R$ 18,90</div>
+<div class="estoque">Estoque: 80</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(1, 'Rolamento 6204', 18.90, 80)">
+Adicionar
+</button>
+</div>
 </div>
 
-    <!-- 2 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Bucha Nylon</h5>
-            <p>Bucha de nylon 12mm</p>
-            <p><strong>R$ 1.20</strong></p>
-            <p>Estoque: 200</p>
-        </div>
-    </div>
+<!-- PRODUTO 2 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Bucha Nylon</h6>
+<div class="preco">R$ 1,20</div>
+<div class="estoque">Estoque: 200</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(2, 'Bucha Nylon', 1.20, 200)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 3 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Engrenagem 32D</h5>
-            <p>Engrenagem de aço 32 dentes</p>
-            <p><strong>R$ 45.00</strong></p>
-            <p>Estoque: 25</p>
-        </div>
-    </div>
+<!-- PRODUTO 3 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Engrenagem 32D</h6>
+<div class="preco">R$ 45,00</div>
+<div class="estoque">Estoque: 25</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(3, 'Engrenagem 32D', 45.00, 25)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 4 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Filtro de Óleo</h5>
-            <p>Filtro automotivo padrão</p>
-            <p><strong>R$ 22.50</strong></p>
-            <p>Estoque: 60</p>
-        </div>
-    </div>
+<!-- PRODUTO 4 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Filtro de Óleo</h6>
+<div class="preco">R$ 22,50</div>
+<div class="estoque">Estoque: 60</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(4, 'Filtro de Óleo', 22.50, 60)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 5 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Disco de Corte</h5>
-            <p>Disco de corte 7 polegadas</p>
-            <p><strong>R$ 9.80</strong></p>
-            <p>Estoque: 150</p>
-        </div>
-    </div>
+<!-- PRODUTO 5 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Disco de Corte</h6>
+<div class="preco">R$ 9,80</div>
+<div class="estoque">Estoque: 150</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(5, 'Disco de Corte', 9.80, 150)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 6 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Chave Allen 8mm</h5>
-            <p>Chave allen reforçada 8mm</p>
-            <p><strong>R$ 14.90</strong></p>
-            <p>Estoque: 40</p>
-        </div>
-    </div>
+<!-- PRODUTO 6 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Chave Allen 8mm</h6>
+<div class="preco">R$ 14,90</div>
+<div class="estoque">Estoque: 40</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(6, 'Chave Allen 8mm', 14.90, 40)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 7 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Correia Dentada</h5>
-            <p>Correia dentada industrial 150cm</p>
-            <p><strong>R$ 38.70</strong></p>
-            <p>Estoque: 35</p>
-        </div>
-    </div>
+<!-- PRODUTO 7 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Correia Dentada</h6>
+<div class="preco">R$ 38,70</div>
+<div class="estoque">Estoque: 35</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(7, 'Correia Dentada', 38.70, 35)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 8 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Parafuso Sextavado</h5>
-            <p>Parafuso sextavado 12mm aço zincado</p>
-            <p><strong>R$ 0.80</strong></p>
-            <p>Estoque: 300</p>
-        </div>
-    </div>
+<!-- PRODUTO 8 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Parafuso Sextavado</h6>
+<div class="preco">R$ 0,80</div>
+<div class="estoque">Estoque: 300</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(8, 'Parafuso Sextavado', 0.80, 300)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 9 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Porca 10mm</h5>
-            <p>Porca aço carbono 10mm</p>
-            <p><strong>R$ 0.35</strong></p>
-            <p>Estoque: 400</p>
-        </div>
-    </div>
+<!-- PRODUTO 9 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Porca 10mm</h6>
+<div class="preco">R$ 0,35</div>
+<div class="estoque">Estoque: 400</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(9, 'Porca 10mm', 0.35, 400)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 10 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Arruela Lisa</h5>
-            <p>Arruela lisa 10mm zincada</p>
-            <p><strong>R$ 0.20</strong></p>
-            <p>Estoque: 500</p>
-        </div>
-    </div>
+<!-- PRODUTO 10 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Arruela Lisa</h6>
+<div class="preco">R$ 0,20</div>
+<div class="estoque">Estoque: 500</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(10, 'Arruela Lisa', 0.20, 500)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 11 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Retentor 35x52x7</h5>
-            <p>Retentor industrial 35x52x7mm</p>
-            <p><strong>R$ 16.40</strong></p>
-            <p>Estoque: 45</p>
-        </div>
-    </div>
+<!-- PRODUTO 11 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Retentor 35x52x7</h6>
+<div class="preco">R$ 16,40</div>
+<div class="estoque">Estoque: 45</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(11, 'Retentor 35x52x7', 16.40, 45)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 12 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Graxa 500g</h5>
-            <p>Graxa industrial alta temperatura</p>
-            <p><strong>R$ 25.00</strong></p>
-            <p>Estoque: 70</p>
-        </div>
-    </div>
+<!-- PRODUTO 12 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Graxa 500g</h6>
+<div class="preco">R$ 25,00</div>
+<div class="estoque">Estoque: 70</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(12, 'Graxa 500g', 25.00, 70)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 13 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Cadeado 40mm</h5>
-            <p>Cadeado de aço reforçado 40mm</p>
-            <p><strong>R$ 32.00</strong></p>
-            <p>Estoque: 30</p>
-        </div>
-    </div>
+<!-- PRODUTO 13 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Cadeado 40mm</h6>
+<div class="preco">R$ 32,00</div>
+<div class="estoque">Estoque: 30</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(13, 'Cadeado 40mm', 32.00, 30)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 14 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Mangueira 1/2</h5>
-            <p>Mangueira industrial 1/2 polegada</p>
-            <p><strong>R$ 6.50</strong></p>
-            <p>Estoque: 120</p>
-        </div>
-    </div>
+<!-- PRODUTO 14 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Mangueira 1/2</h6>
+<div class="preco">R$ 6,50</div>
+<div class="estoque">Estoque: 120</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(14, 'Mangueira 1/2', 6.50, 120)">
+Adicionar
+</button>
+</div>
+</div>
 
-    <!-- 15 -->
-    <div class="col-md-3">
-        <div class="card p-3 mb-3">
-            <h5>Motor Elétrico 1CV</h5>
-            <p>Motor elétrico trifásico 1CV</p>
-            <p><strong>R$ 780.00</strong></p>
-            <p>Estoque: 10</p>
-        </div>
-    </div>
+<!-- PRODUTO 15 -->
+<div class="col-md-3">
+<div class="card-produto">
+<h6>Motor Elétrico 1CV</h6>
+<div class="preco">R$ 780,00</div>
+<div class="estoque">Estoque: 10</div>
+<button class="btn btn-dark btn-sm mt-2 w-100"
+onclick="adicionarCarrinho(15, 'Motor Elétrico 1CV', 780.00, 10)">
+Adicionar
+</button>
+</div>
+</div>
 
 </div>
 
-<a href="index.html" class="btn btn-secondary mt-3">Voltar</a>
+<a href="carrinho.html" class="btn btn-outline-dark mt-4">
+Ver Carrinho
+</a>
+
+</div>
+
+<script>
+function adicionarCarrinho(id, nome, preco, estoque) {
+
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    let produtoExistente = carrinho.find(item => item.id_produto === id);
+
+    if (produtoExistente) {
+
+        if (produtoExistente.quantidade < estoque) {
+            produtoExistente.quantidade += 1;
+        } else {
+            alert("Estoque máximo atingido.");
+            return;
+        }
+
+    } else {
+
+        carrinho.push({
+            id_produto: id,
+            nome_produto: nome,
+            preco: preco,
+            quantidade: 1,
+            estoque: estoque
+        });
+    }
+
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+    alert("Produto adicionado.");
+}
+</script>
 
 </body>
 </html>
