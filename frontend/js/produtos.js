@@ -1,41 +1,44 @@
-const API = "http://localhost:3000";
+let produtos = [
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetch(`${API}/produtos`)
-        .then(res => res.json())
-        .then(produtos => {
-            const lista = document.getElementById("lista-produtos");
+{nome:"Rolamento", preco:20, estoque:10},
+{nome:"Parafuso", preco:2, estoque:100},
+{nome:"Bucha", preco:5, estoque:50}
 
-            produtos.forEach(produto => {
-                lista.innerHTML += `
-                    <div class="col-md-3">
-                        <div class="card p-3 mb-3">
-                            <h5>${produto.nome_produto}</h5>
-                            <p>${produto.descricao_produto}</p>
-                            <p><strong>R$ ${produto.preco_produto}</strong></p>
-                            <p>Estoque: ${produto.quantidade_estoque}</p>
-                            <button class="btn btn-primary"
-                                onclick="adicionarCarrinho(${produto.id_produto}, '${produto.nome_produto}', ${produto.preco_produto})">
-                                Adicionar ao Carrinho
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        });
-});
+]
 
-function adicionarCarrinho(id, nome, preco) {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+let tabela = document.getElementById("listaProdutos")
 
-    carrinho.push({
-        id_produto: id,
-        nome_produto: nome,
-        preco: preco,
-        quantidade: 1
-    });
+produtos.forEach((produto, index)=>{
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+let linha = `
+<tr>
 
-    alert("Produto adicionado ao carrinho!");
+<td>${produto.nome}</td>
+<td>R$ ${produto.preco}</td>
+<td>${produto.estoque}</td>
+
+<td>
+<button class="btn btn-success"
+onclick="adicionar(${index})">
+Adicionar
+</button>
+</td>
+
+</tr>
+`
+
+tabela.innerHTML += linha
+
+})
+
+function adicionar(i){
+
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
+
+carrinho.push(produtos[i])
+
+localStorage.setItem("carrinho", JSON.stringify(carrinho))
+
+alert("Produto adicionado")
+
 }

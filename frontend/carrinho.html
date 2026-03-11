@@ -1,169 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
+
 <head>
-<meta charset="UTF-8">
+
 <title>Carrinho</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-body {
-    background: #f5f5f5;
-}
-
-.tabela-carrinho {
-    background: #fff;
-    border-radius: 6px;
-}
-
-.tabela-carrinho th {
-    font-weight: 600;
-    font-size: 14px;
-    text-transform: uppercase;
-    color: #555;
-}
-
-.tabela-carrinho td {
-    vertical-align: middle;
-}
-
-.input-qtd {
-    width: 70px;
-    text-align: center;
-}
-
-.resumo {
-    background: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    margin-top: 20px;
-}
-
-.total-valor {
-    font-size: 22px;
-    font-weight: 600;
-}
-</style>
-
 </head>
-<body>
 
-<div class="container mt-5">
+<body class="container mt-5">
 
-<h3 class="mb-4">Carrinho</h3>
+<h2>Carrinho</h2>
 
-<div class="tabela-carrinho p-3">
-<table class="table align-middle mb-0">
-    <thead>
-        <tr>
-            <th>Produto</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="itens-carrinho"></tbody>
+<table class="table">
+<tbody id="listaCarrinho"></tbody>
 </table>
-</div>
 
-<div class="resumo text-end">
-    <div class="total-valor" id="total-geral"></div>
+<a href="checkout.html" class="btn btn-success">Finalizar</a>
 
-    <button class="btn btn-dark mt-3" onclick="finalizarPedido()">
-        Finalizar Pedido
-    </button>
-
-    <a href="produtos.html" class="btn btn-outline-secondary mt-3">
-        Continuar Comprando
-    </a>
-</div>
-
-</div>
-
-<script>
-
-function carregarCarrinho() {
-
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    let tbody = document.getElementById("itens-carrinho");
-    tbody.innerHTML = "";
-
-    let total = 0;
-
-    carrinho.forEach((item, index) => {
-
-        let subtotal = item.preco * item.quantidade;
-        total += subtotal;
-
-        tbody.innerHTML += `
-            <tr>
-                <td>${item.nome_produto}</td>
-                <td>R$ ${item.preco.toFixed(2)}</td>
-
-                <td>
-                    <input type="number"
-                        min="1"
-                        class="form-control input-qtd"
-                        value="${item.quantidade}"
-                        onchange="alterarQuantidade(${index}, this.value)">
-                </td>
-
-                <td>R$ ${subtotal.toFixed(2)}</td>
-
-                <td>
-                    <button class="btn btn-sm btn-outline-danger"
-                        onclick="removerItem(${index})">
-                        Remover
-                    </button>
-                </td>
-            </tr>
-        `;
-    });
-
-    document.getElementById("total-geral").innerHTML =
-        "Total: R$ " + total.toFixed(2);
-}
-
-function alterarQuantidade(index, novaQtd) {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho"));
-
-    novaQtd = parseInt(novaQtd);
-
-    if (novaQtd <= 0) {
-        carrinho.splice(index, 1);
-    } else {
-        carrinho[index].quantidade = novaQtd;
-    }
-
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    carregarCarrinho();
-}
-
-function removerItem(index) {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho"));
-    carrinho.splice(index, 1);
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    carregarCarrinho();
-}
-
-function finalizarPedido() {
-
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-    if (carrinho.length === 0) {
-        alert("Carrinho vazio.");
-        return;
-    }
-
-    alert("Pedido enviado com sucesso.");
-
-    localStorage.removeItem("carrinho");
-    carregarCarrinho();
-}
-
-document.addEventListener("DOMContentLoaded", carregarCarrinho);
-
-</script>
+<script src="js/carrinho.js"></script>
 
 </body>
 </html>

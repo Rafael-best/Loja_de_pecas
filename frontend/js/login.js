@@ -1,55 +1,18 @@
-const API = "http://localhost:3000";
+document.getElementById("formLogin").addEventListener("submit", function(e){
 
-document.addEventListener("DOMContentLoaded", () => {
-    mostrarCarrinho();
-});
+e.preventDefault()
 
-function mostrarCarrinho() {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    const div = document.getElementById("itens-carrinho");
-    const totalGeral = document.getElementById("total-geral");
+let email = document.getElementById("email").value
+let senha = document.getElementById("senha").value
 
-    div.innerHTML = "";
-    let total = 0;
+if(email === "compras@compras.com" && senha === "1234"){
 
-    carrinho.forEach(item => {
-        total += item.preco * item.quantidade;
+window.location.href = "produtos.html"
 
-        div.innerHTML += `
-            <div class="card p-2 mb-2">
-                ${item.nome_produto} - R$ ${item.preco}
-            </div>
-        `;
-    });
+}else{
 
-    totalGeral.innerHTML = "Total: R$ " + total.toFixed(2);
+alert("Login inválido")
+
 }
 
-function finalizarCompra() {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-    if (carrinho.length === 0) {
-        alert("Carrinho vazio!");
-        return;
-    }
-
-    carrinho.forEach(item => {
-        fetch(`${API}/vendas`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id_cliente: 1,
-                id_produto: item.id_produto,
-                quantidade: item.quantidade,
-                total: item.preco * item.quantidade
-            })
-        });
-    });
-
-    alert("Compra finalizada com sucesso!");
-
-    localStorage.removeItem("carrinho");
-    window.location.href = "index.html";
-}
+})
