@@ -2,68 +2,56 @@ const express = require("express");
 const router = express.Router();
 const db = require("./db");
 
-
 // ======================
 // CLIENTES
 // ======================
 
-// listar
+// listar clientes
 router.get("/clientes", async (req, res) => {
     const [rows] = await db.query("SELECT * FROM clientes");
     res.json(rows);
 });
 
-// criar
+// criar cliente
 router.post("/clientes", async (req, res) => {
-
     const { nome_cliente, endereco_cliente, telefone_cliente, email_cliente } = req.body;
 
-    if(!nome_cliente){
-        return res.status(400).json({erro:"Nome obrigatório"});
-    }
-
     await db.query(
-        "INSERT INTO clientes (nome_cliente,endereco_cliente,telefone_cliente,email_cliente) VALUES (?,?,?,?)",
-        [nome_cliente,endereco_cliente,telefone_cliente,email_cliente]
+        "INSERT INTO clientes (nome_cliente, endereco_cliente, telefone_cliente, email_cliente) VALUES (?, ?, ?, ?)",
+        [nome_cliente, endereco_cliente, telefone_cliente, email_cliente]
     );
 
-    res.json({message:"Cliente criado"});
+    res.json({ message: "Cliente criado" });
 });
 
-// atualizar
-router.put("/clientes/:id", async (req,res)=>{
+// ======================
+// FORNECEDORES
+// ======================
 
-    const {id} = req.params;
-    const {nome_cliente,endereco_cliente,telefone_cliente,email_cliente} = req.body;
+// listar fornecedores
+router.get("/fornecedores", async (req, res) => {
+    const [rows] = await db.query("SELECT * FROM fornecedores");
+    res.json(rows);
+});
+
+// criar fornecedor
+router.post("/fornecedores", async (req, res) => {
+    const { nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor } = req.body;
 
     await db.query(
-        "UPDATE clientes SET nome_cliente=?, endereco_cliente=?, telefone_cliente=?, email_cliente=? WHERE id_cliente=?",
-        [nome_cliente,endereco_cliente,telefone_cliente,email_cliente,id]
+        "INSERT INTO fornecedores (nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor) VALUES (?, ?, ?, ?)",
+        [nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor]
     );
 
-    res.json({message:"Cliente atualizado"});
+    res.json({ message: "Fornecedor criado" });
 });
-
-// deletar
-router.delete("/clientes/:id", async(req,res)=>{
-
-    const {id} = req.params;
-
-    await db.query(
-        "DELETE FROM clientes WHERE id_cliente=?",
-        [id]
-    );
-
-    res.json({message:"Cliente deletado"});
-});
-
 
 // ======================
 // PRODUTOS
 // ======================
 
-router.get("/produtos", async (req,res)=>{
-
+// listar produtos
+router.get("/produtos", async (req, res) => {
     const [rows] = await db.query(`
         SELECT produtos.*, fornecedores.nome_fornecedor
         FROM produtos
@@ -74,59 +62,32 @@ router.get("/produtos", async (req,res)=>{
     res.json(rows);
 });
 
-router.post("/produtos", async(req,res)=>{
-
-    const {nome_produto,descricao_produto,preco_produto,quantidade_estoque,id_fornecedor} = req.body;
-
-    if(!nome_produto){
-        return res.status(400).json({erro:"Nome obrigatório"});
-    }
-
-    await db.query(`
-        INSERT INTO produtos
-        (nome_produto,descricao_produto,preco_produto,quantidade_estoque,id_fornecedor)
-        VALUES (?,?,?,?,?)
-    `,
-    [nome_produto,descricao_produto,preco_produto,quantidade_estoque,id_fornecedor]);
-
-    res.json({message:"Produto criado"});
-});
-
-router.put("/produtos/:id", async(req,res)=>{
-
-    const {id} = req.params;
-
-    const {nome_produto,descricao_produto,preco_produto,quantidade_estoque,id_fornecedor} = req.body;
-
-    await db.query(`
-        UPDATE produtos
-        SET nome_produto=?, descricao_produto=?, preco_produto=?, quantidade_estoque=?, id_fornecedor=?
-        WHERE id_produto=?
-    `,
-    [nome_produto,descricao_produto,preco_produto,quantidade_estoque,id_fornecedor,id]);
-
-    res.json({message:"Produto atualizado"});
-});
-
-router.delete("/produtos/:id", async(req,res)=>{
-
-    const {id} = req.params;
+// criar produto
+router.post("/produtos", async (req, res) => {
+    const {
+        nome_produto,
+        descricao_produto,
+        preco_produto,
+        quantidade_estoque,
+        id_fornecedor
+    } = req.body;
 
     await db.query(
-        "DELETE FROM produtos WHERE id_produto=?",
-        [id]
+        `INSERT INTO produtos 
+        (nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor)
+        VALUES (?, ?, ?, ?, ?)`,
+        [nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor]
     );
 
-    res.json({message:"Produto deletado"});
+    res.json({ message: "Produto criado" });
 });
-
 
 // ======================
 // VENDAS
 // ======================
 
-router.get("/vendas", async(req,res)=>{
-
+// listar vendas
+router.get("/vendas", async (req, res) => {
     const [rows] = await db.query(`
         SELECT vendas.*, clientes.nome_cliente, produtos.nome_produto
         FROM vendas
@@ -137,18 +98,24 @@ router.get("/vendas", async(req,res)=>{
     res.json(rows);
 });
 
-router.post("/vendas", async(req,res)=>{
+// criar venda
+router.post("/vendas", async (req, res) => {
+    const {
+        id_cliente,
+        id_produto,
+        data_venda,
+        quantidade,
+        total
+    } = req.body;
 
-    const {id_cliente,id_produto,data_venda,quantidade,total} = req.body;
+    await db.query(
+        `INSERT INTO vendas
+        (id_cliente, id_produto, data_venda, quantidade, total)
+        VALUES (?, ?, ?, ?, ?)`,
+        [id_cliente, id_produto, data_venda, quantidade, total]
+    );
 
-    await db.query(`
-        INSERT INTO vendas
-        (id_cliente,id_produto,data_venda,quantidade,total)
-        VALUES (?,?,?,?,?)
-    `,
-    [id_cliente,id_produto,data_venda,quantidade,total]);
-
-    res.json({message:"Venda registrada"});
+    res.json({ message: "Venda registrada" });
 });
 
 module.exports = router;
