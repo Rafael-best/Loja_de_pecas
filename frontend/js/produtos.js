@@ -27,11 +27,14 @@ if (!localStorage.getItem("produtosMock")) {
 }
 
 const btnSair = document.getElementById("btnSair");
+const campoBusca = document.getElementById("campoBusca");
 
-btnSair.addEventListener("click", function () {
-  localStorage.removeItem("clienteLogado");
-  window.location.href = "index.html";
-});
+if (btnSair) {
+  btnSair.addEventListener("click", function () {
+    localStorage.removeItem("clienteLogado");
+    window.location.href = "index.html";
+  });
+}
 
 function formatarMoeda(valor) {
   return Number(valor).toLocaleString("pt-BR", {
@@ -52,6 +55,34 @@ function salvarCarrinho(carrinho) {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
+function atualizarBotaoCarrinho() {
+  const carrinho = obterCarrinho();
+  const btnCarrinho = document.getElementById("btnCarrinho");
+
+  if (!btnCarrinho) return;
+
+  const totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
+  btnCarrinho.textContent = `Carrinho (${totalItens})`;
+}
+
+function mostrarToast(mensagem) {
+  const toast = document.getElementById("toastMensagem");
+
+  if (!toast) {
+    console.log("Toast não encontrado no HTML");
+    return;
+  }
+
+  toast.textContent = mensagem;
+  toast.classList.add("mostrar");
+
+  clearTimeout(toast._timeout);
+
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove("mostrar");
+  }, 2200);
+}
+
 function adicionarAoCarrinho(idProduto) {
   const produtos = obterProdutos();
   const carrinho = obterCarrinho();
@@ -65,7 +96,7 @@ function adicionarAoCarrinho(idProduto) {
     if (itemExistente.quantidade < produto.quantidade_estoque) {
       itemExistente.quantidade += 1;
     } else {
-      alert("Quantidade máxima em estoque atingida.");
+      mostrarToast("Quantidade máxima em estoque atingida.");
       return;
     }
   } else {
@@ -78,15 +109,26 @@ function adicionarAoCarrinho(idProduto) {
   }
 
   salvarCarrinho(carrinho);
-  alert("Produto adicionado ao carrinho.");
+  atualizarBotaoCarrinho();
+  mostrarToast("Produto adicionado ao carrinho.");
 }
 
-function renderizarProdutos() {
-  const produtos = obterProdutos();
+function renderizarProdutos(listaDeProdutos) {
   const lista = document.getElementById("listaProdutos");
   lista.innerHTML = "";
 
-  produtos.forEach(produto => {
+  if (listaDeProdutos.length === 0) {
+    lista.innerHTML = `
+      <div class="col-12">
+        <div class="alert alert-warning mb-0">
+          Nenhum produto encontrado.
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  listaDeProdutos.forEach(produto => {
     const coluna = document.createElement("div");
     coluna.className = "col-12 col-sm-6 col-lg-4 col-xl-3";
 
@@ -111,4 +153,27 @@ function renderizarProdutos() {
   });
 }
 
-renderizarProdutos();
+function filtrarProdutos() {
+  const produtos = obterProdutos();
+
+  if (!campoBusca) {
+    renderizarProdutos(produtos);
+    return;
+  }
+
+  const termo = campoBusca.value.toLowerCase().trim();
+
+  const produtosFiltrados = produtos.filter(produto =>
+    produto.nome_produto.toLowerCase().includes(termo) ||
+    produto.descricao_produto.toLowerCase().includes(termo)
+  );
+
+  renderizarProdutos(produtosFiltrados);
+}
+
+if (campoBusca) {
+  campoBusca.addEventListener("input", filtrarProdutos);
+}
+
+renderizarProdutos(obterProdutos());
+atualizarBotaoCarrinho();
