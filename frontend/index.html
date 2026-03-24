@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Loja de Peças</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.banner {
+    background: url("https://images.unsplash.com/photo-1581091215367-59ab6b3b0b6f") no-repeat center;
+    background-size: cover;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: center;
+}
+
+.produto {
+    background: white;
+    margin: 10px;
+    padding: 15px;
+    width: 200px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.produto img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔧 Loja de Peças</h1>
+</header>
+
+<div class="banner">
+    Promoções de Ferramentas
+</div>
+
+<div class="container" id="produtos"></div>
+
+<script>
+const API = "http://localhost:3000/api";
+
+// LISTAR PRODUTOS
+async function carregarProdutos() {
+    const res = await fetch(API + "/produtos");
+    const produtos = await res.json();
+
+    const container = document.getElementById("produtos");
+    container.innerHTML = "";
+
+    produtos.forEach(p => {
+        const div = document.createElement("div");
+        div.classList.add("produto");
+
+        div.innerHTML = `
+            <img src="https://via.placeholder.com/200x120">
+            <h3>${p.nome_produto}</h3>
+            <p>R$ ${p.preco_produto}</p>
+            <button onclick="comprar(${p.id_produto})">Comprar</button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+// COMPRAR PRODUTO (ENVIA PRO BACKEND)
+async function comprar(id_produto) {
+
+    const id_cliente = 1; // cliente fixo pra teste
+
+    const venda = {
+        id_cliente: id_cliente,
+        id_produto: id_produto,
+        data_venda: new Date(),
+        quantidade: 1,
+        total: 100
+    };
+
+    await fetch(API + "/vendas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(venda)
+    });
+
+    alert("Compra realizada!");
+}
+
+// carregar ao abrir
+carregarProdutos();
+</script>
+
+</body>
+</html>
