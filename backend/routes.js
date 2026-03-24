@@ -1,121 +1,219 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const db = require("./db");
+const db = require('./db'); // conexão com mysql2 (promise)
 
-// ======================
+// =====================
 // CLIENTES
-// ======================
+// =====================
 
-// listar clientes
-router.get("/clientes", async (req, res) => {
-    const [rows] = await db.query("SELECT * FROM clientes");
-    res.json(rows);
+// LISTAR
+router.get('/clientes', async (req, res) => {
+    try {
+        const [result] = await db.query('SELECT * FROM clientes');
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// criar cliente
-router.post("/clientes", async (req, res) => {
-    const { nome_cliente, endereco_cliente, telefone_cliente, email_cliente } = req.body;
+// CADASTRAR
+router.post('/clientes', async (req, res) => {
+    try {
+        const { nome_cliente, endereco_cliente, telefone_cliente, email_cliente, senha_cliente } = req.body;
 
-    await db.query(
-        "INSERT INTO clientes (nome_cliente, endereco_cliente, telefone_cliente, email_cliente) VALUES (?, ?, ?, ?)",
-        [nome_cliente, endereco_cliente, telefone_cliente, email_cliente]
-    );
+        const sql = `INSERT INTO clientes 
+        (nome_cliente, endereco_cliente, telefone_cliente, email_cliente, senha_cliente)
+        VALUES (?, ?, ?, ?, ?)`;
 
-    res.json({ message: "Cliente criado" });
+        const [result] = await db.query(sql, [
+            nome_cliente,
+            endereco_cliente,
+            telefone_cliente,
+            email_cliente,
+            senha_cliente
+        ]);
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// ======================
+// LOGIN
+router.post('/login', async (req, res) => {
+    try {
+        const { email_cliente, senha_cliente } = req.body;
+
+        const sql = `SELECT * FROM clientes 
+                     WHERE email_cliente = ? AND senha_cliente = ?`;
+
+        const [result] = await db.query(sql, [email_cliente, senha_cliente]);
+
+        if (result.length > 0) {
+            res.json({ success: true, user: result[0] });
+        } else {
+            res.json({ success: false, message: 'Login inválido' });
+        }
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// =====================
 // FORNECEDORES
-// ======================
+// =====================
 
-// listar fornecedores
-router.get("/fornecedores", async (req, res) => {
-    const [rows] = await db.query("SELECT * FROM fornecedores");
-    res.json(rows);
+router.get('/fornecedores', async (req, res) => {
+    try {
+        const [result] = await db.query('SELECT * FROM fornecedores');
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// criar fornecedor
-router.post("/fornecedores", async (req, res) => {
-    const { nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor } = req.body;
+router.post('/fornecedores', async (req, res) => {
+    try {
+        const { nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor } = req.body;
 
-    await db.query(
-        "INSERT INTO fornecedores (nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor) VALUES (?, ?, ?, ?)",
-        [nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor]
-    );
+        const sql = `INSERT INTO fornecedores 
+        (nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor)
+        VALUES (?, ?, ?, ?)`;
 
-    res.json({ message: "Fornecedor criado" });
+        const [result] = await db.query(sql, [
+            nome_fornecedor,
+            endereco_fornecedor,
+            telefone_fornecedor,
+            email_fornecedor
+        ]);
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// ======================
+// =====================
 // PRODUTOS
-// ======================
+// =====================
 
-// listar produtos
-router.get("/produtos", async (req, res) => {
-    const [rows] = await db.query(`
-        SELECT produtos.*, fornecedores.nome_fornecedor
-        FROM produtos
-        LEFT JOIN fornecedores
-        ON produtos.id_fornecedor = fornecedores.id_fornecedor
-    `);
+router.get('/produtos', async (req, res) => {
+    try {
+        const sql = `
+            SELECT p.*, f.nome_fornecedor 
+            FROM produtos p
+            LEFT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor
+        `;
 
-    res.json(rows);
+        const [result] = await db.query(sql);
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// criar produto
-router.post("/produtos", async (req, res) => {
-    const {
-        nome_produto,
-        descricao_produto,
-        preco_produto,
-        quantidade_estoque,
-        id_fornecedor
-    } = req.body;
+router.post('/produtos', async (req, res) => {
+    try {
+        const { nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor } = req.body;
 
-    await db.query(
-        `INSERT INTO produtos 
+        const sql = `INSERT INTO produtos 
         (nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor)
-        VALUES (?, ?, ?, ?, ?)`,
-        [nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor]
-    );
+        VALUES (?, ?, ?, ?, ?)`;
 
-    res.json({ message: "Produto criado" });
+        const [result] = await db.query(sql, [
+            nome_produto,
+            descricao_produto,
+            preco_produto,
+            quantidade_estoque,
+            id_fornecedor
+        ]);
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// ======================
-// VENDAS
-// ======================
+// =====================
+// PEDIDOS
+// =====================
 
-// listar vendas
-router.get("/vendas", async (req, res) => {
-    const [rows] = await db.query(`
-        SELECT vendas.*, clientes.nome_cliente, produtos.nome_produto
-        FROM vendas
-        LEFT JOIN clientes ON vendas.id_cliente = clientes.id_cliente
-        LEFT JOIN produtos ON vendas.id_produto = produtos.id_produto
-    `);
+router.get('/pedidos', async (req, res) => {
+    try {
+        const sql = `
+            SELECT p.*, c.nome_cliente 
+            FROM pedidos p
+            LEFT JOIN clientes c ON p.id_cliente = c.id_cliente
+        `;
 
-    res.json(rows);
+        const [result] = await db.query(sql);
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// criar venda
-router.post("/vendas", async (req, res) => {
-    const {
-        id_cliente,
-        id_produto,
-        data_venda,
-        quantidade,
-        total
-    } = req.body;
+router.post('/pedidos', async (req, res) => {
+    try {
+        const { id_cliente, data_pedido, forma_pagamento, status_pedido, total_pedido } = req.body;
 
-    await db.query(
-        `INSERT INTO vendas
-        (id_cliente, id_produto, data_venda, quantidade, total)
-        VALUES (?, ?, ?, ?, ?)`,
-        [id_cliente, id_produto, data_venda, quantidade, total]
-    );
+        const sql = `INSERT INTO pedidos 
+        (id_cliente, data_pedido, forma_pagamento, status_pedido, total_pedido)
+        VALUES (?, ?, ?, ?, ?)`;
 
-    res.json({ message: "Venda registrada" });
+        const [result] = await db.query(sql, [
+            id_cliente,
+            data_pedido,
+            forma_pagamento,
+            status_pedido,
+            total_pedido
+        ]);
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// =====================
+// ITENS DO PEDIDO
+// =====================
+
+router.get('/itens', async (req, res) => {
+    try {
+        const sql = `
+            SELECT i.*, p.nome_produto 
+            FROM itens_pedido i
+            LEFT JOIN produtos p ON i.id_produto = p.id_produto
+        `;
+
+        const [result] = await db.query(sql);
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.post('/itens', async (req, res) => {
+    try {
+        const { id_pedido, id_produto, quantidade, preco_unitario } = req.body;
+
+        const sql = `INSERT INTO itens_pedido 
+        (id_pedido, id_produto, quantidade, preco_unitario)
+        VALUES (?, ?, ?, ?)`;
+
+        const [result] = await db.query(sql, [
+            id_pedido,
+            id_produto,
+            quantidade,
+            preco_unitario
+        ]);
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;

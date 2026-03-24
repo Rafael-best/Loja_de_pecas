@@ -1,26 +1,10 @@
 {
-  "name": "loja_de_pecas",
+  "name": "backend-loja",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Rafael-best/Loja_de_pecas.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Rafael-best/Loja_de_pecas/issues"
-  },
-  "homepage": "https://github.com/Rafael-best/Loja_de_pecas#readme",
+  "main": "server.js",
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "mysql2": "^3.20.0"
-  },
-  "description": ""
+    "cors": "^2.8.5",
+    "express": "^4.22.1",
+    "mysql2": "^3.6.0"
+  }
 }
