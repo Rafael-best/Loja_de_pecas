@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Loja de Peças</title>
+
+    <link rel="stylesheet" href="css/login.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="login-container">
+
+    <div class="logo-area">
+
+        <img src="assets/imagens/logo.png" alt="Logo">
+
+        <h1>Loja de Peças</h1>
+
+        <p>Sistema Inteligente de Auto Peças</p>
+
+    </div>
+
+    <form class="login-form">
+
+        <h2>Entrar</h2>
+
+        <div class="input-group">
+
+            <label>E-mail</label>
+
+            <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    placeholder="Digite seu e-mail"
+                    required>
+            </div>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Senha</label>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                    required>
+
+                <button
+                    type="button"
+                    class="show-password"
+                    onclick="mostrarSenha()">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="options">
+
+            <label>
+
+                <input type="checkbox">
+
+                Lembrar-me
+
+            </label>
+
+            <a href="#">Esqueci minha senha</a>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn-login">
+
+            Entrar
+
+        </button>
+
+        <div class="register-link">
+
+            Não possui conta?
+
+            <a href="#">Cadastre-se</a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script src="js/login.js"></script>
+
+</body>
+</html>
