@@ -10,9 +10,29 @@
   <style>
     body {
       background-color: #f5f7fb;
+      margin: 0;
+      padding: 0;
     }
 
-    /* 🔥 BANNER */
+    /* TOPO FIXO */
+    .topo-acoes {
+      position: sticky;
+      top: 0;
+      z-index: 1055;
+      background: #212529;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .topo-busca {
+      position: sticky;
+      top: 72px;
+      z-index: 1054;
+      background: #f5f7fb;
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* BANNER */
     .top-banner {
       position: relative;
       width: 100%;
@@ -26,12 +46,13 @@
       display: block;
     }
 
-    /* 🛒 CARDS */
+    /* CARDS */
     .card-produto {
       border: none;
       border-radius: 14px;
       transition: 0.2s;
       height: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
 
     .card-produto:hover {
@@ -48,13 +69,13 @@
       min-height: 48px;
     }
 
-    /* 🔎 BUSCA */
+    /* BUSCA */
     #campoBusca {
       border-radius: 10px;
       padding: 12px;
     }
 
-    /* 🔔 TOAST */
+    /* TOAST */
     .toast-mensagem {
       position: fixed;
       top: 20px;
@@ -77,11 +98,16 @@
       transform: translateY(0);
     }
 
-    /* 📱 RESPONSIVO */
+    /* RESPONSIVO */
     @media (max-width: 576px) {
       .navbar .btn {
         font-size: 0.85rem;
         padding: 0.375rem 0.5rem;
+        white-space: nowrap;
+      }
+
+      .navbar-brand {
+        font-size: 1.1rem;
       }
 
       h2 {
@@ -89,7 +115,19 @@
       }
 
       .top-banner img {
-        height: 100px;
+        height: 80px;
+      }
+
+      .topo-busca {
+        top: 78px;
+      }
+    }
+
+    /* NO DESKTOP VOLTA AO NORMAL */
+    @media (min-width: 768px) {
+      .topo-acoes,
+      .topo-busca {
+        position: static;
       }
     }
   </style>
@@ -97,27 +135,27 @@
 
 <body>
 
-  <!-- 🔥 NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
+  <!-- NAVBAR FIXA -->
+  <div class="topo-acoes">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <span class="navbar-brand fw-bold">Loja de peças</span>
 
-      <span class="navbar-brand fw-bold">Loja de peças</span>
-
-      <div class="d-flex flex-wrap gap-2 mt-2 mt-lg-0">
-        <a href="pedidos.html" class="btn btn-outline-light">Pedidos</a>
-        <a href="carrinho.html" class="btn btn-warning" id="btnCarrinho">Carrinho (0)</a>
-        <button id="btnSair" class="btn btn-danger">Sair</button>
+        <div class="d-flex flex-wrap gap-2 mt-2 mt-lg-0">
+          <a href="pedidos.html" class="btn btn-outline-light">Pedidos</a>
+          <a href="carrinho.html" class="btn btn-warning" id="btnCarrinho">Carrinho (0)</a>
+          <button id="btnSair" class="btn btn-danger">Sair</button>
+        </div>
       </div>
+    </nav>
+  </div>
 
-    </div>
-  </nav>
-
-  <!-- 🔥 BANNER -->
+  <!-- BANNER -->
   <div class="top-banner">
     <img src="./img/banner2.jpg" alt="Banner Produtos">
   </div>
 
-  <!-- 🔎 CONTEÚDO -->
+  <!-- CONTEÚDO -->
   <div class="container my-4">
 
     <div class="mb-4">
@@ -125,24 +163,26 @@
       <small class="text-muted">Escolha os itens e adicione ao carrinho</small>
     </div>
 
-    <!-- 🔎 BUSCA -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <input 
-          type="text" 
-          id="campoBusca" 
-          class="form-control" 
-          placeholder="Buscar produto por nome ou descrição">
+    <!-- BUSCA FIXA -->
+    <div class="topo-busca">
+      <div class="row">
+        <div class="col-md-6">
+          <input 
+            type="text" 
+            id="campoBusca" 
+            class="form-control" 
+            placeholder="Buscar produto por nome ou descrição">
+        </div>
       </div>
     </div>
 
-    <!-- 🛒 PRODUTOS -->
-    <div class="row g-4" id="listaProdutos"></div>
+    <!-- PRODUTOS -->
+    <div class="row g-4 mt-1" id="listaProdutos"></div>
 
   </div>
 
-  <!-- 🔔 TOAST -->
-  <div id="toastMensagem" class="toast-mensagem"></div>
+  <!-- TOAST -->
+  <div id="toastMensagem" class="toast-mensagem">Produto adicionado ao carrinho</div>
 
   <script src="js/produtos.js"></script>
 

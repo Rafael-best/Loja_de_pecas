@@ -174,6 +174,36 @@ function filtrarProdutos() {
 if (campoBusca) {
   campoBusca.addEventListener("input", filtrarProdutos);
 }
+function atualizarCarrinhoTopo() {
+  const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+  let total = 0;
+
+  carrinho.forEach(item => {
+    total += item.quantidade || 1;
+  });
+
+  document.getElementById("btnCarrinho").innerText = `Carrinho (${total})`;
+}
+let timeoutToast;
+
+function mostrarToast(mensagem) {
+  const toast = document.getElementById("toastMensagem");
+  if (!toast) return;
+
+  toast.textContent = mensagem;
+  toast.classList.add("mostrar");
+
+  clearTimeout(timeoutToast);
+
+  timeoutToast = setTimeout(() => {
+    toast.classList.remove("mostrar");
+  }, 2000);
+}
+
+// roda quando abrir a página
+atualizarCarrinhoTopo();
 
 renderizarProdutos(obterProdutos());
 atualizarBotaoCarrinho();
+mostrarMensagem("Produto adicionado ao carrinho");

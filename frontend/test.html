@@ -1,0 +1,22 @@
+<button onclick="testar()">Testar Pedido</button>
+
+<script>
+async function testar() {
+    const res = await fetch('http://localhost:3000/api/pedidos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_cliente: 1,
+            forma_pagamento: 'Pix',
+            status_pedido: 'Pendente',
+            total_pedido: 0
+        })
+    });
+
+    const data = await res.json();
+    console.log(data);
+    alert('Pedido criado!');
+}
+</script>
