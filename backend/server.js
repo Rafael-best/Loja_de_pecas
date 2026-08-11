@@ -10,12 +10,15 @@ app.use(express.json());
 
 app.use("/api", routes);
 
-app.get("/", (req,res)=>{
-    res.send("API funcionando");
+app.get("/", (req, res) => {
+    res.status(200).json({
+        status: "online",
+        mensagem: "API Loja de Peças funcionando!"
+    });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log("Servidor rodando em http://localhost:3000");
+    console.log(`🚀 Servidor iniciado em http://localhost:${PORT}`);
 });

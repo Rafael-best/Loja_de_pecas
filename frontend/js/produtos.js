@@ -285,6 +285,7 @@ async function carregarProdutos() {
 
   try {
     const resposta = await fetch(`${API}/produtos`);
+    console.log("Resposta da API:", resposta);
     if (!resposta.ok) throw new Error("Não foi possível carregar os produtos.");
 
     produtos = await resposta.json();
