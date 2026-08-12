@@ -79,11 +79,12 @@ function criarImagemProduto(produto) {
   imagem.src = obterCaminhoImagem(produto.imagem);
   imagem.alt = produto.imagem ? `Imagem do produto ${produto.nome_produto}` : "Imagem não disponível";
   imagem.loading = "lazy";
-  imagem.addEventListener("error", function () {
-    if (!imagem.src.endsWith(PLACEHOLDER_PRODUTO)) {
-      imagem.src = PLACEHOLDER_PRODUTO;
-      imagem.alt = "Imagem não disponível";
-    }
+  
+  // CORREÇÃO: Evita loop infinito caso o placeholder falhe
+  imagem.addEventListener("error", function tratarErroImagem() {
+    imagem.removeEventListener("error", tratarErroImagem);
+    imagem.src = PLACEHOLDER_PRODUTO;
+    imagem.alt = "Imagem não disponível";
   });
   return imagem;
 }
@@ -258,9 +259,17 @@ function renderizarCatalogo() {
   renderizarPaginacao(totalPaginas);
 }
 
+// CORREÇÃO: Limpa opções anteriores antes de preencher
 function preencherCategorias() {
   if (!filtroCategoria) return;
-  const categorias = [...new Set(produtos.map(obterCategoriaProduto))].sort((primeira, segunda) => primeira.localeCompare(segunda, "pt-BR"));
+
+  // Preserva a primeira opção padrão ("Todas as categorias")
+  filtroCategoria.innerHTML = '<option value="">Todas as categorias</option>';
+
+  const categorias = [...new Set(produtos.map(obterCategoriaProduto))].sort((primeira, segunda) =>
+    primeira.localeCompare(segunda, "pt-BR")
+  );
+
   categorias.forEach((categoria) => {
     const opcao = document.createElement("option");
     opcao.value = categoria;
@@ -285,11 +294,9 @@ async function carregarProdutos() {
 
   try {
     const resposta = await fetch(`${API}/produtos`);
-    console.log("Resposta da API:", resposta);
     if (!resposta.ok) throw new Error("Não foi possível carregar os produtos.");
 
     produtos = await resposta.json();
-    /* Compatibilidade temporária com checkout.js, que não é alterado nesta sprint. */
     localStorage.setItem("produtosMock", JSON.stringify(produtos));
     preencherCategorias();
     renderizarCatalogo();
