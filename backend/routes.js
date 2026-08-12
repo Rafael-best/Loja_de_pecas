@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./db');
+const db = require('./db'); // conexão com PostgreSQL
 
 // =====================
 // CLIENTES
@@ -9,12 +9,17 @@ const db = require('./db');
 // LISTAR CLIENTES
 router.get('/clientes', async (req, res) => {
     try {
-        const [result] = await db.query('SELECT * FROM clientes');
-        res.json(result);
+        const result = await db.query('SELECT * FROM clientes');
+        res.json(result.rows);
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao listar clientes:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // CADASTRAR CLIENTE
 router.post('/clientes', async (req, res) => {
@@ -29,11 +34,18 @@ router.post('/clientes', async (req, res) => {
 
         const sql = `
             INSERT INTO clientes
-            (nome_cliente, endereco_cliente, telefone_cliente, email_cliente, senha_cliente)
-            VALUES (?, ?, ?, ?, ?)
+            (
+                nome_cliente,
+                endereco_cliente,
+                telefone_cliente,
+                email_cliente,
+                senha_cliente
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
         `;
 
-        const [result] = await db.query(sql, [
+        const result = await db.query(sql, [
             nome_cliente,
             endereco_cliente,
             telefone_cliente,
@@ -41,33 +53,59 @@ router.post('/clientes', async (req, res) => {
             senha_cliente
         ]);
 
-        res.json(result);
+        res.json(result.rows[0]);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao cadastrar cliente:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
 
-// LOGIN CLIENTE
+
+// LOGIN
 router.post('/login', async (req, res) => {
     try {
-        const { email_cliente, senha_cliente } = req.body;
+        const {
+            email_cliente,
+            senha_cliente
+        } = req.body;
 
         const sql = `
-            SELECT * FROM clientes
-            WHERE email_cliente = ? AND senha_cliente = ?
+            SELECT *
+            FROM clientes
+            WHERE email_cliente = $1
+            AND senha_cliente = $2
         `;
 
-        const [result] = await db.query(sql, [email_cliente, senha_cliente]);
+        const result = await db.query(sql, [
+            email_cliente,
+            senha_cliente
+        ]);
 
-        if (result.length > 0) {
-            res.json({ success: true, user: result[0] });
+        if (result.rows.length > 0) {
+            res.json({
+                success: true,
+                user: result.rows[0]
+            });
         } else {
-            res.json({ success: false, message: 'Login inválido' });
+            res.json({
+                success: false,
+                message: 'Login inválido'
+            });
         }
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro no login:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // =====================
 // FORNECEDORES
@@ -76,12 +114,21 @@ router.post('/login', async (req, res) => {
 // LISTAR FORNECEDORES
 router.get('/fornecedores', async (req, res) => {
     try {
-        const [result] = await db.query('SELECT * FROM fornecedores');
-        res.json(result);
+        const result = await db.query(
+            'SELECT * FROM fornecedores'
+        );
+
+        res.json(result.rows);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao listar fornecedores:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // CADASTRAR FORNECEDOR
 router.post('/fornecedores', async (req, res) => {
@@ -95,22 +142,34 @@ router.post('/fornecedores', async (req, res) => {
 
         const sql = `
             INSERT INTO fornecedores
-            (nome_fornecedor, endereco_fornecedor, telefone_fornecedor, email_fornecedor)
-            VALUES (?, ?, ?, ?)
+            (
+                nome_fornecedor,
+                endereco_fornecedor,
+                telefone_fornecedor,
+                email_fornecedor
+            )
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
         `;
 
-        const [result] = await db.query(sql, [
+        const result = await db.query(sql, [
             nome_fornecedor,
             endereco_fornecedor,
             telefone_fornecedor,
             email_fornecedor
         ]);
 
-        res.json(result);
+        res.json(result.rows[0]);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao cadastrar fornecedor:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // =====================
 // PRODUTOS
@@ -120,17 +179,27 @@ router.post('/fornecedores', async (req, res) => {
 router.get('/produtos', async (req, res) => {
     try {
         const sql = `
-            SELECT p.*, f.nome_fornecedor
+            SELECT
+                p.*,
+                f.nome_fornecedor
             FROM produtos p
-            LEFT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor
+            LEFT JOIN fornecedores f
+                ON p.id_fornecedor = f.id_fornecedor
         `;
 
-        const [result] = await db.query(sql);
-        res.json(result);
+        const result = await db.query(sql);
+
+        res.json(result.rows);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao listar produtos:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // CADASTRAR PRODUTO
 router.post('/produtos', async (req, res) => {
@@ -145,11 +214,18 @@ router.post('/produtos', async (req, res) => {
 
         const sql = `
             INSERT INTO produtos
-            (nome_produto, descricao_produto, preco_produto, quantidade_estoque, id_fornecedor)
-            VALUES (?, ?, ?, ?, ?)
+            (
+                nome_produto,
+                descricao_produto,
+                preco_produto,
+                quantidade_estoque,
+                id_fornecedor
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
         `;
 
-        const [result] = await db.query(sql, [
+        const result = await db.query(sql, [
             nome_produto,
             descricao_produto,
             preco_produto,
@@ -157,11 +233,17 @@ router.post('/produtos', async (req, res) => {
             id_fornecedor
         ]);
 
-        res.json(result);
+        res.json(result.rows[0]);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao cadastrar produto:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
+
 
 // =====================
 // PEDIDOS
@@ -171,279 +253,142 @@ router.post('/produtos', async (req, res) => {
 router.get('/pedidos', async (req, res) => {
     try {
         const sql = `
-            SELECT p.*, c.nome_cliente
+            SELECT
+                p.*,
+                c.nome_cliente
             FROM pedidos p
-            LEFT JOIN clientes c ON p.id_cliente = c.id_cliente
-            ORDER BY p.id_pedido DESC
+            LEFT JOIN clientes c
+                ON p.id_cliente = c.id_cliente
         `;
 
-        const [result] = await db.query(sql);
-        res.json(result);
+        const result = await db.query(sql);
+
+        res.json(result.rows);
+
     } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-// BUSCAR PEDIDO POR ID COM ITENS
-router.get('/pedidos/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const [pedido] = await db.query(`
-            SELECT p.*, c.nome_cliente
-            FROM pedidos p
-            LEFT JOIN clientes c ON p.id_cliente = c.id_cliente
-            WHERE p.id_pedido = ?
-        `, [id]);
-
-        if (pedido.length === 0) {
-            return res.status(404).json({ erro: 'Pedido não encontrado' });
-        }
-
-        const [itens] = await db.query(`
-            SELECT i.*, pr.nome_produto
-            FROM itens_pedido i
-            LEFT JOIN produtos pr ON i.id_produto = pr.id_produto
-            WHERE i.id_pedido = ?
-        `, [id]);
-
-        res.json({
-            pedido: pedido[0],
-            itens
+        console.error('Erro ao listar pedidos:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
         });
-    } catch (err) {
-        res.status(500).json(err);
     }
 });
 
-// CRIAR PEDIDO
+
+// CADASTRAR PEDIDO
 router.post('/pedidos', async (req, res) => {
     try {
         const {
             id_cliente,
+            data_pedido,
             forma_pagamento,
             status_pedido,
             total_pedido
         } = req.body;
 
-        const [cliente] = await db.query(
-            'SELECT * FROM clientes WHERE id_cliente = ?',
-            [id_cliente]
-        );
-
-        if (cliente.length === 0) {
-            return res.status(404).json({ erro: 'Cliente não encontrado' });
-        }
-
         const sql = `
             INSERT INTO pedidos
-            (id_cliente, data_pedido, forma_pagamento, status_pedido, total_pedido)
-            VALUES (?, NOW(), ?, ?, ?)
+            (
+                id_cliente,
+                data_pedido,
+                forma_pagamento,
+                status_pedido,
+                total_pedido
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
         `;
 
-        const [result] = await db.query(sql, [
+        const result = await db.query(sql, [
             id_cliente,
-            forma_pagamento || null,
-            status_pedido || 'Pendente',
-            total_pedido || 0
+            data_pedido,
+            forma_pagamento,
+            status_pedido,
+            total_pedido
         ]);
 
-        res.json({
-            message: 'Pedido criado com sucesso',
-            id_pedido: result.insertId
-        });
+        res.json(result.rows[0]);
+
     } catch (err) {
-        console.error('Erro ao criar pedido:', err);
+        console.error('Erro ao cadastrar pedido:', err);
         res.status(500).json({
-            erro: err.sqlMessage || err.message || 'Erro ao criar pedido'
+            success: false,
+            error: err.message
         });
     }
 });
 
-// ADICIONAR ITEM AO PEDIDO
-router.post('/pedidos/:id/itens', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { id_produto, quantidade } = req.body;
-
-        if (!quantidade || Number(quantidade) <= 0) {
-            return res.status(400).json({ erro: 'Quantidade inválida' });
-        }
-
-        const [pedido] = await db.query(
-            'SELECT * FROM pedidos WHERE id_pedido = ?',
-            [id]
-        );
-
-        if (pedido.length === 0) {
-            return res.status(404).json({ erro: 'Pedido não encontrado' });
-        }
-
-        if (pedido[0].status_pedido === 'Cancelado') {
-            return res.status(400).json({ erro: 'Não é possível alterar um pedido cancelado' });
-        }
-
-        const [produto] = await db.query(
-            'SELECT * FROM produtos WHERE id_produto = ?',
-            [id_produto]
-        );
-
-        if (produto.length === 0) {
-            return res.status(404).json({ erro: 'Produto não encontrado' });
-        }
-
-        if (Number(produto[0].quantidade_estoque) < Number(quantidade)) {
-            return res.status(400).json({ erro: 'Estoque insuficiente' });
-        }
-
-        const preco = produto[0].preco_produto;
-
-        await db.query(`
-            INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario)
-            VALUES (?, ?, ?, ?)
-        `, [id, id_produto, quantidade, preco]);
-
-        await db.query(`
-            UPDATE produtos
-            SET quantidade_estoque = quantidade_estoque - ?
-            WHERE id_produto = ?
-        `, [quantidade, id_produto]);
-
-        await db.query(`
-            UPDATE pedidos
-            SET total_pedido = (
-                SELECT COALESCE(SUM(quantidade * preco_unitario), 0)
-                FROM itens_pedido
-                WHERE id_pedido = ?
-            )
-            WHERE id_pedido = ?
-        `, [id, id]);
-
-        res.json({ message: 'Item adicionado com sucesso' });
-    } catch (err) {
-        console.error('Erro ao adicionar item:', err);
-        res.status(500).json({
-            erro: err.sqlMessage || err.message || 'Erro ao adicionar item'
-        });
-    }
-});
-
-// ATUALIZAR STATUS DO PEDIDO
-router.patch('/pedidos/:id/status', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body;
-
-        if (!status) {
-            return res.status(400).json({ erro: 'Status é obrigatório' });
-        }
-
-        const [pedido] = await db.query(
-            'SELECT * FROM pedidos WHERE id_pedido = ?',
-            [id]
-        );
-
-        if (pedido.length === 0) {
-            return res.status(404).json({ erro: 'Pedido não encontrado' });
-        }
-
-        await db.query(`
-            UPDATE pedidos
-            SET status_pedido = ?
-            WHERE id_pedido = ?
-        `, [status, id]);
-
-        res.json({ message: 'Status atualizado com sucesso' });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-// CANCELAR PEDIDO
-router.patch('/pedidos/:id/cancelar', async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const [pedido] = await db.query(
-            'SELECT * FROM pedidos WHERE id_pedido = ?',
-            [id]
-        );
-
-        if (pedido.length === 0) {
-            return res.status(404).json({ erro: 'Pedido não encontrado' });
-        }
-
-        if (pedido[0].status_pedido === 'Cancelado') {
-            return res.status(400).json({ erro: 'Pedido já está cancelado' });
-        }
-
-        const [itens] = await db.query(`
-            SELECT * FROM itens_pedido
-            WHERE id_pedido = ?
-        `, [id]);
-
-        for (const item of itens) {
-            await db.query(`
-                UPDATE produtos
-                SET quantidade_estoque = quantidade_estoque + ?
-                WHERE id_produto = ?
-            `, [item.quantidade, item.id_produto]);
-        }
-
-        await db.query(`
-            UPDATE pedidos
-            SET status_pedido = 'Cancelado'
-            WHERE id_pedido = ?
-        `, [id]);
-
-        res.json({ message: 'Pedido cancelado com sucesso' });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
 
 // =====================
 // ITENS DO PEDIDO
 // =====================
 
-// LISTAR TODOS OS ITENS
+// LISTAR ITENS
 router.get('/itens', async (req, res) => {
     try {
         const sql = `
-            SELECT i.*, p.nome_produto
+            SELECT
+                i.*,
+                p.nome_produto
             FROM itens_pedido i
-            LEFT JOIN produtos p ON i.id_produto = p.id_produto
+            LEFT JOIN produtos p
+                ON i.id_produto = p.id_produto
         `;
 
-        const [result] = await db.query(sql);
-        res.json(result);
+        const result = await db.query(sql);
+
+        res.json(result.rows);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao listar itens:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
 
-// CADASTRO DIRETO DE ITEM
+
+// CADASTRAR ITEM DO PEDIDO
 router.post('/itens', async (req, res) => {
     try {
-        const { id_pedido, id_produto, quantidade, preco_unitario } = req.body;
+        const {
+            id_pedido,
+            id_produto,
+            quantidade,
+            preco_unitario
+        } = req.body;
 
         const sql = `
             INSERT INTO itens_pedido
-            (id_pedido, id_produto, quantidade, preco_unitario)
-            VALUES (?, ?, ?, ?)
+            (
+                id_pedido,
+                id_produto,
+                quantidade,
+                preco_unitario
+            )
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
         `;
 
-        const [result] = await db.query(sql, [
+        const result = await db.query(sql, [
             id_pedido,
             id_produto,
             quantidade,
             preco_unitario
         ]);
 
-        res.json(result);
+        res.json(result.rows[0]);
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error('Erro ao cadastrar item:', err);
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
     }
 });
 
+
 module.exports = router;
+

@@ -4,15 +4,9 @@
   "main": "server.js",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
     "express": "^4.22.1",
-    "mysql2": "^3.6.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "mysql2": "^3.6.0",
+    "pg": "^8.23.0"
+  }
 }
