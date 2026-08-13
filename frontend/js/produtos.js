@@ -3,6 +3,13 @@
 // =====================================================
 
 const cliente = JSON.parse(localStorage.getItem("clienteLogado"));
+const API = "http://localhost:3000/api";
+const CAMINHO_IMAGENS_PRODUTOS = "assets/images/produtos";
+const PLACEHOLDER_PRODUTO = `${CAMINHO_IMAGENS_PRODUTOS}/placeholder.webp`;
+const ITENS_POR_PAGINA = 8;
+
+let produtos = [];
+let paginaAtual = 1;
 
 if (!cliente) {
     window.location.href = "index.html";

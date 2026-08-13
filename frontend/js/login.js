@@ -1,10 +1,6 @@
 console.log("login carregado");
-const usuarioMock = {
-  email: "compras@compras.com.br",
-  senha: "1234",
-  nome: "Compras",
-  id_cliente: 1
-};
+
+const API = "http://localhost:3000/api";
 
 const btnLogin = document.getElementById("btnLogin");
 const btnMostrarSenha = document.getElementById("btnMostrarSenha");
@@ -30,9 +26,9 @@ btnMostrarSenha.addEventListener("click", function () {
   }
 });
 
-function fazerLogin() {
+async function fazerLogin() {
 
-  let email = campoEmail.value.trim().toLowerCase();
+  const email = campoEmail.value.trim();
   const senha = campoSenha.value.trim();
 
   mensagem.textContent = "";
@@ -42,31 +38,48 @@ function fazerLogin() {
     return;
   }
 
-  // remove .br se existir no final
-  if (email.endsWith(".br")) {
-    email = email.replace(".br", "");
-  }
+  try {
 
-  if (
-    email === "compras@compras.com" &&
-    senha === "1234"
-  ) {
+    const resposta = await fetch(`${API}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email_cliente: email,
+        senha_cliente: senha
+      })
+    });
 
-    const usuario = {
-      nome: "Compras",
-      id_cliente: 1
-    };
+    const dados = await resposta.json();
 
-    localStorage.setItem("clienteLogado", JSON.stringify(usuario));
+    if (dados.success) {
 
-    if (!localStorage.getItem("carrinho")) {
-      localStorage.setItem("carrinho", JSON.stringify([]));
+      localStorage.setItem(
+        "clienteLogado",
+        JSON.stringify({
+          id_cliente: dados.user.id_cliente,
+          nome: dados.user.nome_cliente,
+          email: dados.user.email_cliente
+        })
+      );
+
+      if (!localStorage.getItem("carrinho")) {
+        localStorage.setItem("carrinho", JSON.stringify([]));
+      }
+
+      window.location.href = "produtos.html";
+
+    } else {
+
+      mensagem.textContent = dados.message || "Login inválido.";
+
     }
 
-    window.location.href = "produtos.html";
+  } catch (erro) {
 
-  } else {
-    mensagem.textContent = "E-mail ou senha inválidos.";
+    console.error(erro);
+    mensagem.textContent = "Erro ao conectar ao servidor.";
+
   }
-
 }

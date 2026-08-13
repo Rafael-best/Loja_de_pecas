@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./db');
+const db = require('./db'); // conexão com PostgreSQL
 
 // =====================================================
 // CLIENTES
@@ -23,6 +23,7 @@ router.get('/clientes', async (req, res) => {
         });
     }
 });
+
 
 
 // CADASTRAR CLIENTE
@@ -48,8 +49,18 @@ router.post('/clientes', async (req, res) => {
             )
             VALUES ($1, $2, $3, $4, $5)
             RETURNING *
+            (
+                nome_cliente,
+                endereco_cliente,
+                telefone_cliente,
+                email_cliente,
+                senha_cliente
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
         `;
 
+        const result = await db.query(sql, [
         const result = await db.query(sql, [
             nome_cliente,
             endereco_cliente,
@@ -84,8 +95,16 @@ router.post('/login', async (req, res) => {
             FROM clientes
             WHERE email_cliente = $1
             AND senha_cliente = $2
+            SELECT *
+            FROM clientes
+            WHERE email_cliente = $1
+            AND senha_cliente = $2
         `;
 
+        const result = await db.query(sql, [
+            email_cliente,
+            senha_cliente
+        ]);
         const result = await db.query(sql, [
             email_cliente,
             senha_cliente
@@ -106,6 +125,7 @@ router.post('/login', async (req, res) => {
             });
 
         }
+
 
     } catch (err) {
 
@@ -143,6 +163,7 @@ router.get('/fornecedores', async (req, res) => {
 });
 
 
+
 // CADASTRAR FORNECEDOR
 router.post('/fornecedores', async (req, res) => {
     try {
@@ -164,8 +185,17 @@ router.post('/fornecedores', async (req, res) => {
             )
             VALUES ($1, $2, $3, $4)
             RETURNING *
+            (
+                nome_fornecedor,
+                endereco_fornecedor,
+                telefone_fornecedor,
+                email_fornecedor
+            )
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
         `;
 
+        const result = await db.query(sql, [
         const result = await db.query(sql, [
             nome_fornecedor,
             endereco_fornecedor,
@@ -199,6 +229,9 @@ router.get('/produtos', async (req, res) => {
             SELECT
                 p.*,
                 f.nome_fornecedor
+            SELECT
+                p.*,
+                f.nome_fornecedor
             FROM produtos p
             LEFT JOIN fornecedores f
                 ON p.id_fornecedor = f.id_fornecedor
@@ -229,6 +262,7 @@ router.get('/produtos', async (req, res) => {
 });
 
 
+
 // CADASTRAR PRODUTO
 router.post('/produtos', async (req, res) => {
     try {
@@ -256,6 +290,7 @@ router.post('/produtos', async (req, res) => {
             RETURNING *
         `;
 
+        const result = await db.query(sql, [
         const result = await db.query(sql, [
             nome_produto,
             descricao_produto,
@@ -290,11 +325,18 @@ router.get('/pedidos', async (req, res) => {
             SELECT
                 p.*,
                 c.nome_cliente
+            SELECT
+                p.*,
+                c.nome_cliente
             FROM pedidos p
             LEFT JOIN clientes c
                 ON p.id_cliente = c.id_cliente
             ORDER BY p.id_pedido DESC
         `;
+
+        const result = await db.query(sql);
+
+        res.json(result.rows);
 
         const result = await db.query(sql);
 
@@ -368,6 +410,7 @@ router.post('/pedidos', async (req, res) => {
 
         const {
             id_cliente,
+            data_pedido,
             forma_pagamento,
             status_pedido,
             total_pedido
@@ -803,7 +846,7 @@ router.patch('/pedidos/:id/cancelar', async (req, res) => {
 // ITENS DO PEDIDO
 // =====================================================
 
-// LISTAR TODOS OS ITENS
+// LISTAR ITENS
 router.get('/itens', async (req, res) => {
 
     try {
@@ -812,11 +855,18 @@ router.get('/itens', async (req, res) => {
             SELECT
                 i.*,
                 p.nome_produto
+            SELECT
+                i.*,
+                p.nome_produto
             FROM itens_pedido i
             LEFT JOIN produtos p
                 ON i.id_produto = p.id_produto
             ORDER BY i.id_item
         `;
+
+        const result = await db.query(sql);
+
+        res.json(result.rows);
 
         const result = await db.query(sql);
 
@@ -859,9 +909,18 @@ router.post('/itens', async (req, res) => {
             )
             VALUES ($1, $2, $3, $4)
             RETURNING *
+            (
+                id_pedido,
+                id_produto,
+                quantidade,
+                preco_unitario
+            )
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
         `;
 
 
+        const result = await db.query(sql, [
         const result = await db.query(sql, [
             id_pedido,
             id_produto,
@@ -894,3 +953,4 @@ router.post('/itens', async (req, res) => {
 // =====================================================
 
 module.exports = router;
+
