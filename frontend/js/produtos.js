@@ -1,209 +1,515 @@
+// =====================================================
+// VERIFICAÇÃO DO CLIENTE LOGADO
+// =====================================================
+
 const cliente = JSON.parse(localStorage.getItem("clienteLogado"));
 
 if (!cliente) {
-  window.location.href = "index.html";
+    window.location.href = "index.html";
 }
 
-const produtosMock = [
-  { id_produto: 1, nome_produto: "Rolamento 6204", descricao_produto: "Rolamento industrial 20x47x14mm", preco_produto: 18.90, quantidade_estoque: 80 },
-  { id_produto: 2, nome_produto: "Bucha Nylon", descricao_produto: "Bucha de nylon 12mm", preco_produto: 1.20, quantidade_estoque: 200 },
-  { id_produto: 3, nome_produto: "Engrenagem 32D", descricao_produto: "Engrenagem de aço 32 dentes", preco_produto: 45.00, quantidade_estoque: 25 },
-  { id_produto: 4, nome_produto: "Filtro de Óleo", descricao_produto: "Filtro automotivo padrão", preco_produto: 22.50, quantidade_estoque: 60 },
-  { id_produto: 5, nome_produto: "Disco de Corte", descricao_produto: "Disco de corte 7 polegadas", preco_produto: 9.80, quantidade_estoque: 150 },
-  { id_produto: 6, nome_produto: "Chave Allen 8mm", descricao_produto: "Chave allen reforçada 8mm", preco_produto: 14.90, quantidade_estoque: 40 },
-  { id_produto: 7, nome_produto: "Correia Dentada", descricao_produto: "Correia dentada industrial 150cm", preco_produto: 38.70, quantidade_estoque: 35 },
-  { id_produto: 8, nome_produto: "Parafuso Sextavado", descricao_produto: "Parafuso sextavado 12mm aço zincado", preco_produto: 0.80, quantidade_estoque: 300 },
-  { id_produto: 9, nome_produto: "Porca 10mm", descricao_produto: "Porca aço carbono 10mm", preco_produto: 0.35, quantidade_estoque: 400 },
-  { id_produto: 10, nome_produto: "Arruela Lisa", descricao_produto: "Arruela lisa 10mm zincada", preco_produto: 0.20, quantidade_estoque: 500 },
-  { id_produto: 11, nome_produto: "Retentor 35x52x7", descricao_produto: "Retentor industrial 35x52x7mm", preco_produto: 16.40, quantidade_estoque: 45 },
-  { id_produto: 12, nome_produto: "Graxa 500g", descricao_produto: "Graxa industrial alta temperatura", preco_produto: 25.00, quantidade_estoque: 70 },
-  { id_produto: 13, nome_produto: "Cadeado 40mm", descricao_produto: "Cadeado de aço reforçado 40mm", preco_produto: 32.00, quantidade_estoque: 30 },
-  { id_produto: 14, nome_produto: "Mangueira 1/2", descricao_produto: "Mangueira industrial 1/2 polegada", preco_produto: 6.50, quantidade_estoque: 120 },
-  { id_produto: 15, nome_produto: "Motor Elétrico 1CV", descricao_produto: "Motor elétrico trifásico 1CV", preco_produto: 780.00, quantidade_estoque: 10 }
-];
 
-if (!localStorage.getItem("produtosMock")) {
-  localStorage.setItem("produtosMock", JSON.stringify(produtosMock));
-}
+// =====================================================
+// ELEMENTOS DO HTML
+// =====================================================
 
 const btnSair = document.getElementById("btnSair");
 const campoBusca = document.getElementById("campoBusca");
 
+
+// =====================================================
+// BOTÃO SAIR
+// =====================================================
+
 if (btnSair) {
-  btnSair.addEventListener("click", function () {
-    localStorage.removeItem("clienteLogado");
-    window.location.href = "index.html";
-  });
+    btnSair.addEventListener("click", function () {
+        localStorage.removeItem("clienteLogado");
+        window.location.href = "index.html";
+    });
 }
+
+
+// =====================================================
+// FORMATAÇÃO DE MOEDA
+// =====================================================
 
 function formatarMoeda(valor) {
-  return Number(valor).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 }
+
+
+// =====================================================
+// PRODUTOS
+// =====================================================
+
+// Mantemos o localStorage apenas como cache.
+// A fonte principal agora é o PostgreSQL através da API.
 
 function obterProdutos() {
-  return JSON.parse(localStorage.getItem("produtosMock")) || [];
+    return JSON.parse(localStorage.getItem("produtosMock")) || [];
 }
+
+
+// =====================================================
+// BUSCAR PRODUTOS NO BANCO
+// =====================================================
+
+async function carregarProdutos() {
+
+    try {
+
+        console.log("🔄 Carregando produtos do PostgreSQL...");
+
+        const resposta = await fetch("http://localhost:3000/api/produtos");
+
+        if (!resposta.ok) {
+            throw new Error(
+                `Erro HTTP ${resposta.status}`
+            );
+        }
+
+        const produtos = await resposta.json();
+
+        console.log("✅ Produtos recebidos:", produtos);
+
+        // Salva os produtos recebidos como cache
+        localStorage.setItem(
+            "produtosMock",
+            JSON.stringify(produtos)
+        );
+
+        // Mostra os produtos na tela
+        renderizarProdutos(produtos);
+
+    } catch (erro) {
+
+        console.error(
+            "❌ Erro ao carregar produtos:",
+            erro
+        );
+
+        // Tenta usar produtos que já estejam no navegador
+        const produtosSalvos = obterProdutos();
+
+        if (produtosSalvos.length > 0) {
+
+            console.warn(
+                "⚠️ Usando produtos armazenados localmente."
+            );
+
+            renderizarProdutos(produtosSalvos);
+
+        } else {
+
+            const lista =
+                document.getElementById("listaProdutos");
+
+            if (lista) {
+
+                lista.innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            Não foi possível carregar os produtos.
+                            Verifique se o servidor está funcionando.
+                        </div>
+                    </div>
+                `;
+
+            }
+        }
+    }
+}
+
+
+// =====================================================
+// CARRINHO
+// =====================================================
 
 function obterCarrinho() {
-  return JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    return JSON.parse(
+        localStorage.getItem("carrinho")
+    ) || [];
+
 }
+
 
 function salvarCarrinho(carrinho) {
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
+
 }
+
+
+// =====================================================
+// ATUALIZAR BOTÃO DO CARRINHO
+// =====================================================
 
 function atualizarBotaoCarrinho() {
-  const carrinho = obterCarrinho();
-  const btnCarrinho = document.getElementById("btnCarrinho");
 
-  if (!btnCarrinho) return;
+    const carrinho = obterCarrinho();
 
-  const totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
-  btnCarrinho.textContent = `Carrinho (${totalItens})`;
+    const btnCarrinho =
+        document.getElementById("btnCarrinho");
+
+    if (!btnCarrinho) {
+        return;
+    }
+
+    const totalItens = carrinho.reduce(
+        (total, item) =>
+            total + Number(item.quantidade || 0),
+        0
+    );
+
+    btnCarrinho.textContent =
+        `Carrinho (${totalItens})`;
 }
+
+
+// =====================================================
+// TOAST
+// =====================================================
 
 function mostrarToast(mensagem) {
-  const toast = document.getElementById("toastMensagem");
 
-  if (!toast) {
-    console.log("Toast não encontrado no HTML");
-    return;
-  }
+    const toast =
+        document.getElementById("toastMensagem");
 
-  toast.textContent = mensagem;
-  toast.classList.add("mostrar");
+    if (!toast) {
+        console.log(mensagem);
+        return;
+    }
 
-  clearTimeout(toast._timeout);
+    toast.textContent = mensagem;
 
-  toast._timeout = setTimeout(() => {
-    toast.classList.remove("mostrar");
-  }, 2200);
+    toast.classList.add("mostrar");
+
+    clearTimeout(toast._timeout);
+
+    toast._timeout = setTimeout(() => {
+
+        toast.classList.remove("mostrar");
+
+    }, 2200);
 }
+
+
+// =====================================================
+// ADICIONAR AO CARRINHO
+// =====================================================
 
 function adicionarAoCarrinho(idProduto) {
-  const produtos = obterProdutos();
-  const carrinho = obterCarrinho();
 
-  const produto = produtos.find(p => p.id_produto === idProduto);
-  if (!produto) return;
+    const produtos = obterProdutos();
 
-  const itemExistente = carrinho.find(item => item.id_produto === idProduto);
+    const carrinho = obterCarrinho();
 
-  if (itemExistente) {
-    if (itemExistente.quantidade < produto.quantidade_estoque) {
-      itemExistente.quantidade += 1;
-    } else {
-      mostrarToast("Quantidade máxima em estoque atingida.");
-      return;
+    const produto = produtos.find(
+        p => Number(p.id_produto) === Number(idProduto)
+    );
+
+    if (!produto) {
+
+        mostrarToast(
+            "Produto não encontrado."
+        );
+
+        return;
     }
-  } else {
-    carrinho.push({
-      id_produto: produto.id_produto,
-      nome_produto: produto.nome_produto,
-      preco_produto: Number(produto.preco_produto),
-      quantidade: 1
-    });
-  }
 
-  salvarCarrinho(carrinho);
-  atualizarBotaoCarrinho();
-  mostrarToast("Produto adicionado ao carrinho.");
+
+    const itemExistente = carrinho.find(
+        item =>
+            Number(item.id_produto) ===
+            Number(idProduto)
+    );
+
+
+    if (itemExistente) {
+
+        if (
+            itemExistente.quantidade <
+            Number(produto.quantidade_estoque)
+        ) {
+
+            itemExistente.quantidade += 1;
+
+        } else {
+
+            mostrarToast(
+                "Quantidade máxima em estoque atingida."
+            );
+
+            return;
+        }
+
+    } else {
+
+        carrinho.push({
+
+            id_produto:
+                produto.id_produto,
+
+            nome_produto:
+                produto.nome_produto,
+
+            preco_produto:
+                Number(produto.preco_produto),
+
+            quantidade: 1,
+
+            // Guardamos também a imagem
+            // para o carrinho poder utilizá-la depois.
+            imagem_produto:
+                produto.imagem_produto || null
+
+        });
+
+    }
+
+
+    salvarCarrinho(carrinho);
+
+    atualizarBotaoCarrinho();
+
+    mostrarToast(
+        "Produto adicionado ao carrinho."
+    );
 }
+
+
+// =====================================================
+// RENDERIZAR PRODUTOS
+// =====================================================
 
 function renderizarProdutos(listaDeProdutos) {
-  const lista = document.getElementById("listaProdutos");
-  lista.innerHTML = "";
 
-  if (listaDeProdutos.length === 0) {
-    lista.innerHTML = `
-      <div class="col-12">
-        <div class="alert alert-warning mb-0">
-          Nenhum produto encontrado.
-        </div>
-      </div>
-    `;
-    return;
-  }
+    const lista =
+        document.getElementById("listaProdutos");
 
-  listaDeProdutos.forEach(produto => {
-    const coluna = document.createElement("div");
-    coluna.className = "col-12 col-sm-6 col-lg-4 col-xl-3";
+    if (!lista) {
+        console.error(
+            "Elemento #listaProdutos não encontrado."
+        );
 
-    coluna.innerHTML = `
-      <div class="card card-produto shadow-sm">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">${produto.nome_produto}</h5>
-          <p class="card-text text-muted descricao-produto">${produto.descricao_produto}</p>
-          <p class="mb-1"><strong>Estoque:</strong> ${produto.quantidade_estoque}</p>
-          <p class="preco">${formatarMoeda(produto.preco_produto)}</p>
-          <button class="btn btn-primary mt-auto">Adicionar ao carrinho</button>
-        </div>
-      </div>
-    `;
+        return;
+    }
 
-    const botao = coluna.querySelector("button");
-    botao.addEventListener("click", function () {
-      adicionarAoCarrinho(produto.id_produto);
+
+    lista.innerHTML = "";
+
+
+    if (
+        !listaDeProdutos ||
+        listaDeProdutos.length === 0
+    ) {
+
+        lista.innerHTML = `
+            <div class="col-12">
+
+                <div class="alert alert-warning mb-0">
+
+                    Nenhum produto encontrado.
+
+                </div>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    listaDeProdutos.forEach(produto => {
+
+        const coluna =
+            document.createElement("div");
+
+        coluna.className =
+            "col-12 col-sm-6 col-lg-4 col-xl-3";
+
+
+        // =================================================
+        // IMAGEM DO SUPABASE
+        // =================================================
+
+        let imagemProduto =
+            produto.imagem_produto;
+
+
+        // Se não tiver imagem cadastrada
+        if (!imagemProduto) {
+
+            imagemProduto =
+                "https://via.placeholder.com/400x250?text=Sem+imagem";
+
+        }
+
+
+        coluna.innerHTML = `
+
+            <div class="card card-produto shadow-sm h-100">
+
+                <img
+                    src="${imagemProduto}"
+                    class="card-img-top imagem-produto"
+                    alt="${produto.nome_produto}"
+                    style="
+                        height: 220px;
+                        object-fit: contain;
+                        padding: 15px;
+                    "
+                    onerror="
+                        this.onerror = null;
+                        this.src = 'https://via.placeholder.com/400x250?text=Imagem+indisponivel';
+                    "
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">
+                        ${produto.nome_produto}
+                    </h5>
+
+                    <p class="card-text text-muted descricao-produto">
+
+                        ${produto.descricao_produto || ""}
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        <strong>Estoque:</strong>
+                        ${produto.quantidade_estoque}
+
+                    </p>
+
+                    <p class="preco">
+
+                        ${formatarMoeda(
+                            produto.preco_produto
+                        )}
+
+                    </p>
+
+                    <button
+                        class="btn btn-primary mt-auto"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        const botao =
+            coluna.querySelector("button");
+
+
+        botao.addEventListener(
+            "click",
+            function () {
+
+                adicionarAoCarrinho(
+                    produto.id_produto
+                );
+
+            }
+        );
+
+
+        lista.appendChild(coluna);
+
     });
 
-    lista.appendChild(coluna);
-  });
 }
+
+
+// =====================================================
+// FILTRAR PRODUTOS
+// =====================================================
 
 function filtrarProdutos() {
-  const produtos = obterProdutos();
 
-  if (!campoBusca) {
-    renderizarProdutos(produtos);
-    return;
-  }
+    const produtos =
+        obterProdutos();
 
-  const termo = campoBusca.value.toLowerCase().trim();
 
-  const produtosFiltrados = produtos.filter(produto =>
-    produto.nome_produto.toLowerCase().includes(termo) ||
-    produto.descricao_produto.toLowerCase().includes(termo)
-  );
+    if (!campoBusca) {
 
-  renderizarProdutos(produtosFiltrados);
+        renderizarProdutos(produtos);
+
+        return;
+    }
+
+
+    const termo =
+        campoBusca.value
+            .toLowerCase()
+            .trim();
+
+
+    const produtosFiltrados =
+        produtos.filter(produto => {
+
+            const nome =
+                String(
+                    produto.nome_produto || ""
+                ).toLowerCase();
+
+
+            const descricao =
+                String(
+                    produto.descricao_produto || ""
+                ).toLowerCase();
+
+
+            return (
+                nome.includes(termo) ||
+                descricao.includes(termo)
+            );
+
+        });
+
+
+    renderizarProdutos(
+        produtosFiltrados
+    );
+
 }
+
+
+// =====================================================
+// CAMPO DE BUSCA
+// =====================================================
 
 if (campoBusca) {
-  campoBusca.addEventListener("input", filtrarProdutos);
-}
-function atualizarCarrinhoTopo() {
-  const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-  let total = 0;
+    campoBusca.addEventListener(
+        "input",
+        filtrarProdutos
+    );
 
-  carrinho.forEach(item => {
-    total += item.quantidade || 1;
-  });
-
-  document.getElementById("btnCarrinho").innerText = `Carrinho (${total})`;
-}
-let timeoutToast;
-
-function mostrarToast(mensagem) {
-  const toast = document.getElementById("toastMensagem");
-  if (!toast) return;
-
-  toast.textContent = mensagem;
-  toast.classList.add("mostrar");
-
-  clearTimeout(timeoutToast);
-
-  timeoutToast = setTimeout(() => {
-    toast.classList.remove("mostrar");
-  }, 2000);
 }
 
-// roda quando abrir a página
-atualizarCarrinhoTopo();
 
-renderizarProdutos(obterProdutos());
+// =====================================================
+// INICIALIZAÇÃO
+// =====================================================
+
 atualizarBotaoCarrinho();
-mostrarMensagem("Produto adicionado ao carrinho");
+
+
+// Busca os produtos diretamente
+// do PostgreSQL através da API.
+carregarProdutos();
