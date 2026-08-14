@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Central de Ajuda | Loja de Peças</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/suporte.css">
+</head>
+
+<body>
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header class="main-header">
+
+  <div class="container header-container">
+
+    <a href="produtos.html" class="brand">
+
+      <div class="brand-icon">
+        <i class="fa-solid fa-gears"></i>
+      </div>
+
+      <div>
+        <strong>LOJA DE PEÇAS</strong>
+        <small>Auto Parts & Performance</small>
+      </div>
+
+    </a>
+
+
+    <nav class="desktop-nav">
+
+      <a href="produtos.html">
+        Produtos
+      </a>
+
+      <a href="pedidos.html">
+        Meus Pedidos
+      </a>
+
+      <a href="suporte.html" class="active">
+        Suporte
+      </a>
+
+      <a href="perfil.html">
+        Minha Conta
+      </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <a
+        href="carrinho.html"
+        class="cart-button"
+        aria-label="Carrinho"
+      >
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span id="contadorCarrinho">
+          0
+        </span>
+
+      </a>
+
+
+      <button
+        id="menuButton"
+        class="menu-button"
+        type="button"
+        aria-label="Abrir menu"
+      >
+
+        <i class="fa-solid fa-bars"></i>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- MENU MOBILE -->
+
+  <div
+    id="mobileMenu"
+    class="mobile-menu"
+  >
+
+    <div class="container">
+
+      <a href="produtos.html">
+        <i class="fa-solid fa-box"></i>
+        Produtos
+      </a>
+
+      <a href="pedidos.html">
+        <i class="fa-solid fa-receipt"></i>
+        Meus Pedidos
+      </a>
+
+      <a href="suporte.html">
+        <i class="fa-solid fa-headset"></i>
+        Suporte
+      </a>
+
+      <a href="perfil.html">
+        <i class="fa-solid fa-user"></i>
+        Minha Conta
+      </a>
+
+      <a href="carrinho.html">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Carrinho
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="support-hero">
+
+  <div class="hero-glow glow-one"></div>
+  <div class="hero-glow glow-two"></div>
+
+  <div class="container hero-content">
+
+    <div class="hero-badge">
+
+      <span></span>
+
+      CENTRAL DE ATENDIMENTO
+
+    </div>
+
+
+    <h1>
+      Como podemos
+      <span>ajudar você?</span>
+    </h1>
+
+
+    <p>
+      Encontre respostas rapidamente ou fale com nossa
+      equipe especializada em autopeças.
+    </p>
+
+
+    <div class="support-search">
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        id="buscaSuporte"
+        placeholder="Digite sua dúvida. Ex: entrega, pagamento, pedido..."
+        autocomplete="off"
+      >
+
+      <button
+        type="button"
+        id="btnBuscarAjuda"
+      >
+        Buscar
+      </button>
+
+    </div>
+
+
+    <div class="hero-links">
+
+      <span>Mais buscados:</span>
+
+      <button
+        type="button"
+        data-search="pedido"
+      >
+        Meu pedido
+      </button>
+
+      <button
+        type="button"
+        data-search="entrega"
+      >
+        Entrega
+      </button>
+
+      <button
+        type="button"
+        data-search="pagamento"
+      >
+        Pagamento
+      </button>
+
+      <button
+        type="button"
+        data-search="troca"
+      >
+        Trocas
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     ATALHOS
+====================================================== -->
+
+<section class="support-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        ATENDIMENTO
+      </span>
+
+      <h2>
+        Encontre o que precisa
+      </h2>
+
+      <p>
+        Escolha uma categoria para encontrar ajuda rapidamente.
+      </p>
+
+    </div>
+
+
+    <div class="support-grid">
+
+      <button
+        class="support-card"
+        data-search="pedido"
+        type="button"
+      >
+
+        <div class="support-card-icon">
+          <i class="fa-solid fa-box"></i>
+        </div>
+
+        <h3>Pedidos</h3>
+
+        <p>
+          Acompanhe pedidos, status e informações da compra.
+        </p>
+
+        <span>
+          Ver ajuda
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+
+      </button>
+
+
+      <button
+        class="support-card"
+        data-search="entrega"
+        type="button"
+      >
+
+        <div class="support-card-icon">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+
+        <h3>Entrega</h3>
+
+        <p>
+          Consulte prazos, envio e informações de entrega.
+        </p>
+
+        <span>
+          Ver ajuda
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+
+      </button>
+
+
+      <button
+        class="support-card"
+        data-search="pagamento"
+        type="button"
+      >
+
+        <div class="support-card-icon">
+          <i class="fa-solid fa-credit-card"></i>
+        </div>
+
+        <h3>Pagamentos</h3>
+
+        <p>
+          Tire dúvidas sobre PIX, cartão e boleto.
+        </p>
+
+        <span>
+          Ver ajuda
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+
+      </button>
+
+
+      <button
+        class="support-card"
+        data-search="troca"
+        type="button"
+      >
+
+        <div class="support-card-icon">
+          <i class="fa-solid fa-rotate"></i>
+        </div>
+
+        <h3>Trocas e devoluções</h3>
+
+        <p>
+          Informações sobre devolução, troca e garantia.
+        </p>
+
+        <span>
+          Ver ajuda
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     CONTATO RÁPIDO
+====================================================== -->
+
+<section class="contact-area">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        FALE CONOSCO
+      </span>
+
+      <h2>
+        Precisa falar com alguém?
+      </h2>
+
+      <p>
+        Nossa equipe está pronta para ajudar.
+      </p>
+
+    </div>
+
+
+    <div class="contact-grid">
+
+      <!-- WHATSAPP -->
+
+      <a
+        href="#"
+        class="contact-card"
+        id="whatsappLink"
+      >
+
+        <div class="contact-icon whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+
+        <div>
+
+          <small>
+            WHATSAPP
+          </small>
+
+          <h3>
+            Fale pelo WhatsApp
+          </h3>
+
+          <p>
+            Atendimento rápido com nossa equipe.
+          </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+      </a>
+
+
+      <!-- TELEFONE -->
+
+      <a
+        href="tel:+5500000000000"
+        class="contact-card"
+      >
+
+        <div class="contact-icon phone">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <div>
+
+          <small>
+            TELEFONE
+          </small>
+
+          <h3>
+            (00) 0000-0000
+          </h3>
+
+          <p>
+            Segunda a sexta, das 8h às 18h.
+          </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </a>
+
+
+      <!-- EMAIL -->
+
+      <a
+        href="mailto:suporte@lojadepecas.com.br"
+        class="contact-card"
+      >
+
+        <div class="contact-icon email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+
+        <div>
+
+          <small>
+            E-MAIL
+          </small>
+
+          <h3>
+            suporte@lojadepecas.com.br
+          </h3>
+
+          <p>
+            Envie sua dúvida para nossa equipe.
+          </p>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     FAQ
+====================================================== -->
+
+<section
+  class="faq-section"
+  id="faq"
+>
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        DÚVIDAS FREQUENTES
+      </span>
+
+      <h2>
+        Perguntas frequentes
+      </h2>
+
+      <p>
+        Talvez sua dúvida já esteja respondida aqui.
+      </p>
+
+    </div>
+
+
+    <div
+      id="faqLista"
+      class="faq-list"
+    >
+
+
+      <div
+        class="faq-item"
+        data-keywords="pedido pedidos acompanhar status compra"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+        >
+
+          <span>
+            Como acompanho o status do meu pedido?
+          </span>
+
+          <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <div class="faq-answer">
+
+          <p>
+            Acesse a opção "Meus Pedidos" no menu principal.
+            Lá você poderá visualizar seus pedidos e o status
+            atual de cada compra.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="faq-item"
+        data-keywords="pagamento pix cartão cartao boleto pagar"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+        >
+
+          <span>
+            Quais formas de pagamento são aceitas?
+          </span>
+
+          <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <div class="faq-answer">
+
+          <p>
+            Atualmente o sistema permite selecionar PIX,
+            cartão ou boleto durante a finalização da compra.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="faq-item"
+        data-keywords="entrega prazo envio transportadora pedido"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+        >
+
+          <span>
+            Como funciona o prazo de entrega?
+          </span>
+
+          <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <div class="faq-answer">
+
+          <p>
+            O prazo depende da disponibilidade do produto
+            e da região de entrega. A integração completa
+            com cálculo de frete será adicionada ao sistema.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="faq-item"
+        data-keywords="troca devolver devolução devolucao produto garantia"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+        >
+
+          <span>
+            Como solicitar troca ou devolução?
+          </span>
+
+          <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <div class="faq-answer">
+
+          <p>
+            Entre em contato com o suporte informando
+            o número do pedido e o produto para que
+            a solicitação seja analisada.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="faq-item"
+        data-keywords="peça peca compatível compativel carro veículo veiculo"
+      >
+
+        <button
+          class="faq-question"
+          type="button"
+        >
+
+          <span>
+            Como saber se uma peça serve no meu veículo?
+          </span>
+
+          <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <div class="faq-answer">
+
+          <p>
+            Verifique as informações e aplicações disponíveis
+            na página do produto. Futuramente também teremos
+            busca de peças por veículo.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="nenhumResultado"
+      class="no-result"
+    >
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <h3>
+        Nenhum resultado encontrado
+      </h3>
+
+      <p>
+        Tente pesquisar com outras palavras ou envie
+        uma mensagem para nossa equipe.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     FORMULÁRIO
+====================================================== -->
+
+<section class="ticket-section">
+
+  <div class="container">
+
+    <div class="ticket-layout">
+
+      <div class="ticket-info">
+
+        <span class="section-label">
+          ATENDIMENTO PERSONALIZADO
+        </span>
+
+        <h2>
+          Ainda precisa de ajuda?
+        </h2>
+
+        <p>
+          Envie sua solicitação e nossa equipe poderá
+          analisar seu atendimento.
+        </p>
+
+
+        <div class="ticket-benefit">
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <div>
+            <strong>Atendimento seguro</strong>
+
+            <span>
+              Seus dados serão usados apenas para o atendimento.
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="ticket-benefit">
+
+          <i class="fa-solid fa-ticket"></i>
+
+          <div>
+            <strong>Protocolo automático</strong>
+
+            <span>
+              Sua solicitação receberá um número de protocolo.
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="ticket-benefit">
+
+          <i class="fa-solid fa-clock"></i>
+
+          <div>
+            <strong>Retorno da equipe</strong>
+
+            <span>
+              Atendimento em horário comercial.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="ticket-form-card">
+
+        <form id="formSuporte">
+
+          <div class="form-header">
+
+            <div>
+              <small>
+                NOVA SOLICITAÇÃO
+              </small>
+
+              <h3>
+                Fale com o suporte
+              </h3>
+            </div>
+
+            <i class="fa-solid fa-headset"></i>
+
+          </div>
+
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label for="nomeSuporte">
+                Nome
+              </label>
+
+              <input
+                type="text"
+                id="nomeSuporte"
+                placeholder="Seu nome"
+                required
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="emailSuporte">
+                E-mail
+              </label>
+
+              <input
+                type="email"
+                id="emailSuporte"
+                placeholder="seuemail@exemplo.com"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label for="assuntoSuporte">
+                Assunto
+              </label>
+
+              <select
+                id="assuntoSuporte"
+                required
+              >
+
+                <option value="">
+                  Selecione
+                </option>
+
+                <option value="Pedido">
+                  Pedido
+                </option>
+
+                <option value="Entrega">
+                  Entrega
+                </option>
+
+                <option value="Pagamento">
+                  Pagamento
+                </option>
+
+                <option value="Troca">
+                  Troca ou devolução
+                </option>
+
+                <option value="Produto">
+                  Dúvida sobre produto
+                </option>
+
+                <option value="Outro">
+                  Outro
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="numeroPedido">
+                Número do pedido
+              </label>
+
+              <input
+                type="text"
+                id="numeroPedido"
+                placeholder="Opcional"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="mensagemSuporte">
+              Mensagem
+            </label>
+
+            <textarea
+              id="mensagemSuporte"
+              rows="5"
+              maxlength="1000"
+              placeholder="Explique como podemos ajudar..."
+              required
+            ></textarea>
+
+            <small class="character-counter">
+              <span id="contadorMensagem">0</span>/1000
+            </small>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-ticket"
+            id="btnEnviarSuporte"
+          >
+
+            <span>
+              Enviar solicitação
+            </span>
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+          </button>
+
+
+          <div
+            id="mensagemFormulario"
+            class="form-message"
+          ></div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     LOCALIZAÇÃO
+====================================================== -->
+
+<section class="store-section">
+
+  <div class="container">
+
+    <div class="store-card">
+
+      <div class="store-icon">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+
+
+      <div class="store-content">
+
+        <small>
+          NOSSA LOJA
+        </small>
+
+        <h2>
+          Visite nossa unidade
+        </h2>
+
+        <p>
+          Rua Exemplo, 1000 — Centro<br>
+          Curitiba — PR
+        </p>
+
+      </div>
+
+
+      <div class="store-hours">
+
+        <div>
+
+          <span>
+            Segunda a sexta
+          </span>
+
+          <strong>
+            08:00 — 18:00
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Sábado
+          </span>
+
+          <strong>
+            08:00 — 13:00
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer class="main-footer">
+
+  <div class="container footer-grid">
+
+    <div>
+
+      <a
+        href="produtos.html"
+        class="footer-brand"
+      >
+
+        <div class="brand-icon">
+          <i class="fa-solid fa-gears"></i>
+        </div>
+
+        <div>
+          <strong>
+            LOJA DE PEÇAS
+          </strong>
+
+          <small>
+            Auto Parts & Performance
+          </small>
+        </div>
+
+      </a>
+
+      <p class="footer-description">
+        Peças automotivas com qualidade,
+        tecnologia e atendimento especializado.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        Navegação
+      </h4>
+
+      <a href="produtos.html">
+        Produtos
+      </a>
+
+      <a href="pedidos.html">
+        Meus pedidos
+      </a>
+
+      <a href="perfil.html">
+        Minha conta
+      </a>
+
+      <a href="suporte.html">
+        Suporte
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        Atendimento
+      </h4>
+
+      <a href="tel:+5500000000000">
+        (00) 0000-0000
+      </a>
+
+      <a href="mailto:suporte@lojadepecas.com.br">
+        suporte@lojadepecas.com.br
+      </a>
+
+      <span>
+        Seg. a Sex. — 8h às 18h
+      </span>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        Segurança
+      </h4>
+
+      <p class="security-item">
+        <i class="fa-solid fa-lock"></i>
+        Ambiente seguro
+      </p>
+
+      <p class="security-item">
+        <i class="fa-solid fa-shield-halved"></i>
+        Compra protegida
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="container footer-bottom">
+
+    <span>
+      © 2026 Loja de Peças. Todos os direitos reservados.
+    </span>
+
+    <span>
+      Desenvolvido para performance.
+    </span>
+
+  </div>
+
+</footer>
+
+
+<script src="js/suporte.js"></script>
+
+</body>
+</html>

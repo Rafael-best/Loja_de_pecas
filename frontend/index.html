@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Loja de autopeças - encontre peças, acessórios e produtos automotivos."
+  >
+
+  <title>Loja de Peças | Autopeças</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="top-strip">
+    <div class="site-container top-strip-content">
+
+      <span>
+        <i class="fa-solid fa-shield-halved"></i>
+        Compra segura
+      </span>
+
+      <span class="desktop-only">
+        <i class="fa-solid fa-headset"></i>
+        Atendimento especializado
+      </span>
+
+      <span class="desktop-only">
+        <i class="fa-solid fa-truck-fast"></i>
+        Entrega para sua região
+      </span>
+
+    </div>
+  </div>
+
+
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+
+    <div class="site-container header-main">
+
+      <!-- LOGO -->
+      <a href="index.html" class="brand">
+
+        <img
+          src="assets/images/logo.png"
+          alt="Logo Loja de Peças"
+          class="brand-logo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+
+        <span class="brand-fallback">
+          <i class="fa-solid fa-gear"></i>
+        </span>
+
+        <span class="brand-text">
+          <strong>Loja de Peças</strong>
+          <small>Autopeças & Acessórios</small>
+        </span>
+
+      </a>
+
+
+      <!-- BUSCA -->
+      <form class="header-search" id="headerSearchForm">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="headerSearchInput"
+          type="search"
+          placeholder="Busque por peça, marca, código ou categoria..."
+          autocomplete="off"
+        >
+
+        <button type="submit">
+          Buscar
+        </button>
+
+      </form>
+
+
+      <!-- AÇÕES -->
+      <div class="header-actions">
+
+        <a href="pedidos.html" class="header-action desktop-action">
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+            <small>Acompanhar</small>
+            <strong>Pedidos</strong>
+          </span>
+
+        </a>
+
+
+        <a href="perfil.html" class="header-action desktop-action">
+
+          <i class="fa-regular fa-user"></i>
+
+          <span>
+            <small>Minha conta</small>
+            <strong>Perfil</strong>
+          </span>
+
+        </a>
+
+
+        <a href="carrinho.html" class="cart-button">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span class="cart-text">
+            Carrinho
+          </span>
+
+          <span id="cartCount" class="cart-count">
+            0
+          </span>
+
+        </a>
+
+
+        <!-- HAMBÚRGUER -->
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- MENU DESKTOP -->
+    <nav class="desktop-nav">
+
+      <div class="site-container desktop-nav-inner">
+
+        <a href="produtos.html" class="category-highlight">
+
+          <i class="fa-solid fa-table-cells-large"></i>
+
+          Todos os produtos
+
+        </a>
+
+        <a href="produtos.html?categoria=freios">
+          Freios
+        </a>
+
+        <a href="produtos.html?categoria=motor">
+          Motor
+        </a>
+
+        <a href="produtos.html?categoria=suspensao">
+          Suspensão
+        </a>
+
+        <a href="produtos.html?categoria=eletrica">
+          Elétrica
+        </a>
+
+        <a href="produtos.html?categoria=filtros">
+          Filtros
+        </a>
+
+        <a href="produtos.html?categoria=oleos">
+          Óleos e Fluidos
+        </a>
+
+        <a href="suporte.html" class="nav-support">
+
+          <i class="fa-regular fa-circle-question"></i>
+
+          Suporte
+
+        </a>
+
+      </div>
+
+    </nav>
+
+
+    <!-- FUNDO DO MENU MOBILE -->
+    <div
+      id="mobileMenuBackdrop"
+      class="mobile-menu-backdrop"
+    ></div>
+
+
+    <!-- MENU MOBILE -->
+    <aside
+      id="mobileMenu"
+      class="mobile-menu"
+    >
+
+      <div class="mobile-menu-header">
+
+        <div class="mobile-brand">
+
+          <span class="mobile-brand-icon">
+            <i class="fa-solid fa-gear"></i>
+          </span>
+
+          <div>
+            <strong>Loja de Peças</strong>
+            <small>Menu principal</small>
+          </div>
+
+        </div>
+
+
+        <button
+          id="menuClose"
+          class="menu-close"
+          type="button"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <div class="mobile-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="mobileSearchInput"
+          type="search"
+          placeholder="Buscar produtos..."
+        >
+
+      </div>
+
+
+      <nav class="mobile-nav">
+
+        <a href="index.html">
+
+          <i class="fa-solid fa-house"></i>
+
+          Início
+
+        </a>
+
+
+        <a href="produtos.html">
+
+          <i class="fa-solid fa-box-open"></i>
+
+          Produtos
+
+        </a>
+
+
+        <a href="carrinho.html">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          Carrinho
+
+        </a>
+
+
+        <a href="pedidos.html">
+
+          <i class="fa-solid fa-box"></i>
+
+          Meus pedidos
+
+        </a>
+
+
+        <a href="perfil.html">
+
+          <i class="fa-regular fa-user"></i>
+
+          Meu perfil
+
+        </a>
+
+
+        <a href="suporte.html">
+
+          <i class="fa-solid fa-headset"></i>
+
+          Suporte
+
+        </a>
+
+      </nav>
+
+    </aside>
+
+  </header>
+
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
+
+      <div class="site-container hero-content">
+
+        <!-- TEXTO -->
+        <div class="hero-copy">
+
+          <span class="eyebrow">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            Autopeças com tecnologia
+
+          </span>
+
+
+          <h1>
+
+            A peça certa para o seu carro,
+
+            <span>
+              sem complicação.
+            </span>
+
+          </h1>
+
+
+          <p>
+
+            Encontre peças, acessórios e itens de manutenção
+            com rapidez, segurança e praticidade.
+
+          </p>
+
+
+          <div class="hero-actions">
+
+            <a
+              href="produtos.html"
+              class="main-button primary-button"
+            >
+
+              Ver produtos
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+            <a
+              href="#buscar-veiculo"
+              class="main-button ghost-button"
+            >
+
+              Buscar pelo veículo
+
+            </a>
+
+          </div>
+
+
+          <div class="hero-info">
+
+            <div>
+
+              <strong>
+                Compra segura
+              </strong>
+
+              <span>
+                Proteção durante sua compra
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Atendimento
+              </strong>
+
+              <span>
+                Ajuda para escolher sua peça
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Variedade
+              </strong>
+
+              <span>
+                Peças e acessórios
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ARTE -->
+        <div class="hero-art">
+
+          <div class="hero-ring ring-one"></div>
+
+          <div class="hero-ring ring-two"></div>
+
+
+          <div class="car-art">
+
+            <div class="car-icon">
+
+              <i class="fa-solid fa-car-side"></i>
+
+            </div>
+
+
+            <div class="floating-card floating-one">
+
+              <i class="fa-solid fa-shield"></i>
+
+              Qualidade
+
+            </div>
+
+
+            <div class="floating-card floating-two">
+
+              <i class="fa-solid fa-wrench"></i>
+
+              Compatibilidade
+
+            </div>
+
+
+            <div class="floating-card floating-three">
+
+              <i class="fa-solid fa-box"></i>
+
+              Estoque
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BENEFÍCIOS -->
+    <section class="benefits">
+
+      <div class="site-container benefits-grid">
+
+
+        <article class="benefit-item">
+
+          <span class="benefit-icon">
+
+            <i class="fa-solid fa-truck-fast"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Entrega prática
+            </strong>
+
+            <span>
+              Consulte opções para sua região
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <article class="benefit-item">
+
+          <span class="benefit-icon">
+
+            <i class="fa-solid fa-credit-card"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Pagamento facilitado
+            </strong>
+
+            <span>
+              Pix, cartão ou boleto
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <article class="benefit-item">
+
+          <span class="benefit-icon">
+
+            <i class="fa-solid fa-headset"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Suporte especializado
+            </strong>
+
+            <span>
+              Conte com nosso atendimento
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <article class="benefit-item">
+
+          <span class="benefit-icon">
+
+            <i class="fa-solid fa-lock"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Ambiente seguro
+            </strong>
+
+            <span>
+              Seus dados protegidos
+            </span>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- BUSCAR POR VEÍCULO -->
+    <section
+      class="section"
+      id="buscar-veiculo"
+    >
+
+      <div class="site-container">
+
+        <div class="vehicle-finder">
+
+
+          <div class="vehicle-intro">
+
+            <span class="section-label">
+              Encontre mais rápido
+            </span>
+
+            <h2>
+              Qual é o seu veículo?
+            </h2>
+
+            <p>
+
+              Informe seu veículo para facilitar
+              a busca por peças compatíveis.
+
+            </p>
+
+          </div>
+
+
+          <form
+            id="vehicleForm"
+            class="vehicle-form"
+          >
+
+
+            <div class="vehicle-field">
+
+              <label for="vehicleBrand">
+                Marca
+              </label>
+
+              <select id="vehicleBrand">
+
+                <option value="">
+                  Selecione
+                </option>
+
+                <option>
+                  Chevrolet
+                </option>
+
+                <option>
+                  Fiat
+                </option>
+
+                <option>
+                  Ford
+                </option>
+
+                <option>
+                  Honda
+                </option>
+
+                <option>
+                  Hyundai
+                </option>
+
+                <option>
+                  Renault
+                </option>
+
+                <option>
+                  Toyota
+                </option>
+
+                <option>
+                  Volkswagen
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="vehicle-field">
+
+              <label for="vehicleModel">
+                Modelo
+              </label>
+
+              <input
+                id="vehicleModel"
+                type="text"
+                placeholder="Ex.: Onix"
+              >
+
+            </div>
+
+
+            <div class="vehicle-field">
+
+              <label for="vehicleYear">
+                Ano
+              </label>
+
+              <input
+                id="vehicleYear"
+                type="number"
+                placeholder="Ex.: 2022"
+              >
+
+            </div>
+
+
+            <button
+              type="submit"
+              class="vehicle-button"
+            >
+
+              <i class="fa-solid fa-magnifying-glass"></i>
+
+              Buscar peças
+
+            </button>
+
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CATEGORIAS -->
+    <section class="section section-soft">
+
+      <div class="site-container">
+
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-label">
+              Categorias
+            </span>
+
+            <h2>
+              O que seu carro precisa?
+            </h2>
+
+          </div>
+
+
+          <a
+            href="produtos.html"
+            class="section-link"
+          >
+
+            Ver todos
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+
+        <div class="category-grid">
+
+
+          <a
+            href="produtos.html?categoria=freios"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-compact-disc"></i>
+
+            </span>
+
+            <strong>
+              Freios
+            </strong>
+
+            <small>
+              Pastilhas, discos e componentes
+            </small>
+
+          </a>
+
+
+          <a
+            href="produtos.html?categoria=motor"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-gears"></i>
+
+            </span>
+
+            <strong>
+              Motor
+            </strong>
+
+            <small>
+              Peças e componentes
+            </small>
+
+          </a>
+
+
+          <a
+            href="produtos.html?categoria=suspensao"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-car-burst"></i>
+
+            </span>
+
+            <strong>
+              Suspensão
+            </strong>
+
+            <small>
+              Conforto e estabilidade
+            </small>
+
+          </a>
+
+
+          <a
+            href="produtos.html?categoria=eletrica"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-bolt"></i>
+
+            </span>
+
+            <strong>
+              Elétrica
+            </strong>
+
+            <small>
+              Baterias e componentes
+            </small>
+
+          </a>
+
+
+          <a
+            href="produtos.html?categoria=filtros"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-filter"></i>
+
+            </span>
+
+            <strong>
+              Filtros
+            </strong>
+
+            <small>
+              Ar, óleo e combustível
+            </small>
+
+          </a>
+
+
+          <a
+            href="produtos.html?categoria=oleos"
+            class="category-card"
+          >
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-oil-can"></i>
+
+            </span>
+
+            <strong>
+              Óleos
+            </strong>
+
+            <small>
+              Lubrificantes e fluidos
+            </small>
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BANNER -->
+    <section class="section">
+
+      <div class="site-container">
+
+        <div class="promo-banner">
+
+
+          <div class="promo-content">
+
+            <span>
+              OFERTAS ESPECIAIS
+            </span>
+
+            <h2>
+              Seu carro merece manutenção de qualidade.
+            </h2>
+
+            <p>
+
+              Confira nosso catálogo e encontre
+              as peças que precisa em poucos cliques.
+
+            </p>
+
+            <a
+              href="produtos.html"
+              class="main-button light-button"
+            >
+
+              Explorar catálogo
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+          </div>
+
+
+          <div class="promo-art">
+
+            <div class="promo-circle"></div>
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ATALHOS -->
+    <section class="section section-soft">
+
+      <div class="site-container">
+
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-label">
+              Acesso rápido
+            </span>
+
+            <h2>
+              Continue de onde parou
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+
+          <a
+            href="pedidos.html"
+            class="quick-card"
+          >
+
+            <span class="quick-icon">
+
+              <i class="fa-solid fa-box"></i>
+
+            </span>
+
+            <div>
+
+              <strong>
+                Meus pedidos
+              </strong>
+
+              <p>
+                Acompanhe suas compras.
+              </p>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+          <a
+            href="perfil.html"
+            class="quick-card"
+          >
+
+            <span class="quick-icon">
+
+              <i class="fa-regular fa-user"></i>
+
+            </span>
+
+            <div>
+
+              <strong>
+                Minha conta
+              </strong>
+
+              <p>
+                Gerencie seus dados.
+              </p>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+          <a
+            href="suporte.html"
+            class="quick-card"
+          >
+
+            <span class="quick-icon">
+
+              <i class="fa-solid fa-headset"></i>
+
+            </span>
+
+            <div>
+
+              <strong>
+                Precisa de ajuda?
+              </strong>
+
+              <p>
+                Fale com nosso suporte.
+              </p>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+
+    <div class="site-container footer-grid">
+
+
+      <!-- EMPRESA -->
+      <div class="footer-brand">
+
+        <div class="footer-logo">
+
+          <span>
+
+            <i class="fa-solid fa-gear"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Autopeças & Acessórios
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <p>
+
+          Peças e acessórios automotivos
+          com qualidade, tecnologia,
+          praticidade e confiança.
+
+        </p>
+
+
+        <div class="social-links">
+
+          <a href="#">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a href="#">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+
+          <a href="#">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- ATENDIMENTO -->
+      <div class="footer-column">
+
+        <h3>
+          Atendimento
+        </h3>
+
+        <a href="suporte.html">
+          Fale com o suporte
+        </a>
+
+        <a href="pedidos.html">
+          Acompanhar pedido
+        </a>
+
+        <a href="perfil.html">
+          Minha conta
+        </a>
+
+        <a href="#">
+          Trocas e devoluções
+        </a>
+
+      </div>
+
+
+      <!-- INSTITUCIONAL -->
+      <div class="footer-column">
+
+        <h3>
+          Institucional
+        </h3>
+
+        <a href="#">
+          Sobre a loja
+        </a>
+
+        <a href="#">
+          Política de privacidade
+        </a>
+
+        <a href="#">
+          Termos de uso
+        </a>
+
+        <a href="#">
+          Dúvidas frequentes
+        </a>
+
+      </div>
+
+
+      <!-- CONTATO -->
+      <div class="footer-column footer-contact">
+
+        <h3>
+          Contato
+        </h3>
+
+
+        <p>
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <span>
+            Rua da sua loja, 000<br>
+            Sua Cidade - UF
+          </span>
+
+        </p>
+
+
+        <p>
+
+          <i class="fa-solid fa-phone"></i>
+
+          <a href="tel:+5500000000000">
+
+            (00) 00000-0000
+
+          </a>
+
+        </p>
+
+
+        <p>
+
+          <i class="fa-solid fa-envelope"></i>
+
+          <a href="mailto:contato@sualoja.com.br">
+
+            contato@sualoja.com.br
+
+          </a>
+
+        </p>
+
+
+        <p>
+
+          <i class="fa-regular fa-clock"></i>
+
+          <span>
+
+            Segunda a sexta<br>
+            08:00 às 18:00
+
+          </span>
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <div class="site-container footer-bottom-content">
+
+        <span>
+
+          © <span id="currentYear"></span>
+          Loja de Peças.
+          Todos os direitos reservados.
+
+        </span>
+
+
+        <span>
+
+          Autopeças & Acessórios
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script src="js/site.js"></script>
+  <script src="js/home.js"></script>
+
+</body>
+</html>

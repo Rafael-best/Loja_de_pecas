@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Pedidos | Painel Administrativo</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/pedidos.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside
+    class="admin-sidebar"
+    id="adminSidebar"
+  >
+
+    <div class="sidebar-header">
+
+      <a
+        href="index.html"
+        class="admin-brand"
+      >
+
+        <span>
+          <i class="fa-solid fa-gears"></i>
+        </span>
+
+        <div>
+          <strong>LOJA DE PEÇAS</strong>
+          <small>Painel Administrativo</small>
+        </div>
+
+      </a>
+
+      <button
+        type="button"
+        id="btnFecharSidebar"
+        class="sidebar-close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+      <div class="sidebar-avatar">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+
+      <div>
+        <small>Administrador</small>
+        <strong>Admin</strong>
+      </div>
+
+      <span class="online-indicator"></span>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+      <span class="sidebar-section-title">
+        PRINCIPAL
+      </span>
+
+      <a href="index.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        GERENCIAMENTO
+      </span>
+
+      <a href="produtos.html">
+        <i class="fa-solid fa-box-open"></i>
+        <span>Produtos</span>
+      </a>
+
+      <a href="estoque.html">
+        <i class="fa-solid fa-warehouse"></i>
+        <span>Estoque</span>
+      </a>
+
+      <a
+        href="pedidos.html"
+        class="active"
+      >
+        <i class="fa-solid fa-receipt"></i>
+        <span>Pedidos</span>
+
+        <span
+          id="badgePedidos"
+          class="sidebar-badge warning"
+          hidden
+        >
+          0
+        </span>
+      </a>
+
+      <a href="clientes.html">
+        <i class="fa-solid fa-users"></i>
+        <span>Clientes</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        SISTEMA
+      </span>
+
+      <a href="../produtos.html">
+        <i class="fa-solid fa-store"></i>
+        <span>Ver loja</span>
+      </a>
+
+      <button
+        type="button"
+        id="btnSairAdmin"
+        class="sidebar-logout"
+      >
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Sair</span>
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <div>
+        <strong>Área administrativa</strong>
+        <small>Acesso restrito</small>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <div class="admin-main">
+
+    <!-- TOPBAR -->
+
+    <header class="admin-topbar">
+
+      <div class="topbar-left">
+
+        <button
+          type="button"
+          id="btnAbrirSidebar"
+          class="mobile-sidebar-button"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div>
+
+          <span class="topbar-label">
+            GERENCIAMENTO
+          </span>
+
+          <h1>
+            Pedidos
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <button
+          type="button"
+          class="topbar-icon-button"
+          id="btnAtualizarPedidos"
+          title="Atualizar pedidos"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+
+        <a
+          href="../produtos.html"
+          class="orders-store-link"
+        >
+          <i class="fa-solid fa-store"></i>
+          Ver loja
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="admin-content">
+
+
+      <!-- HEADER -->
+
+      <section class="orders-page-header">
+
+        <div>
+
+          <span class="dashboard-label">
+            VENDAS
+          </span>
+
+          <h2>
+            Gerenciamento de pedidos
+          </h2>
+
+          <p>
+            Acompanhe pedidos, clientes, pagamentos
+            e o andamento das vendas da loja.
+          </p>
+
+        </div>
+
+
+        <div class="orders-header-status">
+
+          <span class="status-live-dot"></span>
+
+          <div>
+            <small>Sistema</small>
+            <strong>Monitorando pedidos</strong>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           INDICADORES
+      ====================================================== -->
+
+      <section class="orders-stats-grid">
+
+
+        <article class="order-stat-card">
+
+          <span class="order-stat-icon blue">
+            <i class="fa-solid fa-receipt"></i>
+          </span>
+
+          <div>
+            <small>Total de pedidos</small>
+
+            <strong id="totalPedidos">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="order-stat-card">
+
+          <span class="order-stat-icon orange">
+            <i class="fa-solid fa-clock"></i>
+          </span>
+
+          <div>
+            <small>Pendentes</small>
+
+            <strong id="totalPendentes">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="order-stat-card">
+
+          <span class="order-stat-icon purple">
+            <i class="fa-solid fa-box"></i>
+          </span>
+
+          <div>
+            <small>Em andamento</small>
+
+            <strong id="totalAndamento">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="order-stat-card">
+
+          <span class="order-stat-icon green">
+            <i class="fa-solid fa-circle-check"></i>
+          </span>
+
+          <div>
+            <small>Concluídos</small>
+
+            <strong id="totalConcluidos">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="order-stat-card">
+
+          <span class="order-stat-icon money">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </span>
+
+          <div>
+            <small>Valor dos pedidos</small>
+
+            <strong id="valorTotalPedidos">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- =====================================================
+           FILTROS
+      ====================================================== -->
+
+      <section class="orders-toolbar">
+
+
+        <div class="orders-search">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="search"
+            id="buscaPedidos"
+            placeholder="Buscar por pedido, cliente ou pagamento..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <select id="filtroStatusPedidos">
+
+          <option value="">
+            Todos os status
+          </option>
+
+          <option value="pendente">
+            Pendente
+          </option>
+
+          <option value="processando">
+            Processando
+          </option>
+
+          <option value="separacao">
+            Em separação
+          </option>
+
+          <option value="enviado">
+            Enviado
+          </option>
+
+          <option value="concluido">
+            Concluído
+          </option>
+
+          <option value="cancelado">
+            Cancelado
+          </option>
+
+        </select>
+
+
+        <select id="filtroPagamentoPedidos">
+
+          <option value="">
+            Todos os pagamentos
+          </option>
+
+          <option value="pix">
+            Pix
+          </option>
+
+          <option value="cartao">
+            Cartão
+          </option>
+
+          <option value="boleto">
+            Boleto
+          </option>
+
+        </select>
+
+
+        <select id="ordenacaoPedidos">
+
+          <option value="recentes">
+            Mais recentes
+          </option>
+
+          <option value="antigos">
+            Mais antigos
+          </option>
+
+          <option value="maior">
+            Maior valor
+          </option>
+
+          <option value="menor">
+            Menor valor
+          </option>
+
+        </select>
+
+
+        <button
+          type="button"
+          id="btnLimparFiltrosPedidos"
+          class="orders-clear-filter"
+          title="Limpar filtros"
+        >
+          <i class="fa-solid fa-filter-circle-xmark"></i>
+        </button>
+
+      </section>
+
+
+      <!-- =====================================================
+           TABELA
+      ====================================================== -->
+
+      <section class="orders-card">
+
+        <div class="orders-card-header">
+
+          <div>
+
+            <span class="dashboard-card-label">
+              PEDIDOS
+            </span>
+
+            <h3>
+              Pedidos realizados
+            </h3>
+
+          </div>
+
+
+          <span id="resultadoPedidos">
+            Carregando...
+          </span>
+
+        </div>
+
+
+        <div class="orders-table-wrapper">
+
+          <table class="orders-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Pedido</th>
+
+                <th>Cliente</th>
+
+                <th>Data</th>
+
+                <th>Pagamento</th>
+
+                <th>Total</th>
+
+                <th>Status</th>
+
+                <th>Ações</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="tabelaPedidos">
+
+              <tr>
+
+                <td colspan="7">
+
+                  <div class="orders-loading">
+
+                    <div class="admin-spinner"></div>
+
+                    <span>
+                      Carregando pedidos...
+                    </span>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div
+          id="cardsPedidosMobile"
+          class="orders-mobile-cards"
+        ></div>
+
+
+        <!-- PAGINAÇÃO -->
+
+        <div
+          id="paginacaoPedidos"
+          class="admin-pagination"
+        ></div>
+
+      </section>
+
+    </main>
+
+
+    <footer class="admin-footer">
+
+      <span>
+        © 2026 Loja de Peças
+      </span>
+
+      <span>
+        Gerenciamento de Pedidos
+      </span>
+
+    </footer>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL DETALHES
+===================================================== -->
+
+<div
+  class="admin-modal"
+  id="modalPedido"
+  aria-hidden="true"
+>
+
+  <div class="admin-modal-backdrop"></div>
+
+
+  <div class="admin-modal-dialog order-modal-dialog">
+
+
+    <div class="admin-modal-header">
+
+      <div>
+
+        <span>
+          DETALHES DO PEDIDO
+        </span>
+
+        <h2 id="tituloModalPedido">
+          Pedido
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="btnFecharPedido"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div id="conteudoModalPedido">
+
+      <div class="modal-order-loading">
+
+        <div class="admin-spinner"></div>
+
+        <span>
+          Carregando pedido...
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="js/pedidos.js"></script>
+
+</body>
+
+</html>

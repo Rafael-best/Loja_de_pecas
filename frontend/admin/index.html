@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Painel Administrativo | Loja de Peças</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/admin.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div class="admin-layout">
+
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside
+    class="admin-sidebar"
+    id="adminSidebar"
+  >
+
+
+    <div class="sidebar-header">
+
+      <a
+        href="admin.html"
+        class="admin-brand"
+      >
+
+        <span>
+
+          <i class="fa-solid fa-gears"></i>
+
+        </span>
+
+
+        <div>
+
+          <strong>
+            LOJA DE PEÇAS
+          </strong>
+
+          <small>
+            Painel Administrativo
+          </small>
+
+        </div>
+
+      </a>
+
+
+      <button
+        type="button"
+        id="btnFecharSidebar"
+        class="sidebar-close"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+    </div>
+
+
+
+    <div class="sidebar-user">
+
+
+      <div class="sidebar-avatar">
+
+        <i class="fa-solid fa-user-shield"></i>
+
+      </div>
+
+
+      <div>
+
+        <small>
+          Administrador
+        </small>
+
+        <strong id="nomeAdministrador">
+          Admin
+        </strong>
+
+      </div>
+
+
+      <span class="online-indicator"></span>
+
+
+    </div>
+
+
+
+    <nav class="sidebar-nav">
+
+
+      <span class="sidebar-section-title">
+
+        PRINCIPAL
+
+      </span>
+
+
+      <a
+        href="admin.html"
+        class="active"
+      >
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>
+          Dashboard
+        </span>
+
+      </a>
+
+
+
+      <span class="sidebar-section-title">
+
+        GERENCIAMENTO
+
+      </span>
+
+
+      <a href="admin-produtos.html">
+
+        <i class="fa-solid fa-box-open"></i>
+
+        <span>
+          Produtos
+        </span>
+
+      </a>
+
+
+      <a href="admin-estoque.html">
+
+        <i class="fa-solid fa-warehouse"></i>
+
+        <span>
+          Estoque
+        </span>
+
+        <span
+          id="badgeEstoque"
+          class="sidebar-badge warning"
+          hidden
+        >
+          0
+        </span>
+
+      </a>
+
+
+      <a href="admin-pedidos.html">
+
+        <i class="fa-solid fa-receipt"></i>
+
+        <span>
+          Pedidos
+        </span>
+
+        <span
+          id="badgePedidos"
+          class="sidebar-badge"
+          hidden
+        >
+          0
+        </span>
+
+      </a>
+
+
+      <a href="admin-clientes.html">
+
+        <i class="fa-solid fa-users"></i>
+
+        <span>
+          Clientes
+        </span>
+
+      </a>
+
+
+
+      <span class="sidebar-section-title">
+
+        SISTEMA
+
+      </span>
+
+
+      <a href="produtos.html">
+
+        <i class="fa-solid fa-store"></i>
+
+        <span>
+          Ver loja
+        </span>
+
+      </a>
+
+
+      <button
+        type="button"
+        id="btnSairAdmin"
+        class="sidebar-logout"
+      >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <span>
+          Sair
+        </span>
+
+      </button>
+
+
+    </nav>
+
+
+
+    <div class="sidebar-footer">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <div>
+
+        <strong>
+          Área administrativa
+        </strong>
+
+        <small>
+          Acesso restrito
+        </small>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+
+  <!-- OVERLAY MOBILE -->
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+
+  <!-- =====================================================
+       CONTEÚDO
+  ====================================================== -->
+
+  <div class="admin-main">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================== -->
+
+    <header class="admin-topbar">
+
+
+      <div class="topbar-left">
+
+
+        <button
+          type="button"
+          id="btnAbrirSidebar"
+          class="mobile-sidebar-button"
+        >
+
+          <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <div>
+
+          <span class="topbar-label">
+            VISÃO GERAL
+          </span>
+
+          <h1>
+            Dashboard
+          </h1>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="topbar-actions">
+
+
+        <button
+          type="button"
+          class="topbar-icon-button"
+          id="btnAtualizarDashboard"
+          title="Atualizar"
+        >
+
+          <i class="fa-solid fa-rotate"></i>
+
+        </button>
+
+
+
+        <div class="topbar-date">
+
+          <i class="fa-regular fa-calendar"></i>
+
+          <span id="dataAtual">
+            --
+          </span>
+
+        </div>
+
+
+
+        <a
+          href="perfil.html"
+          class="topbar-profile"
+        >
+
+          <div>
+
+            <small>
+              Administrador
+            </small>
+
+            <strong>
+              Minha conta
+            </strong>
+
+          </div>
+
+
+          <span>
+
+            <i class="fa-regular fa-user"></i>
+
+          </span>
+
+        </a>
+
+
+      </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <main class="admin-content">
+
+
+      <!-- ===============================================
+           BEM-VINDO
+      ================================================ -->
+
+      <section class="dashboard-welcome">
+
+
+        <div>
+
+          <span class="dashboard-label">
+
+            PAINEL DE CONTROLE
+
+          </span>
+
+
+          <h2>
+
+            Bem-vindo ao gerenciamento da loja.
+
+          </h2>
+
+
+          <p>
+
+            Acompanhe vendas, pedidos, estoque e produtos
+            em um único lugar.
+
+          </p>
+
+        </div>
+
+
+        <div class="welcome-actions">
+
+
+          <a
+            href="admin-produtos.html"
+            class="button-secondary"
+          >
+
+            <i class="fa-solid fa-box-open"></i>
+
+            Produtos
+
+          </a>
+
+
+          <a
+            href="admin-pedidos.html"
+            class="button-primary"
+          >
+
+            <i class="fa-solid fa-receipt"></i>
+
+            Ver pedidos
+
+          </a>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- ===============================================
+           CARDS
+      ================================================ -->
+
+      <section class="stats-grid">
+
+
+        <article class="stat-card">
+
+
+          <div class="stat-header">
+
+            <span class="stat-icon blue">
+
+              <i class="fa-solid fa-receipt"></i>
+
+            </span>
+
+
+            <span class="stat-badge neutral">
+
+              Total
+
+            </span>
+
+          </div>
+
+
+          <span class="stat-label">
+
+            Pedidos
+
+          </span>
+
+
+          <strong
+            class="stat-value"
+            id="totalPedidos"
+          >
+            --
+          </strong>
+
+
+          <small class="stat-description">
+
+            Pedidos registrados no sistema
+
+          </small>
+
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+
+          <div class="stat-header">
+
+            <span class="stat-icon orange">
+
+              <i class="fa-solid fa-clock"></i>
+
+            </span>
+
+
+            <span class="stat-badge warning">
+
+              Atenção
+
+            </span>
+
+          </div>
+
+
+          <span class="stat-label">
+
+            Pedidos pendentes
+
+          </span>
+
+
+          <strong
+            class="stat-value"
+            id="pedidosPendentes"
+          >
+            --
+          </strong>
+
+
+          <small class="stat-description">
+
+            Aguardando processamento
+
+          </small>
+
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+
+          <div class="stat-header">
+
+            <span class="stat-icon green">
+
+              <i class="fa-solid fa-box"></i>
+
+            </span>
+
+
+            <span class="stat-badge success">
+
+              Catálogo
+
+            </span>
+
+          </div>
+
+
+          <span class="stat-label">
+
+            Produtos
+
+          </span>
+
+
+          <strong
+            class="stat-value"
+            id="totalProdutos"
+          >
+            --
+          </strong>
+
+
+          <small class="stat-description">
+
+            Produtos cadastrados
+
+          </small>
+
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+
+          <div class="stat-header">
+
+            <span class="stat-icon red">
+
+              <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </span>
+
+
+            <span class="stat-badge danger">
+
+              Estoque
+
+            </span>
+
+          </div>
+
+
+          <span class="stat-label">
+
+            Estoque baixo
+
+          </span>
+
+
+          <strong
+            class="stat-value"
+            id="estoqueBaixo"
+          >
+            --
+          </strong>
+
+
+          <small class="stat-description">
+
+            Produtos que precisam de atenção
+
+          </small>
+
+
+        </article>
+
+
+      </section>
+
+
+
+      <!-- ===============================================
+           SEGUNDA LINHA
+      ================================================ -->
+
+      <section class="dashboard-grid">
+
+
+        <!-- =============================================
+             PEDIDOS RECENTES
+        ============================================== -->
+
+        <article class="dashboard-card recent-orders-card">
+
+
+          <div class="dashboard-card-header">
+
+
+            <div>
+
+              <span class="dashboard-card-label">
+
+                ÚLTIMAS VENDAS
+
+              </span>
+
+
+              <h3>
+
+                Pedidos recentes
+
+              </h3>
+
+            </div>
+
+
+            <a href="admin-pedidos.html">
+
+              Ver todos
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+          </div>
+
+
+
+          <div
+            id="pedidosRecentes"
+            class="recent-orders"
+          >
+
+
+            <div class="dashboard-loading">
+
+              <div class="admin-spinner"></div>
+
+              <span>
+                Carregando pedidos...
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+        </article>
+
+
+
+        <!-- =============================================
+             RESUMO PEDIDOS
+        ============================================== -->
+
+        <article class="dashboard-card">
+
+
+          <div class="dashboard-card-header">
+
+
+            <div>
+
+              <span class="dashboard-card-label">
+
+                STATUS
+
+              </span>
+
+              <h3>
+
+                Situação dos pedidos
+
+              </h3>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="order-status-list">
+
+
+            <div class="status-row">
+
+              <div>
+
+                <span class="status-dot pending"></span>
+
+                <span>
+                  Pendentes
+                </span>
+
+              </div>
+
+              <strong id="statusPendentes">
+                0
+              </strong>
+
+            </div>
+
+
+            <div class="status-progress">
+
+              <span
+                id="barraPendentes"
+                class="pending"
+              ></span>
+
+            </div>
+
+
+
+            <div class="status-row">
+
+              <div>
+
+                <span class="status-dot shipped"></span>
+
+                <span>
+                  Enviados
+                </span>
+
+              </div>
+
+              <strong id="statusEnviados">
+                0
+              </strong>
+
+            </div>
+
+
+            <div class="status-progress">
+
+              <span
+                id="barraEnviados"
+                class="shipped"
+              ></span>
+
+            </div>
+
+
+
+            <div class="status-row">
+
+              <div>
+
+                <span class="status-dot delivered"></span>
+
+                <span>
+                  Entregues
+                </span>
+
+              </div>
+
+              <strong id="statusEntregues">
+                0
+              </strong>
+
+            </div>
+
+
+            <div class="status-progress">
+
+              <span
+                id="barraEntregues"
+                class="delivered"
+              ></span>
+
+            </div>
+
+
+
+            <div class="status-row">
+
+              <div>
+
+                <span class="status-dot canceled"></span>
+
+                <span>
+                  Cancelados
+                </span>
+
+              </div>
+
+              <strong id="statusCancelados">
+                0
+              </strong>
+
+            </div>
+
+
+            <div class="status-progress">
+
+              <span
+                id="barraCancelados"
+                class="canceled"
+              ></span>
+
+            </div>
+
+
+          </div>
+
+
+        </article>
+
+
+      </section>
+
+
+
+      <!-- ===============================================
+           ESTOQUE + ATALHOS
+      ================================================ -->
+
+      <section class="dashboard-grid bottom-grid">
+
+
+        <!-- ESTOQUE -->
+
+        <article class="dashboard-card">
+
+
+          <div class="dashboard-card-header">
+
+
+            <div>
+
+              <span class="dashboard-card-label">
+
+                INVENTÁRIO
+
+              </span>
+
+              <h3>
+
+                Produtos com estoque baixo
+
+              </h3>
+
+            </div>
+
+
+            <a href="admin-estoque.html">
+
+              Ver estoque
+
+            </a>
+
+
+          </div>
+
+
+
+          <div
+            id="listaEstoqueBaixo"
+            class="low-stock-list"
+          >
+
+            <div class="dashboard-loading">
+
+              <div class="admin-spinner"></div>
+
+              <span>
+                Verificando estoque...
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </article>
+
+
+
+        <!-- ACESSO RÁPIDO -->
+
+        <article class="dashboard-card">
+
+
+          <div class="dashboard-card-header">
+
+
+            <div>
+
+              <span class="dashboard-card-label">
+
+                ATALHOS
+
+              </span>
+
+              <h3>
+
+                Acesso rápido
+
+              </h3>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="quick-actions">
+
+
+            <a href="admin-produtos.html">
+
+              <span class="quick-action-icon blue">
+
+                <i class="fa-solid fa-plus"></i>
+
+              </span>
+
+              <div>
+
+                <strong>
+                  Novo produto
+                </strong>
+
+                <small>
+                  Adicionar item ao catálogo
+                </small>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </a>
+
+
+
+            <a href="admin-pedidos.html">
+
+              <span class="quick-action-icon purple">
+
+                <i class="fa-solid fa-receipt"></i>
+
+              </span>
+
+              <div>
+
+                <strong>
+                  Gerenciar pedidos
+                </strong>
+
+                <small>
+                  Consultar vendas
+                </small>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </a>
+
+
+
+            <a href="admin-estoque.html">
+
+              <span class="quick-action-icon orange">
+
+                <i class="fa-solid fa-warehouse"></i>
+
+              </span>
+
+              <div>
+
+                <strong>
+                  Atualizar estoque
+                </strong>
+
+                <small>
+                  Controlar quantidades
+                </small>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </a>
+
+
+
+            <a href="admin-clientes.html">
+
+              <span class="quick-action-icon green">
+
+                <i class="fa-solid fa-users"></i>
+
+              </span>
+
+              <div>
+
+                <strong>
+                  Clientes
+                </strong>
+
+                <small>
+                  Consultar cadastros
+                </small>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </a>
+
+
+          </div>
+
+
+        </article>
+
+
+      </section>
+
+
+    </main>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="admin-footer">
+
+
+      <span>
+
+        © 2026 Loja de Peças
+
+      </span>
+
+
+      <span>
+
+        Painel Administrativo
+
+      </span>
+
+
+    </footer>
+
+
+  </div>
+
+
+</div>
+
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>

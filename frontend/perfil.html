@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Gerencie sua conta, endereço e veículos na Loja de Peças."
+  >
+
+  <title>Minha Conta | Loja de Peças</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/perfil.css"
+  >
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+  <div class="header-container">
+
+
+    <!-- LOGO -->
+
+    <a
+      href="produtos.html"
+      class="site-brand"
+    >
+
+      <span class="brand-symbol">
+
+        <i class="fa-solid fa-gears"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          LOJA DE PEÇAS
+        </strong>
+
+        <small>
+          Auto Parts & Performance
+        </small>
+
+      </div>
+
+    </a>
+
+
+
+    <!-- NAVEGAÇÃO DESKTOP -->
+
+    <nav class="desktop-navigation">
+
+      <a href="produtos.html">
+        Produtos
+      </a>
+
+      <a
+        href="pedidos.html"
+        data-auth-link
+      >
+        Meus pedidos
+      </a>
+
+      <a href="suporte.html">
+        Suporte
+      </a>
+
+    </nav>
+
+
+
+    <!-- AÇÕES -->
+
+    <div class="header-actions">
+
+
+      <!-- VISITANTE -->
+
+      <div
+        class="guest-actions"
+        id="guestActions"
+      >
+
+        <a
+          href="login.html"
+          class="login-link-header"
+        >
+          Entrar
+        </a>
+
+        <a
+          href="cadastro.html"
+          class="register-link-header"
+        >
+          Criar conta
+        </a>
+
+      </div>
+
+
+
+      <!-- USUÁRIO LOGADO -->
+
+      <div
+        class="user-menu-wrapper"
+        id="userMenuWrapper"
+        hidden
+      >
+
+        <button
+          type="button"
+          class="user-menu-button"
+          id="userMenuButton"
+          aria-label="Abrir menu da conta"
+        >
+
+          <span
+            class="header-user-avatar"
+            id="headerUserAvatar"
+          >
+            U
+          </span>
+
+
+          <div class="header-user-info">
+
+            <small>
+              Olá,
+            </small>
+
+            <strong id="headerUserName">
+              Cliente
+            </strong>
+
+          </div>
+
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+
+
+        <!-- DROPDOWN -->
+
+        <div
+          class="user-dropdown"
+          id="userDropdown"
+        >
+
+          <div class="dropdown-user">
+
+            <span
+              class="dropdown-avatar"
+              id="dropdownAvatar"
+            >
+              U
+            </span>
+
+
+            <div>
+
+              <strong id="dropdownUserName">
+                Cliente
+              </strong>
+
+              <small id="dropdownUserEmail">
+                -
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="dropdown-divider"></div>
+
+
+          <a href="perfil.html">
+
+            <i class="fa-regular fa-user"></i>
+
+            Minha conta
+
+          </a>
+
+
+          <a href="pedidos.html">
+
+            <i class="fa-solid fa-receipt"></i>
+
+            Meus pedidos
+
+          </a>
+
+
+          <a href="perfil.html#veiculos">
+
+            <i class="fa-solid fa-car-side"></i>
+
+            Meus veículos
+
+          </a>
+
+
+          <a href="suporte.html">
+
+            <i class="fa-solid fa-headset"></i>
+
+            Suporte
+
+          </a>
+
+
+          <div class="dropdown-divider"></div>
+
+
+          <button
+            type="button"
+            id="btnLogoutGlobal"
+            class="dropdown-logout"
+          >
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Sair
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CARRINHO -->
+
+      <a
+        href="carrinho.html"
+        class="header-cart"
+        aria-label="Carrinho"
+      >
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span id="headerCartCount">
+          0
+        </span>
+
+      </a>
+
+
+
+      <!-- HAMBÚRGUER -->
+
+      <button
+        type="button"
+        id="mobileMenuButton"
+        class="mobile-menu-button"
+        aria-label="Abrir menu"
+      >
+
+        <i class="fa-solid fa-bars"></i>
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =================================================
+       MENU MOBILE
+  ================================================== -->
+
+  <div
+    class="mobile-menu"
+    id="mobileMenu"
+  >
+
+    <a href="produtos.html">
+
+      <i class="fa-solid fa-box-open"></i>
+
+      Produtos
+
+    </a>
+
+
+    <a
+      href="pedidos.html"
+      data-auth-link
+    >
+
+      <i class="fa-solid fa-receipt"></i>
+
+      Meus pedidos
+
+    </a>
+
+
+    <a
+      href="perfil.html"
+      data-auth-link
+    >
+
+      <i class="fa-regular fa-user"></i>
+
+      Minha conta
+
+    </a>
+
+
+    <a href="suporte.html">
+
+      <i class="fa-solid fa-headset"></i>
+
+      Suporte
+
+    </a>
+
+
+    <a href="carrinho.html">
+
+      <i class="fa-solid fa-cart-shopping"></i>
+
+      Carrinho
+
+      <span id="mobileCartCount">
+        0
+      </span>
+
+    </a>
+
+
+
+    <!-- VISITANTE MOBILE -->
+
+    <div
+      id="mobileGuestActions"
+      class="mobile-guest-actions"
+    >
+
+      <a href="login.html">
+        Entrar
+      </a>
+
+      <a href="cadastro.html">
+        Criar conta
+      </a>
+
+    </div>
+
+
+
+    <!-- LOGOUT MOBILE -->
+
+    <button
+      type="button"
+      id="mobileLogoutButton"
+      class="mobile-logout"
+      hidden
+    >
+
+      <i class="fa-solid fa-right-from-bracket"></i>
+
+      Sair
+
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     PERFIL
+===================================================== -->
+
+<main class="profile-page">
+
+  <div class="profile-container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="profile-hero">
+
+
+      <div class="profile-avatar-area">
+
+
+        <div
+          class="profile-main-avatar"
+          id="profileMainAvatar"
+        >
+          U
+        </div>
+
+
+        <label
+          for="inputFotoPerfil"
+          class="change-photo-button"
+          title="Alterar foto"
+        >
+
+          <i class="fa-solid fa-camera"></i>
+
+        </label>
+
+
+        <input
+          type="file"
+          id="inputFotoPerfil"
+          accept="image/png,image/jpeg,image/webp"
+          hidden
+        >
+
+      </div>
+
+
+
+      <div class="profile-hero-info">
+
+        <span class="profile-label">
+          MINHA CONTA
+        </span>
+
+        <h1 id="nomePerfil">
+          Cliente
+        </h1>
+
+        <p id="emailPerfil">
+          -
+        </p>
+
+
+        <div class="profile-meta">
+
+          <span>
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Conta ativa
+
+          </span>
+
+
+          <span id="clienteDesde">
+
+            <i class="fa-regular fa-calendar"></i>
+
+            Cliente cadastrado
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-hero-actions">
+
+        <a
+          href="pedidos.html"
+          class="profile-secondary-button"
+        >
+
+          <i class="fa-solid fa-receipt"></i>
+
+          Meus pedidos
+
+        </a>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         ESTATÍSTICAS
+    ================================================== -->
+
+    <section class="profile-stats">
+
+
+      <article>
+
+        <span>
+          <i class="fa-solid fa-receipt"></i>
+        </span>
+
+        <div>
+
+          <small>
+            Pedidos realizados
+          </small>
+
+          <strong id="perfilTotalPedidos">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article>
+
+        <span>
+          <i class="fa-solid fa-dollar-sign"></i>
+        </span>
+
+        <div>
+
+          <small>
+            Total comprado
+          </small>
+
+          <strong id="perfilTotalGasto">
+            R$ 0,00
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article>
+
+        <span>
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </span>
+
+        <div>
+
+          <small>
+            Último pedido
+          </small>
+
+          <strong id="perfilUltimoPedido">
+            -
+          </strong>
+
+        </div>
+
+      </article>
+
+
+
+      <article>
+
+        <span>
+          <i class="fa-solid fa-car-side"></i>
+        </span>
+
+        <div>
+
+          <small>
+            Veículos salvos
+          </small>
+
+          <strong id="perfilTotalVeiculos">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         LAYOUT PRINCIPAL
+    ================================================== -->
+
+    <div class="profile-layout">
+
+
+      <!-- MENU -->
+
+      <aside class="profile-sidebar">
+
+
+        <button
+          type="button"
+          class="profile-tab active"
+          data-tab="dados"
+        >
+
+          <i class="fa-regular fa-user"></i>
+
+          Dados pessoais
+
+        </button>
+
+
+        <button
+          type="button"
+          class="profile-tab"
+          data-tab="endereco"
+        >
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          Endereço
+
+        </button>
+
+
+        <button
+          type="button"
+          class="profile-tab"
+          data-tab="veiculos"
+        >
+
+          <i class="fa-solid fa-car-side"></i>
+
+          Meus veículos
+
+        </button>
+
+
+        <button
+          type="button"
+          class="profile-tab"
+          data-tab="seguranca"
+        >
+
+          <i class="fa-solid fa-lock"></i>
+
+          Segurança
+
+        </button>
+
+
+        <button
+          type="button"
+          class="profile-tab"
+          data-tab="preferencias"
+        >
+
+          <i class="fa-solid fa-sliders"></i>
+
+          Preferências
+
+        </button>
+
+
+      </aside>
+
+
+
+      <!-- =================================================
+           CONTEÚDO
+      ================================================== -->
+
+      <section class="profile-content">
+
+
+        <!-- DADOS -->
+
+        <div
+          class="profile-panel active"
+          id="panel-dados"
+        >
+
+          <div class="profile-panel-header">
+
+            <div>
+
+              <span>
+                PERFIL
+              </span>
+
+              <h2>
+                Dados pessoais
+              </h2>
+
+              <p>
+                Atualize suas informações pessoais.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="formDadosPessoais">
+
+            <div class="profile-form-grid">
+
+
+              <div class="profile-field full">
+
+                <label for="perfilNome">
+                  Nome completo
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilNome"
+                  required
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilEmail">
+                  E-mail
+                </label>
+
+                <input
+                  type="email"
+                  id="perfilEmail"
+                  required
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilTelefone">
+                  Telefone
+                </label>
+
+                <input
+                  type="tel"
+                  id="perfilTelefone"
+                  maxlength="15"
+                  placeholder="(00) 00000-0000"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilCpf">
+                  CPF
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilCpf"
+                  maxlength="14"
+                  placeholder="000.000.000-00"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilNascimento">
+                  Data de nascimento
+                </label>
+
+                <input
+                  type="date"
+                  id="perfilNascimento"
+                >
+
+              </div>
+
+
+            </div>
+
+
+            <div
+              id="mensagemDadosPerfil"
+              class="profile-message"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="save-profile-button"
+            >
+
+              <i class="fa-solid fa-floppy-disk"></i>
+
+              Salvar alterações
+
+            </button>
+
+          </form>
+
+        </div>
+
+
+
+        <!-- ENDEREÇO -->
+
+        <div
+          class="profile-panel"
+          id="panel-endereco"
+        >
+
+          <div class="profile-panel-header">
+
+            <div>
+
+              <span>
+                ENTREGA
+              </span>
+
+              <h2>
+                Meu endereço
+              </h2>
+
+              <p>
+                Informações utilizadas para entrega.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="formEndereco">
+
+            <div class="profile-form-grid">
+
+
+              <div class="profile-field">
+
+                <label for="perfilCep">
+                  CEP
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilCep"
+                  maxlength="9"
+                  placeholder="00000-000"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilEstado">
+                  Estado
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilEstado"
+                  maxlength="2"
+                  placeholder="PR"
+                >
+
+              </div>
+
+
+              <div class="profile-field full">
+
+                <label for="perfilRua">
+                  Rua
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilRua"
+                  placeholder="Nome da rua"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilNumero">
+                  Número
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilNumero"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilComplemento">
+                  Complemento
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilComplemento"
+                  placeholder="Apartamento, bloco..."
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilBairro">
+                  Bairro
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilBairro"
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="perfilCidade">
+                  Cidade
+                </label>
+
+                <input
+                  type="text"
+                  id="perfilCidade"
+                >
+
+              </div>
+
+
+            </div>
+
+
+            <div
+              id="mensagemEndereco"
+              class="profile-message"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="save-profile-button"
+            >
+
+              <i class="fa-solid fa-floppy-disk"></i>
+
+              Salvar endereço
+
+            </button>
+
+          </form>
+
+        </div>
+
+
+
+        <!-- VEÍCULOS -->
+
+        <div
+          class="profile-panel"
+          id="panel-veiculos"
+        >
+
+          <div class="profile-panel-header vehicle-panel-header">
+
+            <div>
+
+              <span>
+                GARAGEM
+              </span>
+
+              <h2>
+                Meus veículos
+              </h2>
+
+              <p>
+                Salve seus veículos para facilitar a busca por peças.
+              </p>
+
+            </div>
+
+
+            <button
+              type="button"
+              id="btnAdicionarVeiculo"
+              class="small-primary-button"
+            >
+
+              <i class="fa-solid fa-plus"></i>
+
+              Adicionar veículo
+
+            </button>
+
+          </div>
+
+
+          <div
+            id="listaVeiculos"
+            class="vehicles-grid"
+          ></div>
+
+        </div>
+
+
+
+        <!-- SEGURANÇA -->
+
+        <div
+          class="profile-panel"
+          id="panel-seguranca"
+        >
+
+          <div class="profile-panel-header">
+
+            <div>
+
+              <span>
+                SEGURANÇA
+              </span>
+
+              <h2>
+                Alterar senha
+              </h2>
+
+              <p>
+                Atualize sua senha de acesso.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="formAlterarSenha">
+
+            <div class="profile-form-grid">
+
+
+              <div class="profile-field full">
+
+                <label for="senhaAtualPerfil">
+                  Senha atual
+                </label>
+
+                <input
+                  type="password"
+                  id="senhaAtualPerfil"
+                  autocomplete="current-password"
+                  required
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="novaSenhaPerfil">
+                  Nova senha
+                </label>
+
+                <input
+                  type="password"
+                  id="novaSenhaPerfil"
+                  autocomplete="new-password"
+                  required
+                >
+
+              </div>
+
+
+              <div class="profile-field">
+
+                <label for="confirmarNovaSenhaPerfil">
+                  Confirmar nova senha
+                </label>
+
+                <input
+                  type="password"
+                  id="confirmarNovaSenhaPerfil"
+                  autocomplete="new-password"
+                  required
+                >
+
+              </div>
+
+
+            </div>
+
+
+            <div
+              id="mensagemSenhaPerfil"
+              class="profile-message"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="save-profile-button"
+            >
+
+              <i class="fa-solid fa-lock"></i>
+
+              Alterar senha
+
+            </button>
+
+          </form>
+
+        </div>
+
+
+
+        <!-- PREFERÊNCIAS -->
+
+        <div
+          class="profile-panel"
+          id="panel-preferencias"
+        >
+
+          <div class="profile-panel-header">
+
+            <div>
+
+              <span>
+                PREFERÊNCIAS
+              </span>
+
+              <h2>
+                Comunicações
+              </h2>
+
+              <p>
+                Escolha como deseja receber informações.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="preferences-list">
+
+
+            <label>
+
+              <div>
+
+                <strong>
+                  Novidades e promoções
+                </strong>
+
+                <span>
+                  Receber ofertas e novidades da loja.
+                </span>
+
+              </div>
+
+              <input
+                type="checkbox"
+                id="prefPromocoes"
+              >
+
+              <span class="switch"></span>
+
+            </label>
+
+
+
+            <label>
+
+              <div>
+
+                <strong>
+                  Atualizações de pedidos
+                </strong>
+
+                <span>
+                  Receber informações sobre seus pedidos.
+                </span>
+
+              </div>
+
+              <input
+                type="checkbox"
+                id="prefPedidos"
+                checked
+              >
+
+              <span class="switch"></span>
+
+            </label>
+
+
+
+            <label>
+
+              <div>
+
+                <strong>
+                  Recomendações de peças
+                </strong>
+
+                <span>
+                  Sugestões baseadas nos seus veículos.
+                </span>
+
+              </div>
+
+              <input
+                type="checkbox"
+                id="prefRecomendacoes"
+              >
+
+              <span class="switch"></span>
+
+            </label>
+
+
+          </div>
+
+
+          <button
+            type="button"
+            id="btnSalvarPreferencias"
+            class="save-profile-button"
+          >
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Salvar preferências
+
+          </button>
+
+
+          <div
+            id="mensagemPreferencias"
+            class="profile-message"
+          ></div>
+
+        </div>
+
+
+      </section>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     MODAL VEÍCULO
+===================================================== -->
+
+<div
+  class="profile-modal"
+  id="modalVeiculo"
+>
+
+  <div class="profile-modal-backdrop"></div>
+
+
+  <div class="profile-modal-dialog">
+
+
+    <div class="profile-modal-header">
+
+      <div>
+
+        <span>
+          GARAGEM
+        </span>
+
+        <h2>
+          Adicionar veículo
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="btnFecharVeiculo"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+    </div>
+
+
+    <form
+      id="formVeiculo"
+      class="vehicle-form"
+    >
+
+      <div class="profile-form-grid">
+
+
+        <div class="profile-field">
+
+          <label for="veiculoMarca">
+            Marca
+          </label>
+
+          <input
+            type="text"
+            id="veiculoMarca"
+            placeholder="Volkswagen"
+            required
+          >
+
+        </div>
+
+
+        <div class="profile-field">
+
+          <label for="veiculoModelo">
+            Modelo
+          </label>
+
+          <input
+            type="text"
+            id="veiculoModelo"
+            placeholder="Golf"
+            required
+          >
+
+        </div>
+
+
+        <div class="profile-field">
+
+          <label for="veiculoAno">
+            Ano
+          </label>
+
+          <input
+            type="number"
+            id="veiculoAno"
+            min="1950"
+            max="2100"
+            placeholder="2020"
+            required
+          >
+
+        </div>
+
+
+        <div class="profile-field">
+
+          <label for="veiculoMotor">
+            Motorização
+          </label>
+
+          <input
+            type="text"
+            id="veiculoMotor"
+            placeholder="1.4 TSI"
+          >
+
+        </div>
+
+
+        <div class="profile-field">
+
+          <label for="veiculoPlaca">
+            Placa
+          </label>
+
+          <input
+            type="text"
+            id="veiculoPlaca"
+            maxlength="7"
+            placeholder="ABC1D23"
+          >
+
+        </div>
+
+
+        <div class="profile-field">
+
+          <label for="veiculoCor">
+            Cor
+          </label>
+
+          <input
+            type="text"
+            id="veiculoCor"
+            placeholder="Preto"
+          >
+
+        </div>
+
+
+      </div>
+
+
+      <div class="profile-modal-actions">
+
+
+        <button
+          type="button"
+          id="btnCancelarVeiculo"
+          class="modal-secondary"
+        >
+          Cancelar
+        </button>
+
+
+        <button
+          type="submit"
+          class="modal-primary"
+        >
+
+          <i class="fa-solid fa-plus"></i>
+
+          Adicionar veículo
+
+        </button>
+
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="js/site.js"></script>
+<script src="js/perfil.js"></script>
+
+</body>
+
+</html>

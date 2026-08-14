@@ -1,31 +1,1442 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pedidos - Loja de Peças</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f5f7fb;
-    }
-  </style>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Acompanhe seus pedidos na Loja de Peças."
+  >
+
+  <title>Meus Pedidos | Loja de Peças</title>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="css/site.css"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="css/pedidos.css"
+  >
+
 </head>
+
+
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">Meus Pedidos</a>
-      <div>
-        <a href="produtos.html" class="btn btn-outline-light">Voltar aos produtos</a>
-      </div>
-    </div>
-  </nav>
 
-  <div class="container my-4">
-    <div id="listaPedidos"></div>
+
+<!-- =====================================================
+     TOPO
+===================================================== -->
+
+<div class="top-strip">
+
+  <div class="site-container top-strip-content">
+
+    <span>
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      Compra segura
+
+    </span>
+
+
+    <span class="desktop-only">
+
+      <i class="fa-solid fa-box"></i>
+
+      Acompanhe seus pedidos
+
+    </span>
+
+
+    <span class="desktop-only">
+
+      <i class="fa-solid fa-headset"></i>
+
+      Suporte especializado
+
+    </span>
+
   </div>
 
-  <script src="js/pedidos.js"></script>
+</div>
+
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+
+  <div class="site-container header-main">
+
+
+    <a
+      href="index.html"
+      class="brand"
+    >
+
+      <img
+        src="assets/images/logo.png"
+        alt="Logo Loja de Peças"
+        class="brand-logo"
+
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='flex';
+        "
+      >
+
+
+      <span class="brand-fallback">
+
+        <i class="fa-solid fa-gear"></i>
+
+      </span>
+
+
+      <span class="brand-text">
+
+        <strong>
+          Loja de Peças
+        </strong>
+
+        <small>
+          Autopeças & Acessórios
+        </small>
+
+      </span>
+
+    </a>
+
+
+
+    <!-- BUSCA -->
+
+    <form
+      class="header-search"
+      id="headerSearchForm"
+    >
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+
+      <input
+        id="headerSearchInput"
+        type="search"
+        placeholder="Buscar produtos..."
+      >
+
+
+      <button type="submit">
+
+        Buscar
+
+      </button>
+
+    </form>
+
+
+
+    <div class="header-actions">
+
+
+      <a
+        href="pedidos.html"
+        class="header-action desktop-action"
+      >
+
+        <i class="fa-solid fa-box"></i>
+
+        <span>
+
+          <small>
+            Acompanhar
+          </small>
+
+          <strong>
+            Pedidos
+          </strong>
+
+        </span>
+
+      </a>
+
+
+
+      <a
+        href="perfil.html"
+        class="header-action desktop-action"
+      >
+
+        <i class="fa-regular fa-user"></i>
+
+        <span>
+
+          <small>
+            Minha conta
+          </small>
+
+          <strong>
+            Perfil
+          </strong>
+
+        </span>
+
+      </a>
+
+
+
+      <a
+        href="carrinho.html"
+        class="cart-button"
+      >
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span class="cart-text">
+          Carrinho
+        </span>
+
+        <span
+          id="cartCount"
+          class="cart-count"
+        >
+          0
+        </span>
+
+      </a>
+
+
+
+      <button
+        id="menuToggle"
+        class="menu-toggle"
+        type="button"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- MENU DESKTOP -->
+
+  <nav class="desktop-nav">
+
+
+    <div class="site-container desktop-nav-inner">
+
+
+      <a
+        href="produtos.html"
+        class="category-highlight"
+      >
+
+        <i class="fa-solid fa-table-cells-large"></i>
+
+        Todos os produtos
+
+      </a>
+
+
+      <a href="produtos.html?categoria=freios">
+        Freios
+      </a>
+
+
+      <a href="produtos.html?categoria=motor">
+        Motor
+      </a>
+
+
+      <a href="produtos.html?categoria=suspensao">
+        Suspensão
+      </a>
+
+
+      <a href="produtos.html?categoria=eletrica">
+        Elétrica
+      </a>
+
+
+      <a href="produtos.html?categoria=filtros">
+        Filtros
+      </a>
+
+
+      <a
+        href="suporte.html"
+        class="nav-support"
+      >
+
+        <i class="fa-regular fa-circle-question"></i>
+
+        Suporte
+
+      </a>
+
+
+    </div>
+
+
+  </nav>
+
+
+
+  <!-- MOBILE -->
+
+  <div
+    id="mobileMenuBackdrop"
+    class="mobile-menu-backdrop"
+  ></div>
+
+
+  <aside
+    id="mobileMenu"
+    class="mobile-menu"
+  >
+
+
+    <div class="mobile-menu-header">
+
+
+      <div class="mobile-brand">
+
+        <span class="mobile-brand-icon">
+
+          <i class="fa-solid fa-gear"></i>
+
+        </span>
+
+
+        <div>
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Menu principal
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="menuClose"
+        class="menu-close"
+        type="button"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+
+    </div>
+
+
+
+    <div class="mobile-search">
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        id="mobileSearchInput"
+        type="search"
+        placeholder="Buscar produtos..."
+      >
+
+    </div>
+
+
+
+    <nav class="mobile-nav">
+
+
+      <a href="index.html">
+
+        <i class="fa-solid fa-house"></i>
+
+        Início
+
+      </a>
+
+
+      <a href="produtos.html">
+
+        <i class="fa-solid fa-box-open"></i>
+
+        Produtos
+
+      </a>
+
+
+      <a href="carrinho.html">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        Carrinho
+
+      </a>
+
+
+      <a href="pedidos.html">
+
+        <i class="fa-solid fa-box"></i>
+
+        Meus pedidos
+
+      </a>
+
+
+      <a href="perfil.html">
+
+        <i class="fa-regular fa-user"></i>
+
+        Meu perfil
+
+      </a>
+
+
+      <a href="suporte.html">
+
+        <i class="fa-solid fa-headset"></i>
+
+        Suporte
+
+      </a>
+
+
+    </nav>
+
+
+  </aside>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="orders-hero">
+
+
+  <div class="site-container orders-hero-content">
+
+
+    <div>
+
+
+      <span class="orders-eyebrow">
+
+        <i class="fa-solid fa-box"></i>
+
+        Histórico de compras
+
+      </span>
+
+
+      <h1>
+
+        Acompanhe seus
+
+        <span>
+          pedidos em um só lugar.
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        Consulte compras realizadas,
+        veja o status dos pedidos
+        e acompanhe cada etapa.
+
+      </p>
+
+
+    </div>
+
+
+
+    <div class="orders-hero-art">
+
+
+      <div class="orders-orbit orbit-one"></div>
+
+      <div class="orders-orbit orbit-two"></div>
+
+
+      <div class="orders-main-icon">
+
+        <i class="fa-solid fa-box-open"></i>
+
+      </div>
+
+
+      <span class="orders-float orders-float-one">
+
+        <i class="fa-solid fa-check"></i>
+
+        Pedido confirmado
+
+      </span>
+
+
+      <span class="orders-float orders-float-two">
+
+        <i class="fa-solid fa-truck-fast"></i>
+
+        Acompanhe a entrega
+
+      </span>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     STATUS GERAL
+===================================================== -->
+
+<section class="orders-status-strip">
+
+
+  <div class="site-container orders-status-grid">
+
+
+    <div>
+
+      <span class="status-icon status-blue">
+
+        <i class="fa-solid fa-receipt"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Pedidos
+        </strong>
+
+        <small>
+          Consulte seu histórico
+        </small>
+
+      </div>
+
+    </div>
+
+
+
+    <div>
+
+      <span class="status-icon status-yellow">
+
+        <i class="fa-solid fa-box"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Preparação
+        </strong>
+
+        <small>
+          Acompanhe o processamento
+        </small>
+
+      </div>
+
+    </div>
+
+
+
+    <div>
+
+      <span class="status-icon status-purple">
+
+        <i class="fa-solid fa-truck-fast"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Envio
+        </strong>
+
+        <small>
+          Veja quando for despachado
+        </small>
+
+      </div>
+
+    </div>
+
+
+
+    <div>
+
+      <span class="status-icon status-green">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Entrega
+        </strong>
+
+        <small>
+          Pedido concluído
+        </small>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
+
+<main class="orders-main">
+
+
+  <div class="site-container">
+
+
+    <div class="orders-title-area">
+
+
+      <div>
+
+        <span class="section-label">
+
+          Minha conta
+
+        </span>
+
+
+        <h2>
+
+          Meus pedidos
+
+        </h2>
+
+
+        <p>
+
+          Veja suas compras recentes
+          e acompanhe cada pedido.
+
+        </p>
+
+      </div>
+
+
+
+      <a
+        href="produtos.html"
+        class="new-order-button"
+      >
+
+        <i class="fa-solid fa-plus"></i>
+
+        Fazer nova compra
+
+      </a>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         FILTRO VISUAL
+    ================================================= -->
+
+    <div class="orders-filter-bar">
+
+
+      <div class="orders-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="buscaPedidoVisual"
+          type="text"
+          placeholder="Buscar pelo número do pedido..."
+        >
+
+      </div>
+
+
+
+      <select id="filtroPedidoVisual">
+
+        <option value="">
+
+          Todos os pedidos
+
+        </option>
+
+
+        <option value="Pendente">
+
+          Pendentes
+
+        </option>
+
+
+        <option value="Enviado">
+
+          Enviados
+
+        </option>
+
+
+        <option value="Entregue">
+
+          Entregues
+
+        </option>
+
+
+        <option value="Cancelado">
+
+          Cancelados
+
+        </option>
+
+
+      </select>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         LISTA REAL
+         ID ORIGINAL PRESERVADO
+    ================================================= -->
+
+    <section class="orders-list-wrapper">
+
+
+      <div class="orders-list-header">
+
+
+        <div>
+
+
+          <h3>
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            Histórico de pedidos
+
+          </h3>
+
+
+          <p>
+
+            Suas compras aparecem abaixo.
+
+          </p>
+
+        </div>
+
+
+        <span>
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          Área do cliente
+
+        </span>
+
+
+      </div>
+
+
+
+      <div
+        id="listaPedidos"
+        class="orders-list"
+      ></div>
+
+
+      <div
+        id="ordersEmptyState"
+        class="orders-empty"
+        hidden
+      >
+
+        <span>
+
+          <i class="fa-solid fa-box-open"></i>
+
+        </span>
+
+
+        <h3>
+
+          Nenhum pedido encontrado
+
+        </h3>
+
+
+        <p>
+
+          Quando você realizar uma compra,
+          ela aparecerá aqui.
+
+        </p>
+
+
+        <a href="produtos.html">
+
+          Ver produtos
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+  </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     COMO FUNCIONA
+===================================================== -->
+
+<section class="tracking-section">
+
+
+  <div class="site-container">
+
+
+    <div class="tracking-heading">
+
+      <span class="section-label">
+
+        Acompanhamento
+
+      </span>
+
+      <h2>
+
+        Entenda o status do seu pedido
+
+      </h2>
+
+    </div>
+
+
+
+    <div class="tracking-flow">
+
+
+      <div class="tracking-step">
+
+        <span>
+
+          <i class="fa-solid fa-receipt"></i>
+
+        </span>
+
+        <strong>
+
+          Pedido recebido
+
+        </strong>
+
+        <p>
+
+          Seu pedido foi registrado
+          no sistema.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="tracking-arrow">
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </div>
+
+
+
+      <div class="tracking-step">
+
+        <span>
+
+          <i class="fa-solid fa-box"></i>
+
+        </span>
+
+        <strong>
+
+          Em preparação
+
+        </strong>
+
+        <p>
+
+          Os produtos estão sendo
+          separados.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="tracking-arrow">
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </div>
+
+
+
+      <div class="tracking-step">
+
+        <span>
+
+          <i class="fa-solid fa-truck-fast"></i>
+
+        </span>
+
+        <strong>
+
+          Enviado
+
+        </strong>
+
+        <p>
+
+          O pedido saiu para
+          entrega.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="tracking-arrow">
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </div>
+
+
+
+      <div class="tracking-step">
+
+        <span>
+
+          <i class="fa-solid fa-circle-check"></i>
+
+        </span>
+
+        <strong>
+
+          Entregue
+
+        </strong>
+
+        <p>
+
+          A compra foi
+          concluída.
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     SUPORTE
+===================================================== -->
+
+<section class="orders-support">
+
+
+  <div class="site-container orders-support-box">
+
+
+    <span class="orders-support-icon">
+
+      <i class="fa-solid fa-headset"></i>
+
+    </span>
+
+
+    <div>
+
+      <span>
+
+        PRECISA DE AJUDA?
+
+      </span>
+
+      <h2>
+
+        Algum problema com seu pedido?
+
+      </h2>
+
+      <p>
+
+        Entre em contato com nossa equipe
+        e informe o número do pedido.
+
+      </p>
+
+    </div>
+
+
+    <a href="suporte.html">
+
+      Falar com suporte
+
+      <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+
+  <div class="site-container footer-grid">
+
+
+    <div class="footer-brand">
+
+
+      <div class="footer-logo">
+
+        <span>
+
+          <i class="fa-solid fa-gear"></i>
+
+        </span>
+
+        <div>
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <p>
+
+        Peças e acessórios automotivos
+        com qualidade, tecnologia,
+        praticidade e confiança.
+
+      </p>
+
+
+      <div class="social-links">
+
+        <a href="#">
+
+          <i class="fa-brands fa-instagram"></i>
+
+        </a>
+
+        <a href="#">
+
+          <i class="fa-brands fa-facebook-f"></i>
+
+        </a>
+
+        <a href="#">
+
+          <i class="fa-brands fa-whatsapp"></i>
+
+        </a>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="footer-column">
+
+      <h3>
+        Atendimento
+      </h3>
+
+      <a href="suporte.html">
+        Fale com o suporte
+      </a>
+
+      <a href="pedidos.html">
+        Acompanhar pedido
+      </a>
+
+      <a href="perfil.html">
+        Minha conta
+      </a>
+
+      <a href="#">
+        Trocas e devoluções
+      </a>
+
+    </div>
+
+
+
+    <div class="footer-column">
+
+      <h3>
+        Institucional
+      </h3>
+
+      <a href="#">
+        Sobre a loja
+      </a>
+
+      <a href="#">
+        Política de privacidade
+      </a>
+
+      <a href="#">
+        Termos de uso
+      </a>
+
+      <a href="#">
+        Dúvidas frequentes
+      </a>
+
+    </div>
+
+
+
+    <div class="footer-column footer-contact">
+
+      <h3>
+        Contato
+      </h3>
+
+      <p>
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <span>
+
+          Rua da sua loja, 000
+
+          <br>
+
+          Sua Cidade - UF
+
+        </span>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-solid fa-phone"></i>
+
+        <a href="tel:+5500000000000">
+
+          (00) 00000-0000
+
+        </a>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-solid fa-envelope"></i>
+
+        <a href="mailto:contato@sualoja.com.br">
+
+          contato@sualoja.com.br
+
+        </a>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-regular fa-clock"></i>
+
+        <span>
+
+          Segunda a sexta
+
+          <br>
+
+          08:00 às 18:00
+
+        </span>
+
+      </p>
+
+    </div>
+
+
+  </div>
+
+
+
+  <div class="footer-bottom">
+
+    <div class="site-container footer-bottom-content">
+
+      <span>
+
+        © <span id="currentYear"></span>
+        Loja de Peças.
+        Todos os direitos reservados.
+
+      </span>
+
+
+      <span>
+
+        Autopeças & Acessórios
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+</footer>
+
+
+
+<script src="js/site.js"></script>
+
+
+<!-- SEU JS ORIGINAL -->
+
+<script src="js/pedidos.js"></script>
+
+
+
+<!-- =====================================================
+     JS VISUAL
+===================================================== -->
+
+<script>
+
+  const headerSearchForm =
+    document.getElementById(
+      "headerSearchForm"
+    );
+
+
+  const headerSearchInput =
+    document.getElementById(
+      "headerSearchInput"
+    );
+
+
+  headerSearchForm
+    ?.addEventListener(
+
+      "submit",
+
+      event => {
+
+        event.preventDefault();
+
+
+        const termo =
+          headerSearchInput
+            ?.value
+            .trim();
+
+
+        window.location.href =
+          termo
+            ? `produtos.html?busca=${encodeURIComponent(termo)}`
+            : "produtos.html";
+
+      }
+
+    );
+
+
+
+  const mobileSearchInput =
+    document.getElementById(
+      "mobileSearchInput"
+    );
+
+
+  mobileSearchInput
+    ?.addEventListener(
+
+      "keydown",
+
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          const termo =
+            mobileSearchInput
+              .value
+              .trim();
+
+
+          window.location.href =
+            termo
+              ? `produtos.html?busca=${encodeURIComponent(termo)}`
+              : "produtos.html";
+
+        }
+
+      }
+
+    );
+
+</script>
+
+
 </body>
+
 </html>

@@ -1,27 +1,1770 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+
 <head>
-  <title>Checkout</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Checkout e pagamento da Loja de Peças."
+  >
+
+  <title>Checkout | Loja de Peças</title>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="css/site.css"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="css/checkout.css"
+  >
+
 </head>
-<body class="container mt-5">
 
-  <h2>Forma de Pagamento</h2>
 
-  <select id="pagamento" class="form-control mb-3">
-    <option value="">Selecione</option>
-    <option value="Pix">PIX</option>
-    <option value="Cartão">Cartão</option>
-    <option value="Boleto">Boleto</option>
-  </select>
+<body>
 
-  <div id="mensagem" class="mb-3"></div>
 
-  <button class="btn btn-success" onclick="finalizarPedido()">
-    Finalizar Pedido
-  </button>
-  <div id="mensagem" class="mt-3"></div>
 
-  <script src="js/checkout.js"></script>
+<!-- =====================================================
+     TOPO
+===================================================== -->
+
+<div class="top-strip">
+
+  <div class="site-container top-strip-content">
+
+    <span>
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      Compra segura
+
+    </span>
+
+
+    <span class="desktop-only">
+
+      <i class="fa-solid fa-lock"></i>
+
+      Ambiente protegido
+
+    </span>
+
+
+    <span class="desktop-only">
+
+      <i class="fa-solid fa-headset"></i>
+
+      Suporte disponível
+
+    </span>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+
+  <div class="site-container header-main">
+
+
+    <a
+      href="index.html"
+      class="brand"
+    >
+
+      <img
+        src="assets/images/logo.png"
+        alt="Logo Loja de Peças"
+        class="brand-logo"
+
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='flex';
+        "
+      >
+
+
+      <span class="brand-fallback">
+
+        <i class="fa-solid fa-gear"></i>
+
+      </span>
+
+
+      <span class="brand-text">
+
+        <strong>
+          Loja de Peças
+        </strong>
+
+        <small>
+          Autopeças & Acessórios
+        </small>
+
+      </span>
+
+    </a>
+
+
+
+    <div class="checkout-header-message">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <span>
+
+        <strong>
+          Checkout seguro
+        </strong>
+
+        <small>
+          Seus dados protegidos
+        </small>
+
+      </span>
+
+    </div>
+
+
+
+    <div class="header-actions">
+
+
+      <a
+        href="carrinho.html"
+        class="checkout-back-header"
+      >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Voltar ao carrinho
+
+      </a>
+
+
+      <button
+        id="menuToggle"
+        class="menu-toggle"
+        type="button"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- MOBILE -->
+
+  <div
+    id="mobileMenuBackdrop"
+    class="mobile-menu-backdrop"
+  ></div>
+
+
+  <aside
+    id="mobileMenu"
+    class="mobile-menu"
+  >
+
+
+    <div class="mobile-menu-header">
+
+
+      <div class="mobile-brand">
+
+        <span class="mobile-brand-icon">
+
+          <i class="fa-solid fa-gear"></i>
+
+        </span>
+
+
+        <div>
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Checkout
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="menuClose"
+        class="menu-close"
+        type="button"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+
+    </div>
+
+
+
+    <nav class="mobile-nav">
+
+
+      <a href="index.html">
+
+        <i class="fa-solid fa-house"></i>
+
+        Início
+
+      </a>
+
+
+      <a href="produtos.html">
+
+        <i class="fa-solid fa-box-open"></i>
+
+        Produtos
+
+      </a>
+
+
+      <a href="carrinho.html">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        Carrinho
+
+      </a>
+
+
+      <a href="pedidos.html">
+
+        <i class="fa-solid fa-box"></i>
+
+        Meus pedidos
+
+      </a>
+
+
+      <a href="suporte.html">
+
+        <i class="fa-solid fa-headset"></i>
+
+        Suporte
+
+      </a>
+
+
+    </nav>
+
+
+  </aside>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="checkout-hero">
+
+
+  <div class="site-container checkout-hero-content">
+
+
+    <div>
+
+
+      <span class="checkout-eyebrow">
+
+        <i class="fa-solid fa-credit-card"></i>
+
+        Finalização da compra
+
+      </span>
+
+
+      <h1>
+
+        Falta pouco para
+
+        <span>
+          concluir seu pedido.
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        Escolha sua forma de pagamento
+        e finalize sua compra com segurança.
+
+      </p>
+
+
+    </div>
+
+
+
+    <div class="checkout-hero-art">
+
+
+      <div class="payment-orbit orbit-one"></div>
+
+      <div class="payment-orbit orbit-two"></div>
+
+
+      <div class="payment-main-icon">
+
+        <i class="fa-solid fa-credit-card"></i>
+
+      </div>
+
+
+      <span class="payment-float payment-float-one">
+
+        <i class="fa-solid fa-lock"></i>
+
+        Protegido
+
+      </span>
+
+
+      <span class="payment-float payment-float-two">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        Rápido
+
+      </span>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     ETAPAS
+===================================================== -->
+
+<section class="checkout-progress">
+
+
+  <div class="site-container checkout-progress-inner">
+
+
+    <div class="progress-step complete">
+
+
+      <span>
+
+        <i class="fa-solid fa-check"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Carrinho
+        </strong>
+
+        <small>
+          Itens revisados
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="progress-line active"></div>
+
+
+
+    <div class="progress-step active">
+
+
+      <span>
+
+        <i class="fa-solid fa-credit-card"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Pagamento
+        </strong>
+
+        <small>
+          Escolha a forma
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="progress-line"></div>
+
+
+
+    <div class="progress-step">
+
+
+      <span>
+
+        <i class="fa-solid fa-box"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          Confirmação
+        </strong>
+
+        <small>
+          Pedido concluído
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CHECKOUT PRINCIPAL
+===================================================== -->
+
+<main class="checkout-main">
+
+
+  <div class="site-container">
+
+
+    <div class="checkout-title-area">
+
+
+      <div>
+
+
+        <span class="section-label">
+
+          Pagamento
+
+        </span>
+
+
+        <h2>
+
+          Escolha como deseja pagar
+
+        </h2>
+
+
+        <p>
+
+          Selecione uma das opções disponíveis.
+
+        </p>
+
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="checkout-layout">
+
+
+
+      <!-- ===============================================
+           PAGAMENTO
+      ================================================ -->
+
+      <section class="payment-card">
+
+
+        <div class="payment-card-header">
+
+
+          <span class="payment-card-icon">
+
+            <i class="fa-solid fa-wallet"></i>
+
+          </span>
+
+
+          <div>
+
+            <h3>
+
+              Forma de pagamento
+
+            </h3>
+
+
+            <p>
+
+              Selecione a opção mais conveniente.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SELECT ORIGINAL
+             MESMO ID DO SEU CÓDIGO ANTIGO
+        ================================================= -->
+
+        <div class="checkout-payment-field">
+
+
+          <label for="pagamento">
+
+            Forma de pagamento
+
+          </label>
+
+
+          <div class="checkout-select-wrapper">
+
+
+            <i class="fa-solid fa-credit-card"></i>
+
+
+            <select id="pagamento">
+
+
+              <option value="">
+
+                Selecione
+
+              </option>
+
+
+              <option value="Pix">
+
+                PIX
+
+              </option>
+
+
+              <option value="Cartão">
+
+                Cartão
+
+              </option>
+
+
+              <option value="Boleto">
+
+                Boleto
+
+              </option>
+
+
+            </select>
+
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CARDS VISUAIS
+        ================================================= -->
+
+        <div class="payment-methods">
+
+
+          <button
+            type="button"
+            class="payment-method"
+            data-payment="Pix"
+          >
+
+
+            <span class="payment-method-icon pix">
+
+              <i class="fa-brands fa-pix"></i>
+
+            </span>
+
+
+            <div>
+
+
+              <strong>
+
+                Pix
+
+              </strong>
+
+
+              <small>
+
+                Pagamento rápido e simples
+
+              </small>
+
+
+            </div>
+
+
+            <span class="method-check">
+
+              <i class="fa-solid fa-check"></i>
+
+            </span>
+
+
+          </button>
+
+
+
+          <button
+            type="button"
+            class="payment-method"
+            data-payment="Cartão"
+          >
+
+
+            <span class="payment-method-icon card">
+
+              <i class="fa-regular fa-credit-card"></i>
+
+            </span>
+
+
+            <div>
+
+
+              <strong>
+
+                Cartão
+
+              </strong>
+
+
+              <small>
+
+                Crédito ou débito
+
+              </small>
+
+
+            </div>
+
+
+            <span class="method-check">
+
+              <i class="fa-solid fa-check"></i>
+
+            </span>
+
+
+          </button>
+
+
+
+          <button
+            type="button"
+            class="payment-method"
+            data-payment="Boleto"
+          >
+
+
+            <span class="payment-method-icon boleto">
+
+              <i class="fa-solid fa-barcode"></i>
+
+            </span>
+
+
+            <div>
+
+
+              <strong>
+
+                Boleto
+
+              </strong>
+
+
+              <small>
+
+                Pagamento por boleto bancário
+
+              </small>
+
+
+            </div>
+
+
+            <span class="method-check">
+
+              <i class="fa-solid fa-check"></i>
+
+            </span>
+
+
+          </button>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMAÇÕES DINÂMICAS
+        ================================================= -->
+
+        <div
+          id="paymentInfo"
+          class="payment-info"
+        >
+
+
+          <div class="payment-info-placeholder">
+
+
+            <span>
+
+              <i class="fa-solid fa-circle-info"></i>
+
+            </span>
+
+
+            <div>
+
+
+              <strong>
+
+                Selecione uma forma de pagamento
+
+              </strong>
+
+
+              <p>
+
+                As informações da opção escolhida
+                aparecerão aqui.
+
+              </p>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MENSAGEM
+             APENAS UM ID="mensagem"
+        ================================================= -->
+
+        <div
+          id="mensagem"
+          class="checkout-message"
+        ></div>
+
+
+      </section>
+
+
+
+      <!-- ===============================================
+           RESUMO
+      ================================================ -->
+
+      <aside class="checkout-summary">
+
+
+        <div class="summary-title">
+
+
+          <span>
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+          </span>
+
+
+          <div>
+
+            <h3>
+
+              Finalização segura
+
+            </h3>
+
+
+            <p>
+
+              Revise antes de confirmar
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="summary-divider"></div>
+
+
+
+        <div class="checkout-benefit">
+
+
+          <span>
+
+            <i class="fa-solid fa-lock"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+
+              Ambiente protegido
+
+            </strong>
+
+
+            <p>
+
+              Seus dados são tratados
+              com segurança.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="checkout-benefit">
+
+
+          <span>
+
+            <i class="fa-solid fa-box"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+
+              Acompanhe o pedido
+
+            </strong>
+
+
+            <p>
+
+              Consulte o status em
+              Meus Pedidos.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="checkout-benefit">
+
+
+          <span>
+
+            <i class="fa-solid fa-headset"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+
+              Precisa de ajuda?
+
+            </strong>
+
+
+            <p>
+
+              Nosso suporte está disponível.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="summary-divider"></div>
+
+
+
+        <div class="checkout-final-note">
+
+
+          <i class="fa-solid fa-circle-info"></i>
+
+
+          <p>
+
+            Ao finalizar o pedido,
+            você confirma a forma
+            de pagamento selecionada.
+
+          </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTÃO ORIGINAL
+             MANTÉM finalizarPedido()
+        ================================================= -->
+
+        <button
+          type="button"
+          class="finish-order-button"
+          onclick="finalizarPedido()"
+        >
+
+          Finalizar pedido
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+
+
+        <a
+          href="carrinho.html"
+          class="back-cart-button"
+        >
+
+          <i class="fa-solid fa-arrow-left"></i>
+
+          Voltar ao carrinho
+
+        </a>
+
+
+      </aside>
+
+
+    </div>
+
+
+  </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     SEGURANÇA
+===================================================== -->
+
+<section class="checkout-security">
+
+
+  <div class="site-container checkout-security-grid">
+
+
+    <div>
+
+
+      <span>
+
+        <i class="fa-solid fa-lock"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+
+          Checkout seguro
+
+        </strong>
+
+        <small>
+
+          Ambiente protegido
+
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div>
+
+
+      <span>
+
+        <i class="fa-solid fa-credit-card"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+
+          Pagamento facilitado
+
+        </strong>
+
+        <small>
+
+          Escolha sua opção
+
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div>
+
+
+      <span>
+
+        <i class="fa-solid fa-headset"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+
+          Suporte
+
+        </strong>
+
+        <small>
+
+          Atendimento quando precisar
+
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+
+  <div class="site-container footer-grid">
+
+
+    <div class="footer-brand">
+
+
+      <div class="footer-logo">
+
+
+        <span>
+
+          <i class="fa-solid fa-gear"></i>
+
+        </span>
+
+
+        <div>
+
+          <strong>
+
+            Loja de Peças
+
+          </strong>
+
+
+          <small>
+
+            Autopeças & Acessórios
+
+          </small>
+
+        </div>
+
+
+      </div>
+
+
+
+      <p>
+
+        Peças e acessórios automotivos
+        com qualidade, tecnologia,
+        praticidade e confiança.
+
+      </p>
+
+
+
+      <div class="social-links">
+
+
+        <a href="#">
+
+          <i class="fa-brands fa-instagram"></i>
+
+        </a>
+
+
+        <a href="#">
+
+          <i class="fa-brands fa-facebook-f"></i>
+
+        </a>
+
+
+        <a href="#">
+
+          <i class="fa-brands fa-whatsapp"></i>
+
+        </a>
+
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="footer-column">
+
+
+      <h3>
+
+        Atendimento
+
+      </h3>
+
+
+      <a href="suporte.html">
+
+        Fale com o suporte
+
+      </a>
+
+
+      <a href="pedidos.html">
+
+        Acompanhar pedido
+
+      </a>
+
+
+      <a href="perfil.html">
+
+        Minha conta
+
+      </a>
+
+
+      <a href="#">
+
+        Trocas e devoluções
+
+      </a>
+
+
+    </div>
+
+
+
+    <div class="footer-column">
+
+
+      <h3>
+
+        Institucional
+
+      </h3>
+
+
+      <a href="#">
+
+        Sobre a loja
+
+      </a>
+
+
+      <a href="#">
+
+        Política de privacidade
+
+      </a>
+
+
+      <a href="#">
+
+        Termos de uso
+
+      </a>
+
+
+      <a href="#">
+
+        Dúvidas frequentes
+
+      </a>
+
+
+    </div>
+
+
+
+    <div class="footer-column footer-contact">
+
+
+      <h3>
+
+        Contato
+
+      </h3>
+
+
+      <p>
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <span>
+
+          Rua da sua loja, 000
+
+          <br>
+
+          Sua Cidade - UF
+
+        </span>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-solid fa-phone"></i>
+
+        <a href="tel:+5500000000000">
+
+          (00) 00000-0000
+
+        </a>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-solid fa-envelope"></i>
+
+        <a href="mailto:contato@sualoja.com.br">
+
+          contato@sualoja.com.br
+
+        </a>
+
+      </p>
+
+
+      <p>
+
+        <i class="fa-regular fa-clock"></i>
+
+        <span>
+
+          Segunda a sexta
+
+          <br>
+
+          08:00 às 18:00
+
+        </span>
+
+      </p>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <div class="footer-bottom">
+
+
+    <div class="site-container footer-bottom-content">
+
+
+      <span>
+
+        ©
+
+        <span id="currentYear"></span>
+
+        Loja de Peças.
+
+        Todos os direitos reservados.
+
+      </span>
+
+
+      <span>
+
+        Autopeças & Acessórios
+
+      </span>
+
+
+    </div>
+
+
+  </div>
+
+
+</footer>
+
+
+
+<script src="js/site.js"></script>
+
+
+<!-- SEU JS ORIGINAL -->
+
+<script src="js/checkout.js"></script>
+
+
+
+<!-- =====================================================
+     JS VISUAL DO CHECKOUT
+     NÃO ALTERA API
+===================================================== -->
+
+<script>
+
+
+  const pagamento =
+    document.getElementById(
+      "pagamento"
+    );
+
+
+  const paymentMethods =
+    document.querySelectorAll(
+      ".payment-method"
+    );
+
+
+  const paymentInfo =
+    document.getElementById(
+      "paymentInfo"
+    );
+
+
+
+  function atualizarFormaPagamento(
+    forma
+  ) {
+
+
+    paymentMethods.forEach(
+
+      botao => {
+
+        botao.classList.toggle(
+
+          "active",
+
+          botao.dataset.payment === forma
+
+        );
+
+      }
+
+    );
+
+
+
+    if (!paymentInfo) {
+
+      return;
+
+    }
+
+
+
+    if (forma === "Pix") {
+
+
+      paymentInfo.innerHTML = `
+
+        <div class="payment-info-content">
+
+          <span class="payment-detail-icon pix">
+
+            <i class="fa-brands fa-pix"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Pagamento via Pix
+            </strong>
+
+            <p>
+              Após finalizar o pedido,
+              siga as instruções de pagamento
+              apresentadas pelo sistema.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+    }
+
+
+    else if (
+      forma === "Cartão"
+    ) {
+
+
+      paymentInfo.innerHTML = `
+
+        <div class="payment-info-content">
+
+          <span class="payment-detail-icon card">
+
+            <i class="fa-regular fa-credit-card"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Pagamento com cartão
+            </strong>
+
+            <p>
+              O pedido será registrado
+              utilizando cartão como
+              forma de pagamento.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+    }
+
+
+    else if (
+      forma === "Boleto"
+    ) {
+
+
+      paymentInfo.innerHTML = `
+
+        <div class="payment-info-content">
+
+          <span class="payment-detail-icon boleto">
+
+            <i class="fa-solid fa-barcode"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Pagamento por boleto
+            </strong>
+
+            <p>
+              O pedido será registrado
+              utilizando boleto como
+              forma de pagamento.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+    }
+
+
+    else {
+
+
+      paymentInfo.innerHTML = `
+
+        <div class="payment-info-placeholder">
+
+          <span>
+
+            <i class="fa-solid fa-circle-info"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Selecione uma forma de pagamento
+            </strong>
+
+            <p>
+              As informações da opção escolhida
+              aparecerão aqui.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+    }
+
+
+  }
+
+
+
+  paymentMethods.forEach(
+
+    botao => {
+
+
+      botao.addEventListener(
+
+        "click",
+
+        () => {
+
+
+          const forma =
+            botao.dataset.payment;
+
+
+          pagamento.value =
+            forma;
+
+
+          pagamento.dispatchEvent(
+
+            new Event(
+
+              "change",
+
+              {
+                bubbles: true
+              }
+
+            )
+
+          );
+
+
+          atualizarFormaPagamento(
+            forma
+          );
+
+
+        }
+
+      );
+
+
+    }
+
+  );
+
+
+
+  pagamento
+    ?.addEventListener(
+
+      "change",
+
+      () => {
+
+
+        atualizarFormaPagamento(
+
+          pagamento.value
+
+        );
+
+
+      }
+
+    );
+
+
+</script>
+
+
 </body>
+
 </html>
