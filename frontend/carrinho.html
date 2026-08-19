@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,11 +11,12 @@
 
   <meta
     name="description"
-    content="Carrinho de compras da Loja de Peças."
+    content="Smart Cart - Loja de Peças"
   >
 
-  <title>Carrinho | Loja de Peças</title>
-
+  <title>
+    Smart Cart | Loja de Peças
+  </title>
 
   <link
     rel="preconnect"
@@ -30,812 +30,1453 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet"
   >
-
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   >
 
-
-  <!-- Mantido por compatibilidade -->
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
-
-
   <link
     rel="stylesheet"
     href="css/site.css"
   >
 
-
   <link
     rel="stylesheet"
     href="css/carrinho.css"
   >
-
 </head>
-
 
 <body>
 
+  <!-- =====================================================
+       HEADER GLOBAL
+  ====================================================== -->
 
+  <div class="top-strip">
 
-<!-- =====================================================
-     TOPO
-===================================================== -->
+    <div class="site-container top-strip-content">
 
-<div class="top-strip">
+      <span>
+        <i class="fa-solid fa-shield-halved"></i>
+        Compra segura
+      </span>
 
-  <div class="site-container top-strip-content">
+      <span class="desktop-only">
+        <i class="fa-solid fa-headset"></i>
+        Atendimento especializado
+      </span>
 
-    <span>
+      <span class="desktop-only">
+        <i class="fa-solid fa-truck-fast"></i>
+        Entrega para sua região
+      </span>
 
-      <i class="fa-solid fa-shield-halved"></i>
-
-      Compra segura
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-headset"></i>
-
-      Atendimento especializado
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-truck-fast"></i>
-
-      Entrega para sua região
-
-    </span>
+    </div>
 
   </div>
 
-</div>
 
+  <header class="site-header">
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="site-header">
-
-
-  <div class="site-container header-main">
-
-
-    <a
-      href="index.html"
-      class="brand"
-    >
-
-      <img
-        src="assets/images/logo.png"
-        alt="Logo Loja de Peças"
-        class="brand-logo"
-
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-
-      <span class="brand-fallback">
-
-        <i class="fa-solid fa-gear"></i>
-
-      </span>
-
-
-      <span class="brand-text">
-
-        <strong>
-          Loja de Peças
-        </strong>
-
-        <small>
-          Autopeças & Acessórios
-        </small>
-
-      </span>
-
-    </a>
-
-
-
-    <form
-      class="header-search"
-      id="headerSearchForm"
-    >
-
-      <i class="fa-solid fa-magnifying-glass"></i>
-
-
-      <input
-        id="headerSearchInput"
-        type="search"
-        placeholder="Buscar produtos..."
-      >
-
-
-      <button type="submit">
-
-        Buscar
-
-      </button>
-
-    </form>
-
-
-
-    <div class="header-actions">
-
+    <div class="site-container header-main">
 
       <a
-        href="pedidos.html"
-        class="header-action desktop-action"
+        href="index.html"
+        class="brand"
       >
 
-        <i class="fa-solid fa-box"></i>
-
-        <span>
-
-          <small>
-            Acompanhar
-          </small>
-
-          <strong>
-            Pedidos
-          </strong>
-
-        </span>
-
-      </a>
-
-
-
-      <a
-        href="perfil.html"
-        class="header-action desktop-action"
-      >
-
-        <i class="fa-regular fa-user"></i>
-
-        <span>
-
-          <small>
-            Minha conta
-          </small>
-
-          <strong>
-            Perfil
-          </strong>
-
-        </span>
-
-      </a>
-
-
-
-      <a
-        href="carrinho.html"
-        class="cart-button"
-      >
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-        <span class="cart-text">
-
-          Carrinho
-
-        </span>
-
-
-        <span
-          id="cartCount"
-          class="cart-count"
+        <img
+          src="assets/images/logo.png"
+          alt="Loja de Peças"
+          class="brand-logo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
         >
 
-          0
-
-        </span>
-
-      </a>
-
-
-
-      <button
-        id="menuToggle"
-        class="menu-toggle"
-        type="button"
-      >
-
-        <span></span>
-
-        <span></span>
-
-        <span></span>
-
-      </button>
-
-
-    </div>
-
-
-  </div>
-
-
-
-  <nav class="desktop-nav">
-
-
-    <div class="site-container desktop-nav-inner">
-
-
-      <a
-        href="produtos.html"
-        class="category-highlight"
-      >
-
-        <i class="fa-solid fa-table-cells-large"></i>
-
-        Todos os produtos
-
-      </a>
-
-
-      <a href="produtos.html?categoria=freios">
-
-        Freios
-
-      </a>
-
-
-      <a href="produtos.html?categoria=motor">
-
-        Motor
-
-      </a>
-
-
-      <a href="produtos.html?categoria=suspensao">
-
-        Suspensão
-
-      </a>
-
-
-      <a href="produtos.html?categoria=eletrica">
-
-        Elétrica
-
-      </a>
-
-
-      <a href="produtos.html?categoria=filtros">
-
-        Filtros
-
-      </a>
-
-
-      <a
-        href="suporte.html"
-        class="nav-support"
-      >
-
-        <i class="fa-regular fa-circle-question"></i>
-
-        Suporte
-
-      </a>
-
-
-    </div>
-
-
-  </nav>
-
-
-
-  <!-- MENU MOBILE -->
-
-  <div
-    id="mobileMenuBackdrop"
-    class="mobile-menu-backdrop"
-  ></div>
-
-
-  <aside
-    id="mobileMenu"
-    class="mobile-menu"
-  >
-
-
-    <div class="mobile-menu-header">
-
-
-      <div class="mobile-brand">
-
-
-        <span class="mobile-brand-icon">
-
+        <span class="brand-fallback">
           <i class="fa-solid fa-gear"></i>
-
         </span>
 
-
-        <div>
+        <span class="brand-text">
 
           <strong>
             Loja de Peças
           </strong>
 
           <small>
-            Menu principal
+            Autopeças & Acessórios
           </small>
+
+        </span>
+
+      </a>
+
+
+      <form
+        class="header-search"
+        id="headerSearchForm"
+      >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="headerSearchInput"
+          type="search"
+          placeholder="Peça, marca, código ou categoria..."
+        >
+
+        <button type="submit">
+          Buscar
+        </button>
+
+      </form>
+
+
+      <div class="header-actions">
+
+        <a
+          href="pedidos.html"
+          class="header-action desktop-action"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+            <small>Acompanhar</small>
+            <strong>Pedidos</strong>
+          </span>
+
+        </a>
+
+
+        <div
+          id="guestActions"
+          class="header-guest-actions"
+        >
+
+          <a
+            href="login.html"
+            class="header-login-button"
+          >
+
+            <i class="fa-regular fa-user"></i>
+
+            <span>
+              <small>Olá, visitante</small>
+              <strong>Entrar</strong>
+            </span>
+
+          </a>
+
+          <a
+            href="cadastro.html"
+            class="header-register-button"
+          >
+            Criar conta
+          </a>
 
         </div>
 
+
+        <div
+          id="userMenuWrapper"
+          class="header-user-wrapper"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="userMenuButton"
+            class="header-user-button"
+          >
+
+            <span
+              id="headerUserAvatar"
+              class="header-user-avatar"
+              data-user-avatar
+            >
+              U
+            </span>
+
+            <span class="header-user-data">
+              <small>Olá,</small>
+
+              <strong
+                id="headerUserName"
+                data-user-name
+              >
+                Cliente
+              </strong>
+            </span>
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </button>
+
+
+          <div
+            id="userDropdown"
+            class="user-dropdown"
+          >
+
+            <div class="user-dropdown-header">
+
+              <span
+                id="dropdownAvatar"
+                class="dropdown-avatar"
+                data-user-avatar
+              >
+                U
+              </span>
+
+              <div>
+
+                <strong
+                  id="dropdownUserName"
+                  data-user-name
+                >
+                  Cliente
+                </strong>
+
+                <small
+                  id="dropdownUserEmail"
+                  data-user-email
+                >
+                  cliente@email.com
+                </small>
+
+              </div>
+
+            </div>
+
+            <div class="user-dropdown-divider"></div>
+
+            <a href="perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Minha conta
+            </a>
+
+            <a href="pedidos.html">
+              <i class="fa-solid fa-box"></i>
+              Meus pedidos
+            </a>
+
+            <a href="perfil.html#veiculos">
+              <i class="fa-solid fa-car"></i>
+              Meus veículos
+            </a>
+
+            <a href="suporte.html">
+              <i class="fa-solid fa-headset"></i>
+              Suporte
+            </a>
+
+            <div class="user-dropdown-divider"></div>
+
+            <button
+              type="button"
+              id="btnLogoutGlobal"
+              class="user-dropdown-logout"
+            >
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Sair
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <a
+          href="carrinho.html"
+          class="cart-button"
+        >
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span class="cart-text">
+            Carrinho
+          </span>
+
+          <span
+            id="cartCount"
+            class="cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <nav class="desktop-nav">
+
+      <div class="site-container desktop-nav-inner">
+
+        <a
+          href="produtos.html"
+          class="category-highlight"
+        >
+          <i class="fa-solid fa-table-cells-large"></i>
+          Todos os produtos
+        </a>
+
+        <a href="produtos.html?categoria=freios">
+          Freios
+        </a>
+
+        <a href="produtos.html?categoria=motor">
+          Motor
+        </a>
+
+        <a href="produtos.html?categoria=suspensao">
+          Suspensão
+        </a>
+
+        <a href="produtos.html?categoria=eletrica">
+          Elétrica
+        </a>
+
+        <a href="produtos.html?categoria=filtros">
+          Filtros
+        </a>
+
+        <a href="produtos.html?categoria=oleos">
+          Óleos e Fluidos
+        </a>
+
+        <a
+          href="suporte.html"
+          class="nav-support"
+        >
+          <i class="fa-regular fa-circle-question"></i>
+          Suporte
+        </a>
+
+      </div>
+
+    </nav>
+
+
+    <div
+      id="mobileMenuBackdrop"
+      class="mobile-menu-backdrop"
+    ></div>
+
+
+    <aside
+      id="mobileMenu"
+      class="mobile-menu"
+    >
+
+      <div class="mobile-menu-header">
+
+        <div class="mobile-brand">
+
+          <span class="mobile-brand-icon">
+            <i class="fa-solid fa-gear"></i>
+          </span>
+
+          <div>
+            <strong>Loja de Peças</strong>
+            <small>Menu principal</small>
+          </div>
+
+        </div>
+
+        <button
+          id="menuClose"
+          class="menu-close"
+          type="button"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <div class="mobile-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="mobileSearchInput"
+          type="search"
+          placeholder="Buscar produtos..."
+        >
+
+      </div>
+
+
+      <div
+        id="mobileUserSummary"
+        class="mobile-user-summary"
+        hidden
+      >
+
+        <span
+          class="mobile-user-avatar"
+          data-user-avatar
+        >
+          U
+        </span>
+
+        <div>
+          <small>Bem-vindo</small>
+          <strong data-user-name>Cliente</strong>
+          <span data-user-email>-</span>
+        </div>
+
+      </div>
+
+
+      <nav class="mobile-nav">
+
+        <a href="index.html">
+          <i class="fa-solid fa-house"></i>
+          Início
+        </a>
+
+        <a href="produtos.html">
+          <i class="fa-solid fa-box-open"></i>
+          Produtos
+        </a>
+
+        <a href="carrinho.html">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Carrinho
+
+          <span
+            id="mobileCartCount"
+            class="mobile-cart-count"
+          >
+            0
+          </span>
+        </a>
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+          <i class="fa-solid fa-box"></i>
+          Meus pedidos
+        </a>
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+          <i class="fa-regular fa-user"></i>
+          Meu perfil
+        </a>
+
+        <a href="suporte.html">
+          <i class="fa-solid fa-headset"></i>
+          Suporte
+        </a>
+
+      </nav>
+
+
+      <div
+        id="mobileGuestActions"
+        class="mobile-auth-actions"
+      >
+
+        <a
+          href="login.html"
+          class="mobile-login-button"
+        >
+          Entrar
+        </a>
+
+        <a
+          href="cadastro.html"
+          class="mobile-register-button"
+        >
+          Criar conta
+        </a>
 
       </div>
 
 
       <button
-        id="menuClose"
-        class="menu-close"
+        id="mobileLogoutButton"
+        class="mobile-logout-button"
         type="button"
+        hidden
       >
-
-        <i class="fa-solid fa-xmark"></i>
-
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
       </button>
 
+    </aside>
 
-    </div>
+  </header>
 
 
+  <!-- =====================================================
+       NOVO CARRINHO
+  ====================================================== -->
 
-    <div class="mobile-search">
+  <main class="hyper-cart">
 
 
-      <i class="fa-solid fa-magnifying-glass"></i>
+    <!-- =====================================================
+         COMMAND HERO
+    ====================================================== -->
 
+    <section class="hyper-hero">
 
-      <input
-        id="mobileSearchInput"
-        type="search"
-        placeholder="Buscar produtos..."
-      >
+      <div class="hyper-grid"></div>
 
+      <div class="hyper-noise"></div>
 
-    </div>
+      <div class="hyper-light hyper-light-a"></div>
 
+      <div class="hyper-light hyper-light-b"></div>
 
 
-    <nav class="mobile-nav">
+      <div class="site-container hyper-hero-layout">
 
 
-      <a href="index.html">
+        <div class="hyper-hero-copy">
 
-        <i class="fa-solid fa-house"></i>
 
-        Início
+          <div class="hyper-route">
 
-      </a>
+            <a href="index.html">
+              HOME
+            </a>
 
+            <span>/</span>
 
-      <a href="produtos.html">
+            <a href="produtos.html">
+              CATÁLOGO
+            </a>
 
-        <i class="fa-solid fa-box-open"></i>
+            <span>/</span>
 
-        Produtos
-
-      </a>
-
-
-      <a href="carrinho.html">
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-        Carrinho
-
-      </a>
-
-
-      <a href="pedidos.html">
-
-        <i class="fa-solid fa-box"></i>
-
-        Meus pedidos
-
-      </a>
-
-
-      <a href="perfil.html">
-
-        <i class="fa-regular fa-user"></i>
-
-        Meu perfil
-
-      </a>
-
-
-      <a href="suporte.html">
-
-        <i class="fa-solid fa-headset"></i>
-
-        Suporte
-
-      </a>
-
-
-    </nav>
-
-
-  </aside>
-
-
-</header>
-
-
-
-<!-- =====================================================
-     HERO DO CARRINHO
-===================================================== -->
-
-<section class="cart-hero">
-
-
-  <div class="site-container cart-hero-content">
-
-
-    <div>
-
-
-      <span class="cart-eyebrow">
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-        Seu carrinho
-
-      </span>
-
-
-      <h1>
-
-        Revise seus produtos
-
-        <span>
-          antes de finalizar.
-        </span>
-
-      </h1>
-
-
-      <p>
-
-        Confira os itens, valores e forma
-        de pagamento antes de concluir
-        sua compra.
-
-      </p>
-
-
-    </div>
-
-
-
-    <div class="cart-hero-art">
-
-
-      <div class="cart-hero-circle">
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-      </div>
-
-
-      <span class="cart-floating cart-floating-one">
-
-        <i class="fa-solid fa-lock"></i>
-
-        Compra segura
-
-      </span>
-
-
-      <span class="cart-floating cart-floating-two">
-
-        <i class="fa-solid fa-credit-card"></i>
-
-        Pagamento fácil
-
-      </span>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     ETAPAS
-===================================================== -->
-
-<section class="checkout-steps">
-
-
-  <div class="site-container checkout-steps-inner">
-
-
-    <div class="checkout-step active">
-
-
-      <span>
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Carrinho
-        </strong>
-
-        <small>
-          Revise seus itens
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="step-line"></div>
-
-
-
-    <div class="checkout-step">
-
-
-      <span>
-
-        <i class="fa-solid fa-credit-card"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Pagamento
-        </strong>
-
-        <small>
-          Escolha a forma
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="step-line"></div>
-
-
-
-    <div class="checkout-step">
-
-
-      <span>
-
-        <i class="fa-solid fa-circle-check"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Conclusão
-        </strong>
-
-        <small>
-          Pedido confirmado
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     CARRINHO
-===================================================== -->
-
-<main class="cart-main">
-
-
-  <div class="site-container">
-
-
-    <div class="cart-page-title">
-
-
-      <div>
-
-
-        <span class="section-label">
-
-          Minha compra
-
-        </span>
-
-
-        <h2>
-
-          Itens no carrinho
-
-        </h2>
-
-
-        <p>
-
-          Confira seus produtos
-          antes de finalizar.
-
-        </p>
-
-
-      </div>
-
-
-
-      <a
-        href="produtos.html"
-        class="continue-shopping"
-      >
-
-        <i class="fa-solid fa-arrow-left"></i>
-
-        Continuar comprando
-
-      </a>
-
-
-    </div>
-
-
-
-    <div class="cart-layout">
-
-
-
-      <!-- ===============================================
-           PRODUTOS DO CARRINHO
-      ================================================ -->
-
-      <section class="cart-products-card">
-
-
-        <div class="cart-card-header">
-
-
-          <div>
-
-
-            <h3>
-
-              <i class="fa-solid fa-box-open"></i>
-
-              Produtos
-
-            </h3>
-
-
-            <span>
-
-              Seus itens selecionados
-
-            </span>
-
+            <strong>
+              SMART CART
+            </strong>
 
           </div>
 
 
-          <span class="secure-label">
+          <div class="system-tag">
 
-            <i class="fa-solid fa-shield-halved"></i>
+            <span class="system-tag-dot"></span>
 
-            Compra protegida
+            COMMERCE SYSTEM
 
-          </span>
+            <span class="system-version">
+              V2.7
+            </span>
+
+          </div>
+
+
+          <h1>
+
+            Seu carrinho.
+
+            <span>
+              Elevado a outro nível.
+            </span>
+
+          </h1>
+
+
+          <p>
+
+            Controle seus produtos, estoque,
+            quantidades e compra em uma experiência
+            projetada para ser rápida, precisa e
+            diferente de qualquer loja convencional.
+
+          </p>
+
+
+          <div class="hero-metrics">
+
+
+            <div class="hero-metric">
+
+              <span>
+                ITENS
+              </span>
+
+              <strong id="heroItemCount">
+                00
+              </strong>
+
+            </div>
+
+
+            <div class="hero-metric">
+
+              <span>
+                STATUS
+              </span>
+
+              <strong class="metric-online">
+
+                <i class="fa-solid fa-circle"></i>
+
+                ONLINE
+
+              </strong>
+
+            </div>
+
+
+            <div class="hero-metric">
+
+              <span>
+                SEGURANÇA
+              </span>
+
+              <strong>
+                SSL
+              </strong>
+
+            </div>
+
+
+          </div>
 
 
         </div>
 
 
+        <!-- =================================================
+             DIGITAL DASHBOARD
+        ================================================== -->
 
-        <!--
-          MUITO IMPORTANTE
-
-          ID ORIGINAL MANTIDO
-        -->
-
-        <div
-          id="listaCarrinho"
-          class="cart-items"
-        ></div>
+        <div class="hyper-dashboard">
 
 
-
-        <div class="cart-help">
-
-
-          <span>
-
-            <i class="fa-solid fa-circle-question"></i>
-
-          </span>
+          <div class="dashboard-scanner"></div>
 
 
-          <div>
+          <div class="dashboard-corners">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+
+
+          <div class="dashboard-topline">
+
+            <span>
+              CART MONITOR
+            </span>
 
             <strong>
-
-              Dúvida sobre alguma peça?
-
+              ACTIVE
             </strong>
+
+          </div>
+
+
+          <div class="dashboard-center">
+
+
+            <div class="dashboard-ring ring-outer">
+
+              <div class="dashboard-ring ring-middle">
+
+                <div class="dashboard-ring ring-inner">
+
+
+                  <div class="dashboard-cart">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                  </div>
+
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <span class="orbit-particle particle-a"></span>
+
+            <span class="orbit-particle particle-b"></span>
+
+            <span class="orbit-particle particle-c"></span>
+
+
+          </div>
+
+
+          <div class="dashboard-data">
+
+
+            <div>
+
+              <span>
+                CART STATE
+              </span>
+
+              <strong>
+                SYNCHRONIZED
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                INVENTORY
+              </span>
+
+              <strong>
+                MONITORED
+              </strong>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROGRESS
+    ====================================================== -->
+
+    <section class="hyper-flow">
+
+      <div class="site-container">
+
+        <div class="flow-panel">
+
+
+          <div class="flow-track"></div>
+
+
+          <div class="flow-step current">
+
+            <div class="flow-node">
+              01
+            </div>
+
+            <div>
+              <span>REVISÃO</span>
+              <strong>Carrinho</strong>
+            </div>
+
+          </div>
+
+
+          <div class="flow-step">
+
+            <div class="flow-node">
+              02
+            </div>
+
+            <div>
+              <span>DADOS</span>
+              <strong>Identificação</strong>
+            </div>
+
+          </div>
+
+
+          <div class="flow-step">
+
+            <div class="flow-node">
+              03
+            </div>
+
+            <div>
+              <span>TRANSAÇÃO</span>
+              <strong>Pagamento</strong>
+            </div>
+
+          </div>
+
+
+          <div class="flow-step">
+
+            <div class="flow-node">
+              04
+            </div>
+
+            <div>
+              <span>FINAL</span>
+              <strong>Confirmado</strong>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MAIN WORKSPACE
+    ====================================================== -->
+
+    <section class="hyper-workspace">
+
+      <div class="site-container">
+
+
+        <div
+          id="cartMainLayout"
+          class="workspace-grid"
+        >
+
+
+          <!-- =================================================
+               CART MODULE
+          ================================================== -->
+
+          <section class="cart-module">
+
+
+            <div class="module-heading">
+
+
+              <div class="module-index">
+                01
+              </div>
+
+
+              <div>
+
+                <span class="module-eyebrow">
+                  INVENTORY MODULE
+                </span>
+
+                <h2>
+                  Produtos selecionados
+                </h2>
+
+                <p id="cartItemsDescription">
+                  Gerencie os componentes da sua compra.
+                </p>
+
+              </div>
+
+
+              <button
+                id="btnEsvaziarCarrinho"
+                class="module-danger-action"
+                type="button"
+              >
+
+                <i class="fa-regular fa-trash-can"></i>
+
+                LIMPAR
+
+              </button>
+
+
+            </div>
+
+
+            <div
+              id="listaCarrinho"
+              class="hyper-items"
+            ></div>
+
+
+          </section>
+
+
+          <!-- =================================================
+               COMMAND SUMMARY
+          ================================================== -->
+
+          <aside class="command-column">
+
+
+            <section class="command-summary">
+
+
+              <div class="command-glow"></div>
+
+
+              <div class="command-heading">
+
+                <div>
+
+                  <span>
+                    PURCHASE CONTROL
+                  </span>
+
+                  <h2>
+                    Checkout Console
+                  </h2>
+
+                </div>
+
+
+                <div class="command-live">
+
+                  <span></span>
+
+                  LIVE
+
+                </div>
+
+              </div>
+
+
+              <!-- CIRCULAR TOTAL -->
+
+              <div class="total-visual">
+
+
+                <div class="total-orbit">
+
+
+                  <div class="total-circle">
+
+
+                    <span>
+                      TOTAL
+                    </span>
+
+
+                    <strong id="totalCarrinho">
+                      R$ 0,00
+                    </strong>
+
+
+                    <small>
+                      BRL
+                    </small>
+
+
+                  </div>
+
+
+                </div>
+
+
+              </div>
+
+
+              <!-- DATA -->
+
+              <div class="command-data">
+
+
+                <div class="command-data-row">
+
+                  <span>
+
+                    Produtos
+
+                    <small id="resumoQuantidadeItens">
+                      0 itens
+                    </small>
+
+                  </span>
+
+                  <strong id="resumoSubtotal">
+                    R$ 0,00
+                  </strong>
+
+                </div>
+
+
+                <div class="command-data-row">
+
+                  <span>
+                    Descontos
+                  </span>
+
+                  <strong
+                    id="resumoDesconto"
+                    class="positive-data"
+                  >
+                    R$ 0,00
+                  </strong>
+
+                </div>
+
+
+                <div class="command-data-row">
+
+                  <span>
+                    Logística
+                  </span>
+
+                  <strong id="resumoFrete">
+                    Pendente
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+
+              <!-- ACTION -->
+
+              <button
+                id="btnFinalizar"
+                class="hyper-checkout"
+                type="button"
+              >
+
+                <span class="checkout-light"></span>
+
+
+                <span class="hyper-checkout-copy">
+
+                  <small>
+                    PRÓXIMA ETAPA
+                  </small>
+
+                  <strong>
+                    Continuar checkout
+                  </strong>
+
+                </span>
+
+
+                <span class="hyper-checkout-icon">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+
+              </button>
+
+
+              <div class="command-secure">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <span>
+
+                  <strong>
+                    Transação protegida
+                  </strong>
+
+                  <small>
+                    Seus dados permanecem seguros.
+                  </small>
+
+                </span>
+
+              </div>
+
+
+            </section>
+
+
+            <!-- SYSTEM STATUS -->
+
+            <section class="system-status-card">
+
+
+              <div class="system-status-header">
+
+                <span>
+                  SYSTEM STATUS
+                </span>
+
+                <strong>
+                  ALL SYSTEMS NORMAL
+                </strong>
+
+              </div>
+
+
+              <div class="status-bars">
+
+
+                <div>
+
+                  <span>
+                    Estoque
+                  </span>
+
+                  <div>
+                    <i style="width: 94%"></i>
+                  </div>
+
+                  <strong>
+                    94%
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Segurança
+                  </span>
+
+                  <div>
+                    <i style="width: 100%"></i>
+                  </div>
+
+                  <strong>
+                    100%
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Carrinho
+                  </span>
+
+                  <div>
+                    <i
+                      id="cartHealthBar"
+                      style="width: 100%"
+                    ></i>
+                  </div>
+
+                  <strong id="cartHealth">
+                    OK
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+
+            </section>
+
+
+          </aside>
+
+
+        </div>
+
+
+        <!-- =================================================
+             LOGISTICS + COUPON
+        ================================================== -->
+
+        <div
+          id="cartToolsArea"
+          class="hyper-tools-grid"
+        >
+
+
+          <article class="hyper-tool">
+
+
+            <div class="tool-number">
+              02
+            </div>
+
+
+            <div class="tool-symbol">
+
+              <i class="fa-solid fa-location-crosshairs"></i>
+
+            </div>
+
+
+            <div class="tool-copy">
+
+              <span>
+                LOGISTICS MODULE
+              </span>
+
+              <h3>
+                Defina sua localização
+              </h3>
+
+              <p>
+
+                Salve seu CEP para continuar
+                o cálculo da entrega no checkout.
+
+              </p>
+
+
+              <div class="hyper-field">
+
+
+                <i class="fa-solid fa-location-dot"></i>
+
+
+                <input
+                  id="inputCep"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="9"
+                  placeholder="00000-000"
+                >
+
+
+                <button
+                  id="btnCalcularFrete"
+                  type="button"
+                >
+
+                  ANALISAR
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+              </div>
+
+
+              <div
+                id="resultadoFrete"
+                class="system-response"
+                hidden
+              ></div>
+
+
+            </div>
+
+
+          </article>
+
+
+          <article class="hyper-tool">
+
+
+            <div class="tool-number">
+              03
+            </div>
+
+
+            <div class="tool-symbol">
+
+              <i class="fa-solid fa-ticket"></i>
+
+            </div>
+
+
+            <div class="tool-copy">
+
+              <span>
+                BENEFIT MODULE
+              </span>
+
+              <h3>
+                Aplicar código promocional
+              </h3>
+
+              <p>
+
+                Insira um código disponível
+                para sua conta ou campanha.
+
+              </p>
+
+
+              <div class="hyper-field">
+
+
+                <i class="fa-solid fa-key"></i>
+
+
+                <input
+                  id="inputCupom"
+                  type="text"
+                  placeholder="CÓDIGO"
+                >
+
+
+                <button
+                  id="btnAplicarCupom"
+                  type="button"
+                >
+
+                  VALIDAR
+
+                  <i class="fa-solid fa-check"></i>
+
+                </button>
+
+
+              </div>
+
+
+              <div
+                id="resultadoCupom"
+                class="system-response"
+                hidden
+              ></div>
+
+
+            </div>
+
+
+          </article>
+
+
+        </div>
+
+
+        <!-- =================================================
+             EMPTY
+        ================================================== -->
+
+        <section
+          id="cartEmptyState"
+          class="hyper-empty"
+          hidden
+        >
+
+
+          <div class="empty-visual">
+
+
+            <div class="empty-grid"></div>
+
+
+            <div class="empty-circle circle-one"></div>
+
+            <div class="empty-circle circle-two"></div>
+
+
+            <div class="empty-core">
+
+              <i class="fa-solid fa-cart-shopping"></i>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="empty-copy">
+
+
+            <span>
+              CART STATUS / EMPTY
+            </span>
+
+
+            <h2>
+
+              Nenhum componente
+              carregado no sistema.
+
+            </h2>
 
 
             <p>
 
-              Nosso suporte pode ajudar
-              você a confirmar se o produto
-              é adequado para seu veículo.
+              Explore o catálogo e adicione
+              produtos ao seu Smart Cart.
 
+            </p>
+
+
+            <a href="produtos.html">
+
+              ACESSAR CATÁLOGO
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+
+          </div>
+
+
+        </section>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOMMENDATIONS
+    ====================================================== -->
+
+    <section
+      id="recommendationsSection"
+      class="hyper-recommendations"
+    >
+
+      <div class="site-container">
+
+
+        <div class="recommendation-title">
+
+
+          <div class="recommendation-code">
+            REC / 04
+          </div>
+
+
+          <div>
+
+            <span>
+              SMART SUGGESTIONS
+            </span>
+
+            <h2>
+              Complete sua configuração
+            </h2>
+
+            <p>
+              Itens adicionais disponíveis no catálogo.
             </p>
 
           </div>
 
 
-          <a href="suporte.html">
+          <a href="produtos.html">
 
-            Falar com suporte
+            CATÁLOGO COMPLETO
+
+            <i class="fa-solid fa-arrow-right"></i>
 
           </a>
 
@@ -843,780 +1484,314 @@
         </div>
 
 
-      </section>
+        <div
+          id="cartRecommendations"
+          class="hyper-recommendations-grid"
+        ></div>
 
 
+      </div>
 
-      <!-- ===============================================
-           RESUMO
-      ================================================ -->
+    </section>
 
-      <aside class="cart-summary">
 
+    <!-- =====================================================
+         FINAL TRUST
+    ====================================================== -->
 
-        <div class="summary-header">
+    <section class="hyper-trust">
 
+      <div class="site-container">
 
-          <span>
 
-            <i class="fa-solid fa-receipt"></i>
+        <div class="trust-terminal">
 
-          </span>
 
-
-          <div>
-
-            <h3>
-
-              Resumo da compra
-
-            </h3>
-
-            <p>
-
-              Confira antes de finalizar
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="summary-divider"></div>
-
-
-
-        <div class="payment-box">
-
-
-          <label for="formaPagamento">
-
-            Forma de pagamento
-
-          </label>
-
-
-          <div class="payment-select-wrapper">
-
-
-            <i class="fa-solid fa-wallet"></i>
-
-
-            <!--
-              MESMO ID ORIGINAL
-            -->
-
-            <select
-              id="formaPagamento"
-            >
-
-              <option value="">
-
-                Selecione
-
-              </option>
-
-
-              <option value="Pix">
-
-                Pix
-
-              </option>
-
-
-              <option value="Cartão">
-
-                Cartão
-
-              </option>
-
-
-              <option value="Boleto">
-
-                Boleto
-
-              </option>
-
-
-            </select>
-
-
-            <i class="fa-solid fa-chevron-down"></i>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="payment-options">
-
-
-          <div>
-
-
-            <span class="payment-icon pix-icon">
-
-              <i class="fa-brands fa-pix"></i>
-
-            </span>
-
+          <div class="trust-terminal-title">
 
             <span>
-
-              <strong>
-                Pix
-              </strong>
-
-              <small>
-                Pagamento rápido
-              </small>
-
+              SYSTEM / TRUST
             </span>
+
+            <strong>
+              INFRASTRUCTURE READY
+            </strong>
+
+          </div>
+
+
+          <div class="trust-features">
+
+
+            <article>
+
+              <i class="fa-solid fa-shield-halved"></i>
+
+              <div>
+                <span>PROTECTION</span>
+                <strong>Compra segura</strong>
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <i class="fa-solid fa-warehouse"></i>
+
+              <div>
+                <span>INVENTORY</span>
+                <strong>Controle de estoque</strong>
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <i class="fa-solid fa-microchip"></i>
+
+              <div>
+                <span>PLATFORM</span>
+                <strong>Smart Commerce</strong>
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <i class="fa-solid fa-headset"></i>
+
+              <div>
+                <span>SUPPORT</span>
+                <strong>Equipe especializada</strong>
+              </div>
+
+            </article>
 
 
           </div>
 
 
-
-          <div>
-
-
-            <span class="payment-icon">
-
-              <i class="fa-regular fa-credit-card"></i>
-
-            </span>
-
-
-            <span>
-
-              <strong>
-                Cartão
-              </strong>
-
-              <small>
-                Prático e seguro
-              </small>
-
-            </span>
-
-
-          </div>
-
-
         </div>
 
 
+      </div>
 
-        <div class="summary-divider"></div>
-
-
-
-        <div class="summary-total-label">
+    </section>
 
 
-          <span>
-
-            Total da compra
-
-          </span>
+  </main>
 
 
-          <small>
+  <!-- =====================================================
+       MODAL
+  ====================================================== -->
 
-            Valor dos produtos
+  <div
+    id="modalEsvaziarCarrinho"
+    class="hyper-modal"
+  >
 
-          </small>
-
-
-        </div>
-
-
-
-        <!--
-          MESMO ID ORIGINAL
-        -->
-
-        <h4
-          id="totalCarrinho"
-          class="summary-total"
-        >
-
-          Total: R$ 0,00
-
-        </h4>
+    <div
+      id="cartModalBackdrop"
+      class="hyper-modal-backdrop"
+    ></div>
 
 
-
-        <div class="summary-security">
-
-
-          <i class="fa-solid fa-lock"></i>
+    <div class="hyper-modal-window">
 
 
-          <span>
-
-            Seus dados estão protegidos
-            durante a compra.
-
-          </span>
+      <div class="modal-scan"></div>
 
 
-        </div>
+      <div class="modal-code">
+        SYSTEM COMMAND / DELETE
+      </div>
 
 
+      <div class="modal-icon">
 
-        <!--
-          MESMO ID ORIGINAL
-        -->
+        <i class="fa-solid fa-triangle-exclamation"></i>
+
+      </div>
+
+
+      <h2>
+        Limpar Smart Cart?
+      </h2>
+
+
+      <p>
+
+        Esta ação removerá todos os
+        componentes atualmente selecionados.
+
+      </p>
+
+
+      <div class="modal-actions">
+
 
         <button
-          id="btnFinalizar"
-          class="checkout-button"
+          id="btnCancelarEsvaziar"
           type="button"
+          class="modal-back"
+        >
+          CANCELAR
+        </button>
+
+
+        <button
+          id="btnConfirmarEsvaziar"
+          type="button"
+          class="modal-delete"
         >
 
-          Finalizar compra
+          <i class="fa-regular fa-trash-can"></i>
 
-          <i class="fa-solid fa-arrow-right"></i>
+          CONFIRMAR
 
         </button>
 
 
-
-        <a
-          href="produtos.html"
-          class="summary-back"
-        >
-
-          Continuar comprando
-
-        </a>
-
-
-
-        <!--
-          MESMO ID ORIGINAL
-        -->
-
-        <div
-          id="mensagem"
-          class="cart-message"
-        ></div>
-
-
-      </aside>
+      </div>
 
 
     </div>
-
 
   </div>
 
 
-</main>
+  <!-- TOAST -->
 
+  <div
+    id="toastCarrinho"
+    class="hyper-toast"
+  ></div>
 
 
-<!-- =====================================================
-     CONFIANÇA
-===================================================== -->
+  <!-- FOOTER -->
 
-<section class="cart-trust">
+  <footer class="site-footer">
 
+    <div class="site-container footer-grid">
 
-  <div class="site-container cart-trust-grid">
+      <div class="footer-brand">
 
+        <div class="footer-logo">
 
-    <div>
+          <span>
+            <i class="fa-solid fa-gear"></i>
+          </span>
 
-
-      <span>
-
-        <i class="fa-solid fa-shield-halved"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Compra segura
-
-        </strong>
-
-        <small>
-
-          Seus dados protegidos
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div>
-
-
-      <span>
-
-        <i class="fa-solid fa-headset"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Atendimento
-
-        </strong>
-
-        <small>
-
-          Suporte quando precisar
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div>
-
-
-      <span>
-
-        <i class="fa-solid fa-box"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Acompanhe seu pedido
-
-        </strong>
-
-        <small>
-
-          Consulte pelo sistema
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     RODAPÉ
-===================================================== -->
-
-<footer class="site-footer">
-
-
-  <div class="site-container footer-grid">
-
-
-    <div class="footer-brand">
-
-
-      <div class="footer-logo">
-
-
-        <span>
-
-          <i class="fa-solid fa-gear"></i>
-
-        </span>
-
-
-        <div>
-
-
-          <strong>
-
-            Loja de Peças
-
-          </strong>
-
-
-          <small>
-
-            Autopeças & Acessórios
-
-          </small>
-
+          <div>
+            <strong>Loja de Peças</strong>
+            <small>Autopeças & Acessórios</small>
+          </div>
 
         </div>
 
+        <p>
+          Tecnologia e autopeças integradas
+          em uma experiência de compra moderna.
+        </p>
 
       </div>
 
 
+      <div class="footer-column">
 
-      <p>
+        <h3>Atendimento</h3>
 
-        Peças e acessórios automotivos
-        com qualidade, tecnologia,
-        praticidade e confiança.
-
-      </p>
-
-
-
-      <div class="social-links">
-
-
-        <a href="#">
-
-          <i class="fa-brands fa-instagram"></i>
-
+        <a href="suporte.html">
+          Suporte
         </a>
 
-
-        <a href="#">
-
-          <i class="fa-brands fa-facebook-f"></i>
-
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+          Pedidos
         </a>
 
-
-        <a href="#">
-
-          <i class="fa-brands fa-whatsapp"></i>
-
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+          Minha conta
         </a>
-
 
       </div>
 
 
-    </div>
+      <div class="footer-column">
 
+        <h3>Institucional</h3>
 
-
-    <div class="footer-column">
-
-
-      <h3>
-
-        Atendimento
-
-      </h3>
-
-
-      <a href="suporte.html">
-
-        Fale com o suporte
-
-      </a>
-
-
-      <a href="pedidos.html">
-
-        Acompanhar pedido
-
-      </a>
-
-
-      <a href="perfil.html">
-
-        Minha conta
-
-      </a>
-
-
-      <a href="#">
-
-        Trocas e devoluções
-
-      </a>
-
-
-    </div>
-
-
-
-    <div class="footer-column">
-
-
-      <h3>
-
-        Institucional
-
-      </h3>
-
-
-      <a href="#">
-
-        Sobre a loja
-
-      </a>
-
-
-      <a href="#">
-
-        Política de privacidade
-
-      </a>
-
-
-      <a href="#">
-
-        Termos de uso
-
-      </a>
-
-
-      <a href="#">
-
-        Dúvidas frequentes
-
-      </a>
-
-
-    </div>
-
-
-
-    <div class="footer-column footer-contact">
-
-
-      <h3>
-
-        Contato
-
-      </h3>
-
-
-      <p>
-
-        <i class="fa-solid fa-location-dot"></i>
-
-        <span>
-
-          Rua da sua loja, 000
-
-          <br>
-
-          Sua Cidade - UF
-
-        </span>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-phone"></i>
-
-        <a href="tel:+5500000000000">
-
-          (00) 00000-0000
-
+        <a href="#">
+          Sobre nós
         </a>
 
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-envelope"></i>
-
-        <a href="mailto:contato@sualoja.com.br">
-
-          contato@sualoja.com.br
-
+        <a href="#">
+          Privacidade
         </a>
 
-      </p>
+        <a href="#">
+          Termos
+        </a>
+
+      </div>
 
 
-      <p>
+      <div class="footer-column footer-contact">
 
-        <i class="fa-regular fa-clock"></i>
+        <h3>Contato</h3>
+
+        <p>
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Sua Cidade - UF</span>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-phone"></i>
+          <span>(00) 00000-0000</span>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-envelope"></i>
+          <span>contato@sualoja.com.br</span>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <div class="site-container footer-bottom-content">
 
         <span>
-
-          Segunda a sexta
-
-          <br>
-
-          08:00 às 18:00
-
+          © <span id="currentYear"></span>
+          Loja de Peças.
         </span>
 
-      </p>
+        <span>
+          SMART AUTOMOTIVE COMMERCE
+        </span>
 
-
-    </div>
-
-
-  </div>
-
-
-
-  <div class="footer-bottom">
-
-
-    <div class="site-container footer-bottom-content">
-
-
-      <span>
-
-        ©
-
-        <span id="currentYear"></span>
-
-        Loja de Peças.
-
-        Todos os direitos reservados.
-
-      </span>
-
-
-      <span>
-
-        Autopeças & Acessórios
-
-      </span>
-
+      </div>
 
     </div>
 
-
-  </div>
-
-
-</footer>
+  </footer>
 
 
+  <script src="js/site.js"></script>
 
-<script src="js/site.js"></script>
-
-
-<!-- SEU JS ORIGINAL -->
-
-<script src="js/carrinho.js"></script>
-
-
-<!-- BUSCA GLOBAL -->
-
-<script>
-
-  const headerSearchForm =
-    document.getElementById(
-      "headerSearchForm"
-    );
-
-
-  const headerSearchInput =
-    document.getElementById(
-      "headerSearchInput"
-    );
-
-
-  headerSearchForm
-    ?.addEventListener(
-
-      "submit",
-
-      (event) => {
-
-        event.preventDefault();
-
-
-        const termo =
-          headerSearchInput
-            ?.value
-            .trim();
-
-
-        if (termo) {
-
-          window.location.href =
-
-            `produtos.html?busca=${
-              encodeURIComponent(
-                termo
-              )
-            }`;
-
-        }
-        else {
-
-          window.location.href =
-            "produtos.html";
-
-        }
-
-      }
-
-    );
-
-
-  const mobileSearchInput =
-    document.getElementById(
-      "mobileSearchInput"
-    );
-
-
-  mobileSearchInput
-    ?.addEventListener(
-
-      "keydown",
-
-      (event) => {
-
-        if (
-          event.key === "Enter"
-        ) {
-
-          const termo =
-            mobileSearchInput
-              .value
-              .trim();
-
-
-          window.location.href =
-            termo
-              ? `produtos.html?busca=${encodeURIComponent(termo)}`
-              : "produtos.html";
-
-        }
-
-      }
-
-    );
-
-</script>
-
+  <script src="js/carrinho.js"></script>
 
 </body>
 

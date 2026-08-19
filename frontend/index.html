@@ -1,95 +1,182 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <meta
     name="description"
-    content="Loja de autopeças - encontre peças, acessórios e produtos automotivos."
+    content="Loja de Peças - Autopeças, acessórios e componentes automotivos."
   >
 
-  <title>Loja de Peças | Autopeças</title>
+  <title>
+    Loja de Peças | Autopeças & Acessórios
+  </title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- =====================================================
+       GOOGLE FONTS
+  ====================================================== -->
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet"
   >
+
+
+  <!-- =====================================================
+       FONT AWESOME
+  ====================================================== -->
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   >
 
-  <link rel="stylesheet" href="css/site.css">
-  <link rel="stylesheet" href="css/home.css">
+
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/site.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/index.css"
+  >
+
 </head>
+
 
 <body>
 
-  <!-- BARRA SUPERIOR -->
+
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
+
   <div class="top-strip">
+
     <div class="site-container top-strip-content">
 
       <span>
+
         <i class="fa-solid fa-shield-halved"></i>
+
         Compra segura
+
       </span>
 
+
       <span class="desktop-only">
+
+        <i class="fa-solid fa-box"></i>
+
+        Estoque atualizado
+
+      </span>
+
+
+      <span class="desktop-only">
+
         <i class="fa-solid fa-headset"></i>
-        Atendimento especializado
-      </span>
 
-      <span class="desktop-only">
-        <i class="fa-solid fa-truck-fast"></i>
-        Entrega para sua região
+        Atendimento especializado
+
       </span>
 
     </div>
+
   </div>
 
 
-  <!-- CABEÇALHO -->
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
   <header class="site-header">
+
 
     <div class="site-container header-main">
 
-      <!-- LOGO -->
-      <a href="index.html" class="brand">
+
+      <!-- =================================================
+           BRAND
+      ================================================== -->
+
+      <a
+        href="index.html"
+        class="brand"
+      >
 
         <img
           src="assets/images/logo.png"
-          alt="Logo Loja de Peças"
+          alt="Loja de Peças"
           class="brand-logo"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
         >
 
+
         <span class="brand-fallback">
+
           <i class="fa-solid fa-gear"></i>
+
         </span>
 
+
         <span class="brand-text">
-          <strong>Loja de Peças</strong>
-          <small>Autopeças & Acessórios</small>
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
+
         </span>
 
       </a>
 
 
-      <!-- BUSCA -->
-      <form class="header-search" id="headerSearchForm">
+
+      <!-- =================================================
+           SEARCH
+      ================================================== -->
+
+      <form
+        class="header-search"
+        id="headerSearchForm"
+      >
 
         <i class="fa-solid fa-magnifying-glass"></i>
 
         <input
           id="headerSearchInput"
           type="search"
-          placeholder="Busque por peça, marca, código ou categoria..."
           autocomplete="off"
+          placeholder="Peça, marca, código ou categoria..."
         >
 
         <button type="submit">
@@ -99,34 +186,232 @@
       </form>
 
 
-      <!-- AÇÕES -->
+
+      <!-- =================================================
+           HEADER ACTIONS
+      ================================================== -->
+
       <div class="header-actions">
 
-        <a href="pedidos.html" class="header-action desktop-action">
+
+        <a
+          href="pedidos.html"
+          class="header-action desktop-action"
+          data-auth-link
+        >
 
           <i class="fa-solid fa-box"></i>
 
           <span>
-            <small>Acompanhar</small>
-            <strong>Pedidos</strong>
+
+            <small>
+              Acompanhar
+            </small>
+
+            <strong>
+              Pedidos
+            </strong>
+
           </span>
 
         </a>
 
 
-        <a href="perfil.html" class="header-action desktop-action">
 
-          <i class="fa-regular fa-user"></i>
+        <!-- =================================================
+             VISITANTE
+        ================================================== -->
 
-          <span>
-            <small>Minha conta</small>
-            <strong>Perfil</strong>
-          </span>
+        <div
+          id="guestActions"
+          class="header-guest-actions"
+        >
 
-        </a>
+          <a
+            href="login.html"
+            class="header-login-button"
+          >
+
+            <i class="fa-regular fa-user"></i>
+
+            <span>
+
+              <small>
+                Olá, visitante
+              </small>
+
+              <strong>
+                Entrar
+              </strong>
+
+            </span>
+
+          </a>
 
 
-        <a href="carrinho.html" class="cart-button">
+          <a
+            href="cadastro.html"
+            class="header-register-button"
+          >
+            Criar conta
+          </a>
+
+        </div>
+
+
+
+        <!-- =================================================
+             USUÁRIO
+        ================================================== -->
+
+        <div
+          id="userMenuWrapper"
+          class="header-user-wrapper"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="userMenuButton"
+            class="header-user-button"
+          >
+
+            <span
+              id="headerUserAvatar"
+              class="header-user-avatar"
+              data-user-avatar
+            >
+              U
+            </span>
+
+
+            <span class="header-user-data">
+
+              <small>
+                Olá,
+              </small>
+
+              <strong
+                id="headerUserName"
+                data-user-name
+              >
+                Cliente
+              </strong>
+
+            </span>
+
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </button>
+
+
+
+          <div
+            id="userDropdown"
+            class="user-dropdown"
+          >
+
+            <div class="user-dropdown-header">
+
+              <span
+                id="dropdownAvatar"
+                class="dropdown-avatar"
+                data-user-avatar
+              >
+                U
+              </span>
+
+
+              <div>
+
+                <strong
+                  id="dropdownUserName"
+                  data-user-name
+                >
+                  Cliente
+                </strong>
+
+                <small
+                  id="dropdownUserEmail"
+                  data-user-email
+                >
+                  cliente@email.com
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <a href="perfil.html">
+
+              <i class="fa-regular fa-user"></i>
+
+              Minha conta
+
+            </a>
+
+
+            <a href="pedidos.html">
+
+              <i class="fa-solid fa-box"></i>
+
+              Meus pedidos
+
+            </a>
+
+
+            <a href="perfil.html#veiculos">
+
+              <i class="fa-solid fa-car"></i>
+
+              Meus veículos
+
+            </a>
+
+
+            <a href="suporte.html">
+
+              <i class="fa-solid fa-headset"></i>
+
+              Suporte
+
+            </a>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <button
+              id="btnLogoutGlobal"
+              class="user-dropdown-logout"
+              type="button"
+            >
+
+              <i class="fa-solid fa-right-from-bracket"></i>
+
+              Sair
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CART
+        ================================================== -->
+
+        <a
+          href="carrinho.html"
+          class="cart-button"
+        >
 
           <i class="fa-solid fa-cart-shopping"></i>
 
@@ -134,36 +419,54 @@
             Carrinho
           </span>
 
-          <span id="cartCount" class="cart-count">
+          <span
+            id="cartCount"
+            class="cart-count"
+          >
             0
           </span>
 
         </a>
 
 
-        <!-- HAMBÚRGUER -->
+
+        <!-- =================================================
+             MENU MOBILE
+        ================================================== -->
+
         <button
           id="menuToggle"
           class="menu-toggle"
           type="button"
           aria-label="Abrir menu"
         >
+
           <span></span>
           <span></span>
           <span></span>
+
         </button>
+
 
       </div>
 
     </div>
 
 
-    <!-- MENU DESKTOP -->
+
+    <!-- =====================================================
+         NAV DESKTOP
+    ====================================================== -->
+
     <nav class="desktop-nav">
 
       <div class="site-container desktop-nav-inner">
 
-        <a href="produtos.html" class="category-highlight">
+
+        <a
+          href="produtos.html"
+          class="category-highlight"
+        >
 
           <i class="fa-solid fa-table-cells-large"></i>
 
@@ -171,31 +474,41 @@
 
         </a>
 
+
         <a href="produtos.html?categoria=freios">
           Freios
         </a>
+
 
         <a href="produtos.html?categoria=motor">
           Motor
         </a>
 
+
         <a href="produtos.html?categoria=suspensao">
           Suspensão
         </a>
+
 
         <a href="produtos.html?categoria=eletrica">
           Elétrica
         </a>
 
+
         <a href="produtos.html?categoria=filtros">
           Filtros
         </a>
+
 
         <a href="produtos.html?categoria=oleos">
           Óleos e Fluidos
         </a>
 
-        <a href="suporte.html" class="nav-support">
+
+        <a
+          href="suporte.html"
+          class="nav-support"
+        >
 
           <i class="fa-regular fa-circle-question"></i>
 
@@ -203,19 +516,28 @@
 
         </a>
 
+
       </div>
 
     </nav>
 
 
-    <!-- FUNDO DO MENU MOBILE -->
+
+    <!-- =====================================================
+         MOBILE BACKDROP
+    ====================================================== -->
+
     <div
       id="mobileMenuBackdrop"
       class="mobile-menu-backdrop"
     ></div>
 
 
-    <!-- MENU MOBILE -->
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
     <aside
       id="mobileMenu"
       class="mobile-menu"
@@ -223,15 +545,26 @@
 
       <div class="mobile-menu-header">
 
+
         <div class="mobile-brand">
 
           <span class="mobile-brand-icon">
+
             <i class="fa-solid fa-gear"></i>
+
           </span>
 
+
           <div>
-            <strong>Loja de Peças</strong>
-            <small>Menu principal</small>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Menu principal
+            </small>
+
           </div>
 
         </div>
@@ -242,10 +575,13 @@
           class="menu-close"
           type="button"
         >
+
           <i class="fa-solid fa-xmark"></i>
+
         </button>
 
       </div>
+
 
 
       <div class="mobile-search">
@@ -261,7 +597,43 @@
       </div>
 
 
+
+      <div
+        id="mobileUserSummary"
+        class="mobile-user-summary"
+        hidden
+      >
+
+        <span
+          class="mobile-user-avatar"
+          data-user-avatar
+        >
+          U
+        </span>
+
+
+        <div>
+
+          <small>
+            Bem-vindo
+          </small>
+
+          <strong data-user-name>
+            Cliente
+          </strong>
+
+          <span data-user-email>
+            -
+          </span>
+
+        </div>
+
+      </div>
+
+
+
       <nav class="mobile-nav">
+
 
         <a href="index.html">
 
@@ -287,10 +659,20 @@
 
           Carrinho
 
+          <span
+            id="mobileCartCount"
+            class="mobile-cart-count"
+          >
+            0
+          </span>
+
         </a>
 
 
-        <a href="pedidos.html">
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
 
           <i class="fa-solid fa-box"></i>
 
@@ -299,7 +681,10 @@
         </a>
 
 
-        <a href="perfil.html">
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
 
           <i class="fa-regular fa-user"></i>
 
@@ -316,481 +701,519 @@
 
         </a>
 
+
       </nav>
 
+
+
+      <div
+        id="mobileGuestActions"
+        class="mobile-auth-actions"
+      >
+
+        <a
+          href="login.html"
+          class="mobile-login-button"
+        >
+          Entrar
+        </a>
+
+        <a
+          href="cadastro.html"
+          class="mobile-register-button"
+        >
+          Criar conta
+        </a>
+
+      </div>
+
+
+
+      <button
+        id="mobileLogoutButton"
+        class="mobile-logout-button"
+        type="button"
+        hidden
+      >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Sair
+
+      </button>
+
+
     </aside>
+
 
   </header>
 
 
-  <main>
 
-    <!-- HERO -->
-    <section class="hero">
+  <!-- =====================================================
+       HOME
+  ====================================================== -->
 
-      <div class="hero-glow hero-glow-one"></div>
-      <div class="hero-glow hero-glow-two"></div>
+  <main class="velocity-home">
 
-      <div class="site-container hero-content">
 
-        <!-- TEXTO -->
-        <div class="hero-copy">
+    <!-- =====================================================
+         HERO PRINCIPAL
+    ====================================================== -->
 
-          <span class="eyebrow">
+    <section class="velocity-hero">
 
-            <i class="fa-solid fa-bolt"></i>
 
-            Autopeças com tecnologia
+      <!-- BACKGROUND -->
 
-          </span>
+      <div class="hero-speed-lines"></div>
+
+      <div class="hero-streak streak-one"></div>
+
+      <div class="hero-streak streak-two"></div>
+
+      <div class="hero-streak streak-three"></div>
+
+      <div class="hero-light hero-light-a"></div>
+
+      <div class="hero-light hero-light-b"></div>
+
+
+
+      <div class="site-container velocity-hero-layout">
+
+
+        <!-- =================================================
+             HERO COPY
+        ================================================== -->
+
+        <div class="velocity-hero-copy">
+
+
+          <div class="velocity-kicker">
+
+            <span>
+              AUTOMOTIVE PERFORMANCE
+            </span>
+
+            <i></i>
+
+            <strong>
+              2026
+            </strong>
+
+          </div>
+
 
 
           <h1>
 
-            A peça certa para o seu carro,
+            Performance começa
 
             <span>
-              sem complicação.
+              na peça certa.
             </span>
 
           </h1>
 
 
+
           <p>
 
-            Encontre peças, acessórios e itens de manutenção
-            com rapidez, segurança e praticidade.
+            Encontre peças, componentes e acessórios
+            para manter seu veículo pronto para qualquer caminho.
 
           </p>
 
 
+
           <div class="hero-actions">
+
 
             <a
               href="produtos.html"
-              class="main-button primary-button"
+              class="hero-primary-action"
             >
 
-              Ver produtos
+              <span>
+
+                <small>
+                  CATÁLOGO
+                </small>
+
+                <strong>
+                  Explorar produtos
+                </strong>
+
+              </span>
+
 
               <i class="fa-solid fa-arrow-right"></i>
 
             </a>
 
 
-            <a
-              href="#buscar-veiculo"
-              class="main-button ghost-button"
+
+            <button
+              id="openHeroSearch"
+              type="button"
+              class="hero-secondary-action"
             >
 
-              Buscar pelo veículo
+              <i class="fa-solid fa-magnifying-glass"></i>
 
-            </a>
+              Buscar uma peça
+
+            </button>
+
 
           </div>
 
 
-          <div class="hero-info">
 
-            <div>
+          <!-- =================================================
+               HERO NUMBERS
+          ================================================== -->
 
-              <strong>
-                Compra segura
+          <div class="velocity-stats">
+
+
+            <article>
+
+              <strong
+                data-count-target="1200"
+                data-count-suffix="+"
+              >
+                0
               </strong>
 
               <span>
-                Proteção durante sua compra
+                PRODUTOS
               </span>
 
-            </div>
+            </article>
 
 
-            <div>
+            <article>
 
-              <strong>
-                Atendimento
+              <strong
+                data-count-target="24"
+                data-count-suffix="h"
+              >
+                0
               </strong>
 
               <span>
-                Ajuda para escolher sua peça
+                SISTEMA ONLINE
               </span>
 
-            </div>
+            </article>
 
 
-            <div>
+            <article>
 
-              <strong>
-                Variedade
+              <strong
+                data-count-target="100"
+                data-count-suffix="%"
+              >
+                0
               </strong>
 
               <span>
-                Peças e acessórios
+                COMPRA SEGURA
               </span>
 
-            </div>
+            </article>
+
 
           </div>
+
 
         </div>
 
 
-        <!-- ARTE -->
-        <div class="hero-art">
 
-          <div class="hero-ring ring-one"></div>
+        <!-- =================================================
+             HERO VISUAL
+        ================================================== -->
 
-          <div class="hero-ring ring-two"></div>
-
-
-          <div class="car-art">
-
-            <div class="car-icon">
-
-              <i class="fa-solid fa-car-side"></i>
-
-            </div>
+        <div class="velocity-hero-visual">
 
 
-            <div class="floating-card floating-one">
+          <div class="hero-visual-index">
 
-              <i class="fa-solid fa-shield"></i>
+            <span>
+              01
+            </span>
 
-              Qualidade
+            <i></i>
 
-            </div>
-
-
-            <div class="floating-card floating-two">
-
-              <i class="fa-solid fa-wrench"></i>
-
-              Compatibilidade
-
-            </div>
-
-
-            <div class="floating-card floating-three">
-
-              <i class="fa-solid fa-box"></i>
-
-              Estoque
-
-            </div>
+            <strong>
+              PERFORMANCE
+            </strong>
 
           </div>
+
+
+
+          <div class="hero-machine">
+
+
+            <div class="machine-background-text">
+
+              PARTS
+
+            </div>
+
+
+            <div class="machine-shadow"></div>
+
+
+            <!--
+              Coloque posteriormente uma imagem automotiva
+              aqui se você quiser.
+
+              Exemplo:
+              assets/images/home/hero-car.webp
+            -->
+
+            <div class="machine-main-object">
+
+
+              <div class="machine-rotor">
+
+
+                <div class="rotor-disc">
+
+                  <div class="rotor-center">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                  </div>
+
+                </div>
+
+
+                <div class="rotor-caliper">
+
+                  <span>
+                    PERFORMANCE
+                  </span>
+
+                </div>
+
+
+              </div>
+
+
+            </div>
+
+
+
+            <div class="machine-data data-top">
+
+              <small>
+                PRECISION
+              </small>
+
+              <strong>
+                ENGINEERED
+              </strong>
+
+            </div>
+
+
+
+            <div class="machine-data data-bottom">
+
+              <small>
+                INVENTORY
+              </small>
+
+              <strong>
+                ONLINE
+              </strong>
+
+            </div>
+
+
+
+            <div class="machine-line line-a"></div>
+
+            <div class="machine-line line-b"></div>
+
+
+          </div>
+
+
+
+          <div class="hero-scroll-indicator">
+
+            <span>
+              EXPLORE
+            </span>
+
+            <i class="fa-solid fa-arrow-down"></i>
+
+          </div>
+
 
         </div>
 
+
       </div>
+
 
     </section>
 
 
-    <!-- BENEFÍCIOS -->
-    <section class="benefits">
 
-      <div class="site-container benefits-grid">
+    <!-- =====================================================
+         HERO SEARCH OVERLAY
+    ====================================================== -->
 
-
-        <article class="benefit-item">
-
-          <span class="benefit-icon">
-
-            <i class="fa-solid fa-truck-fast"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Entrega prática
-            </strong>
-
-            <span>
-              Consulte opções para sua região
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <article class="benefit-item">
-
-          <span class="benefit-icon">
-
-            <i class="fa-solid fa-credit-card"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Pagamento facilitado
-            </strong>
-
-            <span>
-              Pix, cartão ou boleto
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <article class="benefit-item">
-
-          <span class="benefit-icon">
-
-            <i class="fa-solid fa-headset"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Suporte especializado
-            </strong>
-
-            <span>
-              Conte com nosso atendimento
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <article class="benefit-item">
-
-          <span class="benefit-icon">
-
-            <i class="fa-solid fa-lock"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Ambiente seguro
-            </strong>
-
-            <span>
-              Seus dados protegidos
-            </span>
-
-          </div>
-
-        </article>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- BUSCAR POR VEÍCULO -->
     <section
-      class="section"
-      id="buscar-veiculo"
+      id="heroSearchPanel"
+      class="hero-search-panel"
+      hidden
     >
+
 
       <div class="site-container">
 
-        <div class="vehicle-finder">
+
+        <div class="hero-search-inner">
 
 
-          <div class="vehicle-intro">
+          <div class="hero-search-heading">
 
-            <span class="section-label">
-              Encontre mais rápido
+            <span>
+              SMART SEARCH
             </span>
 
             <h2>
-              Qual é o seu veículo?
+              O que seu veículo precisa?
+            </h2>
+
+          </div>
+
+
+
+          <form
+            id="heroSmartSearchForm"
+            class="hero-smart-search"
+          >
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              id="heroSmartSearchInput"
+              type="search"
+              placeholder="Ex.: pastilha de freio, filtro, vela, Bosch..."
+              autocomplete="off"
+            >
+
+            <button type="submit">
+
+              Buscar
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+          </form>
+
+
+
+          <button
+            id="closeHeroSearch"
+            class="hero-search-close"
+            type="button"
+          >
+
+            <i class="fa-solid fa-xmark"></i>
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CATEGORY RAIL
+    ====================================================== -->
+
+    <section class="home-categories">
+
+
+      <div class="site-container">
+
+
+        <div class="section-heading split-heading">
+
+
+          <div class="section-number">
+
+            02
+
+          </div>
+
+
+          <div>
+
+            <span>
+              COMPONENT SYSTEM
+            </span>
+
+            <h2>
+              Encontre pelo sistema do veículo.
             </h2>
 
             <p>
 
-              Informe seu veículo para facilitar
-              a busca por peças compatíveis.
+              Navegue diretamente para a categoria
+              que você precisa.
 
             </p>
 
           </div>
 
 
-          <form
-            id="vehicleForm"
-            class="vehicle-form"
-          >
+          <a href="produtos.html">
 
-
-            <div class="vehicle-field">
-
-              <label for="vehicleBrand">
-                Marca
-              </label>
-
-              <select id="vehicleBrand">
-
-                <option value="">
-                  Selecione
-                </option>
-
-                <option>
-                  Chevrolet
-                </option>
-
-                <option>
-                  Fiat
-                </option>
-
-                <option>
-                  Ford
-                </option>
-
-                <option>
-                  Honda
-                </option>
-
-                <option>
-                  Hyundai
-                </option>
-
-                <option>
-                  Renault
-                </option>
-
-                <option>
-                  Toyota
-                </option>
-
-                <option>
-                  Volkswagen
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <div class="vehicle-field">
-
-              <label for="vehicleModel">
-                Modelo
-              </label>
-
-              <input
-                id="vehicleModel"
-                type="text"
-                placeholder="Ex.: Onix"
-              >
-
-            </div>
-
-
-            <div class="vehicle-field">
-
-              <label for="vehicleYear">
-                Ano
-              </label>
-
-              <input
-                id="vehicleYear"
-                type="number"
-                placeholder="Ex.: 2022"
-              >
-
-            </div>
-
-
-            <button
-              type="submit"
-              class="vehicle-button"
-            >
-
-              <i class="fa-solid fa-magnifying-glass"></i>
-
-              Buscar peças
-
-            </button>
-
-
-          </form>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- CATEGORIAS -->
-    <section class="section section-soft">
-
-      <div class="site-container">
-
-
-        <div class="section-heading">
-
-          <div>
-
-            <span class="section-label">
-              Categorias
-            </span>
-
-            <h2>
-              O que seu carro precisa?
-            </h2>
-
-          </div>
-
-
-          <a
-            href="produtos.html"
-            class="section-link"
-          >
-
-            Ver todos
+            VER CATÁLOGO
 
             <i class="fa-solid fa-arrow-right"></i>
 
           </a>
 
+
         </div>
 
 
-        <div class="category-grid">
+
+        <div class="category-rail">
 
 
-          <a
-            href="produtos.html?categoria=freios"
-            class="category-card"
-          >
-
-            <span class="category-icon">
-
-              <i class="fa-solid fa-compact-disc"></i>
-
-            </span>
-
-            <strong>
-              Freios
-            </strong>
-
-            <small>
-              Pastilhas, discos e componentes
-            </small>
-
-          </a>
-
+          <!-- MOTOR -->
 
           <a
             href="produtos.html?categoria=motor"
-            class="category-card"
+            class="velocity-category"
+            data-category="motor"
           >
+
+            <span class="category-code">
+              01
+            </span>
+
 
             <span class="category-icon">
 
@@ -798,43 +1221,152 @@
 
             </span>
 
-            <strong>
-              Motor
-            </strong>
 
-            <small>
-              Peças e componentes
-            </small>
+            <span class="category-content">
 
-          </a>
+              <small>
+                POWER UNIT
+              </small>
 
+              <strong>
+                Motor
+              </strong>
 
-          <a
-            href="produtos.html?categoria=suspensao"
-            class="category-card"
-          >
-
-            <span class="category-icon">
-
-              <i class="fa-solid fa-car-burst"></i>
+              <span>
+                Componentes para desempenho e funcionamento.
+              </span>
 
             </span>
 
-            <strong>
-              Suspensão
-            </strong>
 
-            <small>
-              Conforto e estabilidade
-            </small>
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
 
           </a>
 
 
+
+          <!-- FREIOS -->
+
+          <a
+            href="produtos.html?categoria=freios"
+            class="velocity-category"
+            data-category="freios"
+          >
+
+            <span class="category-code">
+              02
+            </span>
+
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-compact-disc"></i>
+
+            </span>
+
+
+            <span class="category-content">
+
+              <small>
+                BRAKING SYSTEM
+              </small>
+
+              <strong>
+                Freios
+              </strong>
+
+              <span>
+                Segurança e controle para seu veículo.
+              </span>
+
+            </span>
+
+
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
+
+          </a>
+
+
+
+          <!-- SUSPENSÃO -->
+
+          <a
+            href="produtos.html?categoria=suspensao"
+            class="velocity-category"
+            data-category="suspensao"
+          >
+
+            <span class="category-code">
+              03
+            </span>
+
+
+            <span class="category-icon">
+
+              <i class="fa-solid fa-car-side"></i>
+
+            </span>
+
+
+            <span class="category-content">
+
+              <small>
+                CHASSIS SYSTEM
+              </small>
+
+              <strong>
+                Suspensão
+              </strong>
+
+              <span>
+                Estabilidade, conforto e dirigibilidade.
+              </span>
+
+            </span>
+
+
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
+
+          </a>
+
+
+
+          <!-- ELÉTRICA -->
+
           <a
             href="produtos.html?categoria=eletrica"
-            class="category-card"
+            class="velocity-category"
+            data-category="eletrica"
           >
+
+            <span class="category-code">
+              04
+            </span>
+
 
             <span class="category-icon">
 
@@ -842,21 +1374,50 @@
 
             </span>
 
-            <strong>
-              Elétrica
-            </strong>
 
-            <small>
-              Baterias e componentes
-            </small>
+            <span class="category-content">
+
+              <small>
+                ELECTRIC SYSTEM
+              </small>
+
+              <strong>
+                Elétrica
+              </strong>
+
+              <span>
+                Componentes elétricos e eletrônicos.
+              </span>
+
+            </span>
+
+
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
 
           </a>
 
 
+
+          <!-- FILTROS -->
+
           <a
             href="produtos.html?categoria=filtros"
-            class="category-card"
+            class="velocity-category"
+            data-category="filtros"
           >
+
+            <span class="category-code">
+              05
+            </span>
+
 
             <span class="category-icon">
 
@@ -864,236 +1425,889 @@
 
             </span>
 
-            <strong>
-              Filtros
-            </strong>
 
-            <small>
-              Ar, óleo e combustível
-            </small>
+            <span class="category-content">
+
+              <small>
+                FILTRATION
+              </small>
+
+              <strong>
+                Filtros
+              </strong>
+
+              <span>
+                Proteção para motor, ar e combustível.
+              </span>
+
+            </span>
+
+
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
 
           </a>
 
+
+
+          <!-- ÓLEOS -->
 
           <a
             href="produtos.html?categoria=oleos"
-            class="category-card"
+            class="velocity-category"
+            data-category="oleos"
           >
+
+            <span class="category-code">
+              06
+            </span>
+
 
             <span class="category-icon">
 
-              <i class="fa-solid fa-oil-can"></i>
+              <i class="fa-solid fa-droplet"></i>
 
             </span>
 
-            <strong>
-              Óleos
-            </strong>
 
-            <small>
-              Lubrificantes e fluidos
-            </small>
+            <span class="category-content">
+
+              <small>
+                LUBRICATION
+              </small>
+
+              <strong>
+                Óleos & Fluidos
+              </strong>
+
+              <span>
+                Lubrificação e proteção para o sistema.
+              </span>
+
+            </span>
+
+
+            <span class="category-arrow">
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </span>
+
+
+            <i class="category-line"></i>
+
 
           </a>
 
 
         </div>
 
+
       </div>
+
 
     </section>
 
 
-    <!-- BANNER -->
-    <section class="section">
 
-      <div class="site-container">
+    <!-- =====================================================
+         PRODUCTS SHOWCASE
+    ====================================================== -->
 
-        <div class="promo-banner">
-
-
-          <div class="promo-content">
-
-            <span>
-              OFERTAS ESPECIAIS
-            </span>
-
-            <h2>
-              Seu carro merece manutenção de qualidade.
-            </h2>
-
-            <p>
-
-              Confira nosso catálogo e encontre
-              as peças que precisa em poucos cliques.
-
-            </p>
-
-            <a
-              href="produtos.html"
-              class="main-button light-button"
-            >
-
-              Explorar catálogo
-
-              <i class="fa-solid fa-arrow-right"></i>
-
-            </a>
-
-          </div>
+    <section class="home-showcase">
 
 
-          <div class="promo-art">
+      <div class="showcase-background-word">
 
-            <div class="promo-circle"></div>
-
-            <i class="fa-solid fa-gauge-high"></i>
-
-          </div>
-
-
-        </div>
+        PERFORMANCE
 
       </div>
 
-    </section>
 
-
-    <!-- ATALHOS -->
-    <section class="section section-soft">
 
       <div class="site-container">
 
 
-        <div class="section-heading">
+        <div class="section-heading showcase-heading">
+
+
+          <div class="section-number">
+
+            03
+
+          </div>
+
 
           <div>
 
-            <span class="section-label">
-              Acesso rápido
+            <span>
+              SELECTED COMPONENTS
             </span>
 
             <h2>
-              Continue de onde parou
+              Destaques do catálogo.
+            </h2>
+
+            <p>
+              Produtos disponíveis em estoque selecionados para você.
+            </p>
+
+          </div>
+
+
+          <div class="showcase-controls">
+
+
+            <button
+              id="featuredPrev"
+              type="button"
+              aria-label="Produto anterior"
+            >
+
+              <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+
+            <button
+              id="featuredNext"
+              type="button"
+              aria-label="Próximo produto"
+            >
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <div
+          id="featuredProducts"
+          class="featured-products"
+        >
+
+
+          <!--
+             HOME.JS PREENCHE OS PRODUTOS
+          -->
+
+
+        </div>
+
+
+
+        <div class="showcase-bottom">
+
+
+          <span>
+
+            <i class="fa-solid fa-circle"></i>
+
+            ESTOQUE CONECTADO
+
+          </span>
+
+
+          <a href="produtos.html">
+
+            Explorar todos os produtos
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EXPERIENCE SECTION
+    ====================================================== -->
+
+    <section class="home-experience">
+
+
+      <div class="site-container experience-layout">
+
+
+        <!-- =================================================
+             VISUAL
+        ================================================== -->
+
+        <div class="experience-visual">
+
+
+          <div class="experience-track">
+
+
+            <div class="experience-track-line"></div>
+
+
+            <div class="experience-node node-one">
+
+              <span>
+                01
+              </span>
+
+            </div>
+
+
+            <div class="experience-node node-two">
+
+              <span>
+                02
+              </span>
+
+            </div>
+
+
+            <div class="experience-node node-three">
+
+              <span>
+                03
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="experience-object">
+
+
+            <span class="experience-object-index">
+              SMART COMMERCE / 04
+            </span>
+
+
+            <div class="experience-object-core">
+
+              <i class="fa-solid fa-car-rear"></i>
+
+            </div>
+
+
+            <div class="experience-object-data left">
+
+              <small>
+                INVENTORY
+              </small>
+
+              <strong>
+                CONNECTED
+              </strong>
+
+            </div>
+
+
+            <div class="experience-object-data right">
+
+              <small>
+                CHECKOUT
+              </small>
+
+              <strong>
+                SECURE
+              </strong>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="experience-content">
+
+
+          <span class="experience-label">
+
+            04 / SMART EXPERIENCE
+
+          </span>
+
+
+          <h2>
+
+            Mais do que uma loja.
+
+            <span>
+              Um sistema de compra.
+            </span>
+
+          </h2>
+
+
+          <p>
+
+            Do catálogo ao checkout, cada etapa foi
+            projetada para oferecer uma experiência
+            rápida, organizada e intuitiva.
+
+          </p>
+
+
+
+          <div class="experience-features">
+
+
+            <article>
+
+
+              <span class="experience-feature-number">
+                01
+              </span>
+
+
+              <div>
+
+                <strong>
+                  Estoque conectado
+                </strong>
+
+                <p>
+                  Quantidades e disponibilidade integradas ao catálogo.
+                </p>
+
+              </div>
+
+
+            </article>
+
+
+
+            <article>
+
+
+              <span class="experience-feature-number">
+                02
+              </span>
+
+
+              <div>
+
+                <strong>
+                  Smart Cart
+                </strong>
+
+                <p>
+                  Controle de quantidade, estoque e compra em tempo real.
+                </p>
+
+              </div>
+
+
+            </article>
+
+
+
+            <article>
+
+
+              <span class="experience-feature-number">
+                03
+              </span>
+
+
+              <div>
+
+                <strong>
+                  Checkout inteligente
+                </strong>
+
+                <p>
+                  Finalização guiada e segura para o cliente.
+                </p>
+
+              </div>
+
+
+            </article>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BRANDS
+    ====================================================== -->
+
+    <section class="home-brands">
+
+
+      <div class="site-container">
+
+
+        <div class="brands-heading">
+
+          <span>
+            MARCAS / COMPONENTES
+          </span>
+
+          <strong>
+            Tecnologia de marcas reconhecidas.
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="brands-marquee">
+
+
+        <div class="brands-track">
+
+
+          <span>
+            BOSCH
+          </span>
+
+          <i></i>
+
+
+          <span>
+            NGK
+          </span>
+
+          <i></i>
+
+
+          <span>
+            SKF
+          </span>
+
+          <i></i>
+
+
+          <span>
+            MAHLE
+          </span>
+
+          <i></i>
+
+
+          <span>
+            TRW
+          </span>
+
+          <i></i>
+
+
+          <span>
+            NAKATA
+          </span>
+
+          <i></i>
+
+
+          <span>
+            MANN FILTER
+          </span>
+
+          <i></i>
+
+
+          <span>
+            BOSCH
+          </span>
+
+          <i></i>
+
+
+          <span>
+            NGK
+          </span>
+
+          <i></i>
+
+
+          <span>
+            SKF
+          </span>
+
+          <i></i>
+
+
+          <span>
+            MAHLE
+          </span>
+
+          <i></i>
+
+
+          <span>
+            TRW
+          </span>
+
+          <i></i>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TRUST / BENEFITS
+    ====================================================== -->
+
+    <section class="home-benefits">
+
+
+      <div class="site-container">
+
+
+        <div class="benefits-head">
+
+
+          <div>
+
+            <span>
+              05 / INFRASTRUCTURE
+            </span>
+
+            <h2>
+              Tudo preparado para sua compra.
             </h2>
 
           </div>
 
+
+          <p>
+
+            Estrutura de compra pensada para oferecer
+            praticidade, segurança e controle.
+
+          </p>
+
+
         </div>
 
 
-        <div class="quick-grid">
+
+        <div class="benefits-grid">
 
 
-          <a
-            href="pedidos.html"
-            class="quick-card"
-          >
+          <article>
 
-            <span class="quick-icon">
 
-              <i class="fa-solid fa-box"></i>
+            <div class="benefit-icon">
 
-            </span>
-
-            <div>
-
-              <strong>
-                Meus pedidos
-              </strong>
-
-              <p>
-                Acompanhe suas compras.
-              </p>
+              <i class="fa-solid fa-shield-halved"></i>
 
             </div>
 
-            <i class="fa-solid fa-chevron-right"></i>
 
-          </a>
-
-
-          <a
-            href="perfil.html"
-            class="quick-card"
-          >
-
-            <span class="quick-icon">
-
-              <i class="fa-regular fa-user"></i>
-
+            <span class="benefit-code">
+              SEC / 01
             </span>
 
-            <div>
 
-              <strong>
-                Minha conta
-              </strong>
+            <h3>
+              Compra segura
+            </h3>
 
-              <p>
-                Gerencie seus dados.
-              </p>
+
+            <p>
+
+              Fluxo protegido e dados tratados
+              com responsabilidade.
+
+            </p>
+
+
+            <i class="benefit-decoration"></i>
+
+
+          </article>
+
+
+
+          <article>
+
+
+            <div class="benefit-icon">
+
+              <i class="fa-solid fa-warehouse"></i>
 
             </div>
 
-            <i class="fa-solid fa-chevron-right"></i>
 
-          </a>
+            <span class="benefit-code">
+              INV / 02
+            </span>
 
 
-          <a
-            href="suporte.html"
-            class="quick-card"
-          >
+            <h3>
+              Estoque monitorado
+            </h3>
 
-            <span class="quick-icon">
+
+            <p>
+
+              Produtos sincronizados com
+              disponibilidade de estoque.
+
+            </p>
+
+
+            <i class="benefit-decoration"></i>
+
+
+          </article>
+
+
+
+          <article>
+
+
+            <div class="benefit-icon">
+
+              <i class="fa-solid fa-cart-shopping"></i>
+
+            </div>
+
+
+            <span class="benefit-code">
+              CRT / 03
+            </span>
+
+
+            <h3>
+              Smart Cart
+            </h3>
+
+
+            <p>
+
+              Controle inteligente de itens,
+              quantidade e resumo da compra.
+
+            </p>
+
+
+            <i class="benefit-decoration"></i>
+
+
+          </article>
+
+
+
+          <article>
+
+
+            <div class="benefit-icon">
 
               <i class="fa-solid fa-headset"></i>
 
-            </span>
-
-            <div>
-
-              <strong>
-                Precisa de ajuda?
-              </strong>
-
-              <p>
-                Fale com nosso suporte.
-              </p>
-
             </div>
 
-            <i class="fa-solid fa-chevron-right"></i>
 
-          </a>
+            <span class="benefit-code">
+              SUP / 04
+            </span>
+
+
+            <h3>
+              Atendimento
+            </h3>
+
+
+            <p>
+
+              Suporte para ajudar você
+              durante a experiência de compra.
+
+            </p>
+
+
+            <i class="benefit-decoration"></i>
+
+
+          </article>
 
 
         </div>
 
+
       </div>
 
+
     </section>
+
+
+
+    <!-- =====================================================
+         CTA
+    ====================================================== -->
+
+    <section class="home-final-cta">
+
+
+      <div class="cta-speed-background"></div>
+
+
+      <div class="site-container final-cta-layout">
+
+
+        <div class="final-cta-index">
+
+          <span>
+            READY
+          </span>
+
+          <strong>
+            06
+          </strong>
+
+        </div>
+
+
+
+        <div class="final-cta-copy">
+
+
+          <span>
+            START YOUR SEARCH
+          </span>
+
+
+          <h2>
+
+            A próxima peça
+
+            <strong>
+              está aqui.
+            </strong>
+
+          </h2>
+
+
+          <p>
+
+            Explore nosso catálogo e encontre
+            o componente certo para seu veículo.
+
+          </p>
+
+
+        </div>
+
+
+
+        <a
+          href="produtos.html"
+          class="final-cta-action"
+        >
+
+          <span>
+
+            <small>
+              COMEÇAR
+            </small>
+
+            <strong>
+              Abrir catálogo
+            </strong>
+
+          </span>
+
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
 
   </main>
 
 
-  <!-- RODAPÉ -->
+
+  <!-- =====================================================
+       HOME TOAST
+  ====================================================== -->
+
+  <div
+    id="homeToast"
+    class="home-toast"
+  ></div>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
   <footer class="site-footer">
+
 
     <div class="site-container footer-grid">
 
 
-      <!-- EMPRESA -->
       <div class="footer-brand">
 
+
         <div class="footer-logo">
+
 
           <span>
 
             <i class="fa-solid fa-gear"></i>
 
           </span>
+
 
           <div>
 
@@ -1107,91 +2321,84 @@
 
           </div>
 
+
         </div>
 
 
         <p>
 
-          Peças e acessórios automotivos
-          com qualidade, tecnologia,
-          praticidade e confiança.
+          Tecnologia e autopeças integradas
+          em uma experiência de compra moderna.
 
         </p>
 
 
-        <div class="social-links">
-
-          <a href="#">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-
-          <a href="#">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-
-          <a href="#">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-
-        </div>
-
       </div>
 
 
-      <!-- ATENDIMENTO -->
+
       <div class="footer-column">
+
 
         <h3>
           Atendimento
         </h3>
 
+
         <a href="suporte.html">
-          Fale com o suporte
+          Suporte
         </a>
 
-        <a href="pedidos.html">
-          Acompanhar pedido
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+          Pedidos
         </a>
 
-        <a href="perfil.html">
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
           Minha conta
         </a>
 
-        <a href="#">
-          Trocas e devoluções
-        </a>
 
       </div>
 
 
-      <!-- INSTITUCIONAL -->
+
       <div class="footer-column">
+
 
         <h3>
           Institucional
         </h3>
 
-        <a href="#">
-          Sobre a loja
-        </a>
 
         <a href="#">
-          Política de privacidade
+          Sobre nós
         </a>
 
-        <a href="#">
-          Termos de uso
-        </a>
 
         <a href="#">
-          Dúvidas frequentes
+          Privacidade
         </a>
+
+
+        <a href="#">
+          Termos
+        </a>
+
 
       </div>
 
 
-      <!-- CONTATO -->
+
       <div class="footer-column footer-contact">
+
 
         <h3>
           Contato
@@ -1203,7 +2410,6 @@
           <i class="fa-solid fa-location-dot"></i>
 
           <span>
-            Rua da sua loja, 000<br>
             Sua Cidade - UF
           </span>
 
@@ -1214,11 +2420,9 @@
 
           <i class="fa-solid fa-phone"></i>
 
-          <a href="tel:+5500000000000">
-
+          <span>
             (00) 00000-0000
-
-          </a>
+          </span>
 
         </p>
 
@@ -1227,62 +2431,60 @@
 
           <i class="fa-solid fa-envelope"></i>
 
-          <a href="mailto:contato@sualoja.com.br">
-
-            contato@sualoja.com.br
-
-          </a>
-
-        </p>
-
-
-        <p>
-
-          <i class="fa-regular fa-clock"></i>
-
           <span>
-
-            Segunda a sexta<br>
-            08:00 às 18:00
-
+            contato@sualoja.com.br
           </span>
 
         </p>
 
+
       </div>
 
 
     </div>
+
 
 
     <div class="footer-bottom">
 
+
       <div class="site-container footer-bottom-content">
 
+
         <span>
 
-          © <span id="currentYear"></span>
+          ©
+          <span id="currentYear"></span>
+
           Loja de Peças.
-          Todos os direitos reservados.
 
         </span>
 
 
         <span>
-
-          Autopeças & Acessórios
-
+          AUTOMOTIVE COMMERCE SYSTEM
         </span>
+
 
       </div>
 
+
     </div>
+
 
   </footer>
 
 
+
+  <!-- =====================================================
+       JS
+  ====================================================== -->
+
   <script src="js/site.js"></script>
-  <script src="js/home.js"></script>
+
+  <script src="js/index.js"></script>
+
 
 </body>
+
 </html>

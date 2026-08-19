@@ -12,11 +12,17 @@
 
   <meta
     name="description"
-    content="Checkout e pagamento da Loja de Peças."
+    content="Finalize sua compra com segurança."
   >
 
-  <title>Checkout | Loja de Peças</title>
+  <title>
+    Checkout | Loja de Peças
+  </title>
 
+
+  <!-- =====================================================
+       FONTES
+  ====================================================== -->
 
   <link
     rel="preconnect"
@@ -30,10 +36,14 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet"
   >
 
+
+  <!-- =====================================================
+       FONT AWESOME
+  ====================================================== -->
 
   <link
     rel="stylesheet"
@@ -41,17 +51,14 @@
   >
 
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
-
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
 
   <link
     rel="stylesheet"
     href="css/site.css"
   >
-
 
   <link
     rel="stylesheet"
@@ -64,342 +71,2522 @@
 <body>
 
 
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
 
-<!-- =====================================================
-     TOPO
-===================================================== -->
+  <div class="top-strip">
 
-<div class="top-strip">
-
-  <div class="site-container top-strip-content">
-
-    <span>
-
-      <i class="fa-solid fa-shield-halved"></i>
-
-      Compra segura
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-lock"></i>
-
-      Ambiente protegido
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-headset"></i>
-
-      Suporte disponível
-
-    </span>
-
-  </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="site-header">
-
-
-  <div class="site-container header-main">
-
-
-    <a
-      href="index.html"
-      class="brand"
-    >
-
-      <img
-        src="assets/images/logo.png"
-        alt="Logo Loja de Peças"
-        class="brand-logo"
-
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-
-      <span class="brand-fallback">
-
-        <i class="fa-solid fa-gear"></i>
-
-      </span>
-
-
-      <span class="brand-text">
-
-        <strong>
-          Loja de Peças
-        </strong>
-
-        <small>
-          Autopeças & Acessórios
-        </small>
-
-      </span>
-
-    </a>
-
-
-
-    <div class="checkout-header-message">
-
-      <i class="fa-solid fa-shield-halved"></i>
+    <div class="site-container top-strip-content">
 
       <span>
 
-        <strong>
-          Checkout seguro
-        </strong>
+        <i class="fa-solid fa-shield-halved"></i>
 
-        <small>
-          Seus dados protegidos
-        </small>
+        Compra segura
+
+      </span>
+
+
+      <span class="desktop-only">
+
+        <i class="fa-solid fa-lock"></i>
+
+        Dados protegidos
+
+      </span>
+
+
+      <span class="desktop-only">
+
+        <i class="fa-solid fa-headset"></i>
+
+        Atendimento especializado
 
       </span>
 
     </div>
 
-
-
-    <div class="header-actions">
-
-
-      <a
-        href="carrinho.html"
-        class="checkout-back-header"
-      >
-
-        <i class="fa-solid fa-arrow-left"></i>
-
-        Voltar ao carrinho
-
-      </a>
-
-
-      <button
-        id="menuToggle"
-        class="menu-toggle"
-        type="button"
-      >
-
-        <span></span>
-        <span></span>
-        <span></span>
-
-      </button>
-
-
-    </div>
-
-
   </div>
 
 
 
-  <!-- MOBILE -->
+  <!-- =====================================================
+       HEADER GLOBAL
+  ====================================================== -->
 
-  <div
-    id="mobileMenuBackdrop"
-    class="mobile-menu-backdrop"
-  ></div>
-
-
-  <aside
-    id="mobileMenu"
-    class="mobile-menu"
-  >
+  <header class="site-header">
 
 
-    <div class="mobile-menu-header">
+    <div class="site-container header-main">
 
 
-      <div class="mobile-brand">
+      <!-- LOGO -->
 
-        <span class="mobile-brand-icon">
+      <a
+        href="index.html"
+        class="brand"
+      >
+
+        <img
+          src="assets/images/logo.png"
+          alt="Loja de Peças"
+          class="brand-logo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+
+        <span class="brand-fallback">
 
           <i class="fa-solid fa-gear"></i>
 
         </span>
 
 
-        <div>
+        <span class="brand-text">
 
           <strong>
             Loja de Peças
           </strong>
 
           <small>
-            Checkout
+            Autopeças & Acessórios
           </small>
+
+        </span>
+
+      </a>
+
+
+
+      <!-- BUSCA -->
+
+      <form
+        class="header-search"
+        id="headerSearchForm"
+      >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="headerSearchInput"
+          type="search"
+          placeholder="Peça, marca, código ou categoria..."
+          autocomplete="off"
+        >
+
+        <button type="submit">
+
+          Buscar
+
+        </button>
+
+      </form>
+
+
+
+      <!-- AÇÕES -->
+
+      <div class="header-actions">
+
+
+        <a
+          href="pedidos.html"
+          class="header-action desktop-action"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+
+            <small>
+              Acompanhar
+            </small>
+
+            <strong>
+              Pedidos
+            </strong>
+
+          </span>
+
+        </a>
+
+
+
+        <!-- VISITANTE -->
+
+        <div
+          id="guestActions"
+          class="header-guest-actions"
+        >
+
+          <a
+            href="login.html"
+            class="header-login-button"
+          >
+
+            <i class="fa-regular fa-user"></i>
+
+            <span>
+
+              <small>
+                Olá, visitante
+              </small>
+
+              <strong>
+                Entrar
+              </strong>
+
+            </span>
+
+          </a>
+
+
+          <a
+            href="cadastro.html"
+            class="header-register-button"
+          >
+
+            Criar conta
+
+          </a>
+
+        </div>
+
+
+
+        <!-- USUÁRIO -->
+
+        <div
+          id="userMenuWrapper"
+          class="header-user-wrapper"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="userMenuButton"
+            class="header-user-button"
+          >
+
+            <span
+              id="headerUserAvatar"
+              class="header-user-avatar"
+              data-user-avatar
+            >
+              U
+            </span>
+
+
+            <span class="header-user-data">
+
+              <small>
+                Olá,
+              </small>
+
+              <strong
+                id="headerUserName"
+                data-user-name
+              >
+                Cliente
+              </strong>
+
+            </span>
+
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </button>
+
+
+
+          <div
+            id="userDropdown"
+            class="user-dropdown"
+          >
+
+            <div class="user-dropdown-header">
+
+
+              <span
+                id="dropdownAvatar"
+                class="dropdown-avatar"
+                data-user-avatar
+              >
+                U
+              </span>
+
+
+              <div>
+
+                <strong
+                  id="dropdownUserName"
+                  data-user-name
+                >
+                  Cliente
+                </strong>
+
+                <small
+                  id="dropdownUserEmail"
+                  data-user-email
+                >
+                  cliente@email.com
+                </small>
+
+              </div>
+
+
+            </div>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <a href="perfil.html">
+
+              <i class="fa-regular fa-user"></i>
+
+              Minha conta
+
+            </a>
+
+
+            <a href="pedidos.html">
+
+              <i class="fa-solid fa-box"></i>
+
+              Meus pedidos
+
+            </a>
+
+
+            <a href="perfil.html#veiculos">
+
+              <i class="fa-solid fa-car"></i>
+
+              Meus veículos
+
+            </a>
+
+
+            <a href="suporte.html">
+
+              <i class="fa-solid fa-headset"></i>
+
+              Suporte
+
+            </a>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <button
+              id="btnLogoutGlobal"
+              type="button"
+              class="user-dropdown-logout"
+            >
+
+              <i class="fa-solid fa-right-from-bracket"></i>
+
+              Sair
+
+            </button>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CARRINHO -->
+
+        <a
+          href="carrinho.html"
+          class="cart-button"
+        >
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span class="cart-text">
+            Carrinho
+          </span>
+
+          <span
+            id="cartCount"
+            class="cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+
+        <!-- MENU MOBILE -->
+
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         NAV DESKTOP
+    ====================================================== -->
+
+    <nav class="desktop-nav">
+
+      <div class="site-container desktop-nav-inner">
+
+
+        <a
+          href="produtos.html"
+          class="category-highlight"
+        >
+
+          <i class="fa-solid fa-table-cells-large"></i>
+
+          Todos os produtos
+
+        </a>
+
+
+        <a href="produtos.html?categoria=freios">
+          Freios
+        </a>
+
+        <a href="produtos.html?categoria=motor">
+          Motor
+        </a>
+
+        <a href="produtos.html?categoria=suspensao">
+          Suspensão
+        </a>
+
+        <a href="produtos.html?categoria=eletrica">
+          Elétrica
+        </a>
+
+        <a href="produtos.html?categoria=filtros">
+          Filtros
+        </a>
+
+        <a href="produtos.html?categoria=oleos">
+          Óleos e Fluidos
+        </a>
+
+
+        <a
+          href="suporte.html"
+          class="nav-support"
+        >
+
+          <i class="fa-regular fa-circle-question"></i>
+
+          Suporte
+
+        </a>
+
+
+      </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MOBILE
+    ====================================================== -->
+
+    <div
+      id="mobileMenuBackdrop"
+      class="mobile-menu-backdrop"
+    ></div>
+
+
+    <aside
+      id="mobileMenu"
+      class="mobile-menu"
+    >
+
+
+      <div class="mobile-menu-header">
+
+
+        <div class="mobile-brand">
+
+
+          <span class="mobile-brand-icon">
+
+            <i class="fa-solid fa-gear"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Menu principal
+            </small>
+
+          </div>
+
+
+        </div>
+
+
+        <button
+          id="menuClose"
+          class="menu-close"
+          type="button"
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+      </div>
+
+
+
+      <div class="mobile-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="mobileSearchInput"
+          type="search"
+          placeholder="Buscar produtos..."
+        >
+
+      </div>
+
+
+
+      <div
+        id="mobileUserSummary"
+        class="mobile-user-summary"
+        hidden
+      >
+
+        <span
+          class="mobile-user-avatar"
+          data-user-avatar
+        >
+          U
+        </span>
+
+
+        <div>
+
+          <small>
+            Bem-vindo
+          </small>
+
+          <strong data-user-name>
+            Cliente
+          </strong>
+
+          <span data-user-email>
+            -
+          </span>
 
         </div>
 
       </div>
 
 
-      <button
-        id="menuClose"
-        class="menu-close"
-        type="button"
+
+      <nav class="mobile-nav">
+
+
+        <a href="index.html">
+
+          <i class="fa-solid fa-house"></i>
+
+          Início
+
+        </a>
+
+
+        <a href="produtos.html">
+
+          <i class="fa-solid fa-box-open"></i>
+
+          Produtos
+
+        </a>
+
+
+        <a href="carrinho.html">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          Carrinho
+
+          <span
+            id="mobileCartCount"
+            class="mobile-cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          Meus pedidos
+
+        </a>
+
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+
+          <i class="fa-regular fa-user"></i>
+
+          Meu perfil
+
+        </a>
+
+
+        <a href="suporte.html">
+
+          <i class="fa-solid fa-headset"></i>
+
+          Suporte
+
+        </a>
+
+
+      </nav>
+
+
+
+      <div
+        id="mobileGuestActions"
+        class="mobile-auth-actions"
       >
 
-        <i class="fa-solid fa-xmark"></i>
+        <a
+          href="login.html"
+          class="mobile-login-button"
+        >
+          Entrar
+        </a>
+
+        <a
+          href="cadastro.html"
+          class="mobile-register-button"
+        >
+          Criar conta
+        </a>
+
+      </div>
+
+
+      <button
+        id="mobileLogoutButton"
+        class="mobile-logout-button"
+        type="button"
+        hidden
+      >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Sair
 
       </button>
 
 
-    </div>
+    </aside>
+
+
+  </header>
 
 
 
-    <nav class="mobile-nav">
+  <!-- =====================================================
+       CHECKOUT
+  ====================================================== -->
+
+  <main class="checkout-system">
 
 
-      <a href="index.html">
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
-        <i class="fa-solid fa-house"></i>
-
-        Início
-
-      </a>
+    <section class="checkout-hero">
 
 
-      <a href="produtos.html">
+      <div class="checkout-hero-grid"></div>
 
-        <i class="fa-solid fa-box-open"></i>
+      <div class="checkout-hero-glow glow-a"></div>
 
-        Produtos
-
-      </a>
-
-
-      <a href="carrinho.html">
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-        Carrinho
-
-      </a>
-
-
-      <a href="pedidos.html">
-
-        <i class="fa-solid fa-box"></i>
-
-        Meus pedidos
-
-      </a>
-
-
-      <a href="suporte.html">
-
-        <i class="fa-solid fa-headset"></i>
-
-        Suporte
-
-      </a>
-
-
-    </nav>
-
-
-  </aside>
-
-
-</header>
+      <div class="checkout-hero-glow glow-b"></div>
 
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section class="checkout-hero">
+      <div class="site-container checkout-hero-layout">
 
 
-  <div class="site-container checkout-hero-content">
+        <!-- COPY -->
+
+        <div class="checkout-hero-copy">
 
 
-    <div>
+          <div class="checkout-route">
+
+            <a href="carrinho.html">
+              SMART CART
+            </a>
+
+            <span>/</span>
+
+            <strong>
+              CHECKOUT
+            </strong>
+
+          </div>
 
 
-      <span class="checkout-eyebrow">
 
-        <i class="fa-solid fa-credit-card"></i>
+          <div class="checkout-system-badge">
 
-        Finalização da compra
+            <span></span>
 
-      </span>
+            SECURE CHECKOUT
+
+            <small>
+              ACTIVE
+            </small>
+
+          </div>
 
 
-      <h1>
 
-        Falta pouco para
+          <h1>
+
+            Finalize sua
+
+            <span>
+              experiência.
+            </span>
+
+          </h1>
+
+
+
+          <p>
+
+            Confirme seus dados, escolha a forma
+            de pagamento e conclua sua compra
+            em um fluxo seguro e rápido.
+
+          </p>
+
+
+
+          <div class="checkout-hero-info">
+
+
+            <div>
+
+              <i class="fa-solid fa-lock"></i>
+
+              <span>
+
+                <small>
+                  SEGURANÇA
+                </small>
+
+                <strong>
+                  Protegido
+                </strong>
+
+              </span>
+
+            </div>
+
+
+
+            <div>
+
+              <i class="fa-solid fa-bolt"></i>
+
+              <span>
+
+                <small>
+                  PROCESSAMENTO
+                </small>
+
+                <strong>
+                  Instantâneo
+                </strong>
+
+              </span>
+
+            </div>
+
+
+
+            <div>
+
+              <i class="fa-solid fa-shield-halved"></i>
+
+              <span>
+
+                <small>
+                  STATUS
+                </small>
+
+                <strong>
+                  Online
+                </strong>
+
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             VISUAL DIREITO
+        ================================================== -->
+
+        <div class="checkout-visual">
+
+
+          <div class="checkout-device">
+
+
+            <div class="device-light"></div>
+
+
+            <div class="device-header">
+
+              <span>
+                TRANSACTION CORE
+              </span>
+
+              <strong>
+
+                <i class="fa-solid fa-circle"></i>
+
+                READY
+
+              </strong>
+
+            </div>
+
+
+
+            <div class="device-payment-card">
+
+
+              <div class="device-card-top">
+
+
+                <span class="device-chip">
+
+                  <i class="fa-solid fa-microchip"></i>
+
+                </span>
+
+
+                <i class="fa-solid fa-wifi"></i>
+
+
+              </div>
+
+
+
+              <div class="device-card-number">
+
+                •••• •••• •••• 2026
+
+              </div>
+
+
+
+              <div class="device-card-bottom">
+
+
+                <span>
+
+                  <small>
+                    CLIENTE
+                  </small>
+
+                  <strong id="deviceCustomerName">
+                    CLIENTE
+                  </strong>
+
+                </span>
+
+
+                <span>
+
+                  <small>
+                    STATUS
+                  </small>
+
+                  <strong>
+                    SECURE
+                  </strong>
+
+                </span>
+
+
+              </div>
+
+
+            </div>
+
+
+
+            <div class="device-processing">
+
+
+              <div class="processing-line">
+
+                <span></span>
+
+              </div>
+
+
+              <div class="processing-info">
+
+
+                <span>
+                  TRANSACTION SYSTEM
+                </span>
+
+
+                <strong>
+
+                  <i class="fa-solid fa-shield-halved"></i>
+
+                  Protected
+
+                </strong>
+
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CHECKOUT STEPS
+    ====================================================== -->
+
+    <section class="checkout-flow">
+
+
+      <div class="site-container">
+
+
+        <div class="checkout-flow-panel">
+
+
+          <div
+            class="checkout-flow-step completed"
+            data-step="cart"
+          >
+
+            <div class="checkout-flow-number">
+
+              <i class="fa-solid fa-check"></i>
+
+            </div>
+
+            <div>
+
+              <small>
+                ETAPA 01
+              </small>
+
+              <strong>
+                Carrinho
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div
+            class="checkout-flow-step active"
+            data-step="identification"
+          >
+
+            <div class="checkout-flow-number">
+              02
+            </div>
+
+            <div>
+
+              <small>
+                ETAPA 02
+              </small>
+
+              <strong>
+                Identificação
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div
+            class="checkout-flow-step"
+            data-step="payment"
+          >
+
+            <div class="checkout-flow-number">
+              03
+            </div>
+
+            <div>
+
+              <small>
+                ETAPA 03
+              </small>
+
+              <strong>
+                Pagamento
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div
+            class="checkout-flow-step"
+            data-step="confirmation"
+          >
+
+            <div class="checkout-flow-number">
+              04
+            </div>
+
+            <div>
+
+              <small>
+                ETAPA 04
+              </small>
+
+              <strong>
+                Confirmação
+              </strong>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WORKSPACE
+    ====================================================== -->
+
+    <section class="checkout-workspace">
+
+
+      <div class="site-container">
+
+
+        <div class="checkout-layout">
+
+
+          <!-- =================================================
+               COLUNA PRINCIPAL
+          ================================================== -->
+
+          <div class="checkout-main">
+
+
+            <!-- =================================================
+                 IDENTIFICAÇÃO
+            ================================================== -->
+
+            <section
+              id="checkoutSectionIdentification"
+              class="checkout-module active"
+            >
+
+
+              <div class="checkout-module-heading">
+
+
+                <span class="checkout-module-number">
+                  02
+                </span>
+
+
+                <div>
+
+                  <span class="checkout-module-label">
+                    CUSTOMER IDENTITY
+                  </span>
+
+                  <h2>
+                    Identificação
+                  </h2>
+
+                  <p>
+                    Confira os dados da conta que realizará o pedido.
+                  </p>
+
+                </div>
+
+
+                <span class="module-status ready">
+
+                  <i class="fa-solid fa-circle-check"></i>
+
+                  Verificação
+
+                </span>
+
+
+              </div>
+
+
+
+              <!-- CLIENTE LOGADO -->
+
+              <div
+                id="checkoutLoggedUser"
+                class="checkout-user-card"
+              >
+
+
+                <span
+                  id="checkoutUserAvatar"
+                  class="checkout-user-avatar"
+                >
+                  U
+                </span>
+
+
+                <div class="checkout-user-info">
+
+
+                  <span>
+                    COMPRADOR
+                  </span>
+
+
+                  <h3 id="checkoutUserName">
+                    Cliente
+                  </h3>
+
+
+                  <p id="checkoutUserEmail">
+                    cliente@email.com
+                  </p>
+
+
+                </div>
+
+
+                <span class="checkout-verified">
+
+                  <i class="fa-solid fa-shield-check"></i>
+
+                  Conta verificada
+
+                </span>
+
+
+              </div>
+
+
+
+              <!-- VISITANTE -->
+
+              <div
+                id="checkoutGuestRequired"
+                class="checkout-login-required"
+                hidden
+              >
+
+
+                <span>
+
+                  <i class="fa-solid fa-user-lock"></i>
+
+                </span>
+
+
+                <div>
+
+                  <small>
+                    IDENTIFICAÇÃO NECESSÁRIA
+                  </small>
+
+                  <h3>
+                    Entre na sua conta para continuar
+                  </h3>
+
+                  <p>
+
+                    Seus produtos permanecem no carrinho
+                    enquanto você realiza o login.
+
+                  </p>
+
+
+                  <div class="checkout-login-actions">
+
+
+                    <a
+                      id="checkoutLoginButton"
+                      href="login.html"
+                    >
+
+                      Entrar na conta
+
+                      <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                    <a
+                      href="cadastro.html"
+                      class="checkout-create-account"
+                    >
+
+                      Criar conta
+
+                    </a>
+
+
+                  </div>
+
+
+                </div>
+
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ENDEREÇO
+            ================================================== -->
+
+            <section
+              id="checkoutSectionAddress"
+              class="checkout-module"
+            >
+
+
+              <div class="checkout-module-heading">
+
+
+                <span class="checkout-module-number">
+                  03
+                </span>
+
+
+                <div>
+
+                  <span class="checkout-module-label">
+                    DELIVERY POINT
+                  </span>
+
+                  <h2>
+                    Dados de entrega
+                  </h2>
+
+                  <p>
+                    Informe onde o pedido deverá ser entregue.
+                  </p>
+
+                </div>
+
+
+                <span
+                  id="addressStatus"
+                  class="module-status"
+                >
+
+                  Pendente
+
+                </span>
+
+
+              </div>
+
+
+
+              <div class="checkout-form-grid">
+
+
+                <!-- CEP -->
+
+                <div class="checkout-field">
+
+                  <label for="cep">
+
+                    CEP
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <input
+                      id="cep"
+                      type="text"
+                      maxlength="9"
+                      inputmode="numeric"
+                      placeholder="00000-000"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- CIDADE -->
+
+                <div class="checkout-field">
+
+                  <label for="cidade">
+
+                    Cidade
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <i class="fa-solid fa-city"></i>
+
+                    <input
+                      id="cidade"
+                      type="text"
+                      placeholder="Sua cidade"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="checkout-field small">
+
+                  <label for="estado">
+
+                    UF
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <input
+                      id="estado"
+                      type="text"
+                      maxlength="2"
+                      placeholder="UF"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- BAIRRO -->
+
+                <div class="checkout-field">
+
+                  <label for="bairro">
+
+                    Bairro
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <i class="fa-solid fa-map"></i>
+
+                    <input
+                      id="bairro"
+                      type="text"
+                      placeholder="Bairro"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- ENDEREÇO -->
+
+                <div class="checkout-field wide">
+
+                  <label for="endereco">
+
+                    Endereço
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <i class="fa-solid fa-road"></i>
+
+                    <input
+                      id="endereco"
+                      type="text"
+                      placeholder="Rua / Avenida"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- NÚMERO -->
+
+                <div class="checkout-field small">
+
+                  <label for="numero">
+
+                    Número
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <input
+                      id="numero"
+                      type="text"
+                      placeholder="000"
+                    >
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- COMPLEMENTO -->
+
+                <div class="checkout-field wide">
+
+                  <label for="complemento">
+
+                    Complemento
+
+                    <small>
+                      opcional
+                    </small>
+
+                  </label>
+
+
+                  <div class="checkout-input">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    <input
+                      id="complemento"
+                      type="text"
+                      placeholder="Apartamento, bloco, referência..."
+                    >
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 PAGAMENTO
+            ================================================== -->
+
+            <section
+              id="checkoutSectionPayment"
+              class="checkout-module"
+            >
+
+
+              <div class="checkout-module-heading">
+
+
+                <span class="checkout-module-number">
+                  04
+                </span>
+
+
+                <div>
+
+                  <span class="checkout-module-label">
+                    PAYMENT CORE
+                  </span>
+
+                  <h2>
+                    Forma de pagamento
+                  </h2>
+
+                  <p>
+                    Escolha como deseja realizar o pagamento.
+                  </p>
+
+                </div>
+
+
+                <span
+                  id="paymentStatus"
+                  class="module-status"
+                >
+
+                  Selecione
+
+                </span>
+
+
+              </div>
+
+
+
+              <div class="payment-options">
+
+
+                <!-- PIX -->
+
+                <label class="payment-option">
+
+
+                  <input
+                    type="radio"
+                    name="formaPagamento"
+                    value="Pix"
+                  >
+
+
+                  <span class="payment-option-icon pix">
+
+                    <i class="fa-brands fa-pix"></i>
+
+                  </span>
+
+
+                  <span class="payment-option-content">
+
+
+                    <small>
+                      PAGAMENTO INSTANTÂNEO
+                    </small>
+
+
+                    <strong>
+                      Pix
+                    </strong>
+
+
+                    <span>
+                      Confirmação rápida e segura.
+                    </span>
+
+
+                  </span>
+
+
+                  <span class="payment-option-check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                  </span>
+
+
+                </label>
+
+
+
+                <!-- CARTÃO -->
+
+                <label class="payment-option">
+
+
+                  <input
+                    type="radio"
+                    name="formaPagamento"
+                    value="Cartão"
+                  >
+
+
+                  <span class="payment-option-icon card">
+
+                    <i class="fa-regular fa-credit-card"></i>
+
+                  </span>
+
+
+                  <span class="payment-option-content">
+
+
+                    <small>
+                      CRÉDITO / DÉBITO
+                    </small>
+
+
+                    <strong>
+                      Cartão
+                    </strong>
+
+
+                    <span>
+                      Pagamento através de cartão.
+                    </span>
+
+
+                  </span>
+
+
+                  <span class="payment-option-check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                  </span>
+
+
+                </label>
+
+
+
+                <!-- BOLETO -->
+
+                <label class="payment-option">
+
+
+                  <input
+                    type="radio"
+                    name="formaPagamento"
+                    value="Boleto"
+                  >
+
+
+                  <span class="payment-option-icon boleto">
+
+                    <i class="fa-solid fa-barcode"></i>
+
+                  </span>
+
+
+                  <span class="payment-option-content">
+
+
+                    <small>
+                      PAGAMENTO BANCÁRIO
+                    </small>
+
+
+                    <strong>
+                      Boleto
+                    </strong>
+
+
+                    <span>
+                      Gere o documento para pagamento.
+                    </span>
+
+
+                  </span>
+
+
+                  <span class="payment-option-check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                  </span>
+
+
+                </label>
+
+
+              </div>
+
+
+
+              <!-- =================================================
+                   DADOS CARTÃO
+              ================================================== -->
+
+              <div
+                id="cardPaymentFields"
+                class="card-payment-fields"
+                hidden
+              >
+
+
+                <div class="card-fields-title">
+
+                  <span>
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    CARD DATA
+
+                  </span>
+
+                  <strong>
+                    Dados do cartão
+                  </strong>
+
+                </div>
+
+
+
+                <div class="checkout-form-grid">
+
+
+                  <div class="checkout-field wide">
+
+                    <label for="cardNumber">
+                      Número do cartão
+                    </label>
+
+                    <div class="checkout-input">
+
+                      <i class="fa-regular fa-credit-card"></i>
+
+                      <input
+                        id="cardNumber"
+                        type="text"
+                        maxlength="19"
+                        inputmode="numeric"
+                        placeholder="0000 0000 0000 0000"
+                      >
+
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="checkout-field wide">
+
+                    <label for="cardName">
+                      Nome impresso
+                    </label>
+
+                    <div class="checkout-input">
+
+                      <i class="fa-regular fa-user"></i>
+
+                      <input
+                        id="cardName"
+                        type="text"
+                        placeholder="NOME DO TITULAR"
+                      >
+
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="checkout-field">
+
+                    <label for="cardExpiry">
+                      Validade
+                    </label>
+
+                    <div class="checkout-input">
+
+                      <i class="fa-regular fa-calendar"></i>
+
+                      <input
+                        id="cardExpiry"
+                        type="text"
+                        maxlength="5"
+                        placeholder="MM/AA"
+                      >
+
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="checkout-field">
+
+                    <label for="cardCvv">
+                      CVV
+                    </label>
+
+                    <div class="checkout-input">
+
+                      <i class="fa-solid fa-key"></i>
+
+                      <input
+                        id="cardCvv"
+                        type="password"
+                        maxlength="4"
+                        inputmode="numeric"
+                        placeholder="•••"
+                      >
+
+                    </div>
+
+                  </div>
+
+
+                </div>
+
+
+                <div class="payment-security-note">
+
+                  <i class="fa-solid fa-shield-halved"></i>
+
+                  <span>
+
+                    Estes campos são apenas a interface
+                    do projeto. O processamento real de
+                    cartões deverá usar um gateway de pagamento
+                    e nunca armazenar os dados do cartão no sistema.
+
+                  </span>
+
+                </div>
+
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 REVISÃO
+            ================================================== -->
+
+            <section class="checkout-module">
+
+
+              <div class="checkout-module-heading">
+
+
+                <span class="checkout-module-number">
+                  05
+                </span>
+
+
+                <div>
+
+                  <span class="checkout-module-label">
+                    ORDER REVIEW
+                  </span>
+
+                  <h2>
+                    Revisão do pedido
+                  </h2>
+
+                  <p>
+                    Confira os produtos antes da confirmação.
+                  </p>
+
+                </div>
+
+
+                <a
+                  href="carrinho.html"
+                  class="checkout-edit-cart"
+                >
+
+                  <i class="fa-solid fa-pen"></i>
+
+                  Editar carrinho
+
+                </a>
+
+
+              </div>
+
+
+
+              <div
+                id="checkoutItems"
+                class="checkout-items"
+              ></div>
+
+
+            </section>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               RESUMO LATERAL
+          ================================================== -->
+
+          <aside class="checkout-sidebar">
+
+
+            <section class="checkout-console">
+
+
+              <div class="checkout-console-glow"></div>
+
+
+
+              <div class="console-heading">
+
+
+                <div>
+
+                  <span>
+                    ORDER CONSOLE
+                  </span>
+
+                  <h2>
+                    Resumo final
+                  </h2>
+
+                </div>
+
+
+                <span class="console-secure-status">
+
+                  <i class="fa-solid fa-lock"></i>
+
+                  SECURE
+
+                </span>
+
+
+              </div>
+
+
+
+              <!-- TOTAL -->
+
+              <div class="console-total">
+
+
+                <span>
+                  TOTAL DO PEDIDO
+                </span>
+
+
+                <strong id="checkoutTotal">
+                  R$ 0,00
+                </strong>
+
+
+                <small>
+                  valores atualizados automaticamente
+                </small>
+
+
+              </div>
+
+
+
+              <!-- LINHAS -->
+
+              <div class="console-values">
+
+
+                <div>
+
+                  <span>
+
+                    Produtos
+
+                    <small id="checkoutItemCount">
+                      0 itens
+                    </small>
+
+                  </span>
+
+
+                  <strong id="checkoutSubtotal">
+                    R$ 0,00
+                  </strong>
+
+
+                </div>
+
+
+
+                <div>
+
+                  <span>
+                    Desconto
+                  </span>
+
+                  <strong
+                    id="checkoutDiscount"
+                    class="console-positive"
+                  >
+                    R$ 0,00
+                  </strong>
+
+                </div>
+
+
+
+                <div>
+
+                  <span>
+                    Entrega
+                  </span>
+
+                  <strong id="checkoutShipping">
+                    A definir
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+
+
+              <!-- =================================================
+                   STATUS
+              ================================================== -->
+
+              <div class="console-readiness">
+
+
+                <div class="readiness-header">
+
+                  <span>
+                    CHECKOUT READINESS
+                  </span>
+
+                  <strong id="checkoutReadinessPercent">
+                    25%
+                  </strong>
+
+                </div>
+
+
+                <div class="readiness-track">
+
+                  <span
+                    id="checkoutReadinessBar"
+                    style="width: 25%"
+                  ></span>
+
+                </div>
+
+
+                <div class="readiness-items">
+
+
+                  <span
+                    id="readyIdentity"
+                    class="ready"
+                  >
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Identificação
+
+                  </span>
+
+
+                  <span id="readyAddress">
+
+                    <i class="fa-regular fa-circle"></i>
+
+                    Entrega
+
+                  </span>
+
+
+                  <span id="readyPayment">
+
+                    <i class="fa-regular fa-circle"></i>
+
+                    Pagamento
+
+                  </span>
+
+
+                </div>
+
+
+              </div>
+
+
+
+              <!-- =================================================
+                   FINALIZAR
+              ================================================== -->
+
+              <button
+                id="btnFinalizarPedido"
+                class="finish-order-button"
+                type="button"
+              >
+
+
+                <span class="finish-order-light"></span>
+
+
+                <span class="finish-order-copy">
+
+                  <small>
+                    CONFIRMAR OPERAÇÃO
+                  </small>
+
+                  <strong>
+                    Finalizar pedido
+                  </strong>
+
+                </span>
+
+
+                <span class="finish-order-icon">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+
+              </button>
+
+
+
+              <div class="console-security">
+
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+
+                <span>
+
+                  <strong>
+                    Ambiente protegido
+                  </strong>
+
+                  <small>
+                    Seus dados são utilizados apenas
+                    para processar o pedido.
+                  </small>
+
+                </span>
+
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CUPOM
+            ================================================== -->
+
+            <section
+              id="checkoutCouponCard"
+              class="checkout-info-card"
+              hidden
+            >
+
+
+              <span class="checkout-info-icon">
+
+                <i class="fa-solid fa-ticket"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  BENEFÍCIO ATIVO
+                </small>
+
+                <strong id="checkoutCouponCode">
+                  SMART10
+                </strong>
+
+                <span id="checkoutCouponDescription">
+                  Cupom aplicado
+                </span>
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CEP
+            ================================================== -->
+
+            <section
+              id="checkoutCepCard"
+              class="checkout-info-card"
+              hidden
+            >
+
+
+              <span class="checkout-info-icon">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  LOCALIZAÇÃO
+                </small>
+
+                <strong id="checkoutSavedCep">
+                  00000-000
+                </strong>
+
+                <span>
+                  CEP recuperado do Smart Cart
+                </span>
+
+              </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SUPORTE
+            ================================================== -->
+
+            <section class="checkout-support">
+
+
+              <span class="checkout-support-status">
+
+                <i></i>
+
+                SUPPORT ONLINE
+
+              </span>
+
+
+              <div>
+
+
+                <i class="fa-solid fa-headset"></i>
+
+
+                <span>
+
+                  <strong>
+                    Precisa de ajuda?
+                  </strong>
+
+                  <small>
+                    Nossa equipe pode auxiliar antes da compra.
+                  </small>
+
+                </span>
+
+
+              </div>
+
+
+              <a href="suporte.html">
+
+                Falar com suporte
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+              </a>
+
+
+            </section>
+
+
+          </aside>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TRUST SYSTEM
+    ====================================================== -->
+
+    <section class="checkout-trust">
+
+
+      <div class="site-container">
+
+
+        <div class="checkout-trust-panel">
+
+
+          <div>
+
+            <i class="fa-solid fa-lock"></i>
+
+            <span>
+
+              <small>
+                SECURITY
+              </small>
+
+              <strong>
+                Ambiente seguro
+              </strong>
+
+            </span>
+
+          </div>
+
+
+
+          <div>
+
+            <i class="fa-solid fa-database"></i>
+
+            <span>
+
+              <small>
+                DATA
+              </small>
+
+              <strong>
+                Dados protegidos
+              </strong>
+
+            </span>
+
+          </div>
+
+
+
+          <div>
+
+            <i class="fa-solid fa-receipt"></i>
+
+            <span>
+
+              <small>
+                ORDER
+              </small>
+
+              <strong>
+                Pedido rastreável
+              </strong>
+
+            </span>
+
+          </div>
+
+
+
+          <div>
+
+            <i class="fa-solid fa-headset"></i>
+
+            <span>
+
+              <small>
+                SUPPORT
+              </small>
+
+              <strong>
+                Atendimento
+              </strong>
+
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       PROCESSANDO PEDIDO
+  ====================================================== -->
+
+  <div
+    id="checkoutProcessing"
+    class="checkout-processing"
+    hidden
+  >
+
+
+    <div class="processing-backdrop"></div>
+
+
+    <div class="processing-window">
+
+
+      <div class="processing-animation">
+
+
+        <div class="processing-ring ring-one"></div>
+
+        <div class="processing-ring ring-two"></div>
+
 
         <span>
-          concluir seu pedido.
+
+          <i class="fa-solid fa-bolt"></i>
+
         </span>
 
-      </h1>
+
+      </div>
 
 
-      <p>
+      <small>
+        TRANSACTION SYSTEM
+      </small>
 
-        Escolha sua forma de pagamento
-        e finalize sua compra com segurança.
+
+      <h2 id="processingTitle">
+
+        Processando seu pedido
+
+      </h2>
+
+
+      <p id="processingDescription">
+
+        Estamos validando as informações
+        e preparando sua compra.
 
       </p>
 
 
-    </div>
+      <div class="processing-progress">
 
-
-
-    <div class="checkout-hero-art">
-
-
-      <div class="payment-orbit orbit-one"></div>
-
-      <div class="payment-orbit orbit-two"></div>
-
-
-      <div class="payment-main-icon">
-
-        <i class="fa-solid fa-credit-card"></i>
+        <span id="processingProgressBar"></span>
 
       </div>
 
 
-      <span class="payment-float payment-float-one">
+      <strong id="processingStatus">
 
-        <i class="fa-solid fa-lock"></i>
+        Iniciando...
 
-        Protegido
-
-      </span>
-
-
-      <span class="payment-float payment-float-two">
-
-        <i class="fa-solid fa-bolt"></i>
-
-        Rápido
-
-      </span>
+      </strong>
 
 
     </div>
@@ -408,148 +2595,268 @@
   </div>
 
 
-</section>
 
+  <!-- =====================================================
+       PEDIDO CONFIRMADO
+  ====================================================== -->
 
+  <div
+    id="checkoutSuccess"
+    class="checkout-success"
+    hidden
+  >
 
-<!-- =====================================================
-     ETAPAS
-===================================================== -->
 
-<section class="checkout-progress">
+    <div class="success-backdrop"></div>
 
 
-  <div class="site-container checkout-progress-inner">
+    <div class="success-window">
 
 
-    <div class="progress-step complete">
+      <div class="success-animation">
 
 
-      <span>
+        <div class="success-wave wave-one"></div>
 
-        <i class="fa-solid fa-check"></i>
+        <div class="success-wave wave-two"></div>
 
-      </span>
 
+        <span>
 
-      <div>
-
-        <strong>
-          Carrinho
-        </strong>
-
-        <small>
-          Itens revisados
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="progress-line active"></div>
-
-
-
-    <div class="progress-step active">
-
-
-      <span>
-
-        <i class="fa-solid fa-credit-card"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Pagamento
-        </strong>
-
-        <small>
-          Escolha a forma
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="progress-line"></div>
-
-
-
-    <div class="progress-step">
-
-
-      <span>
-
-        <i class="fa-solid fa-box"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Confirmação
-        </strong>
-
-        <small>
-          Pedido concluído
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     CHECKOUT PRINCIPAL
-===================================================== -->
-
-<main class="checkout-main">
-
-
-  <div class="site-container">
-
-
-    <div class="checkout-title-area">
-
-
-      <div>
-
-
-        <span class="section-label">
-
-          Pagamento
+          <i class="fa-solid fa-check"></i>
 
         </span>
 
 
-        <h2>
+      </div>
 
-          Escolha como deseja pagar
 
-        </h2>
+      <small>
+        ORDER CONFIRMED
+      </small>
+
+
+      <h2>
+
+        Pedido realizado com sucesso.
+
+      </h2>
+
+
+      <p>
+
+        Sua compra foi registrada
+        e já está disponível na área de pedidos.
+
+      </p>
+
+
+      <div class="success-order-number">
+
+        <span>
+          NÚMERO DO PEDIDO
+        </span>
+
+        <strong id="successOrderNumber">
+          #0000
+        </strong>
+
+      </div>
+
+
+      <div class="success-actions">
+
+
+        <a
+          href="pedidos.html"
+          class="success-primary"
+        >
+
+          Acompanhar pedido
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a
+          href="produtos.html"
+          class="success-secondary"
+        >
+
+          Continuar comprando
+
+        </a>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    id="checkoutToast"
+    class="checkout-toast"
+  ></div>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="site-footer">
+
+
+    <div class="site-container footer-grid">
+
+
+      <div class="footer-brand">
+
+
+        <div class="footer-logo">
+
+          <span>
+
+            <i class="fa-solid fa-gear"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Autopeças & Acessórios
+            </small>
+
+          </div>
+
+
+        </div>
 
 
         <p>
 
-          Selecione uma das opções disponíveis.
+          Tecnologia e autopeças integradas
+          em uma experiência de compra moderna.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="footer-column">
+
+
+        <h3>
+          Atendimento
+        </h3>
+
+
+        <a href="suporte.html">
+          Suporte
+        </a>
+
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+          Pedidos
+        </a>
+
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+          Minha conta
+        </a>
+
+
+      </div>
+
+
+
+      <div class="footer-column">
+
+
+        <h3>
+          Institucional
+        </h3>
+
+
+        <a href="#">
+          Sobre nós
+        </a>
+
+
+        <a href="#">
+          Privacidade
+        </a>
+
+
+        <a href="#">
+          Termos
+        </a>
+
+
+      </div>
+
+
+
+      <div class="footer-column footer-contact">
+
+
+        <h3>
+          Contato
+        </h3>
+
+
+        <p>
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <span>
+            Sua Cidade - UF
+          </span>
+
+        </p>
+
+
+        <p>
+
+          <i class="fa-solid fa-phone"></i>
+
+          <span>
+            (00) 00000-0000
+          </span>
+
+        </p>
+
+
+        <p>
+
+          <i class="fa-solid fa-envelope"></i>
+
+          <span>
+            contato@sualoja.com.br
+          </span>
 
         </p>
 
@@ -561,716 +2868,27 @@
 
 
 
-    <div class="checkout-layout">
+    <div class="footer-bottom">
 
 
-
-      <!-- ===============================================
-           PAGAMENTO
-      ================================================ -->
-
-      <section class="payment-card">
-
-
-        <div class="payment-card-header">
-
-
-          <span class="payment-card-icon">
-
-            <i class="fa-solid fa-wallet"></i>
-
-          </span>
-
-
-          <div>
-
-            <h3>
-
-              Forma de pagamento
-
-            </h3>
-
-
-            <p>
-
-              Selecione a opção mais conveniente.
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             SELECT ORIGINAL
-             MESMO ID DO SEU CÓDIGO ANTIGO
-        ================================================= -->
-
-        <div class="checkout-payment-field">
-
-
-          <label for="pagamento">
-
-            Forma de pagamento
-
-          </label>
-
-
-          <div class="checkout-select-wrapper">
-
-
-            <i class="fa-solid fa-credit-card"></i>
-
-
-            <select id="pagamento">
-
-
-              <option value="">
-
-                Selecione
-
-              </option>
-
-
-              <option value="Pix">
-
-                PIX
-
-              </option>
-
-
-              <option value="Cartão">
-
-                Cartão
-
-              </option>
-
-
-              <option value="Boleto">
-
-                Boleto
-
-              </option>
-
-
-            </select>
-
-
-            <i class="fa-solid fa-chevron-down"></i>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             CARDS VISUAIS
-        ================================================= -->
-
-        <div class="payment-methods">
-
-
-          <button
-            type="button"
-            class="payment-method"
-            data-payment="Pix"
-          >
-
-
-            <span class="payment-method-icon pix">
-
-              <i class="fa-brands fa-pix"></i>
-
-            </span>
-
-
-            <div>
-
-
-              <strong>
-
-                Pix
-
-              </strong>
-
-
-              <small>
-
-                Pagamento rápido e simples
-
-              </small>
-
-
-            </div>
-
-
-            <span class="method-check">
-
-              <i class="fa-solid fa-check"></i>
-
-            </span>
-
-
-          </button>
-
-
-
-          <button
-            type="button"
-            class="payment-method"
-            data-payment="Cartão"
-          >
-
-
-            <span class="payment-method-icon card">
-
-              <i class="fa-regular fa-credit-card"></i>
-
-            </span>
-
-
-            <div>
-
-
-              <strong>
-
-                Cartão
-
-              </strong>
-
-
-              <small>
-
-                Crédito ou débito
-
-              </small>
-
-
-            </div>
-
-
-            <span class="method-check">
-
-              <i class="fa-solid fa-check"></i>
-
-            </span>
-
-
-          </button>
-
-
-
-          <button
-            type="button"
-            class="payment-method"
-            data-payment="Boleto"
-          >
-
-
-            <span class="payment-method-icon boleto">
-
-              <i class="fa-solid fa-barcode"></i>
-
-            </span>
-
-
-            <div>
-
-
-              <strong>
-
-                Boleto
-
-              </strong>
-
-
-              <small>
-
-                Pagamento por boleto bancário
-
-              </small>
-
-
-            </div>
-
-
-            <span class="method-check">
-
-              <i class="fa-solid fa-check"></i>
-
-            </span>
-
-
-          </button>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             INFORMAÇÕES DINÂMICAS
-        ================================================= -->
-
-        <div
-          id="paymentInfo"
-          class="payment-info"
-        >
-
-
-          <div class="payment-info-placeholder">
-
-
-            <span>
-
-              <i class="fa-solid fa-circle-info"></i>
-
-            </span>
-
-
-            <div>
-
-
-              <strong>
-
-                Selecione uma forma de pagamento
-
-              </strong>
-
-
-              <p>
-
-                As informações da opção escolhida
-                aparecerão aqui.
-
-              </p>
-
-
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             MENSAGEM
-             APENAS UM ID="mensagem"
-        ================================================= -->
-
-        <div
-          id="mensagem"
-          class="checkout-message"
-        ></div>
-
-
-      </section>
-
-
-
-      <!-- ===============================================
-           RESUMO
-      ================================================ -->
-
-      <aside class="checkout-summary">
-
-
-        <div class="summary-title">
-
-
-          <span>
-
-            <i class="fa-solid fa-shield-halved"></i>
-
-          </span>
-
-
-          <div>
-
-            <h3>
-
-              Finalização segura
-
-            </h3>
-
-
-            <p>
-
-              Revise antes de confirmar
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="summary-divider"></div>
-
-
-
-        <div class="checkout-benefit">
-
-
-          <span>
-
-            <i class="fa-solid fa-lock"></i>
-
-          </span>
-
-
-          <div>
-
-            <strong>
-
-              Ambiente protegido
-
-            </strong>
-
-
-            <p>
-
-              Seus dados são tratados
-              com segurança.
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="checkout-benefit">
-
-
-          <span>
-
-            <i class="fa-solid fa-box"></i>
-
-          </span>
-
-
-          <div>
-
-            <strong>
-
-              Acompanhe o pedido
-
-            </strong>
-
-
-            <p>
-
-              Consulte o status em
-              Meus Pedidos.
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="checkout-benefit">
-
-
-          <span>
-
-            <i class="fa-solid fa-headset"></i>
-
-          </span>
-
-
-          <div>
-
-            <strong>
-
-              Precisa de ajuda?
-
-            </strong>
-
-
-            <p>
-
-              Nosso suporte está disponível.
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="summary-divider"></div>
-
-
-
-        <div class="checkout-final-note">
-
-
-          <i class="fa-solid fa-circle-info"></i>
-
-
-          <p>
-
-            Ao finalizar o pedido,
-            você confirma a forma
-            de pagamento selecionada.
-
-          </p>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             BOTÃO ORIGINAL
-             MANTÉM finalizarPedido()
-        ================================================= -->
-
-        <button
-          type="button"
-          class="finish-order-button"
-          onclick="finalizarPedido()"
-        >
-
-          Finalizar pedido
-
-          <i class="fa-solid fa-arrow-right"></i>
-
-        </button>
-
-
-
-        <a
-          href="carrinho.html"
-          class="back-cart-button"
-        >
-
-          <i class="fa-solid fa-arrow-left"></i>
-
-          Voltar ao carrinho
-
-        </a>
-
-
-      </aside>
-
-
-    </div>
-
-
-  </div>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     SEGURANÇA
-===================================================== -->
-
-<section class="checkout-security">
-
-
-  <div class="site-container checkout-security-grid">
-
-
-    <div>
-
-
-      <span>
-
-        <i class="fa-solid fa-lock"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Checkout seguro
-
-        </strong>
-
-        <small>
-
-          Ambiente protegido
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div>
-
-
-      <span>
-
-        <i class="fa-solid fa-credit-card"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Pagamento facilitado
-
-        </strong>
-
-        <small>
-
-          Escolha sua opção
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-
-    <div>
-
-
-      <span>
-
-        <i class="fa-solid fa-headset"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-
-          Suporte
-
-        </strong>
-
-        <small>
-
-          Atendimento quando precisar
-
-        </small>
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="site-footer">
-
-
-  <div class="site-container footer-grid">
-
-
-    <div class="footer-brand">
-
-
-      <div class="footer-logo">
+      <div class="site-container footer-bottom-content">
 
 
         <span>
 
-          <i class="fa-solid fa-gear"></i>
+          ©
+          <span id="currentYear"></span>
+
+          Loja de Peças.
 
         </span>
 
 
-        <div>
+        <span>
 
-          <strong>
+          SECURE AUTOMOTIVE COMMERCE
 
-            Loja de Peças
-
-          </strong>
-
-
-          <small>
-
-            Autopeças & Acessórios
-
-          </small>
-
-        </div>
-
-
-      </div>
-
-
-
-      <p>
-
-        Peças e acessórios automotivos
-        com qualidade, tecnologia,
-        praticidade e confiança.
-
-      </p>
-
-
-
-      <div class="social-links">
-
-
-        <a href="#">
-
-          <i class="fa-brands fa-instagram"></i>
-
-        </a>
-
-
-        <a href="#">
-
-          <i class="fa-brands fa-facebook-f"></i>
-
-        </a>
-
-
-        <a href="#">
-
-          <i class="fa-brands fa-whatsapp"></i>
-
-        </a>
+        </span>
 
 
       </div>
@@ -1279,490 +2897,17 @@
     </div>
 
 
+  </footer>
 
-    <div class="footer-column">
 
 
-      <h3>
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
 
-        Atendimento
+  <script src="js/site.js"></script>
 
-      </h3>
-
-
-      <a href="suporte.html">
-
-        Fale com o suporte
-
-      </a>
-
-
-      <a href="pedidos.html">
-
-        Acompanhar pedido
-
-      </a>
-
-
-      <a href="perfil.html">
-
-        Minha conta
-
-      </a>
-
-
-      <a href="#">
-
-        Trocas e devoluções
-
-      </a>
-
-
-    </div>
-
-
-
-    <div class="footer-column">
-
-
-      <h3>
-
-        Institucional
-
-      </h3>
-
-
-      <a href="#">
-
-        Sobre a loja
-
-      </a>
-
-
-      <a href="#">
-
-        Política de privacidade
-
-      </a>
-
-
-      <a href="#">
-
-        Termos de uso
-
-      </a>
-
-
-      <a href="#">
-
-        Dúvidas frequentes
-
-      </a>
-
-
-    </div>
-
-
-
-    <div class="footer-column footer-contact">
-
-
-      <h3>
-
-        Contato
-
-      </h3>
-
-
-      <p>
-
-        <i class="fa-solid fa-location-dot"></i>
-
-        <span>
-
-          Rua da sua loja, 000
-
-          <br>
-
-          Sua Cidade - UF
-
-        </span>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-phone"></i>
-
-        <a href="tel:+5500000000000">
-
-          (00) 00000-0000
-
-        </a>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-envelope"></i>
-
-        <a href="mailto:contato@sualoja.com.br">
-
-          contato@sualoja.com.br
-
-        </a>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-regular fa-clock"></i>
-
-        <span>
-
-          Segunda a sexta
-
-          <br>
-
-          08:00 às 18:00
-
-        </span>
-
-      </p>
-
-
-    </div>
-
-
-  </div>
-
-
-
-  <div class="footer-bottom">
-
-
-    <div class="site-container footer-bottom-content">
-
-
-      <span>
-
-        ©
-
-        <span id="currentYear"></span>
-
-        Loja de Peças.
-
-        Todos os direitos reservados.
-
-      </span>
-
-
-      <span>
-
-        Autopeças & Acessórios
-
-      </span>
-
-
-    </div>
-
-
-  </div>
-
-
-</footer>
-
-
-
-<script src="js/site.js"></script>
-
-
-<!-- SEU JS ORIGINAL -->
-
-<script src="js/checkout.js"></script>
-
-
-
-<!-- =====================================================
-     JS VISUAL DO CHECKOUT
-     NÃO ALTERA API
-===================================================== -->
-
-<script>
-
-
-  const pagamento =
-    document.getElementById(
-      "pagamento"
-    );
-
-
-  const paymentMethods =
-    document.querySelectorAll(
-      ".payment-method"
-    );
-
-
-  const paymentInfo =
-    document.getElementById(
-      "paymentInfo"
-    );
-
-
-
-  function atualizarFormaPagamento(
-    forma
-  ) {
-
-
-    paymentMethods.forEach(
-
-      botao => {
-
-        botao.classList.toggle(
-
-          "active",
-
-          botao.dataset.payment === forma
-
-        );
-
-      }
-
-    );
-
-
-
-    if (!paymentInfo) {
-
-      return;
-
-    }
-
-
-
-    if (forma === "Pix") {
-
-
-      paymentInfo.innerHTML = `
-
-        <div class="payment-info-content">
-
-          <span class="payment-detail-icon pix">
-
-            <i class="fa-brands fa-pix"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Pagamento via Pix
-            </strong>
-
-            <p>
-              Após finalizar o pedido,
-              siga as instruções de pagamento
-              apresentadas pelo sistema.
-            </p>
-
-          </div>
-
-        </div>
-
-      `;
-
-
-    }
-
-
-    else if (
-      forma === "Cartão"
-    ) {
-
-
-      paymentInfo.innerHTML = `
-
-        <div class="payment-info-content">
-
-          <span class="payment-detail-icon card">
-
-            <i class="fa-regular fa-credit-card"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Pagamento com cartão
-            </strong>
-
-            <p>
-              O pedido será registrado
-              utilizando cartão como
-              forma de pagamento.
-            </p>
-
-          </div>
-
-        </div>
-
-      `;
-
-
-    }
-
-
-    else if (
-      forma === "Boleto"
-    ) {
-
-
-      paymentInfo.innerHTML = `
-
-        <div class="payment-info-content">
-
-          <span class="payment-detail-icon boleto">
-
-            <i class="fa-solid fa-barcode"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Pagamento por boleto
-            </strong>
-
-            <p>
-              O pedido será registrado
-              utilizando boleto como
-              forma de pagamento.
-            </p>
-
-          </div>
-
-        </div>
-
-      `;
-
-
-    }
-
-
-    else {
-
-
-      paymentInfo.innerHTML = `
-
-        <div class="payment-info-placeholder">
-
-          <span>
-
-            <i class="fa-solid fa-circle-info"></i>
-
-          </span>
-
-          <div>
-
-            <strong>
-              Selecione uma forma de pagamento
-            </strong>
-
-            <p>
-              As informações da opção escolhida
-              aparecerão aqui.
-            </p>
-
-          </div>
-
-        </div>
-
-      `;
-
-
-    }
-
-
-  }
-
-
-
-  paymentMethods.forEach(
-
-    botao => {
-
-
-      botao.addEventListener(
-
-        "click",
-
-        () => {
-
-
-          const forma =
-            botao.dataset.payment;
-
-
-          pagamento.value =
-            forma;
-
-
-          pagamento.dispatchEvent(
-
-            new Event(
-
-              "change",
-
-              {
-                bubbles: true
-              }
-
-            )
-
-          );
-
-
-          atualizarFormaPagamento(
-            forma
-          );
-
-
-        }
-
-      );
-
-
-    }
-
-  );
-
-
-
-  pagamento
-    ?.addEventListener(
-
-      "change",
-
-      () => {
-
-
-        atualizarFormaPagamento(
-
-          pagamento.value
-
-        );
-
-
-      }
-
-    );
-
-
-</script>
+  <script src="js/checkout.js"></script>
 
 
 </body>

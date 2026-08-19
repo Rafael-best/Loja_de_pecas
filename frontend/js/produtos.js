@@ -1,205 +1,486 @@
 /* =========================================================
    PRODUTOS.JS
-   Loja de Peças
+   COMPONENT DATABASE
 ========================================================= */
 
-const API = "http://localhost:3000/api";
+const API =
+  "http://localhost:3000/api";
 
-const CAMINHO_IMAGENS_PRODUTOS =
+const CAMINHO_IMAGENS =
   "assets/images/produtos";
 
 const PLACEHOLDER_PRODUTO =
-  `${CAMINHO_IMAGENS_PRODUTOS}/placeholder.webp`;
+  `${CAMINHO_IMAGENS}/placeholder.webp`;
 
-const ITENS_POR_PAGINA = 8;
-
+const PRODUTOS_POR_PAGINA =
+  9;
 
 
 /* =========================================================
-   CLIENTE
+   STATE
 ========================================================= */
 
-let cliente = null;
+let produtosCatalogo = [];
 
-try {
+let produtosFiltrados = [];
 
-  cliente = JSON.parse(
-    localStorage.getItem(
-      "clienteLogado"
+let quantidadeVisivel =
+  PRODUTOS_POR_PAGINA;
+
+let modoVisualizacao =
+  "grid";
+
+let produtoQuickView =
+  null;
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+const catalogHeroEyebrow =
+  document.getElementById(
+    "catalogHeroEyebrow"
+  );
+
+const catalogHeroTitleLine1 =
+  document.getElementById(
+    "catalogHeroTitleLine1"
+  );
+
+const catalogHeroTitleLine2 =
+  document.getElementById(
+    "catalogHeroTitleLine2"
+  );
+
+const catalogHeroDescription =
+  document.getElementById(
+    "catalogHeroDescription"
+  );
+
+const catalogRouteCategory =
+  document.getElementById(
+    "catalogRouteCategory"
+  );
+
+
+const HERO_CATEGORIAS = {
+
+  todos: {
+
+    eyebrow:
+      "COMPONENT DATABASE",
+
+    linha1:
+      "Componentes que movem",
+
+    linha2:
+      "sua máquina.",
+
+    descricao:
+      "Encontre peças selecionadas para desempenho, segurança e confiabilidade.",
+
+    route:
+      "CATÁLOGO",
+
+    classe:
+      "catalog-theme-all"
+
+  },
+
+
+  motor: {
+
+    eyebrow:
+      "POWERTRAIN / ENGINE COMPONENTS",
+
+    linha1:
+      "Potência começa",
+
+    linha2:
+      "por dentro.",
+
+    descricao:
+      "Componentes desenvolvidos para manter o coração do seu veículo trabalhando no máximo.",
+
+    route:
+      "MOTOR",
+
+    classe:
+      "catalog-theme-engine"
+
+  },
+
+
+  freios: {
+
+    eyebrow:
+      "BRAKING SYSTEM / SAFETY COMPONENTS",
+
+    linha1:
+      "Controle quando",
+
+    linha2:
+      "cada metro importa.",
+
+    descricao:
+      "Componentes de frenagem para respostas precisas, segurança e confiança em cada parada.",
+
+    route:
+      "FREIOS",
+
+    classe:
+      "catalog-theme-brakes"
+
+  },
+
+
+  suspensao: {
+
+    eyebrow:
+      "CHASSIS / SUSPENSION SYSTEM",
+
+    linha1:
+      "Domine cada",
+
+    linha2:
+      "irregularidade.",
+
+    descricao:
+      "Estabilidade, conforto e controle para transformar a resposta do veículo em qualquer terreno.",
+
+    route:
+      "SUSPENSÃO",
+
+    classe:
+      "catalog-theme-suspension"
+
+  },
+
+
+  eletrica: {
+
+    eyebrow:
+      "ELECTRICAL SYSTEM / POWER NETWORK",
+
+    linha1:
+      "Energia para tudo",
+
+    linha2:
+      "acontecer.",
+
+    descricao:
+      "Componentes elétricos que mantêm cada sistema conectado, alimentado e pronto para funcionar.",
+
+    route:
+      "ELÉTRICA",
+
+    classe:
+      "catalog-theme-electric"
+
+  },
+
+
+  filtros: {
+
+    eyebrow:
+      "FILTRATION / PROTECTION SYSTEM",
+
+    linha1:
+      "Proteção começa",
+
+    linha2:
+      "antes do problema.",
+
+    descricao:
+      "Filtragem eficiente para preservar componentes essenciais e prolongar a vida útil do veículo.",
+
+    route:
+      "FILTROS",
+
+    classe:
+      "catalog-theme-filters"
+
+  },
+
+
+  oleos: {
+
+    eyebrow:
+      "LUBRICATION / FLUID SYSTEM",
+
+    linha1:
+      "Performance também",
+
+    linha2:
+      "é fluidez.",
+
+    descricao:
+      "Lubrificação, proteção térmica e eficiência para sistemas que não podem parar.",
+
+    route:
+      "ÓLEOS & FLUIDOS",
+
+    classe:
+      "catalog-theme-fluids"
+
+  }
+
+};
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const catalogGrid =
+  document.getElementById(
+    "catalogGrid"
+  );
+
+const catalogLoading =
+  document.getElementById(
+    "catalogLoading"
+  );
+
+const catalogEmpty =
+  document.getElementById(
+    "catalogEmpty"
+  );
+
+const catalogSearch =
+  document.getElementById(
+    "catalogSearch"
+  );
+
+const clearCatalogSearch =
+  document.getElementById(
+    "clearCatalogSearch"
+  );
+
+const catalogSort =
+  document.getElementById(
+    "catalogSort"
+  );
+
+const viewGrid =
+  document.getElementById(
+    "viewGrid"
+  );
+
+const viewList =
+  document.getElementById(
+    "viewList"
+  );
+
+const filterInStock =
+  document.getElementById(
+    "filterInStock"
+  );
+
+const priceMin =
+  document.getElementById(
+    "priceMin"
+  );
+
+const priceMax =
+  document.getElementById(
+    "priceMax"
+  );
+
+const brandFilters =
+  document.getElementById(
+    "brandFilters"
+  );
+
+const clearAllFilters =
+  document.getElementById(
+    "clearAllFilters"
+  );
+
+const emptyClearFilters =
+  document.getElementById(
+    "emptyClearFilters"
+  );
+
+const activeFilters =
+  document.getElementById(
+    "activeFilters"
+  );
+
+const filterCount =
+  document.getElementById(
+    "filterCount"
+  );
+
+const resultCount =
+  document.getElementById(
+    "resultCount"
+  );
+
+const resultsTitle =
+  document.getElementById(
+    "resultsTitle"
+  );
+
+const catalogTotalProducts =
+  document.getElementById(
+    "catalogTotalProducts"
+  );
+
+const catalogAvailableProducts =
+  document.getElementById(
+    "catalogAvailableProducts"
+  );
+
+const catalogCategoryCount =
+  document.getElementById(
+    "catalogCategoryCount"
+  );
+
+const loadMoreProducts =
+  document.getElementById(
+    "loadMoreProducts"
+  );
+
+const paginationStatus =
+  document.getElementById(
+    "paginationStatus"
+  );
+
+const catalogPagination =
+  document.getElementById(
+    "catalogPagination"
+  );
+
+const openFilters =
+  document.getElementById(
+    "openFilters"
+  );
+
+const closeFilters =
+  document.getElementById(
+    "closeFilters"
+  );
+
+const catalogFilters =
+  document.getElementById(
+    "catalogFilters"
+  );
+
+const filtersBackdrop =
+  document.getElementById(
+    "filtersBackdrop"
+  );
+
+const catalogToast =
+  document.getElementById(
+    "catalogToast"
+  );
+
+
+const quickView =
+  document.getElementById(
+    "quickView"
+  );
+
+const quickViewBackdrop =
+  document.getElementById(
+    "quickViewBackdrop"
+  );
+
+const quickViewClose =
+  document.getElementById(
+    "quickViewClose"
+  );
+
+const quickViewImage =
+  document.getElementById(
+    "quickViewImage"
+  );
+
+const quickViewCategory =
+  document.getElementById(
+    "quickViewCategory"
+  );
+
+const quickViewName =
+  document.getElementById(
+    "quickViewName"
+  );
+
+const quickViewCode =
+  document.getElementById(
+    "quickViewCode"
+  );
+
+const quickViewBrand =
+  document.getElementById(
+    "quickViewBrand"
+  );
+
+const quickViewStock =
+  document.getElementById(
+    "quickViewStock"
+  );
+
+const quickViewPrice =
+  document.getElementById(
+    "quickViewPrice"
+  );
+
+const quickViewAdd =
+  document.getElementById(
+    "quickViewAdd"
+  );
+
+const quickViewDetails =
+  document.getElementById(
+    "quickViewDetails"
+  );
+
+
+const categoryFilters =
+  Array.from(
+    document.querySelectorAll(
+      "[data-filter-category]"
     )
   );
 
-} catch (error) {
 
-  console.warn(
-    "Não foi possível ler clienteLogado.",
-    error
-  );
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function numeroSeguro(valor) {
+
+  const numero =
+    Number(valor);
+
+  return Number.isFinite(numero)
+    ? numero
+    : 0;
 
 }
 
-
-/*
-  IMPORTANTE:
-
-  A página de produtos pode ser vista
-  mesmo sem login.
-
-  Então NÃO redirecionamos mais
-  automaticamente para index.html.
-
-  O login será exigido somente
-  quando realmente for necessário.
-*/
-
-if (!cliente) {
-
-  console.info(
-    "Nenhum cliente logado. Catálogo funcionando como visitante."
-  );
-
-}
-
-
-
-/* =========================================================
-   ESTADO
-========================================================= */
-
-let produtos = [];
-
-let paginaAtual = 1;
-
-
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
-const btnSair =
-  document.getElementById(
-    "btnSair"
-  );
-
-const campoBusca =
-  document.getElementById(
-    "campoBusca"
-  );
-
-const campoBuscaMobile =
-  document.getElementById(
-    "campoBuscaMobile"
-  );
-
-const filtroCategoria =
-  document.getElementById(
-    "filtroCategoria"
-  );
-
-const ordenacaoProdutos =
-  document.getElementById(
-    "ordenacaoProdutos"
-  );
-
-const listaProdutos =
-  document.getElementById(
-    "listaProdutos"
-  );
-
-const paginacaoCatalogo =
-  document.getElementById(
-    "paginacaoCatalogo"
-  );
-
-const resultadoCatalogo =
-  document.getElementById(
-    "resultadoCatalogo"
-  )
-  ||
-  document.getElementById(
-    "resultadoProdutos"
-  );
-
-const catalogEmptyState =
-  document.getElementById(
-    "catalogEmptyState"
-  );
-
-const filtroEstoque =
-  document.getElementById(
-    "filtroEstoque"
-  );
-
-const precoMinimo =
-  document.getElementById(
-    "precoMinimo"
-  );
-
-const precoMaximo =
-  document.getElementById(
-    "precoMaximo"
-  );
-
-const btnLimparFiltros =
-  document.getElementById(
-    "btnLimparFiltros"
-  );
-
-
-
-/* =========================================================
-   SAIR
-========================================================= */
-
-if (btnSair) {
-
-  btnSair.addEventListener(
-    "click",
-    () => {
-
-      localStorage.removeItem(
-        "clienteLogado"
-      );
-
-      window.location.href =
-        "index.html";
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   MOEDA
-========================================================= */
 
 function formatarMoeda(valor) {
 
-  return Number(
-    valor || 0
-  ).toLocaleString(
-    "pt-BR",
-    {
-      style: "currency",
-      currency: "BRL"
-    }
-  );
+  return numeroSeguro(valor)
+    .toLocaleString(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL"
+      }
+    );
 
 }
 
 
+function normalizarTexto(valor) {
 
-/* =========================================================
-   TEXTO SEGURO
-========================================================= */
-
-function normalizarTexto(texto) {
-
-  return String(
-    texto || ""
-  )
+  return String(valor || "")
     .normalize("NFD")
     .replace(
       /[\u0300-\u036f]/g,
@@ -211,328 +492,213 @@ function normalizarTexto(texto) {
 }
 
 
-
-/* =========================================================
-   CAMPOS ALTERNATIVOS
-========================================================= */
-
-function obterCampoProduto(
-  produto,
+function obterCampo(
+  objeto,
   campos,
   padrao = ""
 ) {
 
-  const valor =
-    campos
-      .map(
-        campo =>
-          produto?.[campo]
+  for (
+    const campo of campos
+  ) {
+
+    if (
+      objeto?.[campo] !== undefined &&
+      objeto?.[campo] !== null &&
+      String(
+        objeto[campo]
+      ).trim() !== ""
+    ) {
+
+      return objeto[campo];
+
+    }
+
+  }
+
+
+  return padrao;
+
+}
+
+
+function animar(
+  elemento,
+  frames,
+  options
+) {
+
+  if (
+    !elemento ||
+    typeof elemento.animate !==
+    "function"
+  ) {
+
+    return null;
+
+  }
+
+
+  return elemento.animate(
+    frames,
+    options
+  );
+
+}
+
+
+/* =========================================================
+   HERO CATEGORY
+========================================================= */
+
+function obterCategoriaURL() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const categoria =
+    normalizarTexto(
+      params.get(
+        "categoria"
       )
-      .find(
-        item =>
-          item !== null &&
-          item !== undefined &&
-          String(item).trim() !== ""
-      );
-
-
-  return valor ?? padrao;
-
-}
-
-
-
-/* =========================================================
-   CATEGORIA
-========================================================= */
-
-function obterCategoriaProduto(
-  produto
-) {
-
-  return obterCampoProduto(
-    produto,
-    [
-      "categoria_produto",
-      "categoria",
-      "nome_categoria"
-    ],
-    "Autopeças"
-  );
-
-}
-
-
-
-/* =========================================================
-   MARCA
-========================================================= */
-
-function obterMarcaProduto(
-  produto
-) {
-
-  return obterCampoProduto(
-    produto,
-    [
-      "marca_produto",
-      "marca",
-      "nome_marca"
-    ],
-    "Não informada"
-  );
-
-}
-
-
-
-/* =========================================================
-   CÓDIGO
-========================================================= */
-
-function obterCodigoProduto(
-  produto
-) {
-
-  return obterCampoProduto(
-    produto,
-    [
-      "codigo_produto",
-      "codigo",
-      "sku"
-    ],
-    `#${produto.id_produto}`
-  );
-
-}
-
-
-
-/* =========================================================
-   CARRINHO
-========================================================= */
-
-function obterCarrinho() {
-
-  try {
-
-    const dados =
-      JSON.parse(
-        localStorage.getItem(
-          "carrinho"
-        )
-      );
-
-    return Array.isArray(dados)
-      ? dados
-      : [];
-
-  } catch (error) {
-
-    console.warn(
-      "Erro ao ler carrinho.",
-      error
-    );
-
-    return [];
-
-  }
-
-}
-
-
-
-function salvarCarrinho(
-  carrinho
-) {
-
-  try {
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify(
-        carrinho
-      )
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Erro ao salvar carrinho.",
-      error
-    );
-
-  }
-
-
-  atualizarBotaoCarrinho();
-
-}
-
-
-
-/* =========================================================
-   CONTADOR DO CARRINHO
-========================================================= */
-
-function atualizarBotaoCarrinho() {
-
-  const carrinho =
-    obterCarrinho();
-
-
-  const totalItens =
-    carrinho.reduce(
-      (
-        total,
-        item
-      ) => {
-
-        return (
-          total
-          +
-          Number(
-            item.quantidade || 0
-          )
-        );
-
-      },
-      0
-    );
-
-
-  /*
-    NOVO HEADER
-  */
-
-  const cartCount =
-    document.getElementById(
-      "cartCount"
-    );
-
-
-  if (cartCount) {
-
-    cartCount.textContent =
-      totalItens;
-
-  }
-
-
-  /*
-    COMPATIBILIDADE COM
-    HTML ANTIGO
-  */
-
-  const btnCarrinho =
-    document.getElementById(
-      "btnCarrinho"
     );
 
 
   if (
-    btnCarrinho &&
-    !cartCount
+    HERO_CATEGORIAS[
+      categoria
+    ]
   ) {
 
-    btnCarrinho.textContent =
-      `Carrinho (${totalItens})`;
+    return categoria;
 
   }
 
 
-  /*
-    site.js
-  */
+  return "todos";
+
+}
+
+
+function aplicarHeroCategoria() {
+
+  const categoria =
+    obterCategoriaURL();
+
+
+  const config =
+    HERO_CATEGORIAS[
+      categoria
+    ];
+
+
+  document.body.classList.remove(
+    "catalog-theme-all",
+    "catalog-theme-engine",
+    "catalog-theme-brakes",
+    "catalog-theme-suspension",
+    "catalog-theme-electric",
+    "catalog-theme-filters",
+    "catalog-theme-fluids"
+  );
+
+
+  document.body.classList.add(
+    config.classe
+  );
+
+
+  catalogHeroEyebrow.textContent =
+    config.eyebrow;
+
+
+  catalogHeroTitleLine1.textContent =
+    config.linha1;
+
+
+  catalogHeroTitleLine2.textContent =
+    config.linha2;
+
+
+  catalogHeroDescription.textContent =
+    config.descricao;
+
 
   if (
-    window.SiteUI &&
-    typeof window.SiteUI
-      .atualizarCarrinho ===
-      "function"
+    catalogRouteCategory
   ) {
 
-    window.SiteUI
-      .atualizarCarrinho();
-
-  }
-
-}
-
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function mostrarToast(
-  mensagem,
-  tipo = "success"
-) {
-
-  const toast =
-    document.getElementById(
-      "toastMensagem"
-    );
-
-
-  if (!toast) {
-
-    return;
+    catalogRouteCategory.textContent =
+      config.route;
 
   }
 
 
-  toast.innerHTML = `
-
-    <i class="${
-      tipo === "warning"
-      ? "fa-solid fa-triangle-exclamation"
-      : tipo === "error"
-      ? "fa-solid fa-circle-xmark"
-      : "fa-solid fa-circle-check"
-    }"></i>
-
-    <span>
-      ${mensagem}
-    </span>
-
-  `;
-
-
-  toast.classList.add(
-    "mostrar"
-  );
-
-
-  clearTimeout(
-    toast._timeout
-  );
-
-
-  toast._timeout =
-    setTimeout(
-      () => {
-
-        toast.classList.remove(
-          "mostrar"
-        );
-
+  animar(
+    catalogHeroTitleLine1,
+    [
+      {
+        opacity: 0,
+        transform:
+          "translateX(-45px)",
+        clipPath:
+          "inset(0 100% 0 0)"
       },
-      2200
-    );
+      {
+        opacity: 1,
+        transform:
+          "translateX(0)",
+        clipPath:
+          "inset(0 0 0 0)"
+      }
+    ],
+    {
+      duration: 700,
+      easing:
+        "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    }
+  );
+
+
+  animar(
+    catalogHeroTitleLine2,
+    [
+      {
+        opacity: 0,
+        transform:
+          "translateX(45px)",
+        clipPath:
+          "inset(0 0 0 100%)"
+      },
+      {
+        opacity: 1,
+        transform:
+          "translateX(0)",
+        clipPath:
+          "inset(0 0 0 0)"
+      }
+    ],
+    {
+      duration: 750,
+      delay: 160,
+      easing:
+        "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    }
+  );
 
 }
 
 
-
 /* =========================================================
-   IMAGEM
+   IMAGE
 ========================================================= */
 
-function obterCaminhoImagem(
-  imagem
-) {
+function obterImagem(imagem) {
 
   const valor =
     String(
@@ -541,24 +707,14 @@ function obterCaminhoImagem(
 
 
   if (!valor) {
-
     return PLACEHOLDER_PRODUTO;
-
   }
 
 
-  /*
-    Se backend já devolver URL completa.
-  */
-
   if (
-    valor.startsWith(
-      "http://"
-    )
-    ||
-    valor.startsWith(
-      "https://"
-    )
+    valor.startsWith("http://") ||
+    valor.startsWith("https://") ||
+    valor.startsWith("data:")
   ) {
 
     return valor;
@@ -566,1435 +722,135 @@ function obterCaminhoImagem(
   }
 
 
-  /*
-    Remove possíveis caminhos antigos.
-  */
-
-  const nomeArquivo =
+  const nome =
     valor
       .split(/[\\/]/)
       .pop();
 
 
-  return nomeArquivo
-    ? `${CAMINHO_IMAGENS_PRODUTOS}/${encodeURIComponent(nomeArquivo)}`
-    : PLACEHOLDER_PRODUTO;
+  return (
+    `${CAMINHO_IMAGENS}/` +
+    encodeURIComponent(nome)
+  );
 
 }
 
 
-
 /* =========================================================
-   CRIAR IMAGEM
+   CART
 ========================================================= */
 
-function criarImagemProduto(
-  produto
-) {
+function obterCarrinho() {
 
-  const wrapper =
-    document.createElement(
-      "div"
-    );
+  try {
 
-
-  wrapper.className =
-    "product-image-wrapper";
-
-
-  const imagem =
-    document.createElement(
-      "img"
-    );
-
-
-  imagem.className =
-    "product-card-image";
-
-
-  imagem.src =
-    obterCaminhoImagem(
-      produto.imagem
-      ||
-      produto.imagem_produto
-    );
-
-
-  imagem.alt =
-    `Imagem de ${
-      produto.nome_produto
-      ||
-      "produto"
-    }`;
-
-
-  imagem.loading =
-    "lazy";
-
-
-  imagem.addEventListener(
-    "error",
-    function tratarErroImagem() {
-
-      imagem.removeEventListener(
-        "error",
-        tratarErroImagem
-      );
-
-
-      imagem.src =
-        PLACEHOLDER_PRODUTO;
-
-
-      imagem.alt =
-        "Imagem não disponível";
-
-    }
-  );
-
-
-  wrapper.appendChild(
-    imagem
-  );
-
-
-  return wrapper;
-
-}
-
-
-
-/* =========================================================
-   ADICIONAR AO CARRINHO
-========================================================= */
-
-function adicionarAoCarrinho(
-  idProduto
-) {
-
-  const produto =
-    produtos.find(
-      item =>
-        Number(
-          item.id_produto
-        )
-        ===
-        Number(
-          idProduto
-        )
-    );
-
-
-  if (!produto) {
-
-    mostrarToast(
-      "Produto não encontrado.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const estoque =
-    Number(
-      produto.quantidade_estoque || 0
-    );
-
-
-  if (estoque <= 0) {
-
-    mostrarToast(
-      "Este produto está sem estoque.",
-      "warning"
-    );
-
-    return;
-
-  }
-
-
-  const carrinho =
-    obterCarrinho();
-
-
-  const itemExistente =
-    carrinho.find(
-      item =>
-        Number(
-          item.id_produto
-        )
-        ===
-        Number(
-          idProduto
-        )
-    );
-
-
-  if (itemExistente) {
-
-    if (
-      Number(
-        itemExistente.quantidade
+    return JSON.parse(
+      localStorage.getItem(
+        "carrinho"
       )
-      >=
-      estoque
-    ) {
+    ) || [];
 
-      mostrarToast(
-        "Quantidade máxima em estoque atingida.",
-        "warning"
-      );
+  } catch {
 
-      return;
-
-    }
-
-
-    itemExistente.quantidade =
-      Number(
-        itemExistente.quantidade
-      )
-      +
-      1;
-
-  } else {
-
-    carrinho.push({
-
-      id_produto:
-        produto.id_produto,
-
-      nome_produto:
-        produto.nome_produto,
-
-      preco_produto:
-        Number(
-          produto.preco_produto || 0
-        ),
-
-      quantidade_estoque:
-        estoque,
-
-      imagem:
-        produto.imagem
-        ||
-        produto.imagem_produto
-        ||
-        null,
-
-      quantidade:
-        1
-
-    });
+    return [];
 
   }
 
-
-  salvarCarrinho(
-    carrinho
-  );
-
-
-  mostrarToast(
-    "Produto adicionado ao carrinho."
-  );
-
 }
 
 
-
-/* =========================================================
-   DETALHE
-========================================================= */
-
-function criarDetalheProduto(
-  rotulo,
-  valor
+function salvarCarrinho(
+  carrinho
 ) {
 
-  const elemento =
-    document.createElement(
-      "div"
-    );
-
-
-  elemento.className =
-    "product-detail";
-
-
-  const titulo =
-    document.createElement(
-      "span"
-    );
-
-
-  titulo.textContent =
-    rotulo;
-
-
-  const conteudo =
-    document.createElement(
-      "strong"
-    );
-
-
-  conteudo.textContent =
-    String(valor);
-
-
-  elemento.append(
-    titulo,
-    conteudo
-  );
-
-
-  return elemento;
-
-}
-
-
-
-/* =========================================================
-   CARD
-========================================================= */
-
-function criarCardProduto(
-  produto
-) {
-
-  const codigo =
-    obterCodigoProduto(
-      produto
-    );
-
-
-  const marca =
-    obterMarcaProduto(
-      produto
-    );
-
-
-  const categoria =
-    obterCategoriaProduto(
-      produto
-    );
-
-
-  const estoque =
-    Number(
-      produto.quantidade_estoque || 0
-    );
-
-
-  const preco =
-    Number(
-      produto.preco_produto || 0
-    );
-
-
-  const descricao =
-    obterCampoProduto(
-      produto,
-      [
-        "descricao_produto",
-        "descricao"
-      ],
-      "Peça automotiva disponível em nosso catálogo."
-    );
-
-
-
-  /* COLUNA BOOTSTRAP */
-
-  const coluna =
-    document.createElement(
-      "div"
-    );
-
-
-  coluna.className =
-    "col-12 col-sm-6 col-lg-4 col-xl-3";
-
-
-
-  /* CARD */
-
-  const card =
-    document.createElement(
-      "article"
-    );
-
-
-  card.className =
-    "modern-product-card card-produto";
-
-
-
-  /* IMAGEM */
-
-  const imagemWrapper =
-    criarImagemProduto(
-      produto
-    );
-
-
-
-  /* BADGES */
-
-  const badges =
-    document.createElement(
-      "div"
-    );
-
-
-  badges.className =
-    "product-badges";
-
-
-  const badgeCategoria =
-    document.createElement(
-      "span"
-    );
-
-
-  badgeCategoria.className =
-    "product-badge category";
-
-
-  badgeCategoria.textContent =
-    categoria;
-
-
-  const badgeEstoque =
-    document.createElement(
-      "span"
-    );
-
-
-  badgeEstoque.className =
-    estoque > 0
-      ? "product-badge stock"
-      : "product-badge no-stock";
-
-
-  badgeEstoque.textContent =
-    estoque > 0
-      ? "Em estoque"
-      : "Indisponível";
-
-
-  badges.append(
-    badgeCategoria,
-    badgeEstoque
-  );
-
-
-  imagemWrapper.appendChild(
-    badges
-  );
-
-
-
-  /* CONTEÚDO */
-
-  const corpo =
-    document.createElement(
-      "div"
-    );
-
-
-  corpo.className =
-    "modern-product-body";
-
-
-
-  /* MARCA */
-
-  const marcaEl =
-    document.createElement(
-      "span"
-    );
-
-
-  marcaEl.className =
-    "product-brand";
-
-
-  marcaEl.textContent =
-    marca;
-
-
-
-  /* TÍTULO */
-
-  const titulo =
-    document.createElement(
-      "h3"
-    );
-
-
-  titulo.className =
-    "product-title";
-
-
-  titulo.textContent =
-    produto.nome_produto
-    ||
-    "Produto";
-
-
-
-  /* DESCRIÇÃO */
-
-  const descricaoEl =
-    document.createElement(
-      "p"
-    );
-
-
-  descricaoEl.className =
-    "product-description";
-
-
-  descricaoEl.textContent =
-    descricao;
-
-
-
-  /* DETALHES */
-
-  const detalhes =
-    document.createElement(
-      "div"
-    );
-
-
-  detalhes.className =
-    "product-details-grid";
-
-
-  detalhes.append(
-
-    criarDetalheProduto(
-      "Código",
-      codigo
-    ),
-
-    criarDetalheProduto(
-      "Estoque",
-      estoque
+  localStorage.setItem(
+    "carrinho",
+    JSON.stringify(
+      carrinho
     )
-
   );
 
 
-
-  /* RODAPÉ */
-
-  const rodape =
-    document.createElement(
-      "div"
-    );
-
-
-  rodape.className =
-    "product-footer";
-
-
-
-  const areaPreco =
-    document.createElement(
-      "div"
-    );
-
-
-  areaPreco.className =
-    "product-price-area";
-
-
-  const textoPreco =
-    document.createElement(
-      "small"
-    );
-
-
-  textoPreco.textContent =
-    "Preço";
-
-
-  const precoEl =
-    document.createElement(
-      "strong"
-    );
-
-
-  precoEl.className =
-    "product-price";
-
-
-  precoEl.textContent =
-    formatarMoeda(
-      preco
-    );
-
-
-  areaPreco.append(
-    textoPreco,
-    precoEl
+  window.dispatchEvent(
+    new CustomEvent(
+      "carrinhoAtualizado"
+    )
   );
 
 
-
-  const botao =
-    document.createElement(
-      "button"
-    );
-
-
-  botao.type =
-    "button";
-
-
-  botao.className =
-    "product-buy-button";
-
-
-  botao.disabled =
-    estoque <= 0;
-
-
-  botao.innerHTML =
-    estoque > 0
-
-      ? `
-        <i class="fa-solid fa-cart-plus"></i>
-        Adicionar
-      `
-
-      : `
-        <i class="fa-solid fa-ban"></i>
-        Indisponível
-      `;
-
-
-  botao.addEventListener(
-    "click",
-    () => {
-
-      adicionarAoCarrinho(
-        produto.id_produto
-      );
-
-    }
-  );
-
-
-  rodape.append(
-    areaPreco,
-    botao
-  );
-
-
-
-  corpo.append(
-    marcaEl,
-    titulo,
-    descricaoEl,
-    detalhes,
-    rodape
-  );
-
-
-  card.append(
-    imagemWrapper,
-    corpo
-  );
-
-
-  coluna.appendChild(
-    card
-  );
-
-
-  return coluna;
+  window.SiteUI
+    ?.atualizarCarrinho?.();
 
 }
 
 
-
 /* =========================================================
-   URL
+   TOAST
 ========================================================= */
 
-function aplicarParametrosURL() {
-
-  const parametros =
-    new URLSearchParams(
-      window.location.search
-    );
+let toastTimer;
 
 
-  const buscaURL =
-    parametros.get(
-      "busca"
-    );
-
-
-  const categoriaURL =
-    parametros.get(
-      "categoria"
-    );
-
-
-  if (
-    buscaURL &&
-    campoBusca
-  ) {
-
-    campoBusca.value =
-      buscaURL;
-
-  }
-
-
-  if (
-    buscaURL &&
-    campoBuscaMobile
-  ) {
-
-    campoBuscaMobile.value =
-      buscaURL;
-
-  }
-
-
-  /*
-    Categoria da URL será usada
-    mesmo se não existir select
-    filtroCategoria.
-  */
-
-  window.categoriaURL =
-    categoriaURL
-      ? normalizarTexto(
-          categoriaURL
-        )
-      : "";
-
-}
-
-
-
-/* =========================================================
-   FILTRO
-========================================================= */
-
-function filtrarProdutos() {
-
-  const termo =
-    normalizarTexto(
-      campoBusca?.value || ""
-    );
-
-
-  const categoriaSelect =
-    filtroCategoria?.value || "";
-
-
-  const categoriaSelecionada =
-    normalizarTexto(
-      categoriaSelect
-      ||
-      window.categoriaURL
-      ||
-      ""
-    );
-
-
-  const somenteEstoque =
-    Boolean(
-      filtroEstoque?.checked
-    );
-
-
-  const min =
-    Number(
-      precoMinimo?.value || 0
-    );
-
-
-  const max =
-    Number(
-      precoMaximo?.value || 0
-    );
-
-
-  return produtos.filter(
-    produto => {
-
-      const textoPesquisavel =
-        normalizarTexto(
-          [
-            produto.nome_produto,
-            produto.descricao_produto,
-            produto.descricao,
-            obterCodigoProduto(
-              produto
-            ),
-            obterMarcaProduto(
-              produto
-            ),
-            obterCategoriaProduto(
-              produto
-            )
-          ].join(" ")
-        );
-
-
-      const categoriaProduto =
-        normalizarTexto(
-          obterCategoriaProduto(
-            produto
-          )
-        );
-
-
-      const estoque =
-        Number(
-          produto.quantidade_estoque || 0
-        );
-
-
-      const preco =
-        Number(
-          produto.preco_produto || 0
-        );
-
-
-      const correspondeBusca =
-        !termo
-        ||
-        textoPesquisavel.includes(
-          termo
-        );
-
-
-      const correspondeCategoria =
-        !categoriaSelecionada
-        ||
-        categoriaProduto.includes(
-          categoriaSelecionada
-        );
-
-
-      const correspondeEstoque =
-        !somenteEstoque
-        ||
-        estoque > 0;
-
-
-      const correspondeMin =
-        !min
-        ||
-        preco >= min;
-
-
-      const correspondeMax =
-        !max
-        ||
-        preco <= max;
-
-
-      return (
-        correspondeBusca
-        &&
-        correspondeCategoria
-        &&
-        correspondeEstoque
-        &&
-        correspondeMin
-        &&
-        correspondeMax
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   ORDENAR
-========================================================= */
-
-function ordenarProdutos(
-  lista
+function mostrarToast(
+  mensagem,
+  tipo = "success"
 ) {
 
-  const ordenacao =
-    ordenacaoProdutos?.value
-    ||
-    "nome";
-
-
-  const copia =
-    [...lista];
-
-
-  return copia.sort(
-    (
-      primeiro,
-      segundo
-    ) => {
-
-      /*
-        HTML novo
-      */
-
-      if (
-        ordenacao ===
-        "menor-preco"
-        ||
-        ordenacao ===
-        "preco-asc"
-      ) {
-
-        return (
-          Number(
-            primeiro.preco_produto || 0
-          )
-          -
-          Number(
-            segundo.preco_produto || 0
-          )
-        );
-
-      }
-
-
-      if (
-        ordenacao ===
-        "maior-preco"
-        ||
-        ordenacao ===
-        "preco-desc"
-      ) {
-
-        return (
-          Number(
-            segundo.preco_produto || 0
-          )
-          -
-          Number(
-            primeiro.preco_produto || 0
-          )
-        );
-
-      }
-
-
-      if (
-        ordenacao ===
-        "estoque-desc"
-      ) {
-
-        return (
-          Number(
-            segundo.quantidade_estoque || 0
-          )
-          -
-          Number(
-            primeiro.quantidade_estoque || 0
-          )
-        );
-
-      }
-
-
-      return String(
-        primeiro.nome_produto || ""
-      ).localeCompare(
-        String(
-          segundo.nome_produto || ""
-        ),
-        "pt-BR"
-      );
-
-    }
+  clearTimeout(
+    toastTimer
   );
 
-}
 
-
-
-/* =========================================================
-   PAGINAÇÃO
-========================================================= */
-
-function renderizarPaginacao(
-  totalPaginas
-) {
-
-  if (!paginacaoCatalogo) {
-
-    return;
-
-  }
-
-
-  paginacaoCatalogo.innerHTML =
-    "";
+  catalogToast.classList.remove(
+    "show",
+    "error",
+    "warning"
+  );
 
 
   if (
-    totalPaginas <= 1
+    tipo !== "success"
   ) {
 
-    return;
+    catalogToast.classList.add(
+      tipo
+    );
 
   }
 
 
-  function criarBotao(
-    texto,
-    pagina,
-    desabilitado = false,
-    atual = false
-  ) {
-
-    const botao =
-      document.createElement(
-        "button"
-      );
+  catalogToast.textContent =
+    mensagem;
 
 
-    botao.type =
-      "button";
+  void catalogToast.offsetWidth;
 
 
-    botao.className =
-      "catalog-page-button";
+  catalogToast.classList.add(
+    "show"
+  );
 
 
-    botao.textContent =
-      texto;
-
-
-    botao.disabled =
-      desabilitado;
-
-
-    if (atual) {
-
-      botao.classList.add(
-        "active"
-      );
-
-    }
-
-
-    botao.addEventListener(
-      "click",
+  toastTimer =
+    setTimeout(
       () => {
 
-        paginaAtual =
-          pagina;
-
-
-        renderizarCatalogo();
-
-
-        document
-          .querySelector(
-            ".catalog-title-area"
-          )
-          ?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-
-      }
-    );
-
-
-    return botao;
-
-  }
-
-
-
-  paginacaoCatalogo.appendChild(
-
-    criarBotao(
-      "Anterior",
-      paginaAtual - 1,
-      paginaAtual === 1
-    )
-
-  );
-
-
-  for (
-    let pagina = 1;
-    pagina <= totalPaginas;
-    pagina++
-  ) {
-
-    paginacaoCatalogo.appendChild(
-
-      criarBotao(
-        String(pagina),
-        pagina,
-        false,
-        pagina === paginaAtual
-      )
-
-    );
-
-  }
-
-
-  paginacaoCatalogo.appendChild(
-
-    criarBotao(
-      "Próxima",
-      paginaAtual + 1,
-      paginaAtual === totalPaginas
-    )
-
-  );
-
-}
-
-
-
-/* =========================================================
-   RESULTADO
-========================================================= */
-
-function atualizarTextoResultado(
-  quantidade
-) {
-
-  if (!resultadoCatalogo) {
-
-    return;
-
-  }
-
-
-  resultadoCatalogo.textContent =
-    quantidade === 1
-
-      ? "1 produto encontrado"
-
-      : `${quantidade} produtos encontrados`;
-
-}
-
-
-
-/* =========================================================
-   RENDERIZAR
-========================================================= */
-
-function renderizarCatalogo() {
-
-  if (!listaProdutos) {
-
-    console.error(
-      "#listaProdutos não encontrado."
-    );
-
-    return;
-
-  }
-
-
-  const filtrados =
-    ordenarProdutos(
-      filtrarProdutos()
-    );
-
-
-  atualizarTextoResultado(
-    filtrados.length
-  );
-
-
-  const totalPaginas =
-    Math.max(
-      1,
-      Math.ceil(
-        filtrados.length
-        /
-        ITENS_POR_PAGINA
-      )
-    );
-
-
-  if (
-    paginaAtual >
-    totalPaginas
-  ) {
-
-    paginaAtual =
-      totalPaginas;
-
-  }
-
-
-  const inicio =
-    (
-      paginaAtual - 1
-    )
-    *
-    ITENS_POR_PAGINA;
-
-
-  const produtosPagina =
-    filtrados.slice(
-      inicio,
-      inicio + ITENS_POR_PAGINA
-    );
-
-
-  listaProdutos.innerHTML =
-    "";
-
-
-  listaProdutos.setAttribute(
-    "aria-busy",
-    "false"
-  );
-
-
-
-  /* =====================================================
-     VAZIO
-  ===================================================== */
-
-  if (
-    produtosPagina.length === 0
-  ) {
-
-    if (catalogEmptyState) {
-
-      catalogEmptyState.hidden =
-        false;
-
-    } else {
-
-      listaProdutos.innerHTML = `
-
-        <div class="col-12">
-
-          <div class="catalog-empty">
-
-            <span>
-
-              <i class="fa-solid fa-box-open"></i>
-
-            </span>
-
-            <h3>
-              Nenhum produto encontrado
-            </h3>
-
-            <p>
-              Tente alterar sua busca
-              ou os filtros.
-            </p>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }
-
-
-    renderizarPaginacao(
-      0
-    );
-
-
-    return;
-
-  }
-
-
-
-  if (catalogEmptyState) {
-
-    catalogEmptyState.hidden =
-      true;
-
-  }
-
-
-
-  produtosPagina.forEach(
-    produto => {
-
-      listaProdutos.appendChild(
-        criarCardProduto(
-          produto
-        )
-      );
-
-    }
-  );
-
-
-  renderizarPaginacao(
-    totalPaginas
-  );
-
-}
-
-
-
-/* =========================================================
-   CATEGORIAS
-========================================================= */
-
-function preencherCategorias() {
-
-  if (!filtroCategoria) {
-
-    return;
-
-  }
-
-
-  filtroCategoria.innerHTML =
-    `
-      <option value="">
-        Todas as categorias
-      </option>
-    `;
-
-
-  const categorias =
-    [
-      ...new Set(
-        produtos.map(
-          obterCategoriaProduto
-        )
-      )
-    ]
-    .filter(Boolean)
-    .sort(
-      (
-        a,
-        b
-      ) => {
-
-        return a.localeCompare(
-          b,
-          "pt-BR"
+        catalogToast.classList.remove(
+          "show"
         );
 
-      }
+      },
+      2500
     );
 
-
-  categorias.forEach(
-    categoria => {
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-
-      option.value =
-        categoria;
-
-
-      option.textContent =
-        categoria;
-
-
-      filtroCategoria.appendChild(
-        option
-      );
-
-    }
-  );
-
 }
 
 
-
 /* =========================================================
-   ESTADO
-========================================================= */
-
-function mostrarEstado(
-  mensagem,
-  tipo = "info"
-) {
-
-  if (!listaProdutos) {
-
-    return;
-
-  }
-
-
-  listaProdutos.innerHTML = `
-
-    <div class="col-12">
-
-      <div
-        class="catalog-loading-state ${tipo}"
-      >
-
-        ${
-          tipo === "error"
-
-          ? `
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          `
-
-          : `
-            <div
-              class="spinner-border text-primary"
-              role="status"
-            ></div>
-          `
-        }
-
-        <p>
-          ${mensagem}
-        </p>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-
-/* =========================================================
-   CARREGAR PRODUTOS
+   API
 ========================================================= */
 
 async function carregarProdutos() {
-
-  mostrarEstado(
-    "Carregando produtos..."
-  );
-
 
   try {
 
@@ -2007,7 +863,7 @@ async function carregarProdutos() {
     if (!resposta.ok) {
 
       throw new Error(
-        `Erro ${resposta.status} ao carregar produtos.`
+        "API indisponível"
       );
 
     }
@@ -2017,372 +873,1430 @@ async function carregarProdutos() {
       await resposta.json();
 
 
-    if (
-      !Array.isArray(dados)
-    ) {
+    produtosCatalogo =
+      Array.isArray(dados)
+        ? dados
+        : [];
 
-      throw new Error(
-        "A API não retornou uma lista de produtos."
-      );
-
-    }
-
-
-    produtos =
-      dados;
-
-
-    /*
-      Apoio para carrinho / estoque.
-    */
 
     localStorage.setItem(
       "produtosMock",
       JSON.stringify(
-        produtos
+        produtosCatalogo
       )
     );
 
 
-    preencherCategorias();
+  } catch (erro) {
 
-
-    aplicarParametrosURL();
-
-
-    renderizarCatalogo();
-
-
-    atualizarBotaoCarrinho();
-
-  } catch (error) {
-
-    console.error(
-      "Erro ao carregar catálogo:",
-      error
+    console.warn(
+      erro
     );
 
 
-    /*
-      FALLBACK LOCAL
-
-      Se API cair mas houver produtosMock,
-      ainda mostramos os últimos produtos.
-    */
-
     try {
 
-      const backup =
+      produtosCatalogo =
         JSON.parse(
           localStorage.getItem(
             "produtosMock"
           )
-        );
-
-
-      if (
-        Array.isArray(backup)
-        &&
-        backup.length > 0
-      ) {
-
-        produtos =
-          backup;
-
-
-        preencherCategorias();
-
-
-        aplicarParametrosURL();
-
-
-        renderizarCatalogo();
-
-
-        mostrarToast(
-          "Backend indisponível. Mostrando dados salvos anteriormente.",
-          "warning"
-        );
-
-
-        return;
-
-      }
+        ) || [];
 
     } catch {
 
-      /* ignora */
+      produtosCatalogo = [];
 
     }
 
+  }
 
-    mostrarEstado(
-      "Não foi possível carregar os produtos. Verifique se o backend está ligado.",
-      "error"
+
+  catalogLoading.style.display =
+    "none";
+
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+function atualizarMetricasHero() {
+
+  catalogTotalProducts.textContent =
+    String(
+      produtosCatalogo.length
+    ).padStart(
+      3,
+      "0"
     );
 
-  }
+
+  const disponiveis =
+    produtosCatalogo.filter(
+      produto =>
+        numeroSeguro(
+          produto.quantidade_estoque
+        ) > 0
+    ).length;
+
+
+  catalogAvailableProducts.textContent =
+    String(
+      disponiveis
+    ).padStart(
+      3,
+      "0"
+    );
+
+
+  const categorias =
+    new Set(
+      produtosCatalogo.map(
+        produto =>
+          normalizarTexto(
+            obterCampo(
+              produto,
+              [
+                "categoria_produto",
+                "categoria"
+              ]
+            )
+          )
+      )
+    );
+
+
+  catalogCategoryCount.textContent =
+    String(
+      categorias.size
+    ).padStart(
+      2,
+      "0"
+    );
 
 }
 
 
-
 /* =========================================================
-   ATUALIZAR FILTROS
+   BRAND FILTERS
 ========================================================= */
 
-function atualizarFiltros() {
+function renderizarFiltrosMarca() {
 
-  paginaAtual =
-    1;
+  brandFilters.innerHTML =
+    "";
 
 
-  /*
-    Se usuário mexeu manualmente
-    em categoria, removemos categoria URL.
-  */
+  const marcas =
+    [
+      ...new Set(
+        produtosCatalogo
+          .map(
+            produto =>
+              obterCampo(
+                produto,
+                [
+                  "marca_produto",
+                  "marca"
+                ]
+              )
+          )
+          .filter(Boolean)
+      )
+    ].sort();
 
-  renderizarCatalogo();
+
+  marcas.forEach(
+    marca => {
+
+      const label =
+        document.createElement(
+          "label"
+        );
+
+
+      label.className =
+        "filter-check";
+
+
+      label.innerHTML = `
+        <input
+          type="checkbox"
+          value="${marca}"
+          data-filter-brand
+        >
+
+        <span></span>
+
+        ${marca}
+      `;
+
+
+      label
+        .querySelector("input")
+        .addEventListener(
+          "change",
+          atualizarCatalogo
+        );
+
+
+      brandFilters.appendChild(
+        label
+      );
+
+    }
+  );
 
 }
 
 
-
 /* =========================================================
-   BUSCA DESKTOP
+   FILTER URL
 ========================================================= */
 
-campoBusca?.addEventListener(
-  "input",
-  () => {
+function aplicarFiltrosDaURL() {
 
-    paginaAtual =
-      1;
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
 
-    renderizarCatalogo();
+  const categoria =
+    normalizarTexto(
+      params.get(
+        "categoria"
+      )
+    );
+
+
+  const busca =
+    params.get(
+      "busca"
+    );
+
+
+  if (busca) {
+
+    catalogSearch.value =
+      busca;
 
   }
-);
 
 
+  if (categoria) {
 
-/* =========================================================
-   BUSCA MOBILE
-========================================================= */
-
-campoBuscaMobile?.addEventListener(
-  "input",
-  () => {
-
-    if (campoBusca) {
-
-      campoBusca.value =
-        campoBuscaMobile.value;
-
-    }
-
-
-    paginaAtual =
-      1;
-
-
-    renderizarCatalogo();
-
-  }
-);
-
-
-
-/* =========================================================
-   CATEGORIA
-========================================================= */
-
-filtroCategoria?.addEventListener(
-  "change",
-  () => {
-
-    window.categoriaURL =
-      "";
-
-
-    atualizarFiltros();
-
-  }
-);
-
-
-
-/* =========================================================
-   ORDENAÇÃO
-========================================================= */
-
-ordenacaoProdutos?.addEventListener(
-  "change",
-  atualizarFiltros
-);
-
-
-
-/* =========================================================
-   ESTOQUE
-========================================================= */
-
-filtroEstoque?.addEventListener(
-  "change",
-  atualizarFiltros
-);
-
-
-
-/* =========================================================
-   PREÇO
-========================================================= */
-
-precoMinimo?.addEventListener(
-  "input",
-  atualizarFiltros
-);
-
-
-precoMaximo?.addEventListener(
-  "input",
-  atualizarFiltros
-);
-
-
-
-/* =========================================================
-   LIMPAR FILTROS
-========================================================= */
-
-btnLimparFiltros?.addEventListener(
-  "click",
-  () => {
-
-    if (campoBusca) {
-
-      campoBusca.value =
-        "";
-
-    }
-
-
-    if (campoBuscaMobile) {
-
-      campoBuscaMobile.value =
-        "";
-
-    }
-
-
-    if (filtroCategoria) {
-
-      filtroCategoria.value =
-        "";
-
-    }
-
-
-    if (ordenacaoProdutos) {
-
-      ordenacaoProdutos.value =
-        "";
-
-    }
-
-
-    if (filtroEstoque) {
-
-      filtroEstoque.checked =
-        false;
-
-    }
-
-
-    if (precoMinimo) {
-
-      precoMinimo.value =
-        "";
-
-    }
-
-
-    if (precoMaximo) {
-
-      precoMaximo.value =
-        "";
-
-    }
-
-
-    window.categoriaURL =
-      "";
-
-
-    const url =
-      new URL(
-        window.location.href
+    const input =
+      categoryFilters.find(
+        item =>
+          normalizarTexto(
+            item.value
+          ) ===
+          categoria
       );
 
 
-    url.search = "";
+    if (input) {
 
+      input.checked = true;
 
-    window.history.replaceState(
-      {},
-      "",
-      url
-    );
-
-
-    paginaAtual =
-      1;
-
-
-    renderizarCatalogo();
+    }
 
   }
-);
 
+}
 
 
 /* =========================================================
-   BOTÃO BUSCAR VISUAL
+   FILTER
 ========================================================= */
 
-document
-  .getElementById(
-    "btnBuscaVisual"
-  )
-  ?.addEventListener(
+function aplicarFiltros() {
+
+  const busca =
+    normalizarTexto(
+      catalogSearch.value
+    );
+
+
+  const categorias =
+    categoryFilters
+      .filter(
+        input =>
+          input.checked
+      )
+      .map(
+        input =>
+          normalizarTexto(
+            input.value
+          )
+      );
+
+
+  const marcas =
+    Array.from(
+      document.querySelectorAll(
+        "[data-filter-brand]:checked"
+      )
+    )
+      .map(
+        input =>
+          normalizarTexto(
+            input.value
+          )
+      );
+
+
+  const min =
+    priceMin.value !== ""
+      ? numeroSeguro(
+          priceMin.value
+        )
+      : null;
+
+
+  const max =
+    priceMax.value !== ""
+      ? numeroSeguro(
+          priceMax.value
+        )
+      : null;
+
+
+  produtosFiltrados =
+    produtosCatalogo.filter(
+      produto => {
+
+        const nome =
+          normalizarTexto(
+            produto.nome_produto
+          );
+
+
+        const marca =
+          normalizarTexto(
+            obterCampo(
+              produto,
+              [
+                "marca_produto",
+                "marca"
+              ]
+            )
+          );
+
+
+        const categoria =
+          normalizarTexto(
+            obterCampo(
+              produto,
+              [
+                "categoria_produto",
+                "categoria"
+              ]
+            )
+          );
+
+
+        const codigo =
+          normalizarTexto(
+            obterCampo(
+              produto,
+              [
+                "codigo_produto",
+                "codigo",
+                "sku"
+              ]
+            )
+          );
+
+
+        const preco =
+          numeroSeguro(
+            produto.preco_produto
+          );
+
+
+        const estoque =
+          numeroSeguro(
+            produto.quantidade_estoque
+          );
+
+
+        return (
+          (
+            !busca ||
+            nome.includes(busca) ||
+            marca.includes(busca) ||
+            categoria.includes(busca) ||
+            codigo.includes(busca)
+          ) &&
+          (
+            categorias.length === 0 ||
+            categorias.includes(
+              categoria
+            )
+          ) &&
+          (
+            marcas.length === 0 ||
+            marcas.includes(
+              marca
+            )
+          ) &&
+          (
+            !filterInStock.checked ||
+            estoque > 0
+          ) &&
+          (
+            min === null ||
+            preco >= min
+          ) &&
+          (
+            max === null ||
+            preco <= max
+          )
+        );
+
+      }
+    );
+
+
+  ordenarProdutos();
+
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+function ordenarProdutos() {
+
+  switch (
+    catalogSort.value
+  ) {
+
+    case "menor-preco":
+
+      produtosFiltrados.sort(
+        (
+          a,
+          b
+        ) =>
+          numeroSeguro(
+            a.preco_produto
+          ) -
+          numeroSeguro(
+            b.preco_produto
+          )
+      );
+
+      break;
+
+
+    case "maior-preco":
+
+      produtosFiltrados.sort(
+        (
+          a,
+          b
+        ) =>
+          numeroSeguro(
+            b.preco_produto
+          ) -
+          numeroSeguro(
+            a.preco_produto
+          )
+      );
+
+      break;
+
+
+    case "nome":
+
+      produtosFiltrados.sort(
+        (
+          a,
+          b
+        ) =>
+          String(
+            a.nome_produto
+          ).localeCompare(
+            b.nome_produto,
+            "pt-BR"
+          )
+      );
+
+      break;
+
+
+    case "estoque":
+
+      produtosFiltrados.sort(
+        (
+          a,
+          b
+        ) =>
+          numeroSeguro(
+            b.quantidade_estoque
+          ) -
+          numeroSeguro(
+            a.quantidade_estoque
+          )
+      );
+
+      break;
+
+  }
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+function criarCardProduto(
+  produto,
+  indice
+) {
+
+  const card =
+    document.createElement(
+      "article"
+    );
+
+
+  card.className =
+    "catalog-product";
+
+
+  const estoque =
+    numeroSeguro(
+      produto.quantidade_estoque
+    );
+
+
+  const categoria =
+    obterCampo(
+      produto,
+      [
+        "categoria_produto",
+        "categoria"
+      ],
+      "Autopeças"
+    );
+
+
+  const marca =
+    obterCampo(
+      produto,
+      [
+        "marca_produto",
+        "marca"
+      ],
+      "Não informada"
+    );
+
+
+  const codigo =
+    obterCampo(
+      produto,
+      [
+        "codigo_produto",
+        "codigo",
+        "sku"
+      ],
+      produto.id_produto
+    );
+
+
+  card.innerHTML = `
+    <div class="catalog-product-media">
+
+      <img
+        src="${obterImagem(produto.imagem)}"
+        alt="${produto.nome_produto || "Produto"}"
+      >
+
+      <span
+        class="
+          catalog-product-status
+          ${
+            estoque <= 0
+              ? "danger"
+              : estoque <= 5
+                ? "warning"
+                : ""
+          }
+        "
+      >
+
+        ${
+          estoque <= 0
+            ? "SEM ESTOQUE"
+            : estoque <= 5
+              ? `${estoque} RESTANTES`
+              : "EM ESTOQUE"
+        }
+
+      </span>
+
+      <button
+        class="catalog-quick-button"
+        type="button"
+      >
+        <i class="fa-solid fa-expand"></i>
+      </button>
+
+    </div>
+
+
+    <div class="catalog-product-content">
+
+      <div class="catalog-product-top">
+
+        <span class="catalog-product-category">
+          ${categoria.toUpperCase()}
+        </span>
+
+        <span class="catalog-product-code">
+          COD ${codigo}
+        </span>
+
+      </div>
+
+      <h3>
+        ${produto.nome_produto}
+      </h3>
+
+      <span class="catalog-product-brand">
+
+        <i class="fa-solid fa-certificate"></i>
+
+        ${marca}
+
+      </span>
+
+      <div class="catalog-product-footer">
+
+        <div class="catalog-product-price">
+
+          <small>
+            PREÇO
+          </small>
+
+          <strong>
+            ${formatarMoeda(produto.preco_produto)}
+          </strong>
+
+        </div>
+
+        <button
+          class="catalog-add-cart"
+          type="button"
+          ${estoque <= 0 ? "disabled" : ""}
+        >
+
+          <i class="fa-solid fa-cart-plus"></i>
+
+          ${
+            estoque <= 0
+              ? "INDISPONÍVEL"
+              : "ADICIONAR"
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+
+  const quick =
+    card.querySelector(
+      ".catalog-quick-button"
+    );
+
+
+  quick.addEventListener(
     "click",
-    () => {
+    event => {
 
-      paginaAtual =
-        1;
+      event.stopPropagation();
 
-
-      renderizarCatalogo();
+      abrirQuickView(
+        produto
+      );
 
     }
   );
 
 
+  const add =
+    card.querySelector(
+      ".catalog-add-cart"
+    );
+
+
+  add.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      adicionarProdutoCarrinho(
+        produto,
+        card,
+        add
+      );
+
+    }
+  );
+
+
+  card.addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        `produto.html?id=${produto.id_produto}`;
+
+    }
+  );
+
+
+  setTimeout(
+    () => {
+
+      card.classList.add(
+        "catalog-product-visible"
+      );
+
+    },
+    indice * 55
+  );
+
+
+  return card;
+
+}
+
 
 /* =========================================================
-   DISPONIBILIZAR FUNÇÃO
+   RENDER
 ========================================================= */
 
-window.adicionarAoCarrinho =
-  adicionarAoCarrinho;
+function renderizarCatalogo() {
 
+  catalogGrid.innerHTML =
+    "";
+
+
+  const visiveis =
+    produtosFiltrados.slice(
+      0,
+      quantidadeVisivel
+    );
+
+
+  if (
+    visiveis.length === 0
+  ) {
+
+    catalogEmpty.hidden =
+      false;
+
+    catalogPagination.style.display =
+      "none";
+
+  } else {
+
+    catalogEmpty.hidden =
+      true;
+
+  }
+
+
+  visiveis.forEach(
+    (
+      produto,
+      indice
+    ) => {
+
+      catalogGrid.appendChild(
+        criarCardProduto(
+          produto,
+          indice
+        )
+      );
+
+    }
+  );
+
+
+  resultCount.textContent =
+    produtosFiltrados.length;
+
+
+  paginationStatus.textContent =
+    `${visiveis.length} de ${produtosFiltrados.length} produtos`;
+
+
+  catalogPagination.style.display =
+    produtosFiltrados.length > 0
+      ? "flex"
+      : "none";
+
+
+  loadMoreProducts.style.display =
+    visiveis.length <
+    produtosFiltrados.length
+      ? "flex"
+      : "none";
+
+}
 
 
 /* =========================================================
-   INICIAR
+   UPDATE
 ========================================================= */
 
-atualizarBotaoCarrinho();
+function atualizarCatalogo() {
 
-carregarProdutos();
+  quantidadeVisivel =
+    PRODUTOS_POR_PAGINA;
+
+
+  aplicarFiltros();
+
+  renderizarCatalogo();
+
+  atualizarTitulo();
+
+}
+
+
+/* =========================================================
+   RESULT TITLE
+========================================================= */
+
+function atualizarTitulo() {
+
+  const busca =
+    catalogSearch.value.trim();
+
+
+  const categorias =
+    categoryFilters.filter(
+      input =>
+        input.checked
+    );
+
+
+  if (busca) {
+
+    resultsTitle.textContent =
+      `Resultados para "${busca}"`;
+
+  } else if (
+    categorias.length === 1
+  ) {
+
+    resultsTitle.textContent =
+      categorias[0]
+        .parentElement
+        .textContent
+        .trim();
+
+  } else {
+
+    resultsTitle.textContent =
+      "Todos os produtos";
+
+  }
+
+}
+
+
+/* =========================================================
+   ADD CART
+========================================================= */
+
+function adicionarProdutoCarrinho(
+  produto,
+  card,
+  botao
+) {
+
+  const estoque =
+    numeroSeguro(
+      produto.quantidade_estoque
+    );
+
+
+  const carrinho =
+    obterCarrinho();
+
+
+  const existente =
+    carrinho.find(
+      item =>
+        Number(
+          item.id_produto
+        ) ===
+        Number(
+          produto.id_produto
+        )
+    );
+
+
+  if (existente) {
+
+    if (
+      existente.quantidade >=
+      estoque
+    ) {
+
+      mostrarToast(
+        "Limite de estoque atingido.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+
+    existente.quantidade++;
+
+  } else {
+
+    carrinho.push({
+
+      id_produto:
+        produto.id_produto,
+
+      nome_produto:
+        produto.nome_produto,
+
+      preco_produto:
+        numeroSeguro(
+          produto.preco_produto
+        ),
+
+      quantidade_estoque:
+        estoque,
+
+      imagem:
+        produto.imagem,
+
+      quantidade: 1
+
+    });
+
+  }
+
+
+  salvarCarrinho(
+    carrinho
+  );
+
+
+  const original =
+    botao.innerHTML;
+
+
+  botao.innerHTML =
+    `
+      <i class="fa-solid fa-check"></i>
+      ADICIONADO
+    `;
+
+
+  animar(
+    card,
+    [
+      {
+        transform:
+          "scale(1)"
+      },
+      {
+        transform:
+          "scale(.97)"
+      },
+      {
+        transform:
+          "scale(1.015)"
+      },
+      {
+        transform:
+          "scale(1)"
+      }
+    ],
+    {
+      duration: 420
+    }
+  );
+
+
+  setTimeout(
+    () => {
+
+      botao.innerHTML =
+        original;
+
+    },
+    1000
+  );
+
+
+  mostrarToast(
+    "Produto adicionado ao Smart Cart."
+  );
+
+}
+
+
+/* =========================================================
+   QUICK
+========================================================= */
+
+function abrirQuickView(
+  produto
+) {
+
+  produtoQuickView =
+    produto;
+
+
+  quickViewImage.src =
+    obterImagem(
+      produto.imagem
+    );
+
+
+  quickViewCategory.textContent =
+    obterCampo(
+      produto,
+      [
+        "categoria_produto",
+        "categoria"
+      ],
+      "Autopeças"
+    );
+
+
+  quickViewName.textContent =
+    produto.nome_produto;
+
+
+  quickViewCode.textContent =
+    obterCampo(
+      produto,
+      [
+        "codigo_produto",
+        "codigo",
+        "sku"
+      ],
+      produto.id_produto
+    );
+
+
+  quickViewBrand.textContent =
+    obterCampo(
+      produto,
+      [
+        "marca_produto",
+        "marca"
+      ],
+      "Não informada"
+    );
+
+
+  quickViewStock.textContent =
+    `${numeroSeguro(
+      produto.quantidade_estoque
+    )} unidades`;
+
+
+  quickViewPrice.textContent =
+    formatarMoeda(
+      produto.preco_produto
+    );
+
+
+  quickViewDetails.href =
+    `produto.html?id=${produto.id_produto}`;
+
+
+  quickView.hidden =
+    false;
+
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+
+function fecharQuick() {
+
+  quickView.hidden =
+    true;
+
+
+  document.body.style.overflow =
+    "";
+
+
+  produtoQuickView =
+    null;
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function limparFiltros() {
+
+  categoryFilters.forEach(
+    input =>
+      input.checked =
+        false
+  );
+
+
+  document
+    .querySelectorAll(
+      "[data-filter-brand]"
+    )
+    .forEach(
+      input =>
+        input.checked =
+          false
+    );
+
+
+  filterInStock.checked =
+    false;
+
+
+  priceMin.value =
+    "";
+
+
+  priceMax.value =
+    "";
+
+
+  catalogSearch.value =
+    "";
+
+
+  catalogSort.value =
+    "relevancia";
+
+
+  window.history.replaceState(
+    {},
+    "",
+    "produtos.html"
+  );
+
+
+  aplicarHeroCategoria();
+
+  atualizarCatalogo();
+
+}
+
+
+/* =========================================================
+   FILTER MODULE
+========================================================= */
+
+function configurarModulosFiltro() {
+
+  document
+    .querySelectorAll(
+      "[data-filter-toggle]"
+    )
+    .forEach(
+      botao => {
+
+        botao.addEventListener(
+          "click",
+          () => {
+
+            botao
+              .closest(
+                ".filter-module"
+              )
+              .classList.toggle(
+                "collapsed"
+              );
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+catalogSearch.addEventListener(
+  "input",
+  atualizarCatalogo
+);
+
+
+clearCatalogSearch.addEventListener(
+  "click",
+  () => {
+
+    catalogSearch.value =
+      "";
+
+    atualizarCatalogo();
+
+  }
+);
+
+
+catalogSort.addEventListener(
+  "change",
+  atualizarCatalogo
+);
+
+
+filterInStock.addEventListener(
+  "change",
+  atualizarCatalogo
+);
+
+
+priceMin.addEventListener(
+  "input",
+  atualizarCatalogo
+);
+
+
+priceMax.addEventListener(
+  "input",
+  atualizarCatalogo
+);
+
+
+categoryFilters.forEach(
+  input =>
+    input.addEventListener(
+      "change",
+      atualizarCatalogo
+    )
+);
+
+
+viewGrid.addEventListener(
+  "click",
+  () => {
+
+    modoVisualizacao =
+      "grid";
+
+
+    catalogGrid.classList.remove(
+      "list-view"
+    );
+
+
+    viewGrid.classList.add(
+      "active"
+    );
+
+
+    viewList.classList.remove(
+      "active"
+    );
+
+  }
+);
+
+
+viewList.addEventListener(
+  "click",
+  () => {
+
+    modoVisualizacao =
+      "list";
+
+
+    catalogGrid.classList.add(
+      "list-view"
+    );
+
+
+    viewList.classList.add(
+      "active"
+    );
+
+
+    viewGrid.classList.remove(
+      "active"
+    );
+
+  }
+);
+
+
+loadMoreProducts.addEventListener(
+  "click",
+  () => {
+
+    quantidadeVisivel +=
+      PRODUTOS_POR_PAGINA;
+
+
+    renderizarCatalogo();
+
+  }
+);
+
+
+clearAllFilters.addEventListener(
+  "click",
+  limparFiltros
+);
+
+
+emptyClearFilters.addEventListener(
+  "click",
+  limparFiltros
+);
+
+
+openFilters.addEventListener(
+  "click",
+  () => {
+
+    catalogFilters.classList.add(
+      "open"
+    );
+
+
+    filtersBackdrop.classList.add(
+      "show"
+    );
+
+  }
+);
+
+
+closeFilters.addEventListener(
+  "click",
+  () => {
+
+    catalogFilters.classList.remove(
+      "open"
+    );
+
+
+    filtersBackdrop.classList.remove(
+      "show"
+    );
+
+  }
+);
+
+
+filtersBackdrop.addEventListener(
+  "click",
+  () => {
+
+    catalogFilters.classList.remove(
+      "open"
+    );
+
+
+    filtersBackdrop.classList.remove(
+      "show"
+    );
+
+  }
+);
+
+
+quickViewClose.addEventListener(
+  "click",
+  fecharQuick
+);
+
+
+quickViewBackdrop.addEventListener(
+  "click",
+  fecharQuick
+);
+
+
+quickViewAdd.addEventListener(
+  "click",
+  () => {
+
+    if (!produtoQuickView) {
+      return;
+    }
+
+
+    adicionarProdutoCarrinho(
+      produtoQuickView,
+      document.querySelector(
+        ".quick-view-window"
+      ),
+      quickViewAdd
+    );
+
+  }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+async function iniciarCatalogo() {
+
+  aplicarHeroCategoria();
+
+  configurarModulosFiltro();
+
+  await carregarProdutos();
+
+  atualizarMetricasHero();
+
+  renderizarFiltrosMarca();
+
+  aplicarFiltrosDaURL();
+
+  aplicarFiltros();
+
+  renderizarCatalogo();
+
+  atualizarTitulo();
+
+
+  window.SiteUI
+    ?.atualizarCarrinho?.();
+
+}
+
+
+iniciarCatalogo();

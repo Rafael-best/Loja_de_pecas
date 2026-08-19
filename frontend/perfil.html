@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,10 +12,17 @@
 
   <meta
     name="description"
-    content="Gerencie sua conta, endereço e veículos na Loja de Peças."
+    content="Área do cliente - Loja de Peças"
   >
 
-  <title>Minha Conta | Loja de Peças</title>
+  <title>
+    Minha Conta | Loja de Peças
+  </title>
+
+
+  <!-- =====================================================
+       GOOGLE FONTS
+  ====================================================== -->
 
   <link
     rel="preconnect"
@@ -28,1473 +36,2615 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet"
   >
+
+
+  <!-- =====================================================
+       FONT AWESOME
+  ====================================================== -->
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   >
 
+
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/site.css"
+  >
+
   <link
     rel="stylesheet"
     href="css/perfil.css"
   >
+
 </head>
 
 
 <body>
 
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
 
-<header class="site-header">
+  <div class="top-strip">
 
-  <div class="header-container">
+    <div class="site-container top-strip-content">
 
-
-    <!-- LOGO -->
-
-    <a
-      href="produtos.html"
-      class="site-brand"
-    >
-
-      <span class="brand-symbol">
-
-        <i class="fa-solid fa-gears"></i>
-
+      <span>
+        <i class="fa-solid fa-shield-halved"></i>
+        Compra segura
       </span>
 
+      <span class="desktop-only">
+        <i class="fa-solid fa-box"></i>
+        Estoque atualizado
+      </span>
 
-      <div>
+      <span class="desktop-only">
+        <i class="fa-solid fa-headset"></i>
+        Atendimento especializado
+      </span>
 
-        <strong>
-          LOJA DE PEÇAS
-        </strong>
+    </div>
 
-        <small>
-          Auto Parts & Performance
-        </small>
+  </div>
+
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="site-header">
+
+
+    <div class="site-container header-main">
+
+
+      <!-- BRAND -->
+
+      <a
+        href="index.html"
+        class="brand"
+      >
+
+        <img
+          src="assets/images/logo.png"
+          alt="Loja de Peças"
+          class="brand-logo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+
+        <span class="brand-fallback">
+          <i class="fa-solid fa-gear"></i>
+        </span>
+
+        <span class="brand-text">
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
+
+        </span>
+
+      </a>
+
+
+
+      <!-- SEARCH -->
+
+      <form
+        class="header-search"
+        id="headerSearchForm"
+      >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="headerSearchInput"
+          type="search"
+          autocomplete="off"
+          placeholder="Peça, marca, código ou categoria..."
+        >
+
+        <button type="submit">
+          Buscar
+        </button>
+
+      </form>
+
+
+
+      <!-- HEADER ACTIONS -->
+
+      <div class="header-actions">
+
+
+        <a
+          href="pedidos.html"
+          class="header-action desktop-action"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+            <small>Acompanhar</small>
+            <strong>Pedidos</strong>
+          </span>
+
+        </a>
+
+
+
+        <!-- GUEST -->
+
+        <div
+          id="guestActions"
+          class="header-guest-actions"
+        >
+
+          <a
+            href="login.html"
+            class="header-login-button"
+          >
+
+            <i class="fa-regular fa-user"></i>
+
+            <span>
+              <small>Olá, visitante</small>
+              <strong>Entrar</strong>
+            </span>
+
+          </a>
+
+
+          <a
+            href="cadastro.html"
+            class="header-register-button"
+          >
+            Criar conta
+          </a>
+
+        </div>
+
+
+
+        <!-- USER -->
+
+        <div
+          id="userMenuWrapper"
+          class="header-user-wrapper"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="userMenuButton"
+            class="header-user-button"
+          >
+
+            <span
+              id="headerUserAvatar"
+              class="header-user-avatar"
+              data-user-avatar
+            >
+              U
+            </span>
+
+            <span class="header-user-data">
+
+              <small>
+                Olá,
+              </small>
+
+              <strong
+                id="headerUserName"
+                data-user-name
+              >
+                Cliente
+              </strong>
+
+            </span>
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </button>
+
+
+          <div
+            id="userDropdown"
+            class="user-dropdown"
+          >
+
+            <div class="user-dropdown-header">
+
+              <span
+                id="dropdownAvatar"
+                class="dropdown-avatar"
+                data-user-avatar
+              >
+                U
+              </span>
+
+              <div>
+
+                <strong
+                  id="dropdownUserName"
+                  data-user-name
+                >
+                  Cliente
+                </strong>
+
+                <small
+                  id="dropdownUserEmail"
+                  data-user-email
+                >
+                  cliente@email.com
+                </small>
+
+              </div>
+
+            </div>
+
+            <div class="user-dropdown-divider"></div>
+
+            <a href="perfil.html">
+              <i class="fa-regular fa-user"></i>
+              Minha conta
+            </a>
+
+            <a href="pedidos.html">
+              <i class="fa-solid fa-box"></i>
+              Meus pedidos
+            </a>
+
+            <a href="perfil.html#veiculos">
+              <i class="fa-solid fa-car"></i>
+              Meus veículos
+            </a>
+
+            <a href="suporte.html">
+              <i class="fa-solid fa-headset"></i>
+              Suporte
+            </a>
+
+            <div class="user-dropdown-divider"></div>
+
+            <button
+              id="btnLogoutGlobal"
+              type="button"
+              class="user-dropdown-logout"
+            >
+
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Sair
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CART -->
+
+        <a
+          href="carrinho.html"
+          class="cart-button"
+        >
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span class="cart-text">
+            Carrinho
+          </span>
+
+          <span
+            id="cartCount"
+            class="cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
+
 
       </div>
 
-    </a>
+    </div>
 
 
 
-    <!-- NAVEGAÇÃO DESKTOP -->
+    <!-- NAV -->
 
-    <nav class="desktop-navigation">
+    <nav class="desktop-nav">
 
-      <a href="produtos.html">
-        Produtos
-      </a>
+      <div class="site-container desktop-nav-inner">
 
-      <a
-        href="pedidos.html"
-        data-auth-link
-      >
-        Meus pedidos
-      </a>
+        <a
+          href="produtos.html"
+          class="category-highlight"
+        >
 
-      <a href="suporte.html">
-        Suporte
-      </a>
+          <i class="fa-solid fa-table-cells-large"></i>
+          Todos os produtos
+
+        </a>
+
+        <a href="produtos.html?categoria=freios">
+          Freios
+        </a>
+
+        <a href="produtos.html?categoria=motor">
+          Motor
+        </a>
+
+        <a href="produtos.html?categoria=suspensao">
+          Suspensão
+        </a>
+
+        <a href="produtos.html?categoria=eletrica">
+          Elétrica
+        </a>
+
+        <a href="produtos.html?categoria=filtros">
+          Filtros
+        </a>
+
+        <a href="produtos.html?categoria=oleos">
+          Óleos e Fluidos
+        </a>
+
+        <a
+          href="suporte.html"
+          class="nav-support"
+        >
+
+          <i class="fa-regular fa-circle-question"></i>
+          Suporte
+
+        </a>
+
+      </div>
 
     </nav>
 
 
 
-    <!-- AÇÕES -->
+    <!-- MOBILE BACKDROP -->
 
-    <div class="header-actions">
+    <div
+      id="mobileMenuBackdrop"
+      class="mobile-menu-backdrop"
+    ></div>
 
 
-      <!-- VISITANTE -->
 
-      <div
-        class="guest-actions"
-        id="guestActions"
-      >
+    <!-- MOBILE MENU -->
 
-        <a
-          href="login.html"
-          class="login-link-header"
+    <aside
+      id="mobileMenu"
+      class="mobile-menu"
+    >
+
+      <div class="mobile-menu-header">
+
+        <div class="mobile-brand">
+
+          <span class="mobile-brand-icon">
+            <i class="fa-solid fa-gear"></i>
+          </span>
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Menu principal
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="menuClose"
+          class="menu-close"
+          type="button"
         >
-          Entrar
-        </a>
 
-        <a
-          href="cadastro.html"
-          class="register-link-header"
-        >
-          Criar conta
-        </a>
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
 
       </div>
 
 
+      <div class="mobile-search">
 
-      <!-- USUÁRIO LOGADO -->
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="mobileSearchInput"
+          type="search"
+          placeholder="Buscar produtos..."
+        >
+
+      </div>
+
 
       <div
-        class="user-menu-wrapper"
-        id="userMenuWrapper"
+        id="mobileUserSummary"
+        class="mobile-user-summary"
         hidden
       >
 
-        <button
-          type="button"
-          class="user-menu-button"
-          id="userMenuButton"
-          aria-label="Abrir menu da conta"
+        <span
+          class="mobile-user-avatar"
+          data-user-avatar
         >
+          U
+        </span>
 
-          <span
-            class="header-user-avatar"
-            id="headerUserAvatar"
-          >
-            U
+        <div>
+
+          <small>
+            Bem-vindo
+          </small>
+
+          <strong data-user-name>
+            Cliente
+          </strong>
+
+          <span data-user-email>
+            -
           </span>
 
+        </div>
 
-          <div class="header-user-info">
+      </div>
 
-            <small>
-              Olá,
-            </small>
 
-            <strong id="headerUserName">
-              Cliente
-            </strong>
+      <nav class="mobile-nav">
+
+        <a href="index.html">
+
+          <i class="fa-solid fa-house"></i>
+          Início
+
+        </a>
+
+        <a href="produtos.html">
+
+          <i class="fa-solid fa-box-open"></i>
+          Produtos
+
+        </a>
+
+        <a href="carrinho.html">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          Carrinho
+
+          <span
+            id="mobileCartCount"
+            class="mobile-cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+        <a href="pedidos.html">
+
+          <i class="fa-solid fa-box"></i>
+          Meus pedidos
+
+        </a>
+
+        <a
+          href="perfil.html"
+          class="active"
+        >
+
+          <i class="fa-regular fa-user"></i>
+          Meu perfil
+
+        </a>
+
+        <a href="suporte.html">
+
+          <i class="fa-solid fa-headset"></i>
+          Suporte
+
+        </a>
+
+      </nav>
+
+
+      <button
+        id="mobileLogoutButton"
+        class="mobile-logout-button"
+        type="button"
+      >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
+
+      </button>
+
+    </aside>
+
+
+  </header>
+
+
+
+  <!-- =====================================================
+       PROFILE SYSTEM
+  ====================================================== -->
+
+  <main class="profile-system">
+
+
+    <!-- =====================================================
+         PROFILE HERO
+    ====================================================== -->
+
+    <section class="profile-hero">
+
+
+      <div class="profile-hero-light hero-light-one"></div>
+
+      <div class="profile-hero-light hero-light-two"></div>
+
+      <div class="profile-hero-pattern"></div>
+
+
+      <div class="site-container profile-hero-layout">
+
+
+        <!-- AVATAR -->
+
+        <div class="profile-identity">
+
+
+          <div class="profile-avatar-stage">
+
+
+            <div class="profile-avatar-ring ring-one"></div>
+
+            <div class="profile-avatar-ring ring-two"></div>
+
+
+            <button
+              id="profileAvatarButton"
+              class="profile-main-avatar"
+              type="button"
+              title="Alterar foto"
+            >
+
+              <img
+                id="profileAvatarImage"
+                src=""
+                alt="Foto de perfil"
+                hidden
+              >
+
+              <span
+                id="profileAvatarInitial"
+              >
+                U
+              </span>
+
+
+              <span class="profile-avatar-edit">
+
+                <i class="fa-solid fa-camera"></i>
+
+              </span>
+
+            </button>
+
+
+            <input
+              id="profileAvatarInput"
+              type="file"
+              accept="image/*"
+              hidden
+            >
+
 
           </div>
 
 
-          <i class="fa-solid fa-chevron-down"></i>
 
-        </button>
-
+          <div class="profile-identity-copy">
 
 
-        <!-- DROPDOWN -->
+            <span class="profile-eyebrow">
 
-        <div
-          class="user-dropdown"
-          id="userDropdown"
-        >
+              CUSTOMER / PERSONAL HUB
 
-          <div class="dropdown-user">
+            </span>
 
-            <span
-              class="dropdown-avatar"
-              id="dropdownAvatar"
-            >
-              U
+
+            <h1>
+
+              Olá,
+
+              <span id="profileHeroName">
+                Cliente
+              </span>
+
+            </h1>
+
+
+            <p>
+
+              Gerencie seus dados, segurança,
+              veículos e preferências em um só lugar.
+
+            </p>
+
+
+            <div class="profile-account-meta">
+
+
+              <span>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Conta ativa
+
+              </span>
+
+
+              <span>
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Ambiente seguro
+
+              </span>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- HERO STATS -->
+
+        <div class="profile-stats">
+
+
+          <article>
+
+            <span class="profile-stat-icon">
+
+              <i class="fa-solid fa-box"></i>
+
             </span>
 
 
             <div>
 
-              <strong id="dropdownUserName">
-                Cliente
-              </strong>
-
-              <small id="dropdownUserEmail">
-                -
+              <small>
+                PEDIDOS
               </small>
 
+              <strong id="profileOrdersCount">
+                0
+              </strong>
+
             </div>
+
+
+          </article>
+
+
+
+          <article>
+
+            <span class="profile-stat-icon">
+
+              <i class="fa-solid fa-car"></i>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                VEÍCULOS
+              </small>
+
+              <strong id="profileVehiclesCount">
+                0
+              </strong>
+
+            </div>
+
+
+          </article>
+
+
+
+          <article>
+
+            <span class="profile-stat-icon">
+
+              <i class="fa-solid fa-location-dot"></i>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                ENDEREÇOS
+              </small>
+
+              <strong id="profileAddressesCount">
+                0
+              </strong>
+
+            </div>
+
+
+          </article>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROFILE WORKSPACE
+    ====================================================== -->
+
+    <section class="profile-workspace">
+
+
+      <div class="site-container profile-layout">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="profile-sidebar">
+
+
+          <div class="profile-sidebar-head">
+
+            <span>
+              MY ACCOUNT
+            </span>
+
+            <strong>
+              Central do cliente
+            </strong>
 
           </div>
 
 
-          <div class="dropdown-divider"></div>
+
+          <nav class="profile-nav">
 
 
-          <a href="perfil.html">
+            <button
+              class="profile-nav-item active"
+              type="button"
+              data-profile-section="overview"
+            >
 
-            <i class="fa-regular fa-user"></i>
+              <span>
 
-            Minha conta
+                <i class="fa-solid fa-grid-2"></i>
 
-          </a>
+              </span>
 
+              <div>
 
-          <a href="pedidos.html">
+                <small>
+                  01
+                </small>
 
-            <i class="fa-solid fa-receipt"></i>
+                <strong>
+                  Visão geral
+                </strong>
 
-            Meus pedidos
+              </div>
 
-          </a>
-
-
-          <a href="perfil.html#veiculos">
-
-            <i class="fa-solid fa-car-side"></i>
-
-            Meus veículos
-
-          </a>
-
-
-          <a href="suporte.html">
-
-            <i class="fa-solid fa-headset"></i>
-
-            Suporte
-
-          </a>
+            </button>
 
 
-          <div class="dropdown-divider"></div>
+
+            <button
+              class="profile-nav-item"
+              type="button"
+              data-profile-section="personal"
+            >
+
+              <span>
+
+                <i class="fa-regular fa-user"></i>
+
+              </span>
+
+              <div>
+
+                <small>
+                  02
+                </small>
+
+                <strong>
+                  Dados pessoais
+                </strong>
+
+              </div>
+
+            </button>
 
 
-          <button
-            type="button"
-            id="btnLogoutGlobal"
-            class="dropdown-logout"
+
+            <button
+              class="profile-nav-item"
+              type="button"
+              data-profile-section="security"
+            >
+
+              <span>
+
+                <i class="fa-solid fa-lock"></i>
+
+              </span>
+
+              <div>
+
+                <small>
+                  03
+                </small>
+
+                <strong>
+                  Segurança
+                </strong>
+
+              </div>
+
+            </button>
+
+
+
+            <button
+              class="profile-nav-item"
+              type="button"
+              data-profile-section="addresses"
+            >
+
+              <span>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+              </span>
+
+              <div>
+
+                <small>
+                  04
+                </small>
+
+                <strong>
+                  Endereços
+                </strong>
+
+              </div>
+
+            </button>
+
+
+
+            <button
+              class="profile-nav-item"
+              type="button"
+              data-profile-section="vehicles"
+            >
+
+              <span>
+
+                <i class="fa-solid fa-car"></i>
+
+              </span>
+
+              <div>
+
+                <small>
+                  05
+                </small>
+
+                <strong>
+                  Meus veículos
+                </strong>
+
+              </div>
+
+            </button>
+
+
+          </nav>
+
+
+
+          <div class="profile-sidebar-support">
+
+
+            <span>
+
+              <i class="fa-solid fa-headset"></i>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                PRECISA DE AJUDA?
+              </small>
+
+              <strong>
+                Fale com nosso suporte
+              </strong>
+
+            </div>
+
+
+            <a href="suporte.html">
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+          </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="profile-content">
+
+
+          <!-- =================================================
+               OVERVIEW
+          ================================================== -->
+
+          <section
+            id="profileSectionOverview"
+            class="profile-section active"
+            data-profile-panel="overview"
           >
 
-            <i class="fa-solid fa-right-from-bracket"></i>
 
-            Sair
+            <div class="profile-section-heading">
 
-          </button>
+
+              <div>
+
+                <span>
+                  01 / DASHBOARD
+                </span>
+
+                <h2>
+                  Sua conta em um só lugar.
+                </h2>
+
+                <p>
+
+                  Acesse rapidamente suas principais
+                  informações e funcionalidades.
+
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- MAIN INFO CARD -->
+
+            <article class="profile-overview-card">
+
+
+              <div class="overview-card-identity">
+
+
+                <span
+                  id="overviewAvatar"
+                  class="overview-avatar"
+                >
+                  U
+                </span>
+
+
+                <div>
+
+                  <small>
+                    CONTA PRINCIPAL
+                  </small>
+
+                  <h3 id="overviewName">
+                    Cliente
+                  </h3>
+
+                  <p id="overviewEmail">
+                    cliente@email.com
+                  </p>
+
+                </div>
+
+
+              </div>
+
+
+
+              <div class="overview-account-code">
+
+                <small>
+                  CUSTOMER ID
+                </small>
+
+                <strong id="overviewCustomerId">
+                  #0000
+                </strong>
+
+              </div>
+
+
+            </article>
+
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="profile-quick-grid">
+
+
+              <a
+                href="pedidos.html"
+                class="profile-quick-card"
+              >
+
+                <span class="quick-card-number">
+                  01
+                </span>
+
+                <i class="fa-solid fa-box"></i>
+
+                <div>
+
+                  <small>
+                    ORDER CENTER
+                  </small>
+
+                  <strong>
+                    Meus pedidos
+                  </strong>
+
+                  <p>
+                    Acompanhe compras e status.
+                  </p>
+
+                </div>
+
+                <span class="quick-card-arrow">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+              </a>
+
+
+
+              <button
+                type="button"
+                class="profile-quick-card"
+                data-go-profile="vehicles"
+              >
+
+                <span class="quick-card-number">
+                  02
+                </span>
+
+                <i class="fa-solid fa-car-side"></i>
+
+                <div>
+
+                  <small>
+                    GARAGE
+                  </small>
+
+                  <strong>
+                    Meus veículos
+                  </strong>
+
+                  <p>
+                    Organize seus veículos.
+                  </p>
+
+                </div>
+
+                <span class="quick-card-arrow">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+              </button>
+
+
+
+              <button
+                type="button"
+                class="profile-quick-card"
+                data-go-profile="addresses"
+              >
+
+                <span class="quick-card-number">
+                  03
+                </span>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <div>
+
+                  <small>
+                    DELIVERY
+                  </small>
+
+                  <strong>
+                    Endereços
+                  </strong>
+
+                  <p>
+                    Gerencie locais de entrega.
+                  </p>
+
+                </div>
+
+                <span class="quick-card-arrow">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+              </button>
+
+
+
+              <button
+                type="button"
+                class="profile-quick-card"
+                data-go-profile="security"
+              >
+
+                <span class="quick-card-number">
+                  04
+                </span>
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <div>
+
+                  <small>
+                    SECURITY
+                  </small>
+
+                  <strong>
+                    Segurança
+                  </strong>
+
+                  <p>
+                    Proteja sua conta.
+                  </p>
+
+                </div>
+
+                <span class="quick-card-arrow">
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+              </button>
+
+
+            </div>
+
+
+
+            <!-- ACCOUNT HEALTH -->
+
+            <article class="profile-health-card">
+
+
+              <div class="health-copy">
+
+                <span>
+                  ACCOUNT STATUS
+                </span>
+
+                <h3>
+                  Complete seu perfil.
+                </h3>
+
+                <p>
+
+                  Quanto mais informações você cadastrar,
+                  mais rápido fica o processo de compra.
+
+                </p>
+
+              </div>
+
+
+
+              <div class="health-progress">
+
+
+                <div class="health-progress-top">
+
+                  <span>
+                    COMPLETUDE
+                  </span>
+
+                  <strong id="profileCompletionText">
+                    0%
+                  </strong>
+
+                </div>
+
+
+                <div class="health-progress-track">
+
+                  <span
+                    id="profileCompletionBar"
+                  ></span>
+
+                </div>
+
+
+              </div>
+
+
+            </article>
+
+
+          </section>
+
+
+
+          <!-- =================================================
+               PERSONAL DATA
+          ================================================== -->
+
+          <section
+            id="profileSectionPersonal"
+            class="profile-section"
+            data-profile-panel="personal"
+          >
+
+
+            <div class="profile-section-heading">
+
+              <div>
+
+                <span>
+                  02 / PERSONAL DATA
+                </span>
+
+                <h2>
+                  Dados pessoais.
+                </h2>
+
+                <p>
+
+                  Atualize suas principais informações
+                  de cadastro.
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+
+            <form
+              id="profileForm"
+              class="profile-form-card"
+            >
+
+
+              <div class="profile-form-grid">
+
+
+                <label class="profile-field">
+
+                  <span>
+                    NOME COMPLETO
+                  </span>
+
+                  <div>
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input
+                      id="profileName"
+                      type="text"
+                      autocomplete="name"
+                      placeholder="Seu nome"
+                    >
+
+                  </div>
+
+                </label>
+
+
+
+                <label class="profile-field">
+
+                  <span>
+                    E-MAIL
+                  </span>
+
+                  <div>
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                      id="profileEmail"
+                      type="email"
+                      autocomplete="email"
+                      placeholder="seu@email.com"
+                    >
+
+                  </div>
+
+                </label>
+
+
+
+                <label class="profile-field">
+
+                  <span>
+                    TELEFONE
+                  </span>
+
+                  <div>
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    <input
+                      id="profilePhone"
+                      type="tel"
+                      autocomplete="tel"
+                      placeholder="(00) 00000-0000"
+                    >
+
+                  </div>
+
+                </label>
+
+
+
+                <label class="profile-field">
+
+                  <span>
+                    CPF
+                  </span>
+
+                  <div>
+
+                    <i class="fa-regular fa-id-card"></i>
+
+                    <input
+                      id="profileCpf"
+                      type="text"
+                      autocomplete="off"
+                      placeholder="000.000.000-00"
+                    >
+
+                  </div>
+
+                </label>
+
+
+              </div>
+
+
+
+              <div class="profile-form-actions">
+
+
+                <span id="profileFormStatus">
+                  Nenhuma alteração pendente.
+                </span>
+
+
+                <button
+                  id="profileSaveButton"
+                  type="submit"
+                >
+
+                  <span>
+
+                    <small>
+                      UPDATE
+                    </small>
+
+                    <strong>
+                      Salvar alterações
+                    </strong>
+
+                  </span>
+
+                  <i class="fa-solid fa-check"></i>
+
+                </button>
+
+
+              </div>
+
+
+            </form>
+
+
+          </section>
+
+
+
+          <!-- =================================================
+               SECURITY
+          ================================================== -->
+
+          <section
+            id="profileSectionSecurity"
+            class="profile-section"
+            data-profile-panel="security"
+          >
+
+
+            <div class="profile-section-heading">
+
+              <div>
+
+                <span>
+                  03 / SECURITY CENTER
+                </span>
+
+                <h2>
+                  Segurança da conta.
+                </h2>
+
+                <p>
+
+                  Gerencie sua senha e proteja
+                  o acesso à sua conta.
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="security-grid">
+
+
+              <article class="security-status-card">
+
+
+                <div class="security-status-icon">
+
+                  <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+
+                <span>
+                  SECURITY STATUS
+                </span>
+
+                <h3>
+                  Conta protegida
+                </h3>
+
+                <p>
+
+                  Sua sessão está ativa e
+                  o acesso é protegido por senha.
+
+                </p>
+
+
+                <div class="security-indicator">
+
+                  <span></span>
+
+                  <strong>
+                    ACTIVE
+                  </strong>
+
+                </div>
+
+
+              </article>
+
+
+
+              <form
+                id="passwordForm"
+                class="password-card"
+              >
+
+
+                <div class="password-card-head">
+
+                  <span>
+
+                    <i class="fa-solid fa-key"></i>
+
+                  </span>
+
+                  <div>
+
+                    <small>
+                      PASSWORD UPDATE
+                    </small>
+
+                    <h3>
+                      Alterar senha
+                    </h3>
+
+                  </div>
+
+                </div>
+
+
+
+                <label>
+
+                  <span>
+                    SENHA ATUAL
+                  </span>
+
+                  <div>
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                      id="currentPassword"
+                      type="password"
+                      autocomplete="current-password"
+                    >
+
+                    <button
+                      type="button"
+                      data-password-toggle="currentPassword"
+                    >
+
+                      <i class="fa-regular fa-eye"></i>
+
+                    </button>
+
+                  </div>
+
+                </label>
+
+
+
+                <label>
+
+                  <span>
+                    NOVA SENHA
+                  </span>
+
+                  <div>
+
+                    <i class="fa-solid fa-key"></i>
+
+                    <input
+                      id="newPassword"
+                      type="password"
+                      autocomplete="new-password"
+                    >
+
+                    <button
+                      type="button"
+                      data-password-toggle="newPassword"
+                    >
+
+                      <i class="fa-regular fa-eye"></i>
+
+                    </button>
+
+                  </div>
+
+                </label>
+
+
+
+                <label>
+
+                  <span>
+                    CONFIRMAR SENHA
+                  </span>
+
+                  <div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <input
+                      id="confirmPassword"
+                      type="password"
+                      autocomplete="new-password"
+                    >
+
+                    <button
+                      type="button"
+                      data-password-toggle="confirmPassword"
+                    >
+
+                      <i class="fa-regular fa-eye"></i>
+
+                    </button>
+
+                  </div>
+
+                </label>
+
+
+
+                <div class="password-strength">
+
+                  <div class="password-strength-head">
+
+                    <span>
+                      FORÇA DA SENHA
+                    </span>
+
+                    <strong id="passwordStrengthText">
+                      -
+                    </strong>
+
+                  </div>
+
+
+                  <div class="password-strength-track">
+
+                    <span
+                      id="passwordStrengthBar"
+                    ></span>
+
+                  </div>
+
+
+                </div>
+
+
+
+                <button
+                  id="changePasswordButton"
+                  type="submit"
+                  class="security-primary-button"
+                >
+
+                  Atualizar senha
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+              </form>
+
+
+            </div>
+
+
+          </section>
+
+
+
+          <!-- =================================================
+               ADDRESSES
+          ================================================== -->
+
+          <section
+            id="profileSectionAddresses"
+            class="profile-section"
+            data-profile-panel="addresses"
+          >
+
+
+            <div class="profile-section-heading profile-heading-action">
+
+
+              <div>
+
+                <span>
+                  04 / DELIVERY POINTS
+                </span>
+
+                <h2>
+                  Seus endereços.
+                </h2>
+
+                <p>
+
+                  Cadastre locais para agilizar
+                  suas próximas compras.
+
+                </p>
+
+              </div>
+
+
+              <button
+                id="addAddressButton"
+                type="button"
+                class="profile-heading-button"
+              >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Novo endereço
+
+              </button>
+
+
+            </div>
+
+
+
+            <div
+              id="addressesGrid"
+              class="addresses-grid"
+            >
+
+              <!-- JS -->
+
+            </div>
+
+
+
+            <div
+              id="addressesEmpty"
+              class="profile-empty-state"
+              hidden
+            >
+
+              <span>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+              </span>
+
+              <small>
+                DELIVERY POINTS
+              </small>
+
+              <h3>
+                Nenhum endereço cadastrado.
+              </h3>
+
+              <p>
+                Adicione seu primeiro endereço de entrega.
+              </p>
+
+              <button
+                type="button"
+                data-open-address
+              >
+                Adicionar endereço
+              </button>
+
+            </div>
+
+
+          </section>
+
+
+
+          <!-- =================================================
+               VEHICLES
+          ================================================== -->
+
+          <section
+            id="profileSectionVehicles"
+            class="profile-section"
+            data-profile-panel="vehicles"
+          >
+
+
+            <div class="profile-section-heading profile-heading-action">
+
+
+              <div>
+
+                <span>
+                  05 / PERSONAL GARAGE
+                </span>
+
+                <h2>
+                  Sua garagem.
+                </h2>
+
+                <p>
+
+                  Organize seus veículos para
+                  facilitar futuras consultas de peças.
+
+                </p>
+
+              </div>
+
+
+              <button
+                id="addVehicleButton"
+                type="button"
+                class="profile-heading-button"
+              >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Novo veículo
+
+              </button>
+
+
+            </div>
+
+
+
+            <div
+              id="vehiclesGrid"
+              class="vehicles-grid"
+            >
+
+              <!-- JS -->
+
+            </div>
+
+
+
+            <div
+              id="vehiclesEmpty"
+              class="profile-empty-state"
+              hidden
+            >
+
+              <span>
+
+                <i class="fa-solid fa-car-side"></i>
+
+              </span>
+
+              <small>
+                PERSONAL GARAGE
+              </small>
+
+              <h3>
+                Sua garagem está vazia.
+              </h3>
+
+              <p>
+                Adicione seu primeiro veículo.
+              </p>
+
+              <button
+                type="button"
+                data-open-vehicle
+              >
+                Adicionar veículo
+              </button>
+
+            </div>
+
+
+          </section>
+
 
         </div>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       ADDRESS MODAL
+  ====================================================== -->
+
+  <div
+    id="addressModal"
+    class="profile-modal"
+    hidden
+  >
+
+
+    <div
+      class="profile-modal-backdrop"
+      data-close-address
+    ></div>
+
+
+    <div class="profile-modal-window">
+
+
+      <div class="profile-modal-head">
+
+
+        <div>
+
+          <span>
+            DELIVERY POINT
+          </span>
+
+          <h2 id="addressModalTitle">
+            Novo endereço
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          data-close-address
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
 
       </div>
 
 
 
-      <!-- CARRINHO -->
-
-      <a
-        href="carrinho.html"
-        class="header-cart"
-        aria-label="Carrinho"
+      <form
+        id="addressForm"
+        class="profile-modal-form"
       >
 
-        <i class="fa-solid fa-cart-shopping"></i>
 
-        <span id="headerCartCount">
-          0
-        </span>
-
-      </a>
-
-
-
-      <!-- HAMBÚRGUER -->
-
-      <button
-        type="button"
-        id="mobileMenuButton"
-        class="mobile-menu-button"
-        aria-label="Abrir menu"
-      >
-
-        <i class="fa-solid fa-bars"></i>
-
-      </button>
-
-
-    </div>
-
-  </div>
-
-
-
-  <!-- =================================================
-       MENU MOBILE
-  ================================================== -->
-
-  <div
-    class="mobile-menu"
-    id="mobileMenu"
-  >
-
-    <a href="produtos.html">
-
-      <i class="fa-solid fa-box-open"></i>
-
-      Produtos
-
-    </a>
-
-
-    <a
-      href="pedidos.html"
-      data-auth-link
-    >
-
-      <i class="fa-solid fa-receipt"></i>
-
-      Meus pedidos
-
-    </a>
-
-
-    <a
-      href="perfil.html"
-      data-auth-link
-    >
-
-      <i class="fa-regular fa-user"></i>
-
-      Minha conta
-
-    </a>
-
-
-    <a href="suporte.html">
-
-      <i class="fa-solid fa-headset"></i>
-
-      Suporte
-
-    </a>
-
-
-    <a href="carrinho.html">
-
-      <i class="fa-solid fa-cart-shopping"></i>
-
-      Carrinho
-
-      <span id="mobileCartCount">
-        0
-      </span>
-
-    </a>
-
-
-
-    <!-- VISITANTE MOBILE -->
-
-    <div
-      id="mobileGuestActions"
-      class="mobile-guest-actions"
-    >
-
-      <a href="login.html">
-        Entrar
-      </a>
-
-      <a href="cadastro.html">
-        Criar conta
-      </a>
-
-    </div>
-
-
-
-    <!-- LOGOUT MOBILE -->
-
-    <button
-      type="button"
-      id="mobileLogoutButton"
-      class="mobile-logout"
-      hidden
-    >
-
-      <i class="fa-solid fa-right-from-bracket"></i>
-
-      Sair
-
-    </button>
-
-  </div>
-
-</header>
-
-
-
-<!-- =====================================================
-     PERFIL
-===================================================== -->
-
-<main class="profile-page">
-
-  <div class="profile-container">
-
-
-    <!-- =================================================
-         HERO
-    ================================================== -->
-
-    <section class="profile-hero">
-
-
-      <div class="profile-avatar-area">
-
-
-        <div
-          class="profile-main-avatar"
-          id="profileMainAvatar"
-        >
-          U
-        </div>
-
-
-        <label
-          for="inputFotoPerfil"
-          class="change-photo-button"
-          title="Alterar foto"
+        <input
+          id="addressEditId"
+          type="hidden"
         >
 
-          <i class="fa-solid fa-camera"></i>
+
+        <label>
+
+          <span>
+            IDENTIFICAÇÃO
+          </span>
+
+          <input
+            id="addressName"
+            type="text"
+            placeholder="Ex.: Casa, Trabalho..."
+            required
+          >
 
         </label>
 
 
-        <input
-          type="file"
-          id="inputFotoPerfil"
-          accept="image/png,image/jpeg,image/webp"
-          hidden
-        >
 
-      </div>
+        <div class="profile-modal-grid">
 
 
+          <label>
 
-      <div class="profile-hero-info">
+            <span>
+              CEP
+            </span>
 
-        <span class="profile-label">
-          MINHA CONTA
-        </span>
+            <input
+              id="addressCep"
+              type="text"
+              placeholder="00000-000"
+              required
+            >
 
-        <h1 id="nomePerfil">
-          Cliente
-        </h1>
-
-        <p id="emailPerfil">
-          -
-        </p>
-
-
-        <div class="profile-meta">
-
-          <span>
-
-            <i class="fa-solid fa-shield-halved"></i>
-
-            Conta ativa
-
-          </span>
+          </label>
 
 
-          <span id="clienteDesde">
+          <label>
 
-            <i class="fa-regular fa-calendar"></i>
+            <span>
+              NÚMERO
+            </span>
 
-            Cliente cadastrado
+            <input
+              id="addressNumber"
+              type="text"
+              placeholder="123"
+              required
+            >
 
-          </span>
+          </label>
+
 
         </div>
 
+
+
+        <label>
+
+          <span>
+            RUA / AVENIDA
+          </span>
+
+          <input
+            id="addressStreet"
+            type="text"
+            required
+          >
+
+        </label>
+
+
+
+        <label>
+
+          <span>
+            COMPLEMENTO
+          </span>
+
+          <input
+            id="addressComplement"
+            type="text"
+            placeholder="Apartamento, bloco..."
+          >
+
+        </label>
+
+
+
+        <div class="profile-modal-grid">
+
+
+          <label>
+
+            <span>
+              BAIRRO
+            </span>
+
+            <input
+              id="addressDistrict"
+              type="text"
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            <span>
+              CIDADE
+            </span>
+
+            <input
+              id="addressCity"
+              type="text"
+              required
+            >
+
+          </label>
+
+
+        </div>
+
+
+
+        <label>
+
+          <span>
+            ESTADO
+          </span>
+
+          <input
+            id="addressState"
+            type="text"
+            maxlength="2"
+            placeholder="UF"
+            required
+          >
+
+        </label>
+
+
+
+        <button
+          type="submit"
+          class="profile-modal-submit"
+        >
+
+          <span>
+
+            <small>
+              SAVE POINT
+            </small>
+
+            <strong>
+              Salvar endereço
+            </strong>
+
+          </span>
+
+          <i class="fa-solid fa-check"></i>
+
+        </button>
+
+
+      </form>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       VEHICLE MODAL
+  ====================================================== -->
+
+  <div
+    id="vehicleModal"
+    class="profile-modal"
+    hidden
+  >
+
+
+    <div
+      class="profile-modal-backdrop"
+      data-close-vehicle
+    ></div>
+
+
+    <div class="profile-modal-window">
+
+
+      <div class="profile-modal-head">
+
+
+        <div>
+
+          <span>
+            PERSONAL GARAGE
+          </span>
+
+          <h2 id="vehicleModalTitle">
+            Novo veículo
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          data-close-vehicle
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
       </div>
 
 
 
-      <div class="profile-hero-actions">
+      <form
+        id="vehicleForm"
+        class="profile-modal-form"
+      >
 
-        <a
-          href="pedidos.html"
-          class="profile-secondary-button"
+
+        <input
+          id="vehicleEditId"
+          type="hidden"
         >
 
-          <i class="fa-solid fa-receipt"></i>
 
-          Meus pedidos
 
+        <div class="profile-modal-grid">
+
+
+          <label>
+
+            <span>
+              MARCA
+            </span>
+
+            <input
+              id="vehicleBrand"
+              type="text"
+              placeholder="Ex.: Volkswagen"
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            <span>
+              MODELO
+            </span>
+
+            <input
+              id="vehicleModel"
+              type="text"
+              placeholder="Ex.: Golf"
+              required
+            >
+
+          </label>
+
+
+        </div>
+
+
+
+        <div class="profile-modal-grid">
+
+
+          <label>
+
+            <span>
+              ANO
+            </span>
+
+            <input
+              id="vehicleYear"
+              type="number"
+              min="1900"
+              max="2100"
+              placeholder="2024"
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            <span>
+              PLACA
+            </span>
+
+            <input
+              id="vehiclePlate"
+              type="text"
+              maxlength="8"
+              placeholder="ABC1D23"
+            >
+
+          </label>
+
+
+        </div>
+
+
+
+        <label>
+
+          <span>
+            MOTORIZAÇÃO
+          </span>
+
+          <input
+            id="vehicleEngine"
+            type="text"
+            placeholder="Ex.: 2.0 TSI"
+          >
+
+        </label>
+
+
+
+        <button
+          type="submit"
+          class="profile-modal-submit"
+        >
+
+          <span>
+
+            <small>
+              SAVE VEHICLE
+            </small>
+
+            <strong>
+              Adicionar à garagem
+            </strong>
+
+          </span>
+
+          <i class="fa-solid fa-check"></i>
+
+        </button>
+
+
+      </form>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    id="profileToast"
+    class="profile-toast"
+  ></div>
+
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    id="profileLoading"
+    class="profile-loading"
+  >
+
+    <div>
+
+      <span class="profile-loading-icon">
+
+        <i class="fa-regular fa-user"></i>
+
+      </span>
+
+      <small>
+        CUSTOMER HUB
+      </small>
+
+      <strong>
+        Carregando sua conta...
+      </strong>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="site-footer">
+
+
+    <div class="site-container footer-grid">
+
+
+      <div class="footer-brand">
+
+        <div class="footer-logo">
+
+          <span>
+            <i class="fa-solid fa-gear"></i>
+          </span>
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Autopeças & Acessórios
+            </small>
+
+          </div>
+
+        </div>
+
+        <p>
+
+          Tecnologia e autopeças integradas
+          em uma experiência de compra moderna.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="footer-column">
+
+        <h3>
+          Atendimento
+        </h3>
+
+        <a href="suporte.html">
+          Suporte
+        </a>
+
+        <a href="pedidos.html">
+          Pedidos
+        </a>
+
+        <a href="perfil.html">
+          Minha conta
         </a>
 
       </div>
 
 
-    </section>
+
+      <div class="footer-column">
+
+        <h3>
+          Institucional
+        </h3>
+
+        <a href="#">
+          Sobre nós
+        </a>
+
+        <a href="#">
+          Privacidade
+        </a>
+
+        <a href="#">
+          Termos
+        </a>
+
+      </div>
 
 
 
-    <!-- =================================================
-         ESTATÍSTICAS
-    ================================================== -->
+      <div class="footer-column footer-contact">
 
-    <section class="profile-stats">
+        <h3>
+          Contato
+        </h3>
 
-
-      <article>
-
-        <span>
-          <i class="fa-solid fa-receipt"></i>
-        </span>
-
-        <div>
-
-          <small>
-            Pedidos realizados
-          </small>
-
-          <strong id="perfilTotalPedidos">
-            0
-          </strong>
-
-        </div>
-
-      </article>
-
-
-
-      <article>
-
-        <span>
-          <i class="fa-solid fa-dollar-sign"></i>
-        </span>
-
-        <div>
-
-          <small>
-            Total comprado
-          </small>
-
-          <strong id="perfilTotalGasto">
-            R$ 0,00
-          </strong>
-
-        </div>
-
-      </article>
-
-
-
-      <article>
-
-        <span>
-          <i class="fa-solid fa-clock-rotate-left"></i>
-        </span>
-
-        <div>
-
-          <small>
-            Último pedido
-          </small>
-
-          <strong id="perfilUltimoPedido">
-            -
-          </strong>
-
-        </div>
-
-      </article>
-
-
-
-      <article>
-
-        <span>
-          <i class="fa-solid fa-car-side"></i>
-        </span>
-
-        <div>
-
-          <small>
-            Veículos salvos
-          </small>
-
-          <strong id="perfilTotalVeiculos">
-            0
-          </strong>
-
-        </div>
-
-      </article>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         LAYOUT PRINCIPAL
-    ================================================== -->
-
-    <div class="profile-layout">
-
-
-      <!-- MENU -->
-
-      <aside class="profile-sidebar">
-
-
-        <button
-          type="button"
-          class="profile-tab active"
-          data-tab="dados"
-        >
-
-          <i class="fa-regular fa-user"></i>
-
-          Dados pessoais
-
-        </button>
-
-
-        <button
-          type="button"
-          class="profile-tab"
-          data-tab="endereco"
-        >
-
+        <p>
           <i class="fa-solid fa-location-dot"></i>
+          <span>Sua Cidade - UF</span>
+        </p>
 
-          Endereço
+        <p>
+          <i class="fa-solid fa-phone"></i>
+          <span>(00) 00000-0000</span>
+        </p>
 
-        </button>
+        <p>
+          <i class="fa-solid fa-envelope"></i>
+          <span>contato@sualoja.com.br</span>
+        </p>
 
+      </div>
 
-        <button
-          type="button"
-          class="profile-tab"
-          data-tab="veiculos"
-        >
-
-          <i class="fa-solid fa-car-side"></i>
-
-          Meus veículos
-
-        </button>
-
-
-        <button
-          type="button"
-          class="profile-tab"
-          data-tab="seguranca"
-        >
-
-          <i class="fa-solid fa-lock"></i>
-
-          Segurança
-
-        </button>
-
-
-        <button
-          type="button"
-          class="profile-tab"
-          data-tab="preferencias"
-        >
-
-          <i class="fa-solid fa-sliders"></i>
-
-          Preferências
-
-        </button>
-
-
-      </aside>
-
-
-
-      <!-- =================================================
-           CONTEÚDO
-      ================================================== -->
-
-      <section class="profile-content">
-
-
-        <!-- DADOS -->
-
-        <div
-          class="profile-panel active"
-          id="panel-dados"
-        >
-
-          <div class="profile-panel-header">
-
-            <div>
-
-              <span>
-                PERFIL
-              </span>
-
-              <h2>
-                Dados pessoais
-              </h2>
-
-              <p>
-                Atualize suas informações pessoais.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <form id="formDadosPessoais">
-
-            <div class="profile-form-grid">
-
-
-              <div class="profile-field full">
-
-                <label for="perfilNome">
-                  Nome completo
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilNome"
-                  required
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilEmail">
-                  E-mail
-                </label>
-
-                <input
-                  type="email"
-                  id="perfilEmail"
-                  required
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilTelefone">
-                  Telefone
-                </label>
-
-                <input
-                  type="tel"
-                  id="perfilTelefone"
-                  maxlength="15"
-                  placeholder="(00) 00000-0000"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilCpf">
-                  CPF
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilCpf"
-                  maxlength="14"
-                  placeholder="000.000.000-00"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilNascimento">
-                  Data de nascimento
-                </label>
-
-                <input
-                  type="date"
-                  id="perfilNascimento"
-                >
-
-              </div>
-
-
-            </div>
-
-
-            <div
-              id="mensagemDadosPerfil"
-              class="profile-message"
-            ></div>
-
-
-            <button
-              type="submit"
-              class="save-profile-button"
-            >
-
-              <i class="fa-solid fa-floppy-disk"></i>
-
-              Salvar alterações
-
-            </button>
-
-          </form>
-
-        </div>
-
-
-
-        <!-- ENDEREÇO -->
-
-        <div
-          class="profile-panel"
-          id="panel-endereco"
-        >
-
-          <div class="profile-panel-header">
-
-            <div>
-
-              <span>
-                ENTREGA
-              </span>
-
-              <h2>
-                Meu endereço
-              </h2>
-
-              <p>
-                Informações utilizadas para entrega.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <form id="formEndereco">
-
-            <div class="profile-form-grid">
-
-
-              <div class="profile-field">
-
-                <label for="perfilCep">
-                  CEP
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilCep"
-                  maxlength="9"
-                  placeholder="00000-000"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilEstado">
-                  Estado
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilEstado"
-                  maxlength="2"
-                  placeholder="PR"
-                >
-
-              </div>
-
-
-              <div class="profile-field full">
-
-                <label for="perfilRua">
-                  Rua
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilRua"
-                  placeholder="Nome da rua"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilNumero">
-                  Número
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilNumero"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilComplemento">
-                  Complemento
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilComplemento"
-                  placeholder="Apartamento, bloco..."
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilBairro">
-                  Bairro
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilBairro"
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="perfilCidade">
-                  Cidade
-                </label>
-
-                <input
-                  type="text"
-                  id="perfilCidade"
-                >
-
-              </div>
-
-
-            </div>
-
-
-            <div
-              id="mensagemEndereco"
-              class="profile-message"
-            ></div>
-
-
-            <button
-              type="submit"
-              class="save-profile-button"
-            >
-
-              <i class="fa-solid fa-floppy-disk"></i>
-
-              Salvar endereço
-
-            </button>
-
-          </form>
-
-        </div>
-
-
-
-        <!-- VEÍCULOS -->
-
-        <div
-          class="profile-panel"
-          id="panel-veiculos"
-        >
-
-          <div class="profile-panel-header vehicle-panel-header">
-
-            <div>
-
-              <span>
-                GARAGEM
-              </span>
-
-              <h2>
-                Meus veículos
-              </h2>
-
-              <p>
-                Salve seus veículos para facilitar a busca por peças.
-              </p>
-
-            </div>
-
-
-            <button
-              type="button"
-              id="btnAdicionarVeiculo"
-              class="small-primary-button"
-            >
-
-              <i class="fa-solid fa-plus"></i>
-
-              Adicionar veículo
-
-            </button>
-
-          </div>
-
-
-          <div
-            id="listaVeiculos"
-            class="vehicles-grid"
-          ></div>
-
-        </div>
-
-
-
-        <!-- SEGURANÇA -->
-
-        <div
-          class="profile-panel"
-          id="panel-seguranca"
-        >
-
-          <div class="profile-panel-header">
-
-            <div>
-
-              <span>
-                SEGURANÇA
-              </span>
-
-              <h2>
-                Alterar senha
-              </h2>
-
-              <p>
-                Atualize sua senha de acesso.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <form id="formAlterarSenha">
-
-            <div class="profile-form-grid">
-
-
-              <div class="profile-field full">
-
-                <label for="senhaAtualPerfil">
-                  Senha atual
-                </label>
-
-                <input
-                  type="password"
-                  id="senhaAtualPerfil"
-                  autocomplete="current-password"
-                  required
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="novaSenhaPerfil">
-                  Nova senha
-                </label>
-
-                <input
-                  type="password"
-                  id="novaSenhaPerfil"
-                  autocomplete="new-password"
-                  required
-                >
-
-              </div>
-
-
-              <div class="profile-field">
-
-                <label for="confirmarNovaSenhaPerfil">
-                  Confirmar nova senha
-                </label>
-
-                <input
-                  type="password"
-                  id="confirmarNovaSenhaPerfil"
-                  autocomplete="new-password"
-                  required
-                >
-
-              </div>
-
-
-            </div>
-
-
-            <div
-              id="mensagemSenhaPerfil"
-              class="profile-message"
-            ></div>
-
-
-            <button
-              type="submit"
-              class="save-profile-button"
-            >
-
-              <i class="fa-solid fa-lock"></i>
-
-              Alterar senha
-
-            </button>
-
-          </form>
-
-        </div>
-
-
-
-        <!-- PREFERÊNCIAS -->
-
-        <div
-          class="profile-panel"
-          id="panel-preferencias"
-        >
-
-          <div class="profile-panel-header">
-
-            <div>
-
-              <span>
-                PREFERÊNCIAS
-              </span>
-
-              <h2>
-                Comunicações
-              </h2>
-
-              <p>
-                Escolha como deseja receber informações.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="preferences-list">
-
-
-            <label>
-
-              <div>
-
-                <strong>
-                  Novidades e promoções
-                </strong>
-
-                <span>
-                  Receber ofertas e novidades da loja.
-                </span>
-
-              </div>
-
-              <input
-                type="checkbox"
-                id="prefPromocoes"
-              >
-
-              <span class="switch"></span>
-
-            </label>
-
-
-
-            <label>
-
-              <div>
-
-                <strong>
-                  Atualizações de pedidos
-                </strong>
-
-                <span>
-                  Receber informações sobre seus pedidos.
-                </span>
-
-              </div>
-
-              <input
-                type="checkbox"
-                id="prefPedidos"
-                checked
-              >
-
-              <span class="switch"></span>
-
-            </label>
-
-
-
-            <label>
-
-              <div>
-
-                <strong>
-                  Recomendações de peças
-                </strong>
-
-                <span>
-                  Sugestões baseadas nos seus veículos.
-                </span>
-
-              </div>
-
-              <input
-                type="checkbox"
-                id="prefRecomendacoes"
-              >
-
-              <span class="switch"></span>
-
-            </label>
-
-
-          </div>
-
-
-          <button
-            type="button"
-            id="btnSalvarPreferencias"
-            class="save-profile-button"
-          >
-
-            <i class="fa-solid fa-floppy-disk"></i>
-
-            Salvar preferências
-
-          </button>
-
-
-          <div
-            id="mensagemPreferencias"
-            class="profile-message"
-          ></div>
-
-        </div>
-
-
-      </section>
 
     </div>
 
-  </div>
-
-</main>
 
 
+    <div class="footer-bottom">
 
-<!-- =====================================================
-     MODAL VEÍCULO
-===================================================== -->
-
-<div
-  class="profile-modal"
-  id="modalVeiculo"
->
-
-  <div class="profile-modal-backdrop"></div>
-
-
-  <div class="profile-modal-dialog">
-
-
-    <div class="profile-modal-header">
-
-      <div>
+      <div class="site-container footer-bottom-content">
 
         <span>
-          GARAGEM
+
+          ©
+          <span id="currentYear"></span>
+
+          Loja de Peças.
+
         </span>
 
-        <h2>
-          Adicionar veículo
-        </h2>
+        <span>
+          CUSTOMER PERSONAL HUB
+        </span>
 
       </div>
-
-
-      <button
-        type="button"
-        id="btnFecharVeiculo"
-      >
-
-        <i class="fa-solid fa-xmark"></i>
-
-      </button>
 
     </div>
 
 
-    <form
-      id="formVeiculo"
-      class="vehicle-form"
-    >
-
-      <div class="profile-form-grid">
-
-
-        <div class="profile-field">
-
-          <label for="veiculoMarca">
-            Marca
-          </label>
-
-          <input
-            type="text"
-            id="veiculoMarca"
-            placeholder="Volkswagen"
-            required
-          >
-
-        </div>
-
-
-        <div class="profile-field">
-
-          <label for="veiculoModelo">
-            Modelo
-          </label>
-
-          <input
-            type="text"
-            id="veiculoModelo"
-            placeholder="Golf"
-            required
-          >
-
-        </div>
-
-
-        <div class="profile-field">
-
-          <label for="veiculoAno">
-            Ano
-          </label>
-
-          <input
-            type="number"
-            id="veiculoAno"
-            min="1950"
-            max="2100"
-            placeholder="2020"
-            required
-          >
-
-        </div>
-
-
-        <div class="profile-field">
-
-          <label for="veiculoMotor">
-            Motorização
-          </label>
-
-          <input
-            type="text"
-            id="veiculoMotor"
-            placeholder="1.4 TSI"
-          >
-
-        </div>
-
-
-        <div class="profile-field">
-
-          <label for="veiculoPlaca">
-            Placa
-          </label>
-
-          <input
-            type="text"
-            id="veiculoPlaca"
-            maxlength="7"
-            placeholder="ABC1D23"
-          >
-
-        </div>
-
-
-        <div class="profile-field">
-
-          <label for="veiculoCor">
-            Cor
-          </label>
-
-          <input
-            type="text"
-            id="veiculoCor"
-            placeholder="Preto"
-          >
-
-        </div>
-
-
-      </div>
-
-
-      <div class="profile-modal-actions">
-
-
-        <button
-          type="button"
-          id="btnCancelarVeiculo"
-          class="modal-secondary"
-        >
-          Cancelar
-        </button>
-
-
-        <button
-          type="submit"
-          class="modal-primary"
-        >
-
-          <i class="fa-solid fa-plus"></i>
-
-          Adicionar veículo
-
-        </button>
-
-
-      </div>
-
-    </form>
-
-  </div>
-
-</div>
+  </footer>
 
 
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
+  <!-- =====================================================
+       JS
+  ====================================================== -->
 
-<script src="js/site.js"></script>
-<script src="js/perfil.js"></script>
+  <script src="js/site.js"></script>
+
+  <script src="js/perfil.js"></script>
+
 
 </body>
 

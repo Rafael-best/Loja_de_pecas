@@ -1,1205 +1,544 @@
 /* =========================================================
    PERFIL.JS
+   CUSTOMER PERSONAL HUB
+   Loja de Peças
 ========================================================= */
 
-const API =
-  "http://localhost:3000/api";
+
+/* =========================================================
+   CONFIG / STORAGE KEYS
+========================================================= */
+
+const STORAGE_CLIENTE =
+  "clienteLogado";
+
+const STORAGE_ENDERECOS =
+  "enderecosCliente";
+
+const STORAGE_VEICULOS =
+  "veiculosCliente";
+
+const STORAGE_PEDIDOS =
+  "pedidos";
+
+const STORAGE_AVATAR =
+  "avatarCliente";
 
 
-let clientePerfil =
+/* =========================================================
+   STATE
+========================================================= */
+
+let clienteAtual =
+  null;
+
+let enderecos =
+  [];
+
+let veiculos =
+  [];
+
+let secaoAtual =
+  "overview";
+
+let toastTimer =
   null;
 
 
-
 /* =========================================================
-   CLIENTE
+   ELEMENTS
 ========================================================= */
-
-function carregarClientePerfil() {
-
-  try {
-
-    const dados =
-      localStorage.getItem(
-        "clienteLogado"
-      );
-
-
-    if (!dados) {
-
-      return null;
-
-    }
-
-
-    const cliente =
-      JSON.parse(dados);
-
-
-    if (
-      !cliente
-      ||
-      typeof cliente !== "object"
-    ) {
-
-      return null;
-
-    }
-
-
-    return cliente;
-
-  } catch {
-
-    return null;
-
-  }
-
-}
-
-
-
-clientePerfil =
-  carregarClientePerfil();
-
 
 
 /* =========================================================
-   PROTEGER PERFIL
+   LOADING
 ========================================================= */
 
-if (!clientePerfil) {
-
-  try {
-
-    sessionStorage.setItem(
-      "destinoAposLogin",
-      "perfil.html"
-    );
-
-  } catch {
-    /* vazio */
-  }
-
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-
-/* =========================================================
-   CLIENTE
-========================================================= */
-
-function obterNome() {
-
-  if (!clientePerfil) {
-
-    return "Cliente";
-
-  }
-
-
-  return (
-    clientePerfil.nome_cliente
-    ||
-    clientePerfil.nome
-    ||
-    "Cliente"
+const profileLoading =
+  document.getElementById(
+    "profileLoading"
   );
 
-}
 
+/* =========================================================
+   HERO
+========================================================= */
 
-
-function obterEmail() {
-
-  if (!clientePerfil) {
-
-    return "";
-
-  }
-
-
-  return (
-    clientePerfil.email_cliente
-    ||
-    clientePerfil.email
-    ||
-    ""
+const profileHeroName =
+  document.getElementById(
+    "profileHeroName"
   );
 
-}
+const profileAvatarButton =
+  document.getElementById(
+    "profileAvatarButton"
+  );
+
+const profileAvatarImage =
+  document.getElementById(
+    "profileAvatarImage"
+  );
+
+const profileAvatarInitial =
+  document.getElementById(
+    "profileAvatarInitial"
+  );
+
+const profileAvatarInput =
+  document.getElementById(
+    "profileAvatarInput"
+  );
 
 
+/* =========================================================
+   HERO STATS
+========================================================= */
 
-function obterInicial() {
+const profileOrdersCount =
+  document.getElementById(
+    "profileOrdersCount"
+  );
 
-  const nome =
-    obterNome()
-      .trim();
+const profileVehiclesCount =
+  document.getElementById(
+    "profileVehiclesCount"
+  );
+
+const profileAddressesCount =
+  document.getElementById(
+    "profileAddressesCount"
+  );
 
 
-  if (!nome) {
+/* =========================================================
+   SIDEBAR / NAV
+========================================================= */
 
-    return "U";
+const profileNavItems =
+  Array.from(
+    document.querySelectorAll(
+      "[data-profile-section]"
+    )
+  );
 
-  }
+const profilePanels =
+  Array.from(
+    document.querySelectorAll(
+      "[data-profile-panel]"
+    )
+  );
+
+const profileQuickLinks =
+  Array.from(
+    document.querySelectorAll(
+      "[data-go-profile]"
+    )
+  );
 
 
-  return nome
-    .charAt(0)
-    .toUpperCase();
+/* =========================================================
+   OVERVIEW
+========================================================= */
 
-}
+const overviewAvatar =
+  document.getElementById(
+    "overviewAvatar"
+  );
 
+const overviewName =
+  document.getElementById(
+    "overviewName"
+  );
+
+const overviewEmail =
+  document.getElementById(
+    "overviewEmail"
+  );
+
+const overviewCustomerId =
+  document.getElementById(
+    "overviewCustomerId"
+  );
+
+const profileCompletionText =
+  document.getElementById(
+    "profileCompletionText"
+  );
+
+const profileCompletionBar =
+  document.getElementById(
+    "profileCompletionBar"
+  );
+
+
+/* =========================================================
+   PERSONAL FORM
+========================================================= */
+
+const profileForm =
+  document.getElementById(
+    "profileForm"
+  );
+
+const profileName =
+  document.getElementById(
+    "profileName"
+  );
+
+const profileEmail =
+  document.getElementById(
+    "profileEmail"
+  );
+
+const profilePhone =
+  document.getElementById(
+    "profilePhone"
+  );
+
+const profileCpf =
+  document.getElementById(
+    "profileCpf"
+  );
+
+const profileFormStatus =
+  document.getElementById(
+    "profileFormStatus"
+  );
+
+const profileSaveButton =
+  document.getElementById(
+    "profileSaveButton"
+  );
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+const passwordForm =
+  document.getElementById(
+    "passwordForm"
+  );
+
+const currentPassword =
+  document.getElementById(
+    "currentPassword"
+  );
+
+const newPassword =
+  document.getElementById(
+    "newPassword"
+  );
+
+const confirmPassword =
+  document.getElementById(
+    "confirmPassword"
+  );
+
+const passwordStrengthText =
+  document.getElementById(
+    "passwordStrengthText"
+  );
+
+const passwordStrengthBar =
+  document.getElementById(
+    "passwordStrengthBar"
+  );
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+const addAddressButton =
+  document.getElementById(
+    "addAddressButton"
+  );
+
+const addressesGrid =
+  document.getElementById(
+    "addressesGrid"
+  );
+
+const addressesEmpty =
+  document.getElementById(
+    "addressesEmpty"
+  );
+
+const addressModal =
+  document.getElementById(
+    "addressModal"
+  );
+
+const addressModalTitle =
+  document.getElementById(
+    "addressModalTitle"
+  );
+
+const addressForm =
+  document.getElementById(
+    "addressForm"
+  );
+
+const addressEditId =
+  document.getElementById(
+    "addressEditId"
+  );
+
+const addressName =
+  document.getElementById(
+    "addressName"
+  );
+
+const addressCep =
+  document.getElementById(
+    "addressCep"
+  );
+
+const addressNumber =
+  document.getElementById(
+    "addressNumber"
+  );
+
+const addressStreet =
+  document.getElementById(
+    "addressStreet"
+  );
+
+const addressComplement =
+  document.getElementById(
+    "addressComplement"
+  );
+
+const addressDistrict =
+  document.getElementById(
+    "addressDistrict"
+  );
+
+const addressCity =
+  document.getElementById(
+    "addressCity"
+  );
+
+const addressState =
+  document.getElementById(
+    "addressState"
+  );
+
+
+/* =========================================================
+   VEHICLE
+========================================================= */
+
+const addVehicleButton =
+  document.getElementById(
+    "addVehicleButton"
+  );
+
+const vehiclesGrid =
+  document.getElementById(
+    "vehiclesGrid"
+  );
+
+const vehiclesEmpty =
+  document.getElementById(
+    "vehiclesEmpty"
+  );
+
+const vehicleModal =
+  document.getElementById(
+    "vehicleModal"
+  );
+
+const vehicleModalTitle =
+  document.getElementById(
+    "vehicleModalTitle"
+  );
+
+const vehicleForm =
+  document.getElementById(
+    "vehicleForm"
+  );
+
+const vehicleEditId =
+  document.getElementById(
+    "vehicleEditId"
+  );
+
+const vehicleBrand =
+  document.getElementById(
+    "vehicleBrand"
+  );
+
+const vehicleModel =
+  document.getElementById(
+    "vehicleModel"
+  );
+
+const vehicleYear =
+  document.getElementById(
+    "vehicleYear"
+  );
+
+const vehiclePlate =
+  document.getElementById(
+    "vehiclePlate"
+  );
+
+const vehicleEngine =
+  document.getElementById(
+    "vehicleEngine"
+  );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+const profileToast =
+  document.getElementById(
+    "profileToast"
+  );
 
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function formatarMoeda(valor) {
-
-  return Number(
-    valor || 0
-  )
-    .toLocaleString(
-      "pt-BR",
-      {
-        style: "currency",
-        currency: "BRL"
-      }
-    );
-
-}
-
-
-
-function formatarData(valor) {
-
-  if (!valor) {
-
-    return "-";
-
-  }
-
-
-  const data =
-    new Date(valor);
-
-
-  if (
-    Number.isNaN(
-      data.getTime()
-    )
-  ) {
-
-    return String(valor);
-
-  }
-
-
-  return data.toLocaleDateString(
-    "pt-BR"
-  );
-
-}
-
-
-
-function definirTexto(
-  id,
-  valor
-) {
-
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  if (elemento) {
-
-    elemento.textContent =
-      String(valor ?? "");
-
-  }
-
-}
-
-
-
-function definirValor(
-  id,
-  valor
-) {
-
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  if (elemento) {
-
-    elemento.value =
-      valor ?? "";
-
-  }
-
-}
-
-
-
-function valorCampo(id) {
-
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  if (!elemento) {
-
-    return "";
-
-  }
-
+function normalizarTexto(valor) {
 
   return String(
-    elemento.value || ""
-  )
-    .trim();
+    valor || ""
+  ).trim();
 
 }
 
 
+function gerarId() {
 
-function definirCheckbox(
-  id,
+  return (
+    Date.now().toString(36) +
+    Math.random()
+      .toString(36)
+      .slice(2, 8)
+  );
+
+}
+
+
+function lerJSON(
+  chave,
+  fallback
+) {
+
+  try {
+
+    const valor =
+      localStorage.getItem(
+        chave
+      );
+
+
+    if (!valor) {
+      return fallback;
+    }
+
+
+    return JSON.parse(
+      valor
+    );
+
+  } catch {
+
+    return fallback;
+
+  }
+
+}
+
+
+function salvarJSON(
+  chave,
   valor
 ) {
 
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  if (elemento) {
-
-    elemento.checked =
-      Boolean(valor);
-
-  }
+  localStorage.setItem(
+    chave,
+    JSON.stringify(
+      valor
+    )
+  );
 
 }
 
 
-
-function escaparHtml(valor) {
-
-  return String(
-    valor ?? ""
-  )
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-
-function mostrarMensagem(
-  id,
-  texto,
-  tipo
+function animar(
+  elemento,
+  frames,
+  options
 ) {
 
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  if (!elemento) {
-
-    return;
-
-  }
-
-
-  elemento.innerHTML =
-    '<div class="profile-alert '
-    +
-    tipo
-    +
-    '">'
-    +
-    escaparHtml(texto)
-    +
-    "</div>";
-
-}
-
-
-
-/* =========================================================
-   FOTO
-========================================================= */
-
-function obterFotoPerfil() {
-
-  try {
-
-    return (
-      localStorage.getItem(
-        "fotoPerfilCliente"
-      )
-      ||
-      ""
-    );
-
-  } catch {
-
-    return "";
-
-  }
-
-}
-
-
-
-function renderizarFotoPerfil() {
-
-  const avatar =
-    document.getElementById(
-      "profileMainAvatar"
-    );
-
-
-  if (!avatar) {
-
-    return;
-
-  }
-
-
-  const foto =
-    obterFotoPerfil();
-
-
-  if (foto) {
-
-    avatar.textContent =
-      "";
-
-
-    avatar.style.backgroundImage =
-      'url("' + foto + '")';
-
-
-    avatar.style.backgroundSize =
-      "cover";
-
-
-    avatar.style.backgroundPosition =
-      "center";
-
-
-    avatar.style.backgroundRepeat =
-      "no-repeat";
-
-  } else {
-
-    avatar.style.backgroundImage =
-      "";
-
-
-    avatar.textContent =
-      obterInicial();
-
-  }
-
-
   if (
-    window.SiteUI
-    &&
-    typeof window.SiteUI.atualizarCliente
-      === "function"
+    !elemento ||
+    typeof elemento.animate !==
+      "function"
   ) {
 
-    window.SiteUI
-      .atualizarCliente();
-
-  }
-
-}
-
-
-
-/* =========================================================
-   UPLOAD DA FOTO
-========================================================= */
-
-function configurarUploadFoto() {
-
-  const input =
-    document.getElementById(
-      "inputFotoPerfil"
-    );
-
-
-  if (!input) {
-
-    return;
+    return null;
 
   }
 
 
-  input.addEventListener(
-    "change",
-    function (event) {
-
-      const arquivo =
-        event.target.files
-        &&
-        event.target.files[0];
-
-
-      if (!arquivo) {
-
-        return;
-
-      }
-
-
-      if (
-        !arquivo.type
-          .startsWith(
-            "image/"
-          )
-      ) {
-
-        alert(
-          "Selecione uma imagem válida."
-        );
-
-
-        input.value =
-          "";
-
-
-        return;
-
-      }
-
-
-      if (
-        arquivo.size >
-        2 * 1024 * 1024
-      ) {
-
-        alert(
-          "Escolha uma imagem de até 2 MB."
-        );
-
-
-        input.value =
-          "";
-
-
-        return;
-
-      }
-
-
-      const leitor =
-        new FileReader();
-
-
-      leitor.onload =
-        function () {
-
-          try {
-
-            localStorage.setItem(
-              "fotoPerfilCliente",
-              leitor.result
-            );
-
-          } catch (erro) {
-
-            console.error(
-              "Não foi possível salvar a foto:",
-              erro
-            );
-
-
-            alert(
-              "Não foi possível salvar essa imagem no navegador."
-            );
-
-
-            return;
-
-          }
-
-
-          renderizarFotoPerfil();
-
-        };
-
-
-      leitor.readAsDataURL(
-        arquivo
-      );
-
-    }
+  return elemento.animate(
+    frames,
+    options
   );
 
 }
 
 
+function esperar(ms) {
 
-/* =========================================================
-   PREENCHER PERFIL
-========================================================= */
-
-function preencherPerfil() {
-
-  if (!clientePerfil) {
-
-    return;
-
-  }
-
-
-  definirTexto(
-    "nomePerfil",
-    obterNome()
-  );
-
-
-  definirTexto(
-    "emailPerfil",
-    obterEmail()
-  );
-
-
-  definirValor(
-    "perfilNome",
-    obterNome()
-  );
-
-
-  definirValor(
-    "perfilEmail",
-    obterEmail()
-  );
-
-
-  definirValor(
-    "perfilTelefone",
-    clientePerfil.telefone_cliente
-    ||
-    clientePerfil.telefone
-    ||
-    ""
-  );
-
-
-  definirValor(
-    "perfilCpf",
-    clientePerfil.cpf_cliente
-    ||
-    clientePerfil.cpf
-    ||
-    ""
-  );
-
-
-  definirValor(
-    "perfilNascimento",
-    clientePerfil.data_nascimento
-    ||
-    clientePerfil.nascimento
-    ||
-    ""
-  );
-
-
-  if (
-    clientePerfil.data_cadastro
-  ) {
-
-    definirTexto(
-      "clienteDesde",
-      "Cliente desde "
-      +
-      formatarData(
-        clientePerfil.data_cadastro
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
       )
-    );
-
-  }
-
-
-  carregarEndereco();
-
-  carregarPreferencias();
-
-  renderizarFotoPerfil();
+  );
 
 }
-
 
 
 /* =========================================================
-   ABAS
+   CLIENTE
 ========================================================= */
 
-function abrirAba(nome) {
+function carregarCliente() {
 
-  const tabs =
-    document.querySelectorAll(
-      ".profile-tab"
+  clienteAtual =
+    lerJSON(
+      STORAGE_CLIENTE,
+      null
     );
 
 
-  const panels =
-    document.querySelectorAll(
-      ".profile-panel"
+  if (!clienteAtual) {
+
+    mostrarToast(
+      "Você precisa entrar para acessar seu perfil.",
+      "warning"
     );
 
 
-  tabs.forEach(
-    function (tab) {
+    setTimeout(
+      () => {
 
-      tab.classList.toggle(
-        "active",
-        tab.dataset.tab === nome
-      );
+        window.location.href =
+          "login.html";
 
-    }
-  );
-
-
-  panels.forEach(
-    function (panel) {
-
-      panel.classList.toggle(
-        "active",
-        panel.id ===
-        "panel-" + nome
-      );
-
-    }
-  );
-
-}
-
-
-
-function configurarAbas() {
-
-  const tabs =
-    document.querySelectorAll(
-      ".profile-tab"
-    );
-
-
-  tabs.forEach(
-    function (tab) {
-
-      tab.addEventListener(
-        "click",
-        function () {
-
-          const nome =
-            tab.dataset.tab;
-
-
-          abrirAba(
-            nome
-          );
-
-
-          try {
-
-            history.replaceState(
-              null,
-              "",
-              "#" + nome
-            );
-
-          } catch {
-            /* vazio */
-          }
-
-        }
-      );
-
-    }
-  );
-
-}
-
-
-
-function abrirAbaPorHash() {
-
-  const hash =
-    window.location.hash
-      .replace(
-        "#",
-        ""
-      );
-
-
-  const abasValidas = [
-
-    "dados",
-    "endereco",
-    "veiculos",
-    "seguranca",
-    "preferencias"
-
-  ];
-
-
-  if (
-    abasValidas.includes(
-      hash
-    )
-  ) {
-
-    abrirAba(
-      hash
-    );
-
-  }
-
-}
-
-
-
-/* =========================================================
-   DADOS PESSOAIS
-========================================================= */
-
-function configurarFormularioDados() {
-
-  const formulario =
-    document.getElementById(
-      "formDadosPessoais"
-    );
-
-
-  if (!formulario) {
-
-    return;
-
-  }
-
-
-  formulario.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
-
-
-      const nome =
-        valorCampo(
-          "perfilNome"
-        );
-
-
-      const email =
-        valorCampo(
-          "perfilEmail"
-        );
-
-
-      if (
-        !nome
-        ||
-        !email
-      ) {
-
-        mostrarMensagem(
-          "mensagemDadosPerfil",
-          "Preencha nome e e-mail.",
-          "error"
-        );
-
-
-        return;
-
-      }
-
-
-      clientePerfil = {
-
-        ...clientePerfil,
-
-        nome_cliente:
-          nome,
-
-        nome:
-          nome,
-
-        email_cliente:
-          email,
-
-        email:
-          email,
-
-        telefone_cliente:
-          valorCampo(
-            "perfilTelefone"
-          ),
-
-        telefone:
-          valorCampo(
-            "perfilTelefone"
-          ),
-
-        cpf_cliente:
-          valorCampo(
-            "perfilCpf"
-          ),
-
-        cpf:
-          valorCampo(
-            "perfilCpf"
-          ),
-
-        data_nascimento:
-          valorCampo(
-            "perfilNascimento"
-          )
-
-      };
-
-
-      try {
-
-        localStorage.setItem(
-          "clienteLogado",
-          JSON.stringify(
-            clientePerfil
-          )
-        );
-
-      } catch (erro) {
-
-        console.error(
-          erro
-        );
-
-
-        mostrarMensagem(
-          "mensagemDadosPerfil",
-          "Não foi possível salvar os dados.",
-          "error"
-        );
-
-
-        return;
-
-      }
-
-
-      preencherPerfil();
-
-
-      mostrarMensagem(
-        "mensagemDadosPerfil",
-        "Dados atualizados no navegador. Depois conectaremos essas alterações ao banco.",
-        "success"
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   ENDEREÇO
-========================================================= */
-
-function obterEndereco() {
-
-  try {
-
-    const dados =
-      localStorage.getItem(
-        "enderecoCliente"
-      );
-
-
-    if (!dados) {
-
-      return {};
-
-    }
-
-
-    const endereco =
-      JSON.parse(dados);
-
-
-    if (
-      !endereco
-      ||
-      typeof endereco !== "object"
-    ) {
-
-      return {};
-
-    }
-
-
-    return endereco;
-
-  } catch {
-
-    return {};
-
-  }
-
-}
-
-
-
-function carregarEndereco() {
-
-  const endereco =
-    obterEndereco();
-
-
-  definirValor(
-    "perfilCep",
-    endereco.cep
-  );
-
-
-  definirValor(
-    "perfilEstado",
-    endereco.estado
-  );
-
-
-  definirValor(
-    "perfilRua",
-    endereco.rua
-  );
-
-
-  definirValor(
-    "perfilNumero",
-    endereco.numero
-  );
-
-
-  definirValor(
-    "perfilComplemento",
-    endereco.complemento
-  );
-
-
-  definirValor(
-    "perfilBairro",
-    endereco.bairro
-  );
-
-
-  definirValor(
-    "perfilCidade",
-    endereco.cidade
-  );
-
-}
-
-
-
-function configurarFormularioEndereco() {
-
-  const formulario =
-    document.getElementById(
-      "formEndereco"
-    );
-
-
-  if (!formulario) {
-
-    return;
-
-  }
-
-
-  formulario.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
-
-
-      const endereco = {
-
-        cep:
-          valorCampo(
-            "perfilCep"
-          ),
-
-        estado:
-          valorCampo(
-            "perfilEstado"
-          )
-            .toUpperCase(),
-
-        rua:
-          valorCampo(
-            "perfilRua"
-          ),
-
-        numero:
-          valorCampo(
-            "perfilNumero"
-          ),
-
-        complemento:
-          valorCampo(
-            "perfilComplemento"
-          ),
-
-        bairro:
-          valorCampo(
-            "perfilBairro"
-          ),
-
-        cidade:
-          valorCampo(
-            "perfilCidade"
-          )
-
-      };
-
-
-      try {
-
-        localStorage.setItem(
-          "enderecoCliente",
-          JSON.stringify(
-            endereco
-          )
-        );
-
-
-        mostrarMensagem(
-          "mensagemEndereco",
-          "Endereço salvo no navegador. Depois conectaremos ao banco.",
-          "success"
-        );
-
-      } catch {
-
-        mostrarMensagem(
-          "mensagemEndereco",
-          "Não foi possível salvar o endereço.",
-          "error"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   VEÍCULOS
-========================================================= */
-
-function obterVeiculos() {
-
-  try {
-
-    const dados =
-      localStorage.getItem(
-        "veiculosCliente"
-      );
-
-
-    if (!dados) {
-
-      return [];
-
-    }
-
-
-    const veiculos =
-      JSON.parse(dados);
-
-
-    return Array.isArray(
-      veiculos
-    )
-      ? veiculos
-      : [];
-
-  } catch {
-
-    return [];
-
-  }
-
-}
-
-
-
-function salvarVeiculos(veiculos) {
-
-  try {
-
-    localStorage.setItem(
-      "veiculosCliente",
-      JSON.stringify(
-        veiculos
-      )
-    );
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao salvar veículos:",
-      erro
+      },
+      700
     );
 
 
@@ -1208,205 +547,1135 @@ function salvarVeiculos(veiculos) {
   }
 
 
-  renderizarVeiculos();
-
-
   return true;
 
 }
 
 
+/* =========================================================
+   NORMALIZAR CAMPOS DO CLIENTE
+========================================================= */
 
-function renderizarVeiculos() {
+function obterNomeCliente() {
 
-  const lista =
-    document.getElementById(
-      "listaVeiculos"
-    );
-
-
-  if (!lista) {
-
-    return;
-
-  }
-
-
-  const veiculos =
-    obterVeiculos();
-
-
-  definirTexto(
-    "perfilTotalVeiculos",
-    veiculos.length
+  return normalizarTexto(
+    clienteAtual?.nome_cliente ||
+    clienteAtual?.nome ||
+    clienteAtual?.nomeCompleto ||
+    "Cliente"
   );
-
-
-  if (
-    veiculos.length === 0
-  ) {
-
-    lista.innerHTML = `
-      <div class="vehicles-empty">
-
-        <i class="fa-solid fa-car-side"></i>
-
-        <strong>
-          Nenhum veículo cadastrado
-        </strong>
-
-        <span>
-          Adicione um veículo para facilitar a busca por peças.
-        </span>
-
-      </div>
-    `;
-
-
-    return;
-
-  }
-
-
-  lista.innerHTML =
-    veiculos.map(
-      function (veiculo) {
-
-        const titulo =
-          escaparHtml(
-            String(
-              veiculo.marca || ""
-            )
-            +
-            " "
-            +
-            String(
-              veiculo.modelo || ""
-            )
-          );
-
-
-        let descricao =
-          escaparHtml(
-            veiculo.ano || ""
-          );
-
-
-        if (
-          veiculo.motor
-        ) {
-
-          descricao +=
-            " • "
-            +
-            escaparHtml(
-              veiculo.motor
-            );
-
-        }
-
-
-        let detalhes =
-          veiculo.placa
-            ? "Placa "
-              +
-              escaparHtml(
-                veiculo.placa
-              )
-            : "Placa não informada";
-
-
-        if (
-          veiculo.cor
-        ) {
-
-          detalhes +=
-            " • "
-            +
-            escaparHtml(
-              veiculo.cor
-            );
-
-        }
-
-
-        return `
-          <article class="vehicle-card">
-
-            <span class="vehicle-icon">
-
-              <i class="fa-solid fa-car-side"></i>
-
-            </span>
-
-            <div>
-
-              <h3>
-                ${titulo}
-              </h3>
-
-              <p>
-                ${descricao}
-              </p>
-
-              <small>
-                ${detalhes}
-              </small>
-
-            </div>
-
-            <button
-              type="button"
-              class="remove-vehicle-button"
-              data-remove-veiculo="${Number(veiculo.id)}"
-              title="Remover veículo"
-            >
-
-              <i class="fa-solid fa-trash"></i>
-
-            </button>
-
-          </article>
-        `;
-
-      }
-    )
-      .join("");
-
-
-  configurarBotoesRemoverVeiculo();
 
 }
 
 
+function obterEmailCliente() {
 
-function configurarBotoesRemoverVeiculo() {
+  return normalizarTexto(
+    clienteAtual?.email_cliente ||
+    clienteAtual?.email ||
+    ""
+  );
 
-  const botoes =
-    document.querySelectorAll(
-      "[data-remove-veiculo]"
+}
+
+
+function obterTelefoneCliente() {
+
+  return normalizarTexto(
+    clienteAtual?.telefone_cliente ||
+    clienteAtual?.telefone ||
+    ""
+  );
+
+}
+
+
+function obterCpfCliente() {
+
+  return normalizarTexto(
+    clienteAtual?.cpf_cliente ||
+    clienteAtual?.cpf ||
+    ""
+  );
+
+}
+
+
+function obterIdCliente() {
+
+  return (
+    clienteAtual?.id_cliente ||
+    clienteAtual?.id ||
+    clienteAtual?.cliente_id ||
+    "0000"
+  );
+
+}
+
+
+/* =========================================================
+   SALVAR CLIENTE
+========================================================= */
+
+function salvarClienteAtual() {
+
+  salvarJSON(
+    STORAGE_CLIENTE,
+    clienteAtual
+  );
+
+
+  window.dispatchEvent(
+    new CustomEvent(
+      "clienteAtualizado",
+      {
+        detail:
+          clienteAtual
+      }
+    )
+  );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function mostrarToast(
+  mensagem,
+  tipo = "success"
+) {
+
+  if (!profileToast) {
+    return;
+  }
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  profileToast.classList.remove(
+    "show",
+    "error",
+    "warning"
+  );
+
+
+  if (
+    tipo === "error"
+  ) {
+
+    profileToast.classList.add(
+      "error"
     );
 
+  }
 
-  botoes.forEach(
-    function (botao) {
 
-      botao.addEventListener(
-        "click",
-        function () {
+  if (
+    tipo === "warning"
+  ) {
 
-          const id =
-            Number(
-              botao.getAttribute(
-                "data-remove-veiculo"
-              )
+    profileToast.classList.add(
+      "warning"
+    );
+
+  }
+
+
+  profileToast.textContent =
+    mensagem;
+
+
+  void profileToast.offsetWidth;
+
+
+  profileToast.classList.add(
+    "show"
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        profileToast.classList.remove(
+          "show"
+        );
+
+      },
+      2600
+    );
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function esconderLoading() {
+
+  if (!profileLoading) {
+    return;
+  }
+
+
+  profileLoading.classList.add(
+    "hidden"
+  );
+
+
+  setTimeout(
+    () => {
+
+      profileLoading.style.display =
+        "none";
+
+    },
+    450
+  );
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+function obterAvatar() {
+
+  return (
+    clienteAtual?.foto ||
+    clienteAtual?.avatar ||
+    localStorage.getItem(
+      STORAGE_AVATAR
+    ) ||
+    ""
+  );
+
+}
+
+
+function obterInicial() {
+
+  const nome =
+    obterNomeCliente();
+
+
+  return (
+    nome
+      .charAt(0)
+      .toUpperCase() ||
+    "U"
+  );
+
+}
+
+
+function aplicarAvatar(
+  avatar
+) {
+
+  const inicial =
+    obterInicial();
+
+
+  /* HERO */
+
+  if (
+    avatar &&
+    profileAvatarImage
+  ) {
+
+    profileAvatarImage.src =
+      avatar;
+
+
+    profileAvatarImage.hidden =
+      false;
+
+
+    if (
+      profileAvatarInitial
+    ) {
+
+      profileAvatarInitial.style.display =
+        "none";
+
+    }
+
+  } else {
+
+    if (
+      profileAvatarImage
+    ) {
+
+      profileAvatarImage.hidden =
+        true;
+
+    }
+
+
+    if (
+      profileAvatarInitial
+    ) {
+
+      profileAvatarInitial.style.display =
+        "";
+
+
+      profileAvatarInitial.textContent =
+        inicial;
+
+    }
+
+  }
+
+
+  /* OVERVIEW */
+
+  if (
+    overviewAvatar
+  ) {
+
+    if (avatar) {
+
+      overviewAvatar.innerHTML =
+        "";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        avatar;
+
+
+      img.alt =
+        "Foto do cliente";
+
+
+      overviewAvatar.appendChild(
+        img
+      );
+
+    } else {
+
+      overviewAvatar.textContent =
+        inicial;
+
+    }
+
+  }
+
+
+  /* HEADER AVATARS */
+
+  document
+    .querySelectorAll(
+      "[data-user-avatar]"
+    )
+    .forEach(
+      elemento => {
+
+        if (avatar) {
+
+          elemento.innerHTML =
+            "";
+
+
+          const img =
+            document.createElement(
+              "img"
             );
 
 
-          removerVeiculo(
-            id
+          img.src =
+            avatar;
+
+
+          img.alt =
+            "Avatar";
+
+
+          img.style.width =
+            "100%";
+
+
+          img.style.height =
+            "100%";
+
+
+          img.style.objectFit =
+            "cover";
+
+
+          img.style.borderRadius =
+            "inherit";
+
+
+          elemento.appendChild(
+            img
           );
 
+        } else {
+
+          elemento.textContent =
+            inicial;
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   AVATAR INPUT
+========================================================= */
+
+function abrirSeletorAvatar() {
+
+  profileAvatarInput
+    ?.click();
+
+}
+
+
+function alterarAvatar(
+  arquivo
+) {
+
+  if (!arquivo) {
+    return;
+  }
+
+
+  if (
+    !arquivo.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    mostrarToast(
+      "Selecione uma imagem válida.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  const limite =
+    2.5 *
+    1024 *
+    1024;
+
+
+  if (
+    arquivo.size >
+    limite
+  ) {
+
+    mostrarToast(
+      "A imagem deve ter no máximo 2,5 MB.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    () => {
+
+      const avatar =
+        reader.result;
+
+
+      localStorage.setItem(
+        STORAGE_AVATAR,
+        avatar
+      );
+
+
+      clienteAtual.avatar =
+        avatar;
+
+
+      clienteAtual.foto =
+        avatar;
+
+
+      salvarClienteAtual();
+
+
+      aplicarAvatar(
+        avatar
+      );
+
+
+      mostrarToast(
+        "Foto de perfil atualizada."
+      );
+
+
+      animar(
+        profileAvatarButton,
+        [
+          {
+            transform:
+              "scale(1)"
+          },
+          {
+            transform:
+              "scale(.94)"
+          },
+          {
+            transform:
+              "scale(1.06)"
+          },
+          {
+            transform:
+              "scale(1)"
+          }
+        ],
+        {
+          duration: 420
+        }
+      );
+
+    };
+
+
+  reader.readAsDataURL(
+    arquivo
+  );
+
+}
+
+
+/* =========================================================
+   PREENCHER PERFIL
+========================================================= */
+
+function preencherDadosCliente() {
+
+  const nome =
+    obterNomeCliente();
+
+  const email =
+    obterEmailCliente();
+
+  const telefone =
+    obterTelefoneCliente();
+
+  const cpf =
+    obterCpfCliente();
+
+  const id =
+    obterIdCliente();
+
+
+  if (
+    profileHeroName
+  ) {
+
+    profileHeroName.textContent =
+      nome;
+
+  }
+
+
+  if (
+    overviewName
+  ) {
+
+    overviewName.textContent =
+      nome;
+
+  }
+
+
+  if (
+    overviewEmail
+  ) {
+
+    overviewEmail.textContent =
+      email ||
+      "E-mail não informado";
+
+  }
+
+
+  if (
+    overviewCustomerId
+  ) {
+
+    overviewCustomerId.textContent =
+      `#${String(id)
+        .padStart(
+          4,
+          "0"
+        )}`;
+
+  }
+
+
+  if (
+    profileName
+  ) {
+
+    profileName.value =
+      nome;
+
+  }
+
+
+  if (
+    profileEmail
+  ) {
+
+    profileEmail.value =
+      email;
+
+  }
+
+
+  if (
+    profilePhone
+  ) {
+
+    profilePhone.value =
+      telefone;
+
+  }
+
+
+  if (
+    profileCpf
+  ) {
+
+    profileCpf.value =
+      cpf;
+
+  }
+
+
+  /* HEADER */
+
+  document
+    .querySelectorAll(
+      "[data-user-name]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          nome;
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-user-email]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          email ||
+          "-";
+
+      }
+    );
+
+
+  aplicarAvatar(
+    obterAvatar()
+  );
+
+}
+
+
+/* =========================================================
+   SALVAR DADOS PESSOAIS
+========================================================= */
+
+async function salvarDadosPessoais(
+  evento
+) {
+
+  evento.preventDefault();
+
+
+  const nome =
+    normalizarTexto(
+      profileName?.value
+    );
+
+  const email =
+    normalizarTexto(
+      profileEmail?.value
+    );
+
+  const telefone =
+    normalizarTexto(
+      profilePhone?.value
+    );
+
+  const cpf =
+    normalizarTexto(
+      profileCpf?.value
+    );
+
+
+  if (!nome) {
+
+    mostrarToast(
+      "Informe seu nome.",
+      "warning"
+    );
+
+
+    profileName?.focus();
+
+    return;
+
+  }
+
+
+  if (!email) {
+
+    mostrarToast(
+      "Informe seu e-mail.",
+      "warning"
+    );
+
+
+    profileEmail?.focus();
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     UPDATE BUTTON
+  ===================================================== */
+
+  const original =
+    profileSaveButton?.innerHTML;
+
+
+  if (
+    profileSaveButton
+  ) {
+
+    profileSaveButton.disabled =
+      true;
+
+
+    profileSaveButton.innerHTML =
+      `
+        <span>
+          <small>
+            SAVING
+          </small>
+
+          <strong>
+            Salvando...
+          </strong>
+        </span>
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+      `;
+
+  }
+
+
+  await esperar(
+    500
+  );
+
+
+  /* =====================================================
+     MANTÉM FORMATOS DIFERENTES COMPATÍVEIS
+  ===================================================== */
+
+  clienteAtual.nome_cliente =
+    nome;
+
+  clienteAtual.nome =
+    nome;
+
+  clienteAtual.email_cliente =
+    email;
+
+  clienteAtual.email =
+    email;
+
+  clienteAtual.telefone_cliente =
+    telefone;
+
+  clienteAtual.telefone =
+    telefone;
+
+  clienteAtual.cpf_cliente =
+    cpf;
+
+  clienteAtual.cpf =
+    cpf;
+
+
+  salvarClienteAtual();
+
+
+  preencherDadosCliente();
+
+
+  atualizarCompletude();
+
+
+  if (
+    profileFormStatus
+  ) {
+
+    profileFormStatus.textContent =
+      "Alterações salvas.";
+
+  }
+
+
+  if (
+    profileSaveButton
+  ) {
+
+    profileSaveButton.innerHTML =
+      `
+        <span>
+          <small>
+            UPDATED
+          </small>
+
+          <strong>
+            Alterações salvas
+          </strong>
+        </span>
+
+        <i class="fa-solid fa-check"></i>
+      `;
+
+  }
+
+
+  mostrarToast(
+    "Seus dados foram atualizados."
+  );
+
+
+  setTimeout(
+    () => {
+
+      if (
+        profileSaveButton
+      ) {
+
+        profileSaveButton.disabled =
+          false;
+
+
+        profileSaveButton.innerHTML =
+          original;
+
+      }
+
+
+      if (
+        profileFormStatus
+      ) {
+
+        profileFormStatus.textContent =
+          "Nenhuma alteração pendente.";
+
+      }
+
+    },
+    1100
+  );
+
+}
+
+
+/* =========================================================
+   FORM DIRTY
+========================================================= */
+
+function marcarFormularioAlterado() {
+
+  if (
+    profileFormStatus
+  ) {
+
+    profileFormStatus.textContent =
+      "Existem alterações não salvas.";
+
+  }
+
+}
+
+
+/* =========================================================
+   SECTION NAVIGATION
+========================================================= */
+
+async function trocarSecao(
+  secao,
+  atualizarHash = true
+) {
+
+  const novoPainel =
+    profilePanels.find(
+      painel =>
+        painel.dataset.profilePanel ===
+        secao
+    );
+
+
+  if (!novoPainel) {
+    return;
+  }
+
+
+  if (
+    secao ===
+    secaoAtual &&
+    novoPainel.classList.contains(
+      "active"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  const painelAtual =
+    profilePanels.find(
+      painel =>
+        painel.classList.contains(
+          "active"
+        )
+    );
+
+
+  profileNavItems.forEach(
+    item => {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.profileSection ===
+        secao
+      );
+
+    }
+  );
+
+
+  if (
+    painelAtual &&
+    painelAtual !==
+    novoPainel
+  ) {
+
+    const animacao =
+      animar(
+        painelAtual,
+        [
+          {
+            opacity: 1,
+            transform:
+              "translateX(0)"
+          },
+          {
+            opacity: 0,
+            transform:
+              "translateX(-22px)"
+          }
+        ],
+        {
+          duration: 220,
+          easing:
+            "ease",
+          fill:
+            "forwards"
+        }
+      );
+
+
+    if (animacao) {
+
+      try {
+
+        await animacao.finished;
+
+      } catch {}
+
+    }
+
+
+    painelAtual.classList.remove(
+      "active",
+      "profile-section-enter"
+    );
+
+  }
+
+
+  novoPainel.classList.add(
+    "active",
+    "profile-section-enter"
+  );
+
+
+  secaoAtual =
+    secao;
+
+
+  if (
+    atualizarHash
+  ) {
+
+    const hashMap = {
+
+      overview:
+        "",
+
+      personal:
+        "dados",
+
+      security:
+        "seguranca",
+
+      addresses:
+        "enderecos",
+
+      vehicles:
+        "veiculos"
+
+    };
+
+
+    const novoHash =
+      hashMap[secao];
+
+
+    if (novoHash) {
+
+      history.replaceState(
+        {},
+        "",
+        `#${novoHash}`
+      );
+
+    } else {
+
+      history.replaceState(
+        {},
+        "",
+        window.location.pathname
+      );
+
+    }
+
+  }
+
+
+  animarConteudoSecao(
+    novoPainel
+  );
+
+}
+
+
+/* =========================================================
+   SECTION CONTENT ANIMATION
+========================================================= */
+
+function animarConteudoSecao(
+  painel
+) {
+
+  if (!painel) {
+    return;
+  }
+
+
+  const elementos =
+    Array.from(
+      painel.querySelectorAll(
+        [
+          ".profile-section-heading",
+          ".profile-overview-card",
+          ".profile-quick-card",
+          ".profile-health-card",
+          ".profile-form-card",
+          ".security-status-card",
+          ".password-card",
+          ".address-card",
+          ".vehicle-card",
+          ".profile-empty-state"
+        ].join(",")
+      )
+    );
+
+
+  elementos.forEach(
+    (
+      elemento,
+      indice
+    ) => {
+
+      animar(
+        elemento,
+        [
+          {
+            opacity: 0,
+            transform:
+              "translateY(18px)"
+          },
+          {
+            opacity: 1,
+            transform:
+              "translateY(0)"
+          }
+        ],
+        {
+          duration: 480,
+          delay:
+            indice * 55,
+          easing:
+            "cubic-bezier(.16,1,.3,1)",
+          fill:
+            "both"
         }
       );
 
@@ -1416,86 +1685,749 @@ function configurarBotoesRemoverVeiculo() {
 }
 
 
+/* =========================================================
+   HASH
+========================================================= */
 
-function removerVeiculo(id) {
+function secaoPeloHash() {
 
-  const veiculos =
-    obterVeiculos();
-
-
-  const novos =
-    veiculos.filter(
-      function (veiculo) {
-
-        return (
-          Number(
-            veiculo.id
-          )
-          !==
-          Number(id)
-        );
-
-      }
-    );
+  const hash =
+    window.location.hash
+      .replace(
+        "#",
+        ""
+      )
+      .toLowerCase();
 
 
-  salvarVeiculos(
-    novos
+  const mapa = {
+
+    dados:
+      "personal",
+
+    pessoal:
+      "personal",
+
+    seguranca:
+      "security",
+
+    security:
+      "security",
+
+    enderecos:
+      "addresses",
+
+    endereco:
+      "addresses",
+
+    veiculos:
+      "vehicles",
+
+    veiculo:
+      "vehicles"
+
+  };
+
+
+  return (
+    mapa[hash] ||
+    "overview"
   );
 
 }
 
 
-
 /* =========================================================
-   MODAL VEÍCULO
+   COUNTERS
 ========================================================= */
 
-function abrirModalVeiculo() {
+function obterPedidos() {
 
-  const modal =
-    document.getElementById(
-      "modalVeiculo"
+  const pedidos =
+    lerJSON(
+      STORAGE_PEDIDOS,
+      []
     );
 
 
-  if (!modal) {
+  return Array.isArray(
+    pedidos
+  )
+    ? pedidos
+    : [];
+
+}
+
+
+function atualizarContadores() {
+
+  const pedidos =
+    obterPedidos();
+
+
+  animarContador(
+    profileOrdersCount,
+    pedidos.length
+  );
+
+
+  animarContador(
+    profileVehiclesCount,
+    veiculos.length
+  );
+
+
+  animarContador(
+    profileAddressesCount,
+    enderecos.length
+  );
+
+}
+
+
+/* =========================================================
+   COUNTER ANIMATION
+========================================================= */
+
+function animarContador(
+  elemento,
+  alvo
+) {
+
+  if (!elemento) {
+    return;
+  }
+
+
+  const inicio =
+    performance.now();
+
+  const duracao =
+    600;
+
+
+  function frame(
+    tempo
+  ) {
+
+    const progresso =
+      Math.min(
+        (
+          tempo -
+          inicio
+        ) /
+        duracao,
+        1
+      );
+
+
+    const easing =
+      1 -
+      Math.pow(
+        1 - progresso,
+        4
+      );
+
+
+    elemento.textContent =
+      Math.round(
+        alvo *
+        easing
+      );
+
+
+    if (
+      progresso < 1
+    ) {
+
+      requestAnimationFrame(
+        frame
+      );
+
+    }
+
+  }
+
+
+  requestAnimationFrame(
+    frame
+  );
+
+}
+
+
+/* =========================================================
+   PROFILE COMPLETION
+========================================================= */
+
+function calcularCompletude() {
+
+  const campos = [
+
+    obterNomeCliente(),
+
+    obterEmailCliente(),
+
+    obterTelefoneCliente(),
+
+    obterCpfCliente(),
+
+    obterAvatar(),
+
+    enderecos.length > 0
+      ? "ok"
+      : "",
+
+    veiculos.length > 0
+      ? "ok"
+      : ""
+
+  ];
+
+
+  const preenchidos =
+    campos.filter(
+      Boolean
+    ).length;
+
+
+  return Math.round(
+    (
+      preenchidos /
+      campos.length
+    ) *
+    100
+  );
+
+}
+
+
+function atualizarCompletude() {
+
+  const percentual =
+    calcularCompletude();
+
+
+  if (
+    profileCompletionText
+  ) {
+
+    profileCompletionText.textContent =
+      `${percentual}%`;
+
+  }
+
+
+  if (
+    profileCompletionBar
+  ) {
+
+    setTimeout(
+      () => {
+
+        profileCompletionBar.style.width =
+          `${percentual}%`;
+
+      },
+      180
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PASSWORD VISIBILITY
+========================================================= */
+
+function alternarVisibilidadeSenha(
+  botao
+) {
+
+  const id =
+    botao.dataset.passwordToggle;
+
+
+  const input =
+    document.getElementById(
+      id
+    );
+
+
+  if (!input) {
+    return;
+  }
+
+
+  const mostrando =
+    input.type ===
+    "text";
+
+
+  input.type =
+    mostrando
+      ? "password"
+      : "text";
+
+
+  const icon =
+    botao.querySelector(
+      "i"
+    );
+
+
+  if (icon) {
+
+    icon.className =
+      mostrando
+        ? "fa-regular fa-eye"
+        : "fa-regular fa-eye-slash";
+
+  }
+
+}
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+function avaliarForcaSenha(
+  senha
+) {
+
+  let pontos =
+    0;
+
+
+  if (
+    senha.length >= 8
+  ) {
+    pontos++;
+  }
+
+
+  if (
+    senha.length >= 12
+  ) {
+    pontos++;
+  }
+
+
+  if (
+    /[A-Z]/.test(
+      senha
+    )
+  ) {
+    pontos++;
+  }
+
+
+  if (
+    /[a-z]/.test(
+      senha
+    )
+  ) {
+    pontos++;
+  }
+
+
+  if (
+    /\d/.test(
+      senha
+    )
+  ) {
+    pontos++;
+  }
+
+
+  if (
+    /[^A-Za-z0-9]/.test(
+      senha
+    )
+  ) {
+    pontos++;
+  }
+
+
+  return pontos;
+
+}
+
+
+function atualizarForcaSenha() {
+
+  const senha =
+    newPassword?.value ||
+    "";
+
+
+  const pontos =
+    avaliarForcaSenha(
+      senha
+    );
+
+
+  let texto =
+    "-";
+
+  let percentual =
+    0;
+
+  let cor =
+    "#d6535d";
+
+
+  if (!senha) {
+
+    texto =
+      "-";
+
+    percentual =
+      0;
+
+  } else if (
+    pontos <= 2
+  ) {
+
+    texto =
+      "Fraca";
+
+    percentual =
+      30;
+
+    cor =
+      "#d6535d";
+
+  } else if (
+    pontos <= 4
+  ) {
+
+    texto =
+      "Média";
+
+    percentual =
+      65;
+
+    cor =
+      "#da9b2e";
+
+  } else {
+
+    texto =
+      "Forte";
+
+    percentual =
+      100;
+
+    cor =
+      "#2aba7a";
+
+  }
+
+
+  if (
+    passwordStrengthText
+  ) {
+
+    passwordStrengthText.textContent =
+      texto;
+
+  }
+
+
+  if (
+    passwordStrengthBar
+  ) {
+
+    passwordStrengthBar.style.width =
+      `${percentual}%`;
+
+
+    passwordStrengthBar.style.background =
+      cor;
+
+  }
+
+}
+
+
+/* =========================================================
+   ALTERAR SENHA
+========================================================= */
+
+async function alterarSenha(
+  evento
+) {
+
+  evento.preventDefault();
+
+
+  const atual =
+    currentPassword?.value ||
+    "";
+
+  const nova =
+    newPassword?.value ||
+    "";
+
+  const confirmar =
+    confirmPassword?.value ||
+    "";
+
+
+  if (
+    !atual ||
+    !nova ||
+    !confirmar
+  ) {
+
+    mostrarToast(
+      "Preencha todos os campos da senha.",
+      "warning"
+    );
+
 
     return;
 
   }
 
 
-  modal.classList.add(
-    "open"
+  const senhaSalva =
+    String(
+      clienteAtual?.senha_cliente ||
+      clienteAtual?.senha ||
+      ""
+    );
+
+
+  if (
+    senhaSalva &&
+    atual !==
+    senhaSalva
+  ) {
+
+    mostrarToast(
+      "A senha atual está incorreta.",
+      "error"
+    );
+
+
+    executarShake(
+      currentPassword
+    );
+
+
+    return;
+
+  }
+
+
+  if (
+    nova.length < 8
+  ) {
+
+    mostrarToast(
+      "A nova senha deve ter pelo menos 8 caracteres.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  if (
+    nova !==
+    confirmar
+  ) {
+
+    mostrarToast(
+      "A confirmação da senha não corresponde.",
+      "warning"
+    );
+
+
+    executarShake(
+      confirmPassword
+    );
+
+
+    return;
+
+  }
+
+
+  await esperar(
+    400
   );
+
+
+  clienteAtual.senha =
+    nova;
+
+  clienteAtual.senha_cliente =
+    nova;
+
+
+  salvarClienteAtual();
+
+
+  passwordForm.reset();
+
+
+  atualizarForcaSenha();
+
+
+  mostrarToast(
+    "Senha atualizada com sucesso."
+  );
+
+}
+
+
+/* =========================================================
+   ADDRESS STORAGE
+========================================================= */
+
+function carregarEnderecos() {
+
+  const todos =
+    lerJSON(
+      STORAGE_ENDERECOS,
+      []
+    );
+
+
+  enderecos =
+    Array.isArray(todos)
+      ? todos
+      : [];
+
+}
+
+
+/* =========================================================
+   ADDRESS MODAL
+========================================================= */
+
+function abrirModalEndereco(
+  endereco = null
+) {
+
+  if (
+    !addressModal
+  ) {
+    return;
+  }
+
+
+  addressForm?.reset();
+
+
+  if (
+    endereco
+  ) {
+
+    addressModalTitle.textContent =
+      "Editar endereço";
+
+
+    addressEditId.value =
+      endereco.id;
+
+
+    addressName.value =
+      endereco.nome ||
+      "";
+
+
+    addressCep.value =
+      endereco.cep ||
+      "";
+
+
+    addressNumber.value =
+      endereco.numero ||
+      "";
+
+
+    addressStreet.value =
+      endereco.rua ||
+      "";
+
+
+    addressComplement.value =
+      endereco.complemento ||
+      "";
+
+
+    addressDistrict.value =
+      endereco.bairro ||
+      "";
+
+
+    addressCity.value =
+      endereco.cidade ||
+      "";
+
+
+    addressState.value =
+      endereco.estado ||
+      "";
+
+  } else {
+
+    addressModalTitle.textContent =
+      "Novo endereço";
+
+
+    addressEditId.value =
+      "";
+
+  }
+
+
+  addressModal.hidden =
+    false;
 
 
   document.body.style.overflow =
     "hidden";
 
+
+  animarModalEntrada(
+    addressModal
+  );
+
 }
 
 
+/* =========================================================
+   CLOSE ADDRESS
+========================================================= */
 
-function fecharModalVeiculo() {
+async function fecharModalEndereco() {
 
-  const modal =
-    document.getElementById(
-      "modalVeiculo"
-    );
-
-
-  if (!modal) {
+  if (
+    !addressModal ||
+    addressModal.hidden
+  ) {
 
     return;
 
   }
 
 
-  modal.classList.remove(
-    "open"
+  await animarModalSaida(
+    addressModal
   );
+
+
+  addressModal.hidden =
+    true;
 
 
   document.body.style.overflow =
@@ -1504,478 +2436,207 @@ function fecharModalVeiculo() {
 }
 
 
-
-function configurarModalVeiculo() {
-
-  const btnAdicionar =
-    document.getElementById(
-      "btnAdicionarVeiculo"
-    );
-
-
-  const btnFechar =
-    document.getElementById(
-      "btnFecharVeiculo"
-    );
-
-
-  const btnCancelar =
-    document.getElementById(
-      "btnCancelarVeiculo"
-    );
-
-
-  const modal =
-    document.getElementById(
-      "modalVeiculo"
-    );
-
-
-  if (btnAdicionar) {
-
-    btnAdicionar.addEventListener(
-      "click",
-      abrirModalVeiculo
-    );
-
-  }
-
-
-  if (btnFechar) {
-
-    btnFechar.addEventListener(
-      "click",
-      fecharModalVeiculo
-    );
-
-  }
-
-
-  if (btnCancelar) {
-
-    btnCancelar.addEventListener(
-      "click",
-      fecharModalVeiculo
-    );
-
-  }
-
-
-  const backdrop =
-    modal
-      ? modal.querySelector(
-          ".profile-modal-backdrop"
-        )
-      : null;
-
-
-  if (backdrop) {
-
-    backdrop.addEventListener(
-      "click",
-      fecharModalVeiculo
-    );
-
-  }
-
-}
-
-
-
 /* =========================================================
-   FORM VEÍCULO
+   SAVE ADDRESS
 ========================================================= */
 
-function configurarFormularioVeiculo() {
+function salvarEndereco(
+  evento
+) {
 
-  const formulario =
-    document.getElementById(
-      "formVeiculo"
-    );
+  evento.preventDefault();
 
 
-  if (!formulario) {
+  const dados = {
 
-    return;
+    id:
+      addressEditId.value ||
+      gerarId(),
 
-  }
+    nome:
+      normalizarTexto(
+        addressName.value
+      ),
 
+    cep:
+      normalizarTexto(
+        addressCep.value
+      ),
 
-  formulario.addEventListener(
-    "submit",
-    function (event) {
+    numero:
+      normalizarTexto(
+        addressNumber.value
+      ),
 
-      event.preventDefault();
+    rua:
+      normalizarTexto(
+        addressStreet.value
+      ),
 
+    complemento:
+      normalizarTexto(
+        addressComplement.value
+      ),
 
-      const marca =
-        valorCampo(
-          "veiculoMarca"
-        );
+    bairro:
+      normalizarTexto(
+        addressDistrict.value
+      ),
 
+    cidade:
+      normalizarTexto(
+        addressCity.value
+      ),
 
-      const modelo =
-        valorCampo(
-          "veiculoModelo"
-        );
+    estado:
+      normalizarTexto(
+        addressState.value
+      ).toUpperCase()
 
+  };
 
-      const ano =
-        valorCampo(
-          "veiculoAno"
-        );
-
-
-      if (
-        !marca
-        ||
-        !modelo
-        ||
-        !ano
-      ) {
-
-        return;
-
-      }
-
-
-      const veiculos =
-        obterVeiculos();
-
-
-      const veiculo = {
-
-        id:
-          Date.now(),
-
-        marca:
-          marca,
-
-        modelo:
-          modelo,
-
-        ano:
-          ano,
-
-        motor:
-          valorCampo(
-            "veiculoMotor"
-          ),
-
-        placa:
-          valorCampo(
-            "veiculoPlaca"
-          )
-            .toUpperCase(),
-
-        cor:
-          valorCampo(
-            "veiculoCor"
-          )
-
-      };
-
-
-      veiculos.push(
-        veiculo
-      );
-
-
-      if (
-        !salvarVeiculos(
-          veiculos
-        )
-      ) {
-
-        return;
-
-      }
-
-
-      formulario.reset();
-
-
-      fecharModalVeiculo();
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   PREFERÊNCIAS
-========================================================= */
-
-function carregarPreferencias() {
-
-  let preferencias = {};
-
-
-  try {
-
-    const dados =
-      localStorage.getItem(
-        "preferenciasCliente"
-      );
-
-
-    if (dados) {
-
-      const objeto =
-        JSON.parse(dados);
-
-
-      if (
-        objeto
-        &&
-        typeof objeto === "object"
-      ) {
-
-        preferencias =
-          objeto;
-
-      }
-
-    }
-
-  } catch {
-    /* vazio */
-  }
-
-
-  definirCheckbox(
-    "prefPromocoes",
-    preferencias.promocoes === true
-  );
-
-
-  definirCheckbox(
-    "prefPedidos",
-    preferencias.pedidos !== false
-  );
-
-
-  definirCheckbox(
-    "prefRecomendacoes",
-    preferencias.recomendacoes === true
-  );
-
-}
-
-
-
-function configurarPreferencias() {
-
-  const botao =
-    document.getElementById(
-      "btnSalvarPreferencias"
-    );
-
-
-  if (!botao) {
-
-    return;
-
-  }
-
-
-  botao.addEventListener(
-    "click",
-    function () {
-
-      const campoPromocoes =
-        document.getElementById(
-          "prefPromocoes"
-        );
-
-
-      const campoPedidos =
-        document.getElementById(
-          "prefPedidos"
-        );
-
-
-      const campoRecomendacoes =
-        document.getElementById(
-          "prefRecomendacoes"
-        );
-
-
-      const preferencias = {
-
-        promocoes:
-          campoPromocoes
-            ? campoPromocoes.checked
-            : false,
-
-        pedidos:
-          campoPedidos
-            ? campoPedidos.checked
-            : true,
-
-        recomendacoes:
-          campoRecomendacoes
-            ? campoRecomendacoes.checked
-            : false
-
-      };
-
-
-      try {
-
-        localStorage.setItem(
-          "preferenciasCliente",
-          JSON.stringify(
-            preferencias
-          )
-        );
-
-
-        mostrarMensagem(
-          "mensagemPreferencias",
-          "Preferências salvas.",
-          "success"
-        );
-
-      } catch {
-
-        mostrarMensagem(
-          "mensagemPreferencias",
-          "Não foi possível salvar as preferências.",
-          "error"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   ALTERAR SENHA
-========================================================= */
-
-function configurarFormularioSenha() {
-
-  const formulario =
-    document.getElementById(
-      "formAlterarSenha"
-    );
-
-
-  if (!formulario) {
-
-    return;
-
-  }
-
-
-  formulario.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
-
-
-      const senhaAtual =
-        valorCampo(
-          "senhaAtualPerfil"
-        );
-
-
-      const novaSenha =
-        valorCampo(
-          "novaSenhaPerfil"
-        );
-
-
-      const confirmacao =
-        valorCampo(
-          "confirmarNovaSenhaPerfil"
-        );
-
-
-      if (
-        !senhaAtual
-        ||
-        !novaSenha
-        ||
-        !confirmacao
-      ) {
-
-        mostrarMensagem(
-          "mensagemSenhaPerfil",
-          "Preencha todos os campos.",
-          "error"
-        );
-
-
-        return;
-
-      }
-
-
-      if (
-        novaSenha.length < 8
-      ) {
-
-        mostrarMensagem(
-          "mensagemSenhaPerfil",
-          "A nova senha precisa ter pelo menos 8 caracteres.",
-          "error"
-        );
-
-
-        return;
-
-      }
-
-
-      if (
-        novaSenha !==
-        confirmacao
-      ) {
-
-        mostrarMensagem(
-          "mensagemSenhaPerfil",
-          "As novas senhas não coincidem.",
-          "error"
-        );
-
-
-        return;
-
-      }
-
-
-      mostrarMensagem(
-        "mensagemSenhaPerfil",
-        "Senha validada. A alteração real será conectada ao backend.",
-        "info"
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   PEDIDOS
-========================================================= */
-
-async function carregarResumoPedidos() {
 
   if (
-    !clientePerfil
-    ||
-    !clientePerfil.id_cliente
+    !dados.nome ||
+    !dados.cep ||
+    !dados.numero ||
+    !dados.rua ||
+    !dados.bairro ||
+    !dados.cidade ||
+    !dados.estado
+  ) {
+
+    mostrarToast(
+      "Preencha os campos obrigatórios do endereço.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  const indice =
+    enderecos.findIndex(
+      item =>
+        item.id ===
+        dados.id
+    );
+
+
+  if (
+    indice >= 0
+  ) {
+
+    enderecos[indice] =
+      dados;
+
+  } else {
+
+    enderecos.push(
+      dados
+    );
+
+  }
+
+
+  salvarJSON(
+    STORAGE_ENDERECOS,
+    enderecos
+  );
+
+
+  renderizarEnderecos();
+
+
+  atualizarContadores();
+
+
+  atualizarCompletude();
+
+
+  fecharModalEndereco();
+
+
+  mostrarToast(
+    indice >= 0
+      ? "Endereço atualizado."
+      : "Novo endereço cadastrado."
+  );
+
+}
+
+
+/* =========================================================
+   DELETE ADDRESS
+========================================================= */
+
+function excluirEndereco(
+  id
+) {
+
+  const endereco =
+    enderecos.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!endereco) {
+    return;
+  }
+
+
+  const confirmado =
+    window.confirm(
+      `Excluir o endereço "${endereco.nome}"?`
+    );
+
+
+  if (!confirmado) {
+    return;
+  }
+
+
+  enderecos =
+    enderecos.filter(
+      item =>
+        item.id !== id
+    );
+
+
+  salvarJSON(
+    STORAGE_ENDERECOS,
+    enderecos
+  );
+
+
+  renderizarEnderecos();
+
+
+  atualizarContadores();
+
+
+  atualizarCompletude();
+
+
+  mostrarToast(
+    "Endereço removido."
+  );
+
+}
+
+
+/* =========================================================
+   RENDER ADDRESSES
+========================================================= */
+
+function renderizarEnderecos() {
+
+  if (
+    !addressesGrid ||
+    !addressesEmpty
   ) {
 
     return;
@@ -1983,24 +2644,1614 @@ async function carregarResumoPedidos() {
   }
 
 
-  try {
+  addressesGrid.innerHTML =
+    "";
 
-    const resposta =
-      await fetch(
-        API + "/pedidos"
+
+  if (
+    enderecos.length === 0
+  ) {
+
+    addressesGrid.style.display =
+      "none";
+
+
+    addressesEmpty.hidden =
+      false;
+
+
+    return;
+
+  }
+
+
+  addressesGrid.style.display =
+    "grid";
+
+
+  addressesEmpty.hidden =
+    true;
+
+
+  enderecos.forEach(
+    (
+      endereco,
+      indice
+    ) => {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+
+      card.className =
+        "address-card";
+
+
+      const head =
+        document.createElement(
+          "div"
+        );
+
+
+      head.className =
+        "address-card-head";
+
+
+      const icon =
+        document.createElement(
+          "span"
+        );
+
+
+      icon.innerHTML =
+        '<i class="fa-solid fa-location-dot"></i>';
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "profile-card-actions";
+
+
+      const edit =
+        document.createElement(
+          "button"
+        );
+
+
+      edit.type =
+        "button";
+
+
+      edit.title =
+        "Editar endereço";
+
+
+      edit.innerHTML =
+        '<i class="fa-solid fa-pen"></i>';
+
+
+      edit.addEventListener(
+        "click",
+        () => {
+
+          abrirModalEndereco(
+            endereco
+          );
+
+        }
       );
 
 
-    const dados =
-      await resposta.json();
+      const remove =
+        document.createElement(
+          "button"
+        );
 
+
+      remove.type =
+        "button";
+
+
+      remove.title =
+        "Excluir endereço";
+
+
+      remove.className =
+        "delete";
+
+
+      remove.innerHTML =
+        '<i class="fa-solid fa-trash"></i>';
+
+
+      remove.addEventListener(
+        "click",
+        () => {
+
+          excluirEndereco(
+            endereco.id
+          );
+
+        }
+      );
+
+
+      actions.append(
+        edit,
+        remove
+      );
+
+
+      head.append(
+        icon,
+        actions
+      );
+
+
+      const title =
+        document.createElement(
+          "h3"
+        );
+
+
+      title.textContent =
+        endereco.nome;
+
+
+      const descricao =
+        document.createElement(
+          "p"
+        );
+
+
+      descricao.innerHTML =
+        `
+          ${endereco.rua}, ${endereco.numero}
+          ${
+            endereco.complemento
+              ? ` · ${endereco.complemento}`
+              : ""
+          }
+          <br>
+          ${endereco.bairro}
+          <br>
+          ${endereco.cidade} - ${endereco.estado}
+        `;
+
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+
+      meta.className =
+        "address-card-meta";
+
+
+      meta.innerHTML =
+        `
+          <span>
+            <i class="fa-solid fa-location-crosshairs"></i>
+            ${endereco.cep}
+          </span>
+
+          <span>
+            <i class="fa-solid fa-map"></i>
+            ${endereco.cidade}
+          </span>
+        `;
+
+
+      card.append(
+        head,
+        title,
+        descricao,
+        meta
+      );
+
+
+      addressesGrid.appendChild(
+        card
+      );
+
+
+      animar(
+        card,
+        [
+          {
+            opacity: 0,
+            transform:
+              "translateY(20px) scale(.97)"
+          },
+          {
+            opacity: 1,
+            transform:
+              "translateY(0) scale(1)"
+          }
+        ],
+        {
+          duration: 470,
+          delay:
+            indice * 65,
+          easing:
+            "cubic-bezier(.16,1,.3,1)",
+          fill:
+            "both"
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   VEHICLES STORAGE
+========================================================= */
+
+function carregarVeiculos() {
+
+  const todos =
+    lerJSON(
+      STORAGE_VEICULOS,
+      []
+    );
+
+
+  veiculos =
+    Array.isArray(todos)
+      ? todos
+      : [];
+
+}
+
+
+/* =========================================================
+   VEHICLE MODAL
+========================================================= */
+
+function abrirModalVeiculo(
+  veiculo = null
+) {
+
+  if (
+    !vehicleModal
+  ) {
+    return;
+  }
+
+
+  vehicleForm?.reset();
+
+
+  if (
+    veiculo
+  ) {
+
+    vehicleModalTitle.textContent =
+      "Editar veículo";
+
+
+    vehicleEditId.value =
+      veiculo.id;
+
+
+    vehicleBrand.value =
+      veiculo.marca ||
+      "";
+
+
+    vehicleModel.value =
+      veiculo.modelo ||
+      "";
+
+
+    vehicleYear.value =
+      veiculo.ano ||
+      "";
+
+
+    vehiclePlate.value =
+      veiculo.placa ||
+      "";
+
+
+    vehicleEngine.value =
+      veiculo.motor ||
+      "";
+
+  } else {
+
+    vehicleModalTitle.textContent =
+      "Novo veículo";
+
+
+    vehicleEditId.value =
+      "";
+
+  }
+
+
+  vehicleModal.hidden =
+    false;
+
+
+  document.body.style.overflow =
+    "hidden";
+
+
+  animarModalEntrada(
+    vehicleModal
+  );
+
+}
+
+
+/* =========================================================
+   CLOSE VEHICLE
+========================================================= */
+
+async function fecharModalVeiculo() {
+
+  if (
+    !vehicleModal ||
+    vehicleModal.hidden
+  ) {
+
+    return;
+
+  }
+
+
+  await animarModalSaida(
+    vehicleModal
+  );
+
+
+  vehicleModal.hidden =
+    true;
+
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* =========================================================
+   SAVE VEHICLE
+========================================================= */
+
+function salvarVeiculo(
+  evento
+) {
+
+  evento.preventDefault();
+
+
+  const ano =
+    Number(
+      vehicleYear.value
+    );
+
+
+  const dados = {
+
+    id:
+      vehicleEditId.value ||
+      gerarId(),
+
+    marca:
+      normalizarTexto(
+        vehicleBrand.value
+      ),
+
+    modelo:
+      normalizarTexto(
+        vehicleModel.value
+      ),
+
+    ano:
+      Number.isFinite(
+        ano
+      )
+        ? ano
+        : "",
+
+    placa:
+      normalizarTexto(
+        vehiclePlate.value
+      ).toUpperCase(),
+
+    motor:
+      normalizarTexto(
+        vehicleEngine.value
+      )
+
+  };
+
+
+  if (
+    !dados.marca ||
+    !dados.modelo ||
+    !dados.ano
+  ) {
+
+    mostrarToast(
+      "Informe marca, modelo e ano do veículo.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  const indice =
+    veiculos.findIndex(
+      item =>
+        item.id ===
+        dados.id
+    );
+
+
+  if (
+    indice >= 0
+  ) {
+
+    veiculos[indice] =
+      dados;
+
+  } else {
+
+    veiculos.push(
+      dados
+    );
+
+  }
+
+
+  salvarJSON(
+    STORAGE_VEICULOS,
+    veiculos
+  );
+
+
+  renderizarVeiculos();
+
+
+  atualizarContadores();
+
+
+  atualizarCompletude();
+
+
+  fecharModalVeiculo();
+
+
+  mostrarToast(
+    indice >= 0
+      ? "Veículo atualizado."
+      : "Veículo adicionado à garagem."
+  );
+
+}
+
+
+/* =========================================================
+   DELETE VEHICLE
+========================================================= */
+
+function excluirVeiculo(
+  id
+) {
+
+  const veiculo =
+    veiculos.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!veiculo) {
+    return;
+  }
+
+
+  const confirmado =
+    window.confirm(
+      `Excluir ${veiculo.marca} ${veiculo.modelo} da garagem?`
+    );
+
+
+  if (!confirmado) {
+    return;
+  }
+
+
+  veiculos =
+    veiculos.filter(
+      item =>
+        item.id !== id
+    );
+
+
+  salvarJSON(
+    STORAGE_VEICULOS,
+    veiculos
+  );
+
+
+  renderizarVeiculos();
+
+
+  atualizarContadores();
+
+
+  atualizarCompletude();
+
+
+  mostrarToast(
+    "Veículo removido da garagem."
+  );
+
+}
+
+
+/* =========================================================
+   RENDER VEHICLES
+========================================================= */
+
+function renderizarVeiculos() {
+
+  if (
+    !vehiclesGrid ||
+    !vehiclesEmpty
+  ) {
+
+    return;
+
+  }
+
+
+  vehiclesGrid.innerHTML =
+    "";
+
+
+  if (
+    veiculos.length === 0
+  ) {
+
+    vehiclesGrid.style.display =
+      "none";
+
+
+    vehiclesEmpty.hidden =
+      false;
+
+
+    return;
+
+  }
+
+
+  vehiclesGrid.style.display =
+    "grid";
+
+
+  vehiclesEmpty.hidden =
+    true;
+
+
+  veiculos.forEach(
+    (
+      veiculo,
+      indice
+    ) => {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+
+      card.className =
+        "vehicle-card";
+
+
+      const head =
+        document.createElement(
+          "div"
+        );
+
+
+      head.className =
+        "vehicle-card-head";
+
+
+      const icon =
+        document.createElement(
+          "span"
+        );
+
+
+      icon.innerHTML =
+        '<i class="fa-solid fa-car-side"></i>';
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "profile-card-actions";
+
+
+      const edit =
+        document.createElement(
+          "button"
+        );
+
+
+      edit.type =
+        "button";
+
+
+      edit.title =
+        "Editar veículo";
+
+
+      edit.innerHTML =
+        '<i class="fa-solid fa-pen"></i>';
+
+
+      edit.addEventListener(
+        "click",
+        () => {
+
+          abrirModalVeiculo(
+            veiculo
+          );
+
+        }
+      );
+
+
+      const remove =
+        document.createElement(
+          "button"
+        );
+
+
+      remove.type =
+        "button";
+
+
+      remove.title =
+        "Excluir veículo";
+
+
+      remove.className =
+        "delete";
+
+
+      remove.innerHTML =
+        '<i class="fa-solid fa-trash"></i>';
+
+
+      remove.addEventListener(
+        "click",
+        () => {
+
+          excluirVeiculo(
+            veiculo.id
+          );
+
+        }
+      );
+
+
+      actions.append(
+        edit,
+        remove
+      );
+
+
+      head.append(
+        icon,
+        actions
+      );
+
+
+      const main =
+        document.createElement(
+          "div"
+        );
+
+
+      main.className =
+        "vehicle-main-line";
+
+
+      const name =
+        document.createElement(
+          "strong"
+        );
+
+
+      name.textContent =
+        `${veiculo.marca} ${veiculo.modelo}`;
+
+
+      const year =
+        document.createElement(
+          "span"
+        );
+
+
+      year.textContent =
+        String(
+          veiculo.ano
+        );
+
+
+      main.append(
+        name,
+        year
+      );
+
+
+      const descricao =
+        document.createElement(
+          "p"
+        );
+
+
+      descricao.textContent =
+        veiculo.motor
+          ? `Motorização ${veiculo.motor}`
+          : "Motorização não informada";
+
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+
+      meta.className =
+        "vehicle-card-meta";
+
+
+      if (
+        veiculo.placa
+      ) {
+
+        meta.innerHTML +=
+          `
+            <span>
+              <i class="fa-regular fa-id-card"></i>
+              ${veiculo.placa}
+            </span>
+          `;
+
+      }
+
+
+      meta.innerHTML +=
+        `
+          <span>
+            <i class="fa-solid fa-calendar"></i>
+            ${veiculo.ano}
+          </span>
+        `;
+
+
+      card.append(
+        head,
+        main,
+        descricao,
+        meta
+      );
+
+
+      vehiclesGrid.appendChild(
+        card
+      );
+
+
+      animar(
+        card,
+        [
+          {
+            opacity: 0,
+            transform:
+              "translateX(25px) scale(.97)"
+          },
+          {
+            opacity: 1,
+            transform:
+              "translateX(0) scale(1)"
+          }
+        ],
+        {
+          duration: 480,
+          delay:
+            indice * 65,
+          easing:
+            "cubic-bezier(.16,1,.3,1)",
+          fill:
+            "both"
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MODAL ANIMATIONS
+========================================================= */
+
+function animarModalEntrada(
+  modal
+) {
+
+  const backdrop =
+    modal.querySelector(
+      ".profile-modal-backdrop"
+    );
+
+
+  const janela =
+    modal.querySelector(
+      ".profile-modal-window"
+    );
+
+
+  animar(
+    backdrop,
+    [
+      {
+        opacity: 0
+      },
+      {
+        opacity: 1
+      }
+    ],
+    {
+      duration: 250
+    }
+  );
+
+
+  animar(
+    janela,
+    [
+      {
+        opacity: 0,
+        transform:
+          "translateY(28px) scale(.96)"
+      },
+      {
+        opacity: 1,
+        transform:
+          "translateY(0) scale(1)"
+      }
+    ],
+    {
+      duration: 420,
+      easing:
+        "cubic-bezier(.16,1,.3,1)"
+    }
+  );
+
+}
+
+
+async function animarModalSaida(
+  modal
+) {
+
+  const backdrop =
+    modal.querySelector(
+      ".profile-modal-backdrop"
+    );
+
+
+  const janela =
+    modal.querySelector(
+      ".profile-modal-window"
+    );
+
+
+  animar(
+    backdrop,
+    [
+      {
+        opacity: 1
+      },
+      {
+        opacity: 0
+      }
+    ],
+    {
+      duration: 200,
+      fill: "forwards"
+    }
+  );
+
+
+  const animacao =
+    animar(
+      janela,
+      [
+        {
+          opacity: 1,
+          transform:
+            "translateY(0) scale(1)"
+        },
+        {
+          opacity: 0,
+          transform:
+            "translateY(20px) scale(.97)"
+        }
+      ],
+      {
+        duration: 220,
+        easing: "ease",
+        fill: "forwards"
+      }
+    );
+
+
+  if (animacao) {
+
+    try {
+
+      await animacao.finished;
+
+    } catch {}
+
+  } else {
+
+    await esperar(
+      220
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HERO ENTRY
+========================================================= */
+
+function animarEntradaPerfil() {
+
+  const avatar =
+    document.querySelector(
+      ".profile-avatar-stage"
+    );
+
+
+  const copy =
+    document.querySelector(
+      ".profile-identity-copy"
+    );
+
+
+  const stats =
+    Array.from(
+      document.querySelectorAll(
+        ".profile-stats article"
+      )
+    );
+
+
+  animar(
+    avatar,
+    [
+      {
+        opacity: 0,
+        transform:
+          "translateX(-35px) scale(.92)"
+      },
+      {
+        opacity: 1,
+        transform:
+          "translateX(0) scale(1)"
+      }
+    ],
+    {
+      duration: 700,
+      easing:
+        "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    }
+  );
+
+
+  animar(
+    copy,
+    [
+      {
+        opacity: 0,
+        transform:
+          "translateY(25px)"
+      },
+      {
+        opacity: 1,
+        transform:
+          "translateY(0)"
+      }
+    ],
+    {
+      duration: 650,
+      delay: 120,
+      easing:
+        "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    }
+  );
+
+
+  stats.forEach(
+    (
+      stat,
+      indice
+    ) => {
+
+      animar(
+        stat,
+        [
+          {
+            opacity: 0,
+            transform:
+              "translateX(25px) scale(.95)"
+          },
+          {
+            opacity: 1,
+            transform:
+              "translateX(0) scale(1)"
+          }
+        ],
+        {
+          duration: 520,
+          delay:
+            260 +
+            indice * 95,
+          easing:
+            "cubic-bezier(.16,1,.3,1)",
+          fill: "both"
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SHAKE
+========================================================= */
+
+function executarShake(
+  elemento
+) {
+
+  animar(
+    elemento,
+    [
+      {
+        transform:
+          "translateX(0)"
+      },
+      {
+        transform:
+          "translateX(-5px)"
+      },
+      {
+        transform:
+          "translateX(5px)"
+      },
+      {
+        transform:
+          "translateX(-3px)"
+      },
+      {
+        transform:
+          "translateX(0)"
+      }
+    ],
+    {
+      duration: 300
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MASK PHONE
+========================================================= */
+
+function formatarTelefone(
+  valor
+) {
+
+  let numeros =
+    valor.replace(
+      /\D/g,
+      ""
+    );
+
+
+  numeros =
+    numeros.slice(
+      0,
+      11
+    );
+
+
+  if (
+    numeros.length <= 10
+  ) {
+
+    return numeros
+      .replace(
+        /^(\d{2})(\d)/,
+        "($1) $2"
+      )
+      .replace(
+        /(\d{4})(\d)/,
+        "$1-$2"
+      );
+
+  }
+
+
+  return numeros
+    .replace(
+      /^(\d{2})(\d)/,
+      "($1) $2"
+    )
+    .replace(
+      /(\d{5})(\d)/,
+      "$1-$2"
+    );
+
+}
+
+
+/* =========================================================
+   CPF
+========================================================= */
+
+function formatarCpf(
+  valor
+) {
+
+  return valor
+    .replace(
+      /\D/g,
+      ""
+    )
+    .slice(
+      0,
+      11
+    )
+    .replace(
+      /(\d{3})(\d)/,
+      "$1.$2"
+    )
+    .replace(
+      /(\d{3})(\d)/,
+      "$1.$2"
+    )
+    .replace(
+      /(\d{3})(\d{1,2})$/,
+      "$1-$2"
+    );
+
+}
+
+
+/* =========================================================
+   CEP
+========================================================= */
+
+function formatarCep(
+  valor
+) {
+
+  return valor
+    .replace(
+      /\D/g,
+      ""
+    )
+    .slice(
+      0,
+      8
+    )
+    .replace(
+      /(\d{5})(\d)/,
+      "$1-$2"
+    );
+
+}
+
+
+/* =========================================================
+   PLACA
+========================================================= */
+
+function formatarPlaca(
+  valor
+) {
+
+  return valor
+    .replace(
+      /[^A-Za-z0-9]/g,
+      ""
+    )
+    .toUpperCase()
+    .slice(
+      0,
+      7
+    );
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+
+/* AVATAR */
+
+profileAvatarButton
+  ?.addEventListener(
+    "click",
+    abrirSeletorAvatar
+  );
+
+
+profileAvatarInput
+  ?.addEventListener(
+    "change",
+    evento => {
+
+      alterarAvatar(
+        evento.target.files?.[0]
+      );
+
+
+      evento.target.value =
+        "";
+
+    }
+  );
+
+
+/* NAV */
+
+profileNavItems.forEach(
+  item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        trocarSecao(
+          item.dataset.profileSection
+        );
+
+      }
+    );
+
+  }
+);
+
+
+profileQuickLinks.forEach(
+  item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        trocarSecao(
+          item.dataset.goProfile
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* PROFILE FORM */
+
+profileForm
+  ?.addEventListener(
+    "submit",
+    salvarDadosPessoais
+  );
+
+
+[
+  profileName,
+  profileEmail,
+  profilePhone,
+  profileCpf
+]
+  .forEach(
+    campo => {
+
+      campo?.addEventListener(
+        "input",
+        marcarFormularioAlterado
+      );
+
+    }
+  );
+
+
+profilePhone
+  ?.addEventListener(
+    "input",
+    () => {
+
+      profilePhone.value =
+        formatarTelefone(
+          profilePhone.value
+        );
+
+    }
+  );
+
+
+profileCpf
+  ?.addEventListener(
+    "input",
+    () => {
+
+      profileCpf.value =
+        formatarCpf(
+          profileCpf.value
+        );
+
+    }
+  );
+
+
+/* PASSWORD */
+
+document
+  .querySelectorAll(
+    "[data-password-toggle]"
+  )
+  .forEach(
+    botao => {
+
+      botao.addEventListener(
+        "click",
+        () => {
+
+          alternarVisibilidadeSenha(
+            botao
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+newPassword
+  ?.addEventListener(
+    "input",
+    atualizarForcaSenha
+  );
+
+
+passwordForm
+  ?.addEventListener(
+    "submit",
+    alterarSenha
+  );
+
+
+/* ADDRESS */
+
+addAddressButton
+  ?.addEventListener(
+    "click",
+    () => {
+
+      abrirModalEndereco();
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    "[data-open-address]"
+  )
+  .forEach(
+    botao => {
+
+      botao.addEventListener(
+        "click",
+        () => {
+
+          abrirModalEndereco();
+
+        }
+      );
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    "[data-close-address]"
+  )
+  .forEach(
+    elemento => {
+
+      elemento.addEventListener(
+        "click",
+        fecharModalEndereco
+      );
+
+    }
+  );
+
+
+addressForm
+  ?.addEventListener(
+    "submit",
+    salvarEndereco
+  );
+
+
+addressCep
+  ?.addEventListener(
+    "input",
+    () => {
+
+      addressCep.value =
+        formatarCep(
+          addressCep.value
+        );
+
+    }
+  );
+
+
+addressState
+  ?.addEventListener(
+    "input",
+    () => {
+
+      addressState.value =
+        addressState.value
+          .replace(
+            /[^A-Za-z]/g,
+            ""
+          )
+          .toUpperCase()
+          .slice(
+            0,
+            2
+          );
+
+    }
+  );
+
+
+/* VEHICLE */
+
+addVehicleButton
+  ?.addEventListener(
+    "click",
+    () => {
+
+      abrirModalVeiculo();
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    "[data-open-vehicle]"
+  )
+  .forEach(
+    botao => {
+
+      botao.addEventListener(
+        "click",
+        () => {
+
+          abrirModalVeiculo();
+
+        }
+      );
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    "[data-close-vehicle]"
+  )
+  .forEach(
+    elemento => {
+
+      elemento.addEventListener(
+        "click",
+        fecharModalVeiculo
+      );
+
+    }
+  );
+
+
+vehicleForm
+  ?.addEventListener(
+    "submit",
+    salvarVeiculo
+  );
+
+
+vehiclePlate
+  ?.addEventListener(
+    "input",
+    () => {
+
+      vehiclePlate.value =
+        formatarPlaca(
+          vehiclePlate.value
+        );
+
+    }
+  );
+
+
+/* ESC */
+
+document.addEventListener(
+  "keydown",
+  evento => {
 
     if (
-      !resposta.ok
-      ||
-      !Array.isArray(
-        dados
-      )
+      evento.key !==
+      "Escape"
     ) {
 
       return;
@@ -2008,430 +4259,223 @@ async function carregarResumoPedidos() {
     }
 
 
-    const meusPedidos =
-      dados.filter(
-        function (pedido) {
-
-          return (
-            Number(
-              pedido.id_cliente
-            )
-            ===
-            Number(
-              clientePerfil.id_cliente
-            )
-          );
-
-        }
-      );
-
-
-    const total =
-      meusPedidos.reduce(
-        function (
-          soma,
-          pedido
-        ) {
-
-          return (
-            soma
-            +
-            Number(
-              pedido.total_pedido || 0
-            )
-          );
-
-        },
-        0
-      );
-
-
-    const ordenados =
-      meusPedidos.slice();
-
-
-    ordenados.sort(
-      function (a, b) {
-
-        const dataA =
-          new Date(
-            a.data_pedido || 0
-          );
-
-
-        const dataB =
-          new Date(
-            b.data_pedido || 0
-          );
-
-
-        return (
-          dataB.getTime()
-          -
-          dataA.getTime()
-        );
-
-      }
-    );
-
-
-    const ultimo =
-      ordenados.length > 0
-        ? ordenados[0]
-        : null;
-
-
-    definirTexto(
-      "perfilTotalPedidos",
-      meusPedidos.length
-    );
-
-
-    definirTexto(
-      "perfilTotalGasto",
-      formatarMoeda(
-        total
-      )
-    );
-
-
-    definirTexto(
-      "perfilUltimoPedido",
-      ultimo
-        ? "#" + ultimo.id_pedido
-        : "-"
-    );
-
-  } catch (erro) {
-
-    console.warn(
-      "Não foi possível carregar os pedidos:",
-      erro
-    );
-
-  }
-
-}
-
-
-
-/* =========================================================
-   MÁSCARA TELEFONE
-========================================================= */
-
-function configurarMascaraTelefone() {
-
-  const campo =
-    document.getElementById(
-      "perfilTelefone"
-    );
-
-
-  if (!campo) {
-
-    return;
-
-  }
-
-
-  campo.addEventListener(
-    "input",
-    function () {
-
-      let valor =
-        campo.value
-          .replace(
-            /\D/g,
-            ""
-          )
-          .slice(
-            0,
-            11
-          );
-
-
-      if (
-        valor.length > 10
-      ) {
-
-        valor =
-          valor.replace(
-            /^(\d{2})(\d{5})(\d{4})$/,
-            "($1) $2-$3"
-          );
-
-      } else if (
-        valor.length > 6
-      ) {
-
-        valor =
-          valor.replace(
-            /^(\d{2})(\d{4})(\d{0,4})$/,
-            "($1) $2-$3"
-          );
-
-      } else if (
-        valor.length > 2
-      ) {
-
-        valor =
-          valor.replace(
-            /^(\d{2})(\d+)/,
-            "($1) $2"
-          );
-
-      }
-
-
-      campo.value =
-        valor;
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   CPF
-========================================================= */
-
-function configurarMascaraCpf() {
-
-  const campo =
-    document.getElementById(
-      "perfilCpf"
-    );
-
-
-  if (!campo) {
-
-    return;
-
-  }
-
-
-  campo.addEventListener(
-    "input",
-    function () {
-
-      let valor =
-        campo.value
-          .replace(
-            /\D/g,
-            ""
-          )
-          .slice(
-            0,
-            11
-          );
-
-
-      valor =
-        valor.replace(
-          /(\d{3})(\d)/,
-          "$1.$2"
-        );
-
-
-      valor =
-        valor.replace(
-          /(\d{3})(\d)/,
-          "$1.$2"
-        );
-
-
-      valor =
-        valor.replace(
-          /(\d{3})(\d{1,2})$/,
-          "$1-$2"
-        );
-
-
-      campo.value =
-        valor;
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   CEP
-========================================================= */
-
-function configurarMascaraCep() {
-
-  const campo =
-    document.getElementById(
-      "perfilCep"
-    );
-
-
-  if (!campo) {
-
-    return;
-
-  }
-
-
-  campo.addEventListener(
-    "input",
-    function () {
-
-      let valor =
-        campo.value
-          .replace(
-            /\D/g,
-            ""
-          )
-          .slice(
-            0,
-            8
-          );
-
-
-      if (
-        valor.length > 5
-      ) {
-
-        valor =
-          valor.replace(
-            /^(\d{5})(\d+)/,
-            "$1-$2"
-          );
-
-      }
-
-
-      campo.value =
-        valor;
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   PLACA
-========================================================= */
-
-function configurarPlaca() {
-
-  const campo =
-    document.getElementById(
-      "veiculoPlaca"
-    );
-
-
-  if (!campo) {
-
-    return;
-
-  }
-
-
-  campo.addEventListener(
-    "input",
-    function () {
-
-      campo.value =
-        campo.value
-          .replace(
-            /[^a-zA-Z0-9]/g,
-            ""
-          )
-          .toUpperCase()
-          .slice(
-            0,
-            7
-          );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   ESC
-========================================================= */
-
-function configurarEscape() {
-
-  document.addEventListener(
-    "keydown",
-    function (event) {
-
-      if (
-        event.key === "Escape"
-      ) {
-
-        fecharModalVeiculo();
-
-      }
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   INICIAR
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-
-    if (!clientePerfil) {
+    if (
+      addressModal &&
+      !addressModal.hidden
+    ) {
+
+      fecharModalEndereco();
 
       return;
 
     }
 
 
-    preencherPerfil();
+    if (
+      vehicleModal &&
+      !vehicleModal.hidden
+    ) {
 
-    configurarUploadFoto();
+      fecharModalVeiculo();
 
-    configurarAbas();
-
-    abrirAbaPorHash();
-
-    configurarFormularioDados();
-
-    configurarFormularioEndereco();
-
-    configurarModalVeiculo();
-
-    configurarFormularioVeiculo();
-
-    configurarPreferencias();
-
-    configurarFormularioSenha();
-
-    configurarMascaraTelefone();
-
-    configurarMascaraCpf();
-
-    configurarMascaraCep();
-
-    configurarPlaca();
-
-    configurarEscape();
-
-    renderizarVeiculos();
-
-    carregarResumoPedidos();
+    }
 
   }
 );
+
+
+/* HASH CHANGE */
+
+window.addEventListener(
+  "hashchange",
+  () => {
+
+    trocarSecao(
+      secaoPeloHash(),
+      false
+    );
+
+  }
+);
+
+
+/* STORAGE */
+
+window.addEventListener(
+  "storage",
+  evento => {
+
+    if (
+      evento.key ===
+      STORAGE_CLIENTE
+    ) {
+
+      clienteAtual =
+        lerJSON(
+          STORAGE_CLIENTE,
+          clienteAtual
+        );
+
+
+      preencherDadosCliente();
+
+
+      atualizarCompletude();
+
+    }
+
+
+    if (
+      evento.key ===
+      STORAGE_ENDERECOS
+    ) {
+
+      carregarEnderecos();
+
+      renderizarEnderecos();
+
+      atualizarContadores();
+
+      atualizarCompletude();
+
+    }
+
+
+    if (
+      evento.key ===
+      STORAGE_VEICULOS
+    ) {
+
+      carregarVeiculos();
+
+      renderizarVeiculos();
+
+      atualizarContadores();
+
+      atualizarCompletude();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+async function iniciarPerfil() {
+
+  const clienteOk =
+    carregarCliente();
+
+
+  if (
+    !clienteOk
+  ) {
+
+    esconderLoading();
+
+    return;
+
+  }
+
+
+  carregarEnderecos();
+
+  carregarVeiculos();
+
+
+  preencherDadosCliente();
+
+
+  renderizarEnderecos();
+
+  renderizarVeiculos();
+
+
+  atualizarContadores();
+
+  atualizarCompletude();
+
+  atualizarForcaSenha();
+
+
+  const secaoInicial =
+    secaoPeloHash();
+
+
+  secaoAtual =
+    secaoInicial;
+
+
+  profilePanels.forEach(
+    painel => {
+
+      painel.classList.toggle(
+        "active",
+        painel.dataset.profilePanel ===
+        secaoInicial
+      );
+
+    }
+  );
+
+
+  profileNavItems.forEach(
+    item => {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.profileSection ===
+        secaoInicial
+      );
+
+    }
+  );
+
+
+  esconderLoading();
+
+
+  await esperar(
+    170
+  );
+
+
+  animarEntradaPerfil();
+
+
+  const painel =
+    profilePanels.find(
+      item =>
+        item.dataset.profilePanel ===
+        secaoInicial
+    );
+
+
+  animarConteudoSecao(
+    painel
+  );
+
+
+  if (
+    window.SiteUI &&
+    typeof window.SiteUI
+      .atualizarCarrinho ===
+      "function"
+  ) {
+
+    window.SiteUI
+      .atualizarCarrinho();
+
+  }
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+iniciarPerfil();
