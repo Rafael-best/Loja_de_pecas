@@ -33,7 +33,7 @@ if (!clientePedido) {
 }
 
 
-const API = "https://loja-de-pecas.onrender.com";
+const API = "https://loja-de-pecas.onrender.com/api";
 
 
 
