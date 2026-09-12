@@ -2,20 +2,11 @@ require('dotenv').config();
 
 const { Pool } = require('pg');
 
-
-// =====================
-// CONEXÃO COM POSTGRESQL
-// =====================
-
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL
 });
 
-
-// =====================
-// TESTE AUTOMÁTICO
-// =====================
-
+// Teste automático da conexão
 (async () => {
     try {
 
@@ -40,11 +31,4 @@ const pool = new Pool({
     }
 })();
 
-
-// =====================
-// EXPORTA O POOL
-// =====================
-
 module.exports = pool;
-
-
