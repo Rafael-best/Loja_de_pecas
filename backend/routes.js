@@ -61,7 +61,6 @@ router.post('/clientes', async (req, res) => {
         `;
 
         const result = await db.query(sql, [
-        const result = await db.query(sql, [
             nome_cliente,
             endereco_cliente,
             telefone_cliente,
@@ -101,10 +100,6 @@ router.post('/login', async (req, res) => {
             AND senha_cliente = $2
         `;
 
-        const result = await db.query(sql, [
-            email_cliente,
-            senha_cliente
-        ]);
         const result = await db.query(sql, [
             email_cliente,
             senha_cliente
@@ -195,7 +190,6 @@ router.post('/fornecedores', async (req, res) => {
             RETURNING *
         `;
 
-        const result = await db.query(sql, [
         const result = await db.query(sql, [
             nome_fornecedor,
             endereco_fornecedor,
@@ -291,7 +285,6 @@ router.post('/produtos', async (req, res) => {
         `;
 
         const result = await db.query(sql, [
-        const result = await db.query(sql, [
             nome_produto,
             descricao_produto,
             preco_produto,
@@ -333,10 +326,6 @@ router.get('/pedidos', async (req, res) => {
                 ON p.id_cliente = c.id_cliente
             ORDER BY p.id_pedido DESC
         `;
-
-        const result = await db.query(sql);
-
-        res.json(result.rows);
 
         const result = await db.query(sql);
 
@@ -868,10 +857,6 @@ router.get('/itens', async (req, res) => {
 
         res.json(result.rows);
 
-        const result = await db.query(sql);
-
-        res.json(result.rows);
-
     } catch (err) {
 
         console.error(
@@ -920,7 +905,6 @@ router.post('/itens', async (req, res) => {
         `;
 
 
-        const result = await db.query(sql, [
         const result = await db.query(sql, [
             id_pedido,
             id_produto,
