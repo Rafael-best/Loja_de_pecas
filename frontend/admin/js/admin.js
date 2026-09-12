@@ -3,7 +3,7 @@
 ========================================================= */
 
 const API =
-  "http://localhost:3000/api";
+  "https://loja-de-pecas.onrender.com";
 
 
 let pedidosAdmin = [];
