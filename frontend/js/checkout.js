@@ -27,7 +27,7 @@
    CONFIGURAÇÕES
 ========================================================= */
 
-const API = "http://localhost:3000/api";
+const API = "https://loja-de-pecas.onrender.com";
 
 const CAMINHO_IMAGENS =
   "assets/images/produtos";

@@ -33,7 +33,7 @@ if (!clientePedido) {
 }
 
 
-const API = "http://localhost:3000/api";
+const API = "https://loja-de-pecas.onrender.com";
 
 
 
