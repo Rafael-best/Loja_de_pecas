@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Detalhes do produto - Loja de Peças"
+  >
+
+  <title>
+    Produto | Loja de Peças
+  </title>
+
+
+  <!-- =====================================================
+       GOOGLE FONTS
+  ====================================================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =====================================================
+       FONT AWESOME
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/site.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/produto.css"
+  >
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       TOP STRIP
+  ====================================================== -->
+
+  <div class="top-strip">
+
+    <div class="site-container top-strip-content">
+
+      <span>
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Compra segura
+
+      </span>
+
+
+      <span class="desktop-only">
+
+        <i class="fa-solid fa-box"></i>
+
+        Estoque atualizado
+
+      </span>
+
+
+      <span class="desktop-only">
+
+        <i class="fa-solid fa-headset"></i>
+
+        Atendimento especializado
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="site-header">
+
+
+    <div class="site-container header-main">
+
+
+      <!-- BRAND -->
+
+      <a
+        href="index.html"
+        class="brand"
+      >
+
+        <img
+          src="assets/images/logo.png"
+          alt="Loja de Peças"
+          class="brand-logo"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+
+
+        <span class="brand-fallback">
+
+          <i class="fa-solid fa-gear"></i>
+
+        </span>
+
+
+        <span class="brand-text">
+
+          <strong>
+            Loja de Peças
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
+
+        </span>
+
+      </a>
+
+
+
+      <!-- SEARCH -->
+
+      <form
+        class="header-search"
+        id="headerSearchForm"
+      >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="headerSearchInput"
+          type="search"
+          autocomplete="off"
+          placeholder="Peça, marca, código ou categoria..."
+        >
+
+        <button type="submit">
+          Buscar
+        </button>
+
+      </form>
+
+
+
+      <!-- ACTIONS -->
+
+      <div class="header-actions">
+
+
+        <a
+          href="pedidos.html"
+          class="header-action desktop-action"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+
+            <small>
+              Acompanhar
+            </small>
+
+            <strong>
+              Pedidos
+            </strong>
+
+          </span>
+
+        </a>
+
+
+
+        <!-- GUEST -->
+
+        <div
+          id="guestActions"
+          class="header-guest-actions"
+        >
+
+          <a
+            href="login.html"
+            class="header-login-button"
+          >
+
+            <i class="fa-regular fa-user"></i>
+
+            <span>
+
+              <small>
+                Olá, visitante
+              </small>
+
+              <strong>
+                Entrar
+              </strong>
+
+            </span>
+
+          </a>
+
+
+          <a
+            href="cadastro.html"
+            class="header-register-button"
+          >
+            Criar conta
+          </a>
+
+        </div>
+
+
+
+        <!-- USER -->
+
+        <div
+          id="userMenuWrapper"
+          class="header-user-wrapper"
+          hidden
+        >
+
+          <button
+            type="button"
+            id="userMenuButton"
+            class="header-user-button"
+          >
+
+            <span
+              id="headerUserAvatar"
+              class="header-user-avatar"
+              data-user-avatar
+            >
+              U
+            </span>
+
+
+            <span class="header-user-data">
+
+              <small>
+                Olá,
+              </small>
+
+              <strong
+                id="headerUserName"
+                data-user-name
+              >
+                Cliente
+              </strong>
+
+            </span>
+
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+          </button>
+
+
+
+          <div
+            id="userDropdown"
+            class="user-dropdown"
+          >
+
+            <div class="user-dropdown-header">
+
+              <span
+                id="dropdownAvatar"
+                class="dropdown-avatar"
+                data-user-avatar
+              >
+                U
+              </span>
+
+
+              <div>
+
+                <strong
+                  id="dropdownUserName"
+                  data-user-name
+                >
+                  Cliente
+                </strong>
+
+                <small
+                  id="dropdownUserEmail"
+                  data-user-email
+                >
+                  cliente@email.com
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <a href="perfil.html">
+
+              <i class="fa-regular fa-user"></i>
+
+              Minha conta
+
+            </a>
+
+
+            <a href="pedidos.html">
+
+              <i class="fa-solid fa-box"></i>
+
+              Meus pedidos
+
+            </a>
+
+
+            <a href="perfil.html#veiculos">
+
+              <i class="fa-solid fa-car"></i>
+
+              Meus veículos
+
+            </a>
+
+
+            <a href="suporte.html">
+
+              <i class="fa-solid fa-headset"></i>
+
+              Suporte
+
+            </a>
+
+
+            <div class="user-dropdown-divider"></div>
+
+
+            <button
+              id="btnLogoutGlobal"
+              type="button"
+              class="user-dropdown-logout"
+            >
+
+              <i class="fa-solid fa-right-from-bracket"></i>
+
+              Sair
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CART -->
+
+        <a
+          href="carrinho.html"
+          class="cart-button"
+        >
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span class="cart-text">
+            Carrinho
+          </span>
+
+          <span
+            id="cartCount"
+            class="cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+
+        <!-- MOBILE -->
+
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         NAV
+    ====================================================== -->
+
+    <nav class="desktop-nav">
+
+      <div class="site-container desktop-nav-inner">
+
+
+        <a
+          href="produtos.html"
+          class="category-highlight"
+        >
+
+          <i class="fa-solid fa-table-cells-large"></i>
+
+          Todos os produtos
+
+        </a>
+
+
+        <a href="produtos.html?categoria=freios">
+          Freios
+        </a>
+
+
+        <a href="produtos.html?categoria=motor">
+          Motor
+        </a>
+
+
+        <a href="produtos.html?categoria=suspensao">
+          Suspensão
+        </a>
+
+
+        <a href="produtos.html?categoria=eletrica">
+          Elétrica
+        </a>
+
+
+        <a href="produtos.html?categoria=filtros">
+          Filtros
+        </a>
+
+
+        <a href="produtos.html?categoria=oleos">
+          Óleos e Fluidos
+        </a>
+
+
+        <a
+          href="suporte.html"
+          class="nav-support"
+        >
+
+          <i class="fa-regular fa-circle-question"></i>
+
+          Suporte
+
+        </a>
+
+
+      </div>
+
+    </nav>
+
+
+
+    <!-- MOBILE BACKDROP -->
+
+    <div
+      id="mobileMenuBackdrop"
+      class="mobile-menu-backdrop"
+    ></div>
+
+
+
+    <!-- MOBILE MENU -->
+
+    <aside
+      id="mobileMenu"
+      class="mobile-menu"
+    >
+
+      <div class="mobile-menu-header">
+
+
+        <div class="mobile-brand">
+
+          <span class="mobile-brand-icon">
+
+            <i class="fa-solid fa-gear"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Menu principal
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="menuClose"
+          class="menu-close"
+          type="button"
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+      </div>
+
+
+
+      <div class="mobile-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          id="mobileSearchInput"
+          type="search"
+          placeholder="Buscar produtos..."
+        >
+
+      </div>
+
+
+
+      <div
+        id="mobileUserSummary"
+        class="mobile-user-summary"
+        hidden
+      >
+
+        <span
+          class="mobile-user-avatar"
+          data-user-avatar
+        >
+          U
+        </span>
+
+
+        <div>
+
+          <small>
+            Bem-vindo
+          </small>
+
+          <strong data-user-name>
+            Cliente
+          </strong>
+
+          <span data-user-email>
+            -
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <nav class="mobile-nav">
+
+        <a href="index.html">
+
+          <i class="fa-solid fa-house"></i>
+
+          Início
+
+        </a>
+
+
+        <a href="produtos.html">
+
+          <i class="fa-solid fa-box-open"></i>
+
+          Produtos
+
+        </a>
+
+
+        <a href="carrinho.html">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          Carrinho
+
+          <span
+            id="mobileCartCount"
+            class="mobile-cart-count"
+          >
+            0
+          </span>
+
+        </a>
+
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+
+          <i class="fa-solid fa-box"></i>
+
+          Meus pedidos
+
+        </a>
+
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+
+          <i class="fa-regular fa-user"></i>
+
+          Meu perfil
+
+        </a>
+
+
+        <a href="suporte.html">
+
+          <i class="fa-solid fa-headset"></i>
+
+          Suporte
+
+        </a>
+
+      </nav>
+
+
+
+      <div
+        id="mobileGuestActions"
+        class="mobile-auth-actions"
+      >
+
+        <a
+          href="login.html"
+          class="mobile-login-button"
+        >
+          Entrar
+        </a>
+
+
+        <a
+          href="cadastro.html"
+          class="mobile-register-button"
+        >
+          Criar conta
+        </a>
+
+      </div>
+
+
+
+      <button
+        id="mobileLogoutButton"
+        class="mobile-logout-button"
+        type="button"
+        hidden
+      >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Sair
+
+      </button>
+
+
+    </aside>
+
+
+  </header>
+
+
+
+  <!-- =====================================================
+       PRODUCT SYSTEM
+  ====================================================== -->
+
+  <main class="product-system">
+
+
+    <!-- =====================================================
+         BREADCRUMB
+    ====================================================== -->
+
+    <section class="product-route-section">
+
+      <div class="site-container">
+
+        <div class="product-route">
+
+          <a href="index.html">
+            HOME
+          </a>
+
+          <i class="fa-solid fa-chevron-right"></i>
+
+          <a href="produtos.html">
+            PRODUTOS
+          </a>
+
+          <i class="fa-solid fa-chevron-right"></i>
+
+          <a
+            id="productRouteCategory"
+            href="produtos.html"
+          >
+            CATEGORIA
+          </a>
+
+          <i class="fa-solid fa-chevron-right"></i>
+
+          <strong id="productRouteName">
+            PRODUTO
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PRODUCT HERO
+    ====================================================== -->
+
+    <section
+      id="productHero"
+      class="product-hero"
+    >
+
+
+      <!-- BACKGROUND -->
+
+      <div class="product-blueprint-grid"></div>
+
+      <div class="product-blueprint-line line-1"></div>
+
+      <div class="product-blueprint-line line-2"></div>
+
+      <div class="product-hero-glow"></div>
+
+
+
+      <div class="site-container product-hero-layout">
+
+
+        <!-- =================================================
+             PRODUCT VISUAL
+        ================================================== -->
+
+        <div class="product-stage">
+
+
+          <div class="stage-index">
+
+            <span>
+              COMPONENT
+            </span>
+
+            <strong>
+              01
+            </strong>
+
+          </div>
+
+
+
+          <!-- =================================================
+               MAIN IMAGE
+          ================================================== -->
+
+          <div class="product-image-zone">
+
+
+            <div class="product-image-orbit orbit-one"></div>
+
+            <div class="product-image-orbit orbit-two"></div>
+
+
+            <div class="product-image-shadow"></div>
+
+
+            <img
+              id="productMainImage"
+              src=""
+              alt="Produto"
+              class="product-main-image"
+            >
+
+
+
+            <!-- =================================================
+                 TECH POINT 1
+            ================================================== -->
+
+            <div
+              id="techPointOne"
+              class="tech-point tech-point-one"
+            >
+
+              <button
+                type="button"
+                class="tech-point-button"
+              >
+                <span></span>
+              </button>
+
+
+              <div class="tech-point-info">
+
+                <small>
+                  STATUS
+                </small>
+
+                <strong id="techPointStock">
+                  Em estoque
+                </strong>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TECH POINT 2
+            ================================================== -->
+
+            <div
+              id="techPointTwo"
+              class="tech-point tech-point-two"
+            >
+
+              <button
+                type="button"
+                class="tech-point-button"
+              >
+                <span></span>
+              </button>
+
+
+              <div class="tech-point-info">
+
+                <small>
+                  BRAND
+                </small>
+
+                <strong id="techPointBrand">
+                  -
+                </strong>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TECH POINT 3
+            ================================================== -->
+
+            <div
+              id="techPointThree"
+              class="tech-point tech-point-three"
+            >
+
+              <button
+                type="button"
+                class="tech-point-button"
+              >
+                <span></span>
+              </button>
+
+
+              <div class="tech-point-info">
+
+                <small>
+                  CATEGORY
+                </small>
+
+                <strong id="techPointCategory">
+                  -
+                </strong>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               IMAGE CONTROL
+          ================================================== -->
+
+          <div class="product-stage-control">
+
+            <span>
+              INTERACTIVE VIEW
+            </span>
+
+            <div>
+
+              <i class="fa-solid fa-computer-mouse"></i>
+
+              <small>
+                Mova o cursor sobre a peça
+              </small>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PRODUCT INFO
+        ================================================== -->
+
+        <div class="product-main-info">
+
+
+          <!-- CATEGORY / CODE -->
+
+          <div class="product-meta-header">
+
+            <span
+              id="productCategoryBadge"
+              class="product-category-badge"
+            >
+              CATEGORIA
+            </span>
+
+
+            <span class="product-code">
+
+              COD
+
+              <strong id="productCode">
+                -
+              </strong>
+
+            </span>
+
+          </div>
+
+
+
+          <!-- TITLE -->
+
+          <h1 id="productName">
+
+            Carregando produto...
+
+          </h1>
+
+
+
+          <!-- BRAND -->
+
+          <div class="product-brand-row">
+
+            <span>
+
+              <i class="fa-solid fa-certificate"></i>
+
+              MARCA
+
+            </span>
+
+            <strong id="productBrand">
+              -
+            </strong>
+
+          </div>
+
+
+
+          <!-- DESCRIPTION -->
+
+          <p
+            id="productShortDescription"
+            class="product-short-description"
+          >
+
+            Informações do produto serão carregadas automaticamente.
+
+          </p>
+
+
+
+          <!-- =================================================
+               PRODUCT STATUS STRIP
+          ================================================== -->
+
+          <div class="product-status-strip">
+
+
+            <div>
+
+              <span class="status-icon stock">
+
+                <i class="fa-solid fa-box"></i>
+
+              </span>
+
+
+              <span>
+
+                <small>
+                  ESTOQUE
+                </small>
+
+                <strong id="productStock">
+                  -
+                </strong>
+
+              </span>
+
+            </div>
+
+
+
+            <div>
+
+              <span class="status-icon availability">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+              </span>
+
+
+              <span>
+
+                <small>
+                  DISPONIBILIDADE
+                </small>
+
+                <strong id="productAvailability">
+                  Verificando
+                </strong>
+
+              </span>
+
+            </div>
+
+
+
+            <div>
+
+              <span class="status-icon secure">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+              </span>
+
+
+              <span>
+
+                <small>
+                  COMPRA
+                </small>
+
+                <strong>
+                  Protegida
+                </strong>
+
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               PRICE
+          ================================================== -->
+
+          <div class="product-price-block">
+
+            <span>
+              PREÇO
+            </span>
+
+
+            <div class="product-price-line">
+
+              <strong id="productPrice">
+                R$ 0,00
+              </strong>
+
+
+              <small>
+                à vista
+              </small>
+
+            </div>
+
+
+            <p id="productInstallment">
+
+              Valor calculado no checkout.
+
+            </p>
+
+          </div>
+
+
+
+          <!-- =================================================
+               BUY PANEL
+          ================================================== -->
+
+          <div class="product-buy-panel">
+
+
+            <!-- QUANTITY -->
+
+            <div class="product-quantity">
+
+              <span>
+                QUANTIDADE
+              </span>
+
+
+              <div class="quantity-control">
+
+                <button
+                  id="decreaseQuantity"
+                  type="button"
+                >
+
+                  <i class="fa-solid fa-minus"></i>
+
+                </button>
+
+
+                <strong id="productQuantity">
+                  1
+                </strong>
+
+
+                <button
+                  id="increaseQuantity"
+                  type="button"
+                >
+
+                  <i class="fa-solid fa-plus"></i>
+
+                </button>
+
+              </div>
+
+
+              <small id="quantityStockInfo">
+                -
+              </small>
+
+            </div>
+
+
+
+            <!-- ADD CART -->
+
+            <button
+              id="productAddCart"
+              class="product-add-cart"
+              type="button"
+            >
+
+              <span class="product-add-copy">
+
+                <small>
+                  SMART CART
+                </small>
+
+                <strong>
+                  Adicionar ao carrinho
+                </strong>
+
+              </span>
+
+
+              <span class="product-add-icon">
+
+                <i class="fa-solid fa-cart-plus"></i>
+
+              </span>
+
+
+              <span class="product-add-progress"></span>
+
+            </button>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               SECONDARY ACTIONS
+          ================================================== -->
+
+          <div class="product-secondary-actions">
+
+
+            <button
+              id="productBuyNow"
+              type="button"
+            >
+
+              <i class="fa-solid fa-bolt"></i>
+
+              Comprar agora
+
+            </button>
+
+
+            <button
+              id="productCopyLink"
+              type="button"
+            >
+
+              <i class="fa-solid fa-link"></i>
+
+              Copiar link
+
+            </button>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PRODUCT DATA BAR
+    ====================================================== -->
+
+    <section class="product-data-bar">
+
+
+      <div class="site-container product-data-grid">
+
+
+        <article>
+
+          <span>
+            01
+          </span>
+
+          <div>
+
+            <small>
+              IDENTIFICAÇÃO
+            </small>
+
+            <strong id="dataProductCode">
+              -
+            </strong>
+
+          </div>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            02
+          </span>
+
+          <div>
+
+            <small>
+              MARCA
+            </small>
+
+            <strong id="dataProductBrand">
+              -
+            </strong>
+
+          </div>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            03
+          </span>
+
+          <div>
+
+            <small>
+              CATEGORIA
+            </small>
+
+            <strong id="dataProductCategory">
+              -
+            </strong>
+
+          </div>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            04
+          </span>
+
+          <div>
+
+            <small>
+              INVENTÁRIO
+            </small>
+
+            <strong id="dataProductStock">
+              -
+            </strong>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DETAILS
+    ====================================================== -->
+
+    <section class="product-details-section">
+
+
+      <div class="site-container">
+
+
+        <!-- =================================================
+             SECTION HEAD
+        ================================================== -->
+
+        <div class="product-section-heading">
+
+
+          <div class="section-index">
+            02
+          </div>
+
+
+          <div>
+
+            <span>
+              COMPONENT INFORMATION
+            </span>
+
+            <h2>
+              Engenharia em cada detalhe.
+            </h2>
+
+            <p>
+
+              Informações técnicas e características
+              do componente selecionado.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             DETAILS GRID
+        ================================================== -->
+
+        <div class="product-details-grid">
+
+
+          <!-- DESCRIPTION -->
+
+          <article
+            class="product-detail-card
+                   product-description-card"
+          >
+
+            <div class="detail-card-head">
+
+              <span>
+
+                <i class="fa-solid fa-align-left"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  PRODUCT OVERVIEW
+                </small>
+
+                <h3>
+                  Sobre o produto
+                </h3>
+
+              </div>
+
+            </div>
+
+
+            <p id="productDescription">
+
+              As informações completas do produto
+              serão carregadas automaticamente.
+
+            </p>
+
+
+            <div class="detail-card-decoration"></div>
+
+
+          </article>
+
+
+
+          <!-- TECHNICAL -->
+
+          <article
+            class="product-detail-card
+                   product-spec-card"
+          >
+
+            <div class="detail-card-head">
+
+              <span>
+
+                <i class="fa-solid fa-microchip"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  TECHNICAL DATA
+                </small>
+
+                <h3>
+                  Especificações
+                </h3>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="productSpecifications"
+              class="product-specifications"
+            >
+
+              <!-- JS -->
+
+            </div>
+
+
+          </article>
+
+
+
+          <!-- =================================================
+               STOCK
+          ================================================== -->
+
+          <article
+            class="product-detail-card
+                   product-inventory-card"
+          >
+
+            <div class="detail-card-head">
+
+              <span>
+
+                <i class="fa-solid fa-warehouse"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  INVENTORY CONTROL
+                </small>
+
+                <h3>
+                  Disponibilidade
+                </h3>
+
+              </div>
+
+            </div>
+
+
+            <div class="inventory-visual">
+
+
+              <div class="inventory-number">
+
+                <strong id="inventoryNumber">
+                  0
+                </strong>
+
+                <span>
+                  UNIDADES
+                </span>
+
+              </div>
+
+
+              <div class="inventory-meter">
+
+                <span id="inventoryMeter"></span>
+
+              </div>
+
+
+              <p id="inventoryMessage">
+
+                Consultando estoque...
+
+              </p>
+
+
+            </div>
+
+
+          </article>
+
+
+
+          <!-- =================================================
+               SUPPORT
+          ================================================== -->
+
+          <article
+            class="product-detail-card
+                   product-support-card"
+          >
+
+            <div class="detail-card-head">
+
+              <span>
+
+                <i class="fa-solid fa-headset"></i>
+
+              </span>
+
+
+              <div>
+
+                <small>
+                  SPECIALIST SUPPORT
+                </small>
+
+                <h3>
+                  Precisa de ajuda?
+                </h3>
+
+              </div>
+
+            </div>
+
+
+            <p>
+
+              Se tiver dúvidas sobre a peça,
+              entre em contato com nosso atendimento.
+
+            </p>
+
+
+            <a href="suporte.html">
+
+              Falar com suporte
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+          </article>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         COMPATIBILITY
+    ====================================================== -->
+
+    <section class="product-compatibility">
+
+
+      <div class="site-container">
+
+
+        <div class="product-section-heading compatibility-heading">
+
+
+          <div class="section-index">
+            03
+          </div>
+
+
+          <div>
+
+            <span>
+              VEHICLE MATCH
+            </span>
+
+            <h2>
+              Compatibilidade.
+            </h2>
+
+            <p>
+
+              Consulte as informações disponíveis
+              para o componente selecionado.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="compatibility-panel">
+
+
+          <div class="compatibility-visual">
+
+
+            <div class="compatibility-car">
+
+              <i class="fa-solid fa-car-side"></i>
+
+            </div>
+
+
+            <div class="compatibility-wave wave-a"></div>
+
+            <div class="compatibility-wave wave-b"></div>
+
+
+          </div>
+
+
+
+          <div class="compatibility-content">
+
+
+            <span>
+              VEHICLE CONNECTION
+            </span>
+
+
+            <h3>
+              Confira antes de instalar.
+            </h3>
+
+
+            <p id="productCompatibilityText">
+
+              Verifique código, modelo e especificações
+              antes da compra.
+
+            </p>
+
+
+            <a
+              id="compatibilityCategoryLink"
+              href="produtos.html"
+            >
+
+              Ver produtos da mesma categoria
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RELATED PRODUCTS
+    ====================================================== -->
+
+    <section class="related-products-section">
+
+
+      <div class="site-container">
+
+
+        <div class="related-heading">
+
+
+          <div>
+
+            <span>
+              04 / RELATED COMPONENTS
+            </span>
+
+            <h2>
+              Você também pode precisar.
+            </h2>
+
+          </div>
+
+
+          <div class="related-controls">
+
+
+            <button
+              id="relatedPrev"
+              type="button"
+            >
+
+              <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+
+            <button
+              id="relatedNext"
+              type="button"
+            >
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <div
+          id="relatedProducts"
+          class="related-products"
+        >
+
+          <!-- JS -->
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINAL STRIP
+    ====================================================== -->
+
+    <section class="product-final-strip">
+
+
+      <div class="site-container product-final-grid">
+
+
+        <article>
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <span>
+
+            <small>
+              SECURITY
+            </small>
+
+            <strong>
+              Compra protegida
+            </strong>
+
+          </span>
+
+        </article>
+
+
+
+        <article>
+
+          <i class="fa-solid fa-box"></i>
+
+          <span>
+
+            <small>
+              INVENTORY
+            </small>
+
+            <strong>
+              Estoque conectado
+            </strong>
+
+          </span>
+
+        </article>
+
+
+
+        <article>
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+          <span>
+
+            <small>
+              SMART CART
+            </small>
+
+            <strong>
+              Compra inteligente
+            </strong>
+
+          </span>
+
+        </article>
+
+
+
+        <article>
+
+          <i class="fa-solid fa-headset"></i>
+
+          <span>
+
+            <small>
+              SUPPORT
+            </small>
+
+            <strong>
+              Atendimento
+            </strong>
+
+          </span>
+
+        </article>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    id="productLoading"
+    class="product-loading"
+  >
+
+
+    <div class="product-loading-core">
+
+
+      <div class="loading-component">
+
+        <span></span>
+
+        <span></span>
+
+        <span></span>
+
+      </div>
+
+
+      <small>
+        COMPONENT DATA
+      </small>
+
+
+      <strong>
+        Carregando produto...
+      </strong>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    id="productError"
+    class="product-error"
+    hidden
+  >
+
+
+    <div class="product-error-card">
+
+
+      <span>
+
+        <i class="fa-solid fa-triangle-exclamation"></i>
+
+      </span>
+
+
+      <small>
+        COMPONENT ERROR
+      </small>
+
+
+      <h2>
+        Produto não encontrado.
+      </h2>
+
+
+      <p>
+
+        O produto solicitado pode ter sido removido
+        ou o endereço acessado está incorreto.
+
+      </p>
+
+
+      <a href="produtos.html">
+
+        Voltar ao catálogo
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </a>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       CART CONFIRMATION
+  ====================================================== -->
+
+  <div
+    id="productCartConfirmation"
+    class="product-cart-confirmation"
+    hidden
+  >
+
+
+    <div class="cart-confirmation-panel">
+
+
+      <div class="cart-confirmation-icon">
+
+        <i class="fa-solid fa-check"></i>
+
+      </div>
+
+
+      <div>
+
+        <small>
+          COMPONENT LOCKED
+        </small>
+
+        <strong>
+          Produto adicionado ao carrinho
+        </strong>
+
+      </div>
+
+
+      <a href="carrinho.html">
+
+        Ver carrinho
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </a>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    id="productToast"
+    class="product-toast"
+  ></div>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="site-footer">
+
+
+    <div class="site-container footer-grid">
+
+
+      <div class="footer-brand">
+
+
+        <div class="footer-logo">
+
+          <span>
+
+            <i class="fa-solid fa-gear"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+              Loja de Peças
+            </strong>
+
+            <small>
+              Autopeças & Acessórios
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <p>
+
+          Tecnologia e autopeças integradas
+          em uma experiência de compra moderna.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="footer-column">
+
+        <h3>
+          Atendimento
+        </h3>
+
+        <a href="suporte.html">
+          Suporte
+        </a>
+
+        <a
+          href="pedidos.html"
+          data-auth-link
+        >
+          Pedidos
+        </a>
+
+        <a
+          href="perfil.html"
+          data-auth-link
+        >
+          Minha conta
+        </a>
+
+      </div>
+
+
+
+      <div class="footer-column">
+
+        <h3>
+          Institucional
+        </h3>
+
+        <a href="#">
+          Sobre nós
+        </a>
+
+        <a href="#">
+          Privacidade
+        </a>
+
+        <a href="#">
+          Termos
+        </a>
+
+      </div>
+
+
+
+      <div class="footer-column footer-contact">
+
+        <h3>
+          Contato
+        </h3>
+
+        <p>
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <span>
+            Sua Cidade - UF
+          </span>
+
+        </p>
+
+        <p>
+
+          <i class="fa-solid fa-phone"></i>
+
+          <span>
+            (00) 00000-0000
+          </span>
+
+        </p>
+
+        <p>
+
+          <i class="fa-solid fa-envelope"></i>
+
+          <span>
+            contato@sualoja.com.br
+          </span>
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="footer-bottom">
+
+
+      <div class="site-container footer-bottom-content">
+
+
+        <span>
+
+          ©
+          <span id="currentYear"></span>
+
+          Loja de Peças.
+
+        </span>
+
+
+        <span>
+          COMPONENT DETAIL / TECHNICAL VIEW
+        </span>
+
+
+      </div>
+
+
+    </div>
+
+
+  </footer>
+
+
+
+  <!-- =====================================================
+       JS
+  ====================================================== -->
+
+  <script src="js/site.js"></script>
+
+  <script src="js/produto.js"></script>
+
+
+</body>
+
+</html>

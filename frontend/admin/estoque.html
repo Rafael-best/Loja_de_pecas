@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Estoque | Painel Administrativo</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/estoque.css">
+
+</head>
+
+<body>
+
+
+<div class="admin-layout">
+
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside
+    class="admin-sidebar"
+    id="adminSidebar"
+  >
+
+    <div class="sidebar-header">
+
+      <a
+        href="index.html"
+        class="admin-brand"
+      >
+
+        <span>
+          <i class="fa-solid fa-gears"></i>
+        </span>
+
+        <div>
+          <strong>LOJA DE PEÇAS</strong>
+          <small>Painel Administrativo</small>
+        </div>
+
+      </a>
+
+
+      <button
+        type="button"
+        id="btnFecharSidebar"
+        class="sidebar-close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+      <div class="sidebar-avatar">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+
+      <div>
+        <small>Administrador</small>
+        <strong>Admin</strong>
+      </div>
+
+      <span class="online-indicator"></span>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+      <span class="sidebar-section-title">
+        PRINCIPAL
+      </span>
+
+      <a href="index.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        GERENCIAMENTO
+      </span>
+
+      <a href="produtos.html">
+        <i class="fa-solid fa-box-open"></i>
+        <span>Produtos</span>
+      </a>
+
+      <a
+        href="estoque.html"
+        class="active"
+      >
+        <i class="fa-solid fa-warehouse"></i>
+        <span>Estoque</span>
+
+        <span
+          id="badgeEstoque"
+          class="sidebar-badge warning"
+          hidden
+        >
+          0
+        </span>
+      </a>
+
+      <a href="pedidos.html">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Pedidos</span>
+      </a>
+
+      <a href="clientes.html">
+        <i class="fa-solid fa-users"></i>
+        <span>Clientes</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        SISTEMA
+      </span>
+
+      <a href="../produtos.html">
+        <i class="fa-solid fa-store"></i>
+        <span>Ver loja</span>
+      </a>
+
+      <button
+        type="button"
+        id="btnSairAdmin"
+        class="sidebar-logout"
+      >
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Sair</span>
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <div>
+        <strong>Área administrativa</strong>
+        <small>Acesso restrito</small>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <div class="admin-main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="admin-topbar">
+
+      <div class="topbar-left">
+
+        <button
+          type="button"
+          id="btnAbrirSidebar"
+          class="mobile-sidebar-button"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div>
+          <span class="topbar-label">
+            GERENCIAMENTO
+          </span>
+
+          <h1>
+            Estoque
+          </h1>
+        </div>
+
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <button
+          type="button"
+          class="topbar-icon-button"
+          id="btnAtualizarEstoque"
+          title="Atualizar estoque"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+
+        <a
+          href="produtos.html"
+          class="topbar-stock-link"
+        >
+          <i class="fa-solid fa-box-open"></i>
+          Produtos
+        </a>
+
+        <a
+          href="../produtos.html"
+          class="topbar-stock-link"
+        >
+          <i class="fa-solid fa-store"></i>
+          Loja
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CONTEÚDO
+    ================================================== -->
+
+    <main class="admin-content">
+
+
+      <!-- HEADER -->
+
+      <section class="stock-page-header">
+
+        <div>
+
+          <span class="dashboard-label">
+            INVENTÁRIO
+          </span>
+
+          <h2>
+            Controle de estoque
+          </h2>
+
+          <p>
+            Monitore quantidades, produtos críticos
+            e movimentações do estoque.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="btnNovaMovimentacao"
+          class="button-primary stock-main-button"
+        >
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          Nova movimentação
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           INDICADORES
+      ================================================== -->
+
+      <section class="stock-stats-grid">
+
+
+        <article class="stock-stat-card">
+
+          <span class="stock-stat-icon blue">
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </span>
+
+          <div>
+            <small>Total em estoque</small>
+            <strong id="totalUnidadesEstoque">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="stock-stat-card">
+
+          <span class="stock-stat-icon green">
+            <i class="fa-solid fa-circle-check"></i>
+          </span>
+
+          <div>
+            <small>Estoque saudável</small>
+            <strong id="totalEstoqueSaudavel">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="stock-stat-card">
+
+          <span class="stock-stat-icon orange">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </span>
+
+          <div>
+            <small>Estoque baixo</small>
+            <strong id="totalEstoqueBaixo">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+        <article class="stock-stat-card">
+
+          <span class="stock-stat-icon red">
+            <i class="fa-solid fa-ban"></i>
+          </span>
+
+          <div>
+            <small>Sem estoque</small>
+            <strong id="totalSemEstoque">
+              --
+            </strong>
+          </div>
+
+        </article>
+
+
+      </section>
+
+
+      <!-- =================================================
+           ALERTA
+      ================================================== -->
+
+      <section
+        id="alertaEstoque"
+        class="stock-alert"
+        hidden
+      >
+
+        <span>
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </span>
+
+        <div>
+
+          <strong>
+            Existem produtos que precisam de atenção
+          </strong>
+
+          <p id="textoAlertaEstoque">
+            --
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          id="btnVerCriticos"
+        >
+          Ver produtos críticos
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           FILTROS
+      ================================================== -->
+
+      <section class="stock-toolbar">
+
+
+        <div class="stock-search">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="search"
+            id="buscaEstoque"
+            placeholder="Buscar produto, código, marca ou categoria..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <select id="filtroSituacaoEstoque">
+
+          <option value="">
+            Todas as situações
+          </option>
+
+          <option value="normal">
+            Estoque saudável
+          </option>
+
+          <option value="baixo">
+            Estoque baixo
+          </option>
+
+          <option value="sem">
+            Sem estoque
+          </option>
+
+        </select>
+
+
+        <select id="filtroCategoriaEstoque">
+
+          <option value="">
+            Todas as categorias
+          </option>
+
+        </select>
+
+
+        <select id="ordenacaoEstoque">
+
+          <option value="estoque-asc">
+            Menor estoque
+          </option>
+
+          <option value="estoque-desc">
+            Maior estoque
+          </option>
+
+          <option value="nome">
+            Nome A-Z
+          </option>
+
+        </select>
+
+
+        <button
+          type="button"
+          id="btnLimparFiltrosEstoque"
+          class="stock-filter-clear"
+        >
+          <i class="fa-solid fa-filter-circle-xmark"></i>
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           GRID
+      ================================================== -->
+
+      <section class="stock-layout">
+
+
+        <!-- ESTOQUE -->
+
+        <article class="stock-table-card">
+
+
+          <div class="stock-card-header">
+
+            <div>
+
+              <span class="dashboard-card-label">
+                ESTOQUE ATUAL
+              </span>
+
+              <h3>
+                Produtos
+              </h3>
+
+            </div>
+
+            <span id="resultadoEstoque">
+              Carregando...
+            </span>
+
+          </div>
+
+
+          <div class="stock-table-wrapper">
+
+            <table class="stock-table">
+
+              <thead>
+
+                <tr>
+                  <th>Produto</th>
+                  <th>Categoria</th>
+                  <th>Quantidade</th>
+                  <th>Situação</th>
+                  <th>Ação</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="tabelaEstoque">
+
+                <tr>
+
+                  <td colspan="5">
+
+                    <div class="stock-loading">
+
+                      <div class="admin-spinner"></div>
+
+                      <span>
+                        Carregando estoque...
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+          <div
+            id="cardsEstoqueMobile"
+            class="stock-mobile-cards"
+          ></div>
+
+
+          <div
+            id="paginacaoEstoque"
+            class="admin-pagination"
+          ></div>
+
+
+        </article>
+
+
+
+        <!-- =================================================
+             HISTÓRICO
+        ================================================== -->
+
+        <aside class="movement-card">
+
+
+          <div class="stock-card-header">
+
+            <div>
+
+              <span class="dashboard-card-label">
+                MOVIMENTAÇÕES
+              </span>
+
+              <h3>
+                Histórico recente
+              </h3>
+
+            </div>
+
+            <button
+              type="button"
+              id="btnLimparHistorico"
+              title="Limpar histórico local"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+
+          </div>
+
+
+          <div
+            id="historicoMovimentacoes"
+            class="movement-list"
+          ></div>
+
+
+        </aside>
+
+
+      </section>
+
+
+    </main>
+
+
+    <footer class="admin-footer">
+
+      <span>
+        © 2026 Loja de Peças
+      </span>
+
+      <span>
+        Controle de Estoque
+      </span>
+
+    </footer>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL MOVIMENTAÇÃO
+===================================================== -->
+
+<div
+  class="admin-modal"
+  id="modalMovimentacao"
+  aria-hidden="true"
+>
+
+  <div class="admin-modal-backdrop"></div>
+
+
+  <div class="admin-modal-dialog movement-dialog">
+
+
+    <div class="admin-modal-header">
+
+      <div>
+
+        <span>
+          ESTOQUE
+        </span>
+
+        <h2>
+          Nova movimentação
+        </h2>
+
+      </div>
+
+      <button
+        type="button"
+        id="btnFecharMovimentacao"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <form
+      id="formMovimentacao"
+      class="movement-form"
+    >
+
+
+      <div class="admin-field">
+
+        <label for="produtoMovimentacao">
+          Produto
+        </label>
+
+        <select
+          id="produtoMovimentacao"
+          required
+        >
+
+          <option value="">
+            Selecione um produto
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="movement-product-preview">
+
+        <span>
+          <i class="fa-solid fa-box"></i>
+        </span>
+
+        <div>
+
+          <small>
+            Estoque atual
+          </small>
+
+          <strong id="estoqueAtualMovimentacao">
+            --
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="movement-type-grid">
+
+
+        <label class="movement-type entrada">
+
+          <input
+            type="radio"
+            name="tipoMovimentacao"
+            value="entrada"
+            checked
+          >
+
+          <span>
+
+            <i class="fa-solid fa-arrow-down"></i>
+
+          </span>
+
+          <div>
+            <strong>Entrada</strong>
+            <small>Adicionar unidades</small>
+          </div>
+
+        </label>
+
+
+        <label class="movement-type saida">
+
+          <input
+            type="radio"
+            name="tipoMovimentacao"
+            value="saida"
+          >
+
+          <span>
+
+            <i class="fa-solid fa-arrow-up"></i>
+
+          </span>
+
+          <div>
+            <strong>Saída</strong>
+            <small>Remover unidades</small>
+          </div>
+
+        </label>
+
+
+      </div>
+
+
+      <div class="admin-field">
+
+        <label for="quantidadeMovimentacao">
+          Quantidade
+        </label>
+
+        <input
+          type="number"
+          id="quantidadeMovimentacao"
+          min="1"
+          step="1"
+          placeholder="0"
+          required
+        >
+
+      </div>
+
+
+      <div class="admin-field">
+
+        <label for="motivoMovimentacao">
+          Motivo
+        </label>
+
+        <select id="motivoMovimentacao">
+
+          <option value="Reposição">
+            Reposição
+          </option>
+
+          <option value="Compra fornecedor">
+            Compra de fornecedor
+          </option>
+
+          <option value="Venda">
+            Venda
+          </option>
+
+          <option value="Ajuste">
+            Ajuste manual
+          </option>
+
+          <option value="Avaria">
+            Avaria
+          </option>
+
+          <option value="Outro">
+            Outro
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="admin-field">
+
+        <label for="observacaoMovimentacao">
+          Observação
+        </label>
+
+        <textarea
+          id="observacaoMovimentacao"
+          rows="4"
+          placeholder="Informações adicionais..."
+        ></textarea>
+
+      </div>
+
+
+      <div
+        id="mensagemMovimentacao"
+        class="admin-form-message"
+      ></div>
+
+
+      <div class="admin-modal-actions">
+
+        <button
+          type="button"
+          id="btnCancelarMovimentacao"
+          class="modal-secondary-button"
+        >
+          Cancelar
+        </button>
+
+
+        <button
+          type="submit"
+          class="modal-primary-button"
+        >
+          <i class="fa-solid fa-check"></i>
+          Registrar movimentação
+        </button>
+
+      </div>
+
+
+    </form>
+
+
+  </div>
+
+</div>
+
+
+<script src="js/estoque.js"></script>
+
+</body>
+
+</html>

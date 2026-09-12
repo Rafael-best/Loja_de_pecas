@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Recuperar Senha | Loja de Peças</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/recuperar-senha.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<main class="recovery-page">
+
+
+  <div class="recovery-grid"></div>
+
+
+  <div class="recovery-glow glow-one"></div>
+  <div class="recovery-glow glow-two"></div>
+
+
+
+  <a
+    href="index.html"
+    class="recovery-brand"
+  >
+
+    <span>
+
+      <i class="fa-solid fa-gears"></i>
+
+    </span>
+
+    <div>
+
+      <strong>
+        LOJA DE PEÇAS
+      </strong>
+
+      <small>
+        Auto Parts & Performance
+      </small>
+
+    </div>
+
+  </a>
+
+
+
+  <section class="recovery-card">
+
+
+    <div class="recovery-icon">
+
+      <i class="fa-solid fa-key"></i>
+
+    </div>
+
+
+    <span class="recovery-label">
+
+      RECUPERAÇÃO DE ACESSO
+
+    </span>
+
+
+    <h1>
+
+      Esqueceu sua senha?
+
+    </h1>
+
+
+    <p>
+
+      Informe o e-mail cadastrado.
+      Depois conectaremos esta etapa ao envio
+      real de recuperação pelo backend.
+
+    </p>
+
+
+
+    <form id="formRecuperacao">
+
+
+      <div class="form-group">
+
+        <label for="emailRecuperacao">
+
+          E-mail
+
+        </label>
+
+
+        <div class="input-wrapper">
+
+          <i class="fa-regular fa-envelope"></i>
+
+          <input
+            type="email"
+            id="emailRecuperacao"
+            placeholder="Digite seu e-mail"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+
+      <div
+        id="mensagemRecuperacao"
+        class="recovery-message"
+      ></div>
+
+
+
+      <button
+        type="submit"
+        id="btnRecuperarSenha"
+        class="recovery-button"
+      >
+
+        <span>
+          Continuar
+        </span>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </button>
+
+
+    </form>
+
+
+
+    <div class="recovery-info">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <div>
+
+        <strong>
+          Segurança da conta
+        </strong>
+
+        <span>
+          Nunca compartilhe sua senha ou código de recuperação.
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    <a
+      href="login.html"
+      class="back-login"
+    >
+
+      <i class="fa-solid fa-arrow-left"></i>
+
+      Voltar para o login
+
+    </a>
+
+
+  </section>
+
+
+
+  <footer class="recovery-footer">
+
+    <span>
+
+      © 2026 Loja de Peças
+
+    </span>
+
+
+    <a href="suporte.html">
+
+      Precisa de ajuda?
+
+    </a>
+
+  </footer>
+
+
+</main>
+
+
+<script src="js/recuperar-senha.js"></script>
+
+</body>
+
+</html>

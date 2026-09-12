@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Clientes | Painel Administrativo</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/clientes.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside
+    class="admin-sidebar"
+    id="adminSidebar"
+  >
+
+    <div class="sidebar-header">
+
+      <a
+        href="index.html"
+        class="admin-brand"
+      >
+
+        <span>
+          <i class="fa-solid fa-gears"></i>
+        </span>
+
+        <div>
+          <strong>LOJA DE PEÇAS</strong>
+          <small>Painel Administrativo</small>
+        </div>
+
+      </a>
+
+      <button
+        type="button"
+        id="btnFecharSidebar"
+        class="sidebar-close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+      <div class="sidebar-avatar">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+
+      <div>
+        <small>Administrador</small>
+        <strong>Admin</strong>
+      </div>
+
+      <span class="online-indicator"></span>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+      <span class="sidebar-section-title">
+        PRINCIPAL
+      </span>
+
+      <a href="index.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        GERENCIAMENTO
+      </span>
+
+      <a href="produtos.html">
+        <i class="fa-solid fa-box-open"></i>
+        <span>Produtos</span>
+      </a>
+
+      <a href="estoque.html">
+        <i class="fa-solid fa-warehouse"></i>
+        <span>Estoque</span>
+      </a>
+
+      <a href="pedidos.html">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Pedidos</span>
+      </a>
+
+      <a
+        href="clientes.html"
+        class="active"
+      >
+        <i class="fa-solid fa-users"></i>
+        <span>Clientes</span>
+      </a>
+
+
+      <span class="sidebar-section-title">
+        SISTEMA
+      </span>
+
+      <a href="../produtos.html">
+        <i class="fa-solid fa-store"></i>
+        <span>Ver loja</span>
+      </a>
+
+      <button
+        type="button"
+        id="btnSairAdmin"
+        class="sidebar-logout"
+      >
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Sair</span>
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+      <i class="fa-solid fa-shield-halved"></i>
+
+      <div>
+        <strong>Área administrativa</strong>
+        <small>Acesso restrito</small>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <div class="admin-main">
+
+
+    <header class="admin-topbar">
+
+      <div class="topbar-left">
+
+        <button
+          type="button"
+          id="btnAbrirSidebar"
+          class="mobile-sidebar-button"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div>
+
+          <span class="topbar-label">
+            GERENCIAMENTO
+          </span>
+
+          <h1>
+            Clientes
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <button
+          type="button"
+          class="topbar-icon-button"
+          id="btnAtualizarClientes"
+          title="Atualizar clientes"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+
+        <a
+          href="../produtos.html"
+          class="clients-store-link"
+        >
+          <i class="fa-solid fa-store"></i>
+          Ver loja
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <main class="admin-content">
+
+
+      <!-- =================================================
+           HEADER
+      ================================================== -->
+
+      <section class="clients-page-header">
+
+        <div>
+
+          <span class="dashboard-label">
+            RELACIONAMENTO
+          </span>
+
+          <h2>
+            Gerenciamento de clientes
+          </h2>
+
+          <p>
+            Consulte cadastros, histórico de compras
+            e relacionamento com os clientes da loja.
+          </p>
+
+        </div>
+
+
+        <div class="clients-header-icon">
+
+          <i class="fa-solid fa-users"></i>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           INDICADORES
+      ================================================== -->
+
+      <section class="clients-stats-grid">
+
+
+        <article class="client-stat-card">
+
+          <span class="client-stat-icon blue">
+            <i class="fa-solid fa-users"></i>
+          </span>
+
+          <div>
+
+            <small>
+              Clientes
+            </small>
+
+            <strong id="totalClientes">
+              --
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <article class="client-stat-card">
+
+          <span class="client-stat-icon green">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </span>
+
+          <div>
+
+            <small>
+              Com pedidos
+            </small>
+
+            <strong id="clientesComPedidos">
+              --
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <article class="client-stat-card">
+
+          <span class="client-stat-icon purple">
+            <i class="fa-solid fa-receipt"></i>
+          </span>
+
+          <div>
+
+            <small>
+              Pedidos por cliente
+            </small>
+
+            <strong id="mediaPedidosCliente">
+              --
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <article class="client-stat-card">
+
+          <span class="client-stat-icon money">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </span>
+
+          <div>
+
+            <small>
+              Ticket médio
+            </small>
+
+            <strong id="ticketMedioClientes">
+              --
+            </strong>
+
+          </div>
+
+        </article>
+
+
+      </section>
+
+
+      <!-- =================================================
+           TOOLBAR
+      ================================================== -->
+
+      <section class="clients-toolbar">
+
+
+        <div class="clients-search">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="search"
+            id="buscaClientes"
+            placeholder="Buscar por nome, e-mail ou código..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <select id="filtroClientes">
+
+          <option value="">
+            Todos os clientes
+          </option>
+
+          <option value="comprou">
+            Com compras
+          </option>
+
+          <option value="sem-compra">
+            Sem compras
+          </option>
+
+          <option value="recorrente">
+            Clientes recorrentes
+          </option>
+
+        </select>
+
+
+        <select id="ordenacaoClientes">
+
+          <option value="nome">
+            Nome A-Z
+          </option>
+
+          <option value="mais-pedidos">
+            Mais pedidos
+          </option>
+
+          <option value="maior-gasto">
+            Maior valor gasto
+          </option>
+
+          <option value="ultimo-pedido">
+            Compra mais recente
+          </option>
+
+        </select>
+
+
+        <button
+          type="button"
+          id="btnLimparFiltrosClientes"
+          class="clients-clear-filter"
+        >
+          <i class="fa-solid fa-filter-circle-xmark"></i>
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           TABELA
+      ================================================== -->
+
+      <section class="clients-card">
+
+
+        <div class="clients-card-header">
+
+          <div>
+
+            <span class="dashboard-card-label">
+              CLIENTES
+            </span>
+
+            <h3>
+              Base de clientes
+            </h3>
+
+          </div>
+
+
+          <span id="resultadoClientes">
+            Carregando...
+          </span>
+
+        </div>
+
+
+        <div class="clients-table-wrapper">
+
+          <table class="clients-table">
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Cliente
+                </th>
+
+                <th>
+                  Contato
+                </th>
+
+                <th>
+                  Pedidos
+                </th>
+
+                <th>
+                  Total gasto
+                </th>
+
+                <th>
+                  Última compra
+                </th>
+
+                <th>
+                  Perfil
+                </th>
+
+                <th>
+                  Ações
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="tabelaClientes">
+
+              <tr>
+
+                <td colspan="7">
+
+                  <div class="clients-loading">
+
+                    <div class="admin-spinner"></div>
+
+                    <span>
+                      Carregando clientes...
+                    </span>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          id="cardsClientesMobile"
+          class="clients-mobile-cards"
+        ></div>
+
+
+        <div
+          id="paginacaoClientes"
+          class="admin-pagination"
+        ></div>
+
+
+      </section>
+
+    </main>
+
+
+    <footer class="admin-footer">
+
+      <span>
+        © 2026 Loja de Peças
+      </span>
+
+      <span>
+        Gerenciamento de Clientes
+      </span>
+
+    </footer>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL CLIENTE
+===================================================== -->
+
+<div
+  class="admin-modal"
+  id="modalCliente"
+  aria-hidden="true"
+>
+
+  <div class="admin-modal-backdrop"></div>
+
+
+  <div class="admin-modal-dialog client-modal-dialog">
+
+
+    <div class="admin-modal-header">
+
+      <div>
+
+        <span>
+          PERFIL DO CLIENTE
+        </span>
+
+        <h2 id="tituloModalCliente">
+          Cliente
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="btnFecharCliente"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <div
+      id="conteudoModalCliente"
+      class="client-modal-content"
+    ></div>
+
+
+  </div>
+
+</div>
+
+
+<script src="js/clientes.js"></script>
+
+</body>
+
+</html>

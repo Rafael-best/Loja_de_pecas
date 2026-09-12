@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Crie sua conta na Loja de Peças."
+  >
+
+  <title>Criar Conta | Loja de Peças</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="css/cadastro.css">
+
+</head>
+
+
+<body>
+
+<div class="register-page">
+
+
+  <!-- =====================================================
+       LADO VISUAL
+  ====================================================== -->
+
+  <section class="register-visual">
+
+    <div class="visual-grid"></div>
+
+    <div class="visual-glow glow-one"></div>
+    <div class="visual-glow glow-two"></div>
+
+
+    <a
+      href="index.html"
+      class="register-brand"
+    >
+
+      <span>
+
+        <i class="fa-solid fa-gears"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          LOJA DE PEÇAS
+        </strong>
+
+        <small>
+          Auto Parts & Performance
+        </small>
+
+      </div>
+
+    </a>
+
+
+
+    <div class="visual-content">
+
+      <span class="visual-badge">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        CRIE SUA CONTA
+
+      </span>
+
+
+      <h1>
+
+        Sua garagem
+
+        <span>
+          começa aqui.
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        Crie sua conta para comprar,
+        acompanhar pedidos e futuramente
+        salvar seus veículos favoritos.
+
+      </p>
+
+
+
+      <div class="feature-list">
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-box"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Histórico de pedidos
+            </strong>
+
+            <small>
+              Acompanhe todas as suas compras.
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-car-side"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Veículos salvos
+            </strong>
+
+            <small>
+              Encontre peças compatíveis mais rápido.
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-headset"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Atendimento personalizado
+            </strong>
+
+            <small>
+              Conte com nosso suporte.
+            </small>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+    <div class="visual-art">
+
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+
+      <div class="visual-icon">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+      </div>
+
+
+      <span class="floating-tag tag-one">
+
+        <i class="fa-solid fa-check"></i>
+
+        Cadastro rápido
+
+      </span>
+
+
+      <span class="floating-tag tag-two">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Conta segura
+
+      </span>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       FORMULÁRIO
+  ====================================================== -->
+
+  <main class="register-form-area">
+
+
+    <div class="mobile-brand">
+
+      <a href="index.html">
+
+        <span>
+
+          <i class="fa-solid fa-gears"></i>
+
+        </span>
+
+        <div>
+
+          <strong>
+            LOJA DE PEÇAS
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
+
+        </div>
+
+      </a>
+
+    </div>
+
+
+
+    <div class="register-wrapper">
+
+
+      <div class="register-heading">
+
+        <span>
+          NOVO CLIENTE
+        </span>
+
+        <h2>
+          Criar minha conta
+        </h2>
+
+        <p>
+          Preencha seus dados para começar.
+        </p>
+
+      </div>
+
+
+
+      <form
+        id="formCadastro"
+        class="register-form"
+      >
+
+
+        <div class="form-grid">
+
+
+          <!-- NOME -->
+
+          <div class="form-group full">
+
+            <label for="nomeCadastro">
+              Nome completo
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-regular fa-user"></i>
+
+              <input
+                type="text"
+                id="nomeCadastro"
+                placeholder="Digite seu nome completo"
+                autocomplete="name"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="emailCadastro">
+              E-mail
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-regular fa-envelope"></i>
+
+              <input
+                type="email"
+                id="emailCadastro"
+                placeholder="seuemail@exemplo.com"
+                autocomplete="email"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+
+          <!-- TELEFONE -->
+
+          <div class="form-group">
+
+            <label for="telefoneCadastro">
+              Telefone
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-phone"></i>
+
+              <input
+                type="tel"
+                id="telefoneCadastro"
+                placeholder="(00) 00000-0000"
+                autocomplete="tel"
+                maxlength="15"
+              >
+
+            </div>
+
+          </div>
+
+
+
+          <!-- CPF -->
+
+          <div class="form-group">
+
+            <label for="cpfCadastro">
+              CPF
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-regular fa-id-card"></i>
+
+              <input
+                type="text"
+                id="cpfCadastro"
+                placeholder="000.000.000-00"
+                maxlength="14"
+              >
+
+            </div>
+
+          </div>
+
+
+
+          <!-- NASCIMENTO -->
+
+          <div class="form-group">
+
+            <label for="nascimentoCadastro">
+              Data de nascimento
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-regular fa-calendar"></i>
+
+              <input
+                type="date"
+                id="nascimentoCadastro"
+              >
+
+            </div>
+
+          </div>
+
+
+
+          <!-- SENHA -->
+
+          <div class="form-group">
+
+            <label for="senhaCadastro">
+              Senha
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-lock"></i>
+
+              <input
+                type="password"
+                id="senhaCadastro"
+                placeholder="Crie uma senha"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="senhaCadastro"
+              >
+
+                <i class="fa-regular fa-eye"></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- CONFIRMAR -->
+
+          <div class="form-group">
+
+            <label for="confirmarSenhaCadastro">
+              Confirmar senha
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="fa-solid fa-lock"></i>
+
+              <input
+                type="password"
+                id="confirmarSenhaCadastro"
+                placeholder="Repita sua senha"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="confirmarSenhaCadastro"
+              >
+
+                <i class="fa-regular fa-eye"></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- FORÇA -->
+
+        <div class="password-strength">
+
+          <div class="strength-header">
+
+            <span>
+              Segurança da senha
+            </span>
+
+            <strong id="textoForcaSenha">
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="strength-bars">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+
+          <div class="password-rules">
+
+            <span id="regraTamanho">
+
+              <i class="fa-solid fa-circle"></i>
+
+              8 caracteres
+
+            </span>
+
+
+            <span id="regraNumero">
+
+              <i class="fa-solid fa-circle"></i>
+
+              1 número
+
+            </span>
+
+
+            <span id="regraMaiuscula">
+
+              <i class="fa-solid fa-circle"></i>
+
+              1 letra maiúscula
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- TERMOS -->
+
+        <label class="terms">
+
+          <input
+            type="checkbox"
+            id="aceitarTermos"
+          >
+
+          <span>
+
+            <i class="fa-solid fa-check"></i>
+
+          </span>
+
+          <p>
+
+            Li e aceito os
+
+            <a href="#">
+              Termos de Uso
+            </a>
+
+            e a
+
+            <a href="#">
+              Política de Privacidade
+            </a>.
+
+          </p>
+
+        </label>
+
+
+
+        <div
+          id="mensagemCadastro"
+          class="register-message"
+        ></div>
+
+
+
+        <button
+          type="submit"
+          id="btnCadastrar"
+          class="register-button"
+        >
+
+          <span>
+            Criar minha conta
+          </span>
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+
+
+        <div class="login-link">
+
+          <span>
+            Já possui uma conta?
+          </span>
+
+          <a href="login.html">
+
+            Entrar
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+
+
+    <footer class="register-footer">
+
+      <span>
+        © 2026 Loja de Peças
+      </span>
+
+      <a href="suporte.html">
+        Precisa de ajuda?
+      </a>
+
+    </footer>
+
+
+  </main>
+
+
+</div>
+
+
+<script src="js/cadastro.js"></script>
+
+</body>
+
+</html>

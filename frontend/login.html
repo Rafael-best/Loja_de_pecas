@@ -1,118 +1,694 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Loja de Peças</title>
+  <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/globals.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/utilities.css">
-    <link rel="stylesheet" href="css/login.css">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta
+    name="description"
+    content="Acesse sua conta na Loja de Peças."
+  >
+
+  <title>Entrar | Loja de Peças</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/login.css"
+  >
 </head>
+
 
 <body>
 
-<div class="overlay"></div>
+<div class="auth-page">
 
-<div class="login-container">
 
-    <div class="logo-area">
+  <!-- =====================================================
+       LADO VISUAL
+  ====================================================== -->
 
-        <img src="assets/images/logo.png" alt="Logo">
+  <section class="auth-visual">
 
-        <h1>Loja de Peças</h1>
+    <div class="visual-grid"></div>
 
-        <p>Sistema Inteligente de Auto Peças</p>
+    <div class="visual-glow glow-one"></div>
+    <div class="visual-glow glow-two"></div>
+
+
+    <a
+      href="index.html"
+      class="auth-brand"
+    >
+
+      <img
+        src="assets/images/logo.png"
+        alt="Loja de Peças"
+        onerror="this.style.display='none';"
+      >
+
+      <span class="auth-brand-icon">
+
+        <i class="fa-solid fa-gears"></i>
+
+      </span>
+
+
+      <div>
+
+        <strong>
+          LOJA DE PEÇAS
+        </strong>
+
+        <small>
+          Auto Parts & Performance
+        </small>
+
+      </div>
+
+    </a>
+
+
+
+    <div class="visual-content">
+
+      <span class="visual-badge">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        SISTEMA INTELIGENTE DE AUTOPEÇAS
+
+      </span>
+
+
+      <h1>
+
+        Tudo para seu carro.
+
+        <span>
+          Em um só lugar.
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        Acesse sua conta para acompanhar pedidos,
+        gerenciar seus dados e encontrar as peças
+        certas para seu veículo.
+
+      </p>
+
+
+
+      <div class="visual-benefits">
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-box"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Acompanhe pedidos
+            </strong>
+
+            <small>
+              Consulte suas compras e status.
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-car-side"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Seus veículos
+            </strong>
+
+            <small>
+              Encontre peças compatíveis.
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <span>
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+          </span>
+
+          <div>
+
+            <strong>
+              Ambiente seguro
+            </strong>
+
+            <small>
+              Seus dados protegidos.
+            </small>
+
+          </div>
+
+        </div>
+
+
+      </div>
 
     </div>
 
-    <form class="login-form">
 
-        <h2>Entrar</h2>
 
-        <div class="input-group">
+    <div class="visual-art">
 
-            <label>E-mail</label>
+      <div class="art-ring art-ring-one"></div>
+      <div class="art-ring art-ring-two"></div>
+      <div class="art-ring art-ring-three"></div>
 
-            <div class="input-box">
-                <i class="fa-solid fa-envelope"></i>
+      <div class="art-center">
 
-                <input
-                    type="email"
-                    placeholder="Digite seu e-mail"
-                    required>
-            </div>
+        <i class="fa-solid fa-car-side"></i>
+
+      </div>
+
+
+      <span class="art-chip chip-one">
+
+        <i class="fa-solid fa-check"></i>
+
+        Peças selecionadas
+
+      </span>
+
+
+      <span class="art-chip chip-two">
+
+        <i class="fa-solid fa-lock"></i>
+
+        Compra segura
+
+      </span>
+
+
+      <span class="art-chip chip-three">
+
+        <i class="fa-solid fa-gauge-high"></i>
+
+        Performance
+
+      </span>
+
+    </div>
+
+
+    <div class="visual-footer">
+
+      <span>
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Ambiente seguro
+
+      </span>
+
+      <span>
+
+        <i class="fa-solid fa-headset"></i>
+
+        Suporte especializado
+
+      </span>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
+
+  <main class="auth-form-area">
+
+
+    <div class="mobile-brand">
+
+      <a href="index.html">
+
+        <span>
+
+          <i class="fa-solid fa-gears"></i>
+
+        </span>
+
+        <div>
+
+          <strong>
+            LOJA DE PEÇAS
+          </strong>
+
+          <small>
+            Autopeças & Acessórios
+          </small>
 
         </div>
 
-        <div class="input-group">
+      </a>
 
-            <label>Senha</label>
+    </div>
 
-            <div class="input-box">
 
-                <i class="fa-solid fa-lock"></i>
 
-                <input
-                    type="password"
-                    id="senha"
-                    placeholder="Digite sua senha"
-                    required>
+    <div class="login-wrapper">
 
-                <button
-                    type="button"
-                    class="show-password"
-                    onclick="mostrarSenha()">
 
-                    <i class="fa-solid fa-eye"></i>
+      <div class="login-heading">
 
-                </button>
+        <span class="login-label">
 
-            </div>
+          BEM-VINDO DE VOLTA
+
+        </span>
+
+
+        <h2>
+
+          Entre na sua conta
+
+        </h2>
+
+
+        <p>
+
+          Informe seus dados para continuar.
+
+        </p>
+
+      </div>
+
+
+
+      <form
+        id="formLogin"
+        class="login-form"
+      >
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+
+            E-mail
+
+          </label>
+
+
+          <div class="input-wrapper">
+
+            <i class="fa-regular fa-envelope"></i>
+
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Digite seu e-mail"
+              autocomplete="email"
+              required
+            >
+
+
+            <span class="input-status">
+
+              <i class="fa-solid fa-check"></i>
+
+            </span>
+
+          </div>
 
         </div>
 
-        <div class="options">
 
-            <label>
 
-                <input type="checkbox">
+        <!-- SENHA -->
 
-                Lembrar-me
+        <div class="form-group">
+
+          <div class="label-row">
+
+            <label for="senha">
+
+              Senha
 
             </label>
 
-            <a href="#">Esqueci minha senha</a>
+
+            <a href="recuperar-senha.html">
+
+              Esqueci minha senha
+
+            </a>
+
+          </div>
+
+
+          <div class="input-wrapper">
+
+            <i class="fa-solid fa-lock"></i>
+
+
+            <input
+              type="password"
+              id="senha"
+              name="senha"
+              placeholder="Digite sua senha"
+              autocomplete="current-password"
+              required
+            >
+
+
+            <button
+              type="button"
+              id="btnMostrarSenha"
+              class="password-button"
+              aria-label="Mostrar senha"
+            >
+
+              <i class="fa-regular fa-eye"></i>
+
+            </button>
+
+          </div>
 
         </div>
 
-        <button
-            type="submit"
-            class="btn-login">
 
-            Entrar
+
+        <!-- OPÇÕES -->
+
+        <div class="login-options">
+
+
+          <label class="remember-option">
+
+            <input
+              type="checkbox"
+              id="lembrarMe"
+            >
+
+            <span class="custom-checkbox">
+
+              <i class="fa-solid fa-check"></i>
+
+            </span>
+
+            Lembrar de mim
+
+          </label>
+
+
+          <span class="secure-login">
+
+            <i class="fa-solid fa-lock"></i>
+
+            Login seguro
+
+          </span>
+
+        </div>
+
+
+
+        <!-- MENSAGEM -->
+
+        <div
+          id="mensagemLogin"
+          class="login-message"
+        ></div>
+
+
+
+        <!-- BOTÃO -->
+
+        <button
+          type="submit"
+          id="btnEntrar"
+          class="login-button"
+        >
+
+          <span>
+
+            Entrar na minha conta
+
+          </span>
+
+          <i class="fa-solid fa-arrow-right"></i>
 
         </button>
 
-        <div class="register-link">
 
-            Não possui conta?
 
-            <a href="#">Cadastre-se</a>
+        <!-- DIVISOR -->
+
+        <div class="login-divider">
+
+          <span></span>
+
+          <small>
+            OU
+          </small>
+
+          <span></span>
 
         </div>
 
-    </form>
+
+
+        <!-- CADASTRO -->
+
+        <div class="register-box">
+
+          <span class="register-icon">
+
+            <i class="fa-regular fa-user"></i>
+
+          </span>
+
+
+          <div>
+
+            <strong>
+              Ainda não possui uma conta?
+            </strong>
+
+            <p>
+              Cadastre-se para comprar e acompanhar seus pedidos.
+            </p>
+
+          </div>
+
+
+          <a href="cadastro.html">
+
+            Criar conta
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+
+
+      </form>
+
+
+
+      <div class="login-security">
+
+
+        <div>
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <span>
+
+            <strong>
+              Dados protegidos
+            </strong>
+
+            <small>
+              Ambiente seguro
+            </small>
+
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <i class="fa-solid fa-headset"></i>
+
+          <span>
+
+            <strong>
+              Precisa de ajuda?
+            </strong>
+
+            <a href="suporte.html">
+              Fale conosco
+            </a>
+
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+    <footer class="auth-footer">
+
+      <span>
+
+        © 2026 Loja de Peças
+
+      </span>
+
+
+      <div>
+
+        <a href="#">
+          Privacidade
+        </a>
+
+        <a href="#">
+          Termos
+        </a>
+
+        <a href="suporte.html">
+          Suporte
+        </a>
+
+      </div>
+
+    </footer>
+
+
+  </main>
+
 
 </div>
 
+
 <script src="js/login.js"></script>
+
+
+<!-- Apenas comportamento visual.
+     Não interfere na autenticação da API. -->
+
+<script>
+
+  const btnMostrarSenha =
+    document.getElementById(
+      "btnMostrarSenha"
+    );
+
+
+  const senhaInput =
+    document.getElementById(
+      "senha"
+    );
+
+
+  btnMostrarSenha?.addEventListener(
+    "click",
+    () => {
+
+      const mostrando =
+        senhaInput.type === "text";
+
+
+      senhaInput.type =
+        mostrando
+          ? "password"
+          : "text";
+
+
+      const icone =
+        btnMostrarSenha.querySelector(
+          "i"
+        );
+
+
+      if (icone) {
+
+        icone.className =
+          mostrando
+            ? "fa-regular fa-eye"
+            : "fa-regular fa-eye-slash";
+
+      }
+
+    }
+  );
+
+</script>
+
 
 </body>
 </html>
