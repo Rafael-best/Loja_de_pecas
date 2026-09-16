@@ -1,4163 +1,4685 @@
-/* =========================================================
+/* ============================================================
+   AUTO PEÇA CERTA
    CHECKOUT.JS
-   SECURE CHECKOUT SYSTEM
-   Loja de Peças
-
-   Recursos:
-   - Cliente logado / visitante
-   - Carrinho e catálogo sincronizados
-   - CEP recuperado do Smart Cart
-   - Cupom recuperado
-   - Formulário de endereço
-   - Validação em tempo real
-   - Pix / Cartão / Boleto
-   - Campos de cartão dinâmicos
-   - Checkout Readiness animado
-   - Revisão dos produtos
-   - Validação de estoque
-   - Total animado
-   - Processamento visual
-   - Criação REAL do pedido
-   - Inserção REAL dos itens
-   - Confirmação com ID real do pedido
-========================================================= */
-
-
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
-
-const API = "https://loja-de-pecas.onrender.com";
-
-const CAMINHO_IMAGENS =
-  "assets/images/produtos";
-
-const PLACEHOLDER_PRODUTO =
-  `${CAMINHO_IMAGENS}/placeholder.webp`;
-
-
-/* =========================================================
-   ESTADO
-========================================================= */
-
-let produtosCatalogo = [];
-
-let clienteLogado = null;
-
-let checkoutPreview = null;
-
-let cupomAtual = null;
-
-let checkoutBloqueado = false;
-
-let pedidoEmProcessamento = false;
-
-
-/* =========================================================
-   ELEMENTOS — CLIENTE
-========================================================= */
-
-const checkoutLoggedUser =
-  document.getElementById(
-    "checkoutLoggedUser"
-  );
-
-const checkoutGuestRequired =
-  document.getElementById(
-    "checkoutGuestRequired"
-  );
-
-const checkoutUserAvatar =
-  document.getElementById(
-    "checkoutUserAvatar"
-  );
-
-const checkoutUserName =
-  document.getElementById(
-    "checkoutUserName"
-  );
-
-const checkoutUserEmail =
-  document.getElementById(
-    "checkoutUserEmail"
-  );
-
-const deviceCustomerName =
-  document.getElementById(
-    "deviceCustomerName"
-  );
-
-
-/* =========================================================
-   ELEMENTOS — ENDEREÇO
-========================================================= */
-
-const cep =
-  document.getElementById(
-    "cep"
-  );
-
-const cidade =
-  document.getElementById(
-    "cidade"
-  );
-
-const estado =
-  document.getElementById(
-    "estado"
-  );
-
-const bairro =
-  document.getElementById(
-    "bairro"
-  );
-
-const endereco =
-  document.getElementById(
-    "endereco"
-  );
-
-const numero =
-  document.getElementById(
-    "numero"
-  );
-
-const complemento =
-  document.getElementById(
-    "complemento"
-  );
-
-const addressStatus =
-  document.getElementById(
-    "addressStatus"
-  );
-
-
-/* =========================================================
-   ELEMENTOS — PAGAMENTO
-========================================================= */
-
-const paymentStatus =
-  document.getElementById(
-    "paymentStatus"
-  );
-
-const paymentOptions =
-  document.querySelectorAll(
-    'input[name="formaPagamento"]'
-  );
-
-const cardPaymentFields =
-  document.getElementById(
-    "cardPaymentFields"
-  );
-
-const cardNumber =
-  document.getElementById(
-    "cardNumber"
-  );
-
-const cardName =
-  document.getElementById(
-    "cardName"
-  );
-
-const cardExpiry =
-  document.getElementById(
-    "cardExpiry"
-  );
-
-const cardCvv =
-  document.getElementById(
-    "cardCvv"
-  );
-
-
-/* =========================================================
-   ELEMENTOS — ITENS
-========================================================= */
-
-const checkoutItems =
-  document.getElementById(
-    "checkoutItems"
-  );
-
-
-/* =========================================================
-   ELEMENTOS — RESUMO
-========================================================= */
-
-const checkoutTotal =
-  document.getElementById(
-    "checkoutTotal"
-  );
-
-const checkoutSubtotal =
-  document.getElementById(
-    "checkoutSubtotal"
-  );
-
-const checkoutDiscount =
-  document.getElementById(
-    "checkoutDiscount"
-  );
-
-const checkoutShipping =
-  document.getElementById(
-    "checkoutShipping"
-  );
-
-const checkoutItemCount =
-  document.getElementById(
-    "checkoutItemCount"
-  );
-
-
-/* =========================================================
-   READINESS
-========================================================= */
-
-const checkoutReadinessPercent =
-  document.getElementById(
-    "checkoutReadinessPercent"
-  );
-
-const checkoutReadinessBar =
-  document.getElementById(
-    "checkoutReadinessBar"
-  );
-
-const readyIdentity =
-  document.getElementById(
-    "readyIdentity"
-  );
-
-const readyAddress =
-  document.getElementById(
-    "readyAddress"
-  );
-
-const readyPayment =
-  document.getElementById(
-    "readyPayment"
-  );
-
-
-/* =========================================================
-   INFO CARDS
-========================================================= */
-
-const checkoutCouponCard =
-  document.getElementById(
-    "checkoutCouponCard"
-  );
-
-const checkoutCouponCode =
-  document.getElementById(
-    "checkoutCouponCode"
-  );
-
-const checkoutCouponDescription =
-  document.getElementById(
-    "checkoutCouponDescription"
-  );
-
-const checkoutCepCard =
-  document.getElementById(
-    "checkoutCepCard"
-  );
-
-const checkoutSavedCep =
-  document.getElementById(
-    "checkoutSavedCep"
-  );
-
-
-/* =========================================================
-   FINALIZAÇÃO
-========================================================= */
-
-const btnFinalizarPedido =
-  document.getElementById(
-    "btnFinalizarPedido"
-  );
-
-const checkoutProcessing =
-  document.getElementById(
-    "checkoutProcessing"
-  );
-
-const processingTitle =
-  document.getElementById(
-    "processingTitle"
-  );
-
-const processingDescription =
-  document.getElementById(
-    "processingDescription"
-  );
-
-const processingProgressBar =
-  document.getElementById(
-    "processingProgressBar"
-  );
-
-const processingStatus =
-  document.getElementById(
-    "processingStatus"
-  );
-
-
-/* =========================================================
-   SUCCESS
-========================================================= */
-
-const checkoutSuccess =
-  document.getElementById(
-    "checkoutSuccess"
-  );
-
-const successOrderNumber =
-  document.getElementById(
-    "successOrderNumber"
-  );
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-const checkoutToast =
-  document.getElementById(
-    "checkoutToast"
-  );
-
-
-/* =========================================================
-   UTILITÁRIOS
-========================================================= */
-
-function numeroSeguro(valor) {
-
-  const numeroConvertido =
-    Number(valor);
-
-  return Number.isFinite(
-    numeroConvertido
-  )
-    ? numeroConvertido
-    : 0;
-
-}
-
-
-function formatarMoeda(valor) {
-
-  return numeroSeguro(valor)
-    .toLocaleString(
-      "pt-BR",
-      {
-        style: "currency",
-        currency: "BRL"
-      }
-    );
-
-}
-
-
-function obterCampo(
-  objeto,
-  campos,
-  padrao = ""
-) {
-
-  if (!objeto) {
-    return padrao;
-  }
-
-
-  for (
-    const campo of campos
-  ) {
-
-    const valor =
-      objeto[campo];
-
-
-    if (
-      valor !== undefined &&
-      valor !== null &&
-      String(valor).trim() !== ""
-    ) {
-
-      return valor;
-
-    }
-
-  }
-
-
-  return padrao;
-
-}
-
-
-function primeiraLetra(nome) {
-
-  return String(
-    nome || "U"
-  )
-    .trim()
-    .charAt(0)
-    .toUpperCase() || "U";
-
-}
-
-
-function esperar(ms) {
-
-  return new Promise(
-    resolve =>
-      setTimeout(
-        resolve,
-        ms
-      )
-  );
-
-}
-
-
-/* =========================================================
-   ANIMATION SAFE
-========================================================= */
-
-function animar(
-  elemento,
-  keyframes,
-  options
-) {
-
-  if (
-    !elemento ||
-    typeof elemento.animate !==
-      "function"
-  ) {
-
-    return null;
-
-  }
-
-
-  return elemento.animate(
-    keyframes,
-    options
-  );
-
-}
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-function lerJSON(
-  chave,
-  padrao = null
-) {
-
-  try {
-
-    const conteudo =
-      localStorage.getItem(
-        chave
-      );
-
-
-    if (!conteudo) {
-      return padrao;
-    }
-
-
-    return JSON.parse(
-      conteudo
-    );
-
-  } catch {
-
-    return padrao;
-
-  }
-
-}
-
-
-function obterCarrinho() {
-
-  const carrinho =
-    lerJSON(
-      "carrinho",
-      []
-    );
-
-
-  return Array.isArray(
-    carrinho
-  )
-    ? carrinho
-    : [];
-
-}
-
-
-function obterProdutosCache() {
-
-  const produtos =
-    lerJSON(
-      "produtosMock",
-      []
-    );
-
-
-  return Array.isArray(
-    produtos
-  )
-    ? produtos
-    : [];
-
-}
-
-
-/* =========================================================
-   SESSION STORAGE
-========================================================= */
-
-function carregarCheckoutPreview() {
-
-  try {
-
-    const salvo =
-      sessionStorage.getItem(
-        "checkoutPreview"
-      );
-
-
-    if (!salvo) {
-      return null;
-    }
-
-
-    return JSON.parse(
-      salvo
-    );
-
-  } catch {
-
-    return null;
-
-  }
-
-}
-
-
-/* =========================================================
-   IMAGEM
-========================================================= */
-
-function obterImagemProduto(imagem) {
-
-  const valor =
-    String(
-      imagem || ""
-    ).trim();
-
-
-  if (!valor) {
-    return PLACEHOLDER_PRODUTO;
-  }
-
-
-  if (
-    valor.startsWith("http://") ||
-    valor.startsWith("https://") ||
-    valor.startsWith("data:")
-  ) {
-
-    return valor;
-
-  }
-
-
-  const nome =
-    valor
-      .split(/[\\/]/)
-      .pop();
-
-
-  if (!nome) {
-    return PLACEHOLDER_PRODUTO;
-  }
-
-
-  return (
-    `${CAMINHO_IMAGENS}/` +
-    encodeURIComponent(nome)
-  );
-
-}
-
-
-/* =========================================================
-   CATÁLOGO
-========================================================= */
-
-function encontrarProduto(
-  idProduto
-) {
-
-  return produtosCatalogo.find(
-    produto =>
-      Number(
-        produto.id_produto
-      ) ===
-      Number(
-        idProduto
-      )
-  );
-
-}
-
-
-function obterDadosItem(item) {
-
-  const produto =
-    encontrarProduto(
-      item.id_produto
-    );
-
-
-  return {
-
-    produto,
-
-    nome:
-      produto?.nome_produto ||
-      item.nome_produto ||
-      "Produto",
-
-    preco:
-      numeroSeguro(
-        produto?.preco_produto ??
-        item.preco_produto
-      ),
-
-    estoque:
-      numeroSeguro(
-        produto?.quantidade_estoque ??
-        item.quantidade_estoque
-      ),
-
-    imagem:
-      produto?.imagem ||
-      item.imagem ||
-      "",
-
-    codigo:
-      obterCampo(
-        produto || item,
-        [
-          "codigo_produto",
-          "codigo",
-          "sku"
-        ],
-        `#${item.id_produto}`
-      )
-
-  };
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer = null;
-
-
-function mostrarToast(
-  mensagem,
-  tipo = "success"
-) {
-
-  if (!checkoutToast) {
-    return;
-  }
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  checkoutToast.classList.remove(
-    "show",
-    "error",
-    "warning"
-  );
-
-
-  if (
-    tipo === "error"
-  ) {
-
-    checkoutToast.classList.add(
-      "error"
-    );
-
-  }
-
-
-  if (
-    tipo === "warning"
-  ) {
-
-    checkoutToast.classList.add(
-      "warning"
-    );
-
-  }
-
-
-  checkoutToast.textContent =
-    mensagem;
-
-
-  void checkoutToast.offsetWidth;
-
-
-  checkoutToast.classList.add(
-    "show"
-  );
-
-
-  toastTimer =
-    setTimeout(
-      () => {
-
-        checkoutToast.classList.remove(
-          "show"
-        );
-
-      },
-      2800
-    );
-
-}
-
-
-/* =========================================================
-   CLIENTE
-========================================================= */
-
-function carregarCliente() {
-
-  clienteLogado =
-    lerJSON(
-      "clienteLogado",
-      null
-    );
-
-
-  if (
-    !clienteLogado ||
-    !clienteLogado.id_cliente
-  ) {
-
-    clienteLogado =
-      null;
-
-
-    if (
-      checkoutLoggedUser
-    ) {
-
-      checkoutLoggedUser.hidden =
-        true;
-
-    }
-
-
-    if (
-      checkoutGuestRequired
-    ) {
-
-      checkoutGuestRequired.hidden =
-        false;
-
-    }
-
-
-    if (
-      deviceCustomerName
-    ) {
-
-      deviceCustomerName.textContent =
-        "VISITANTE";
-
-    }
-
-
-    return;
-
-  }
-
-
-  if (
-    checkoutLoggedUser
-  ) {
-
-    checkoutLoggedUser.hidden =
-      false;
-
-  }
-
-
-  if (
-    checkoutGuestRequired
-  ) {
-
-    checkoutGuestRequired.hidden =
-      true;
-
-  }
-
-
-  const nome =
-    clienteLogado.nome ||
-    clienteLogado.nome_cliente ||
-    "Cliente";
-
-
-  const email =
-    clienteLogado.email ||
-    clienteLogado.email_cliente ||
-    "";
-
-
-  if (
-    checkoutUserAvatar
-  ) {
-
-    checkoutUserAvatar.textContent =
-      primeiraLetra(nome);
-
-  }
-
-
-  if (
-    checkoutUserName
-  ) {
-
-    checkoutUserName.textContent =
-      nome;
-
-  }
-
-
-  if (
-    checkoutUserEmail
-  ) {
-
-    checkoutUserEmail.textContent =
-      email || "E-mail não informado";
-
-  }
-
-
-  if (
-    deviceCustomerName
-  ) {
-
-    deviceCustomerName.textContent =
-      nome
-        .split(" ")[0]
-        .toUpperCase();
-
-  }
-
-}
-
-
-/* =========================================================
-   CUPOM E CEP DO SMART CART
-========================================================= */
-
-function recuperarDadosSmartCart() {
-
-  checkoutPreview =
-    carregarCheckoutPreview();
-
-
-  cupomAtual =
-    lerJSON(
-      "cupomCarrinho",
-      null
-    );
-
-
-  const cepSalvo =
-    localStorage.getItem(
-      "cepCarrinho"
-    ) ||
-    checkoutPreview?.cep ||
-    "";
-
-
-  if (cepSalvo) {
-
-    const formatado =
-      formatarCep(
-        cepSalvo
-      );
-
-
-    if (cep) {
-
-      cep.value =
-        formatado;
-
-    }
-
-
-    if (
-      checkoutCepCard
-    ) {
-
-      checkoutCepCard.hidden =
-        false;
-
-    }
-
-
-    if (
-      checkoutSavedCep
-    ) {
-
-      checkoutSavedCep.textContent =
-        formatado;
-
-    }
-
-  }
-
-
-  if (
-    cupomAtual &&
-    cupomAtual.codigo
-  ) {
-
-    if (
-      checkoutCouponCard
-    ) {
-
-      checkoutCouponCard.hidden =
-        false;
-
-    }
-
-
-    if (
-      checkoutCouponCode
-    ) {
-
-      checkoutCouponCode.textContent =
-        cupomAtual.codigo;
-
-    }
-
-
-    if (
-      checkoutCouponDescription
-    ) {
-
-      checkoutCouponDescription.textContent =
-        cupomAtual.descricao ||
-        "Cupom aplicado";
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   MÁSCARA CEP
-========================================================= */
-
-function formatarCep(valor) {
-
-  const numeros =
-    String(valor || "")
-      .replace(
-        /\D/g,
-        ""
-      )
-      .slice(
-        0,
-        8
-      );
-
-
-  if (
-    numeros.length <= 5
-  ) {
-
-    return numeros;
-
-  }
-
-
-  return (
-    numeros.slice(
-      0,
-      5
-    ) +
-    "-" +
-    numeros.slice(5)
-  );
-
-}
-
-
-function cepValido(valor) {
-
-  return /^\d{5}-\d{3}$/
-    .test(
-      String(
-        valor || ""
-      )
-    );
-
-}
-
-
-/* =========================================================
-   CAMPOS
-========================================================= */
-
-const camposEndereco = [
-  cep,
-  cidade,
-  estado,
-  bairro,
-  endereco,
-  numero
-].filter(Boolean);
-
-
-/* =========================================================
-   VALIDAÇÃO VISUAL
-========================================================= */
-
-function marcarCampo(
-  input,
-  valido
-) {
-
-  if (!input) {
-    return;
-  }
-
-
-  const wrapper =
-    input.closest(
-      ".checkout-input"
-    );
-
-
-  if (!wrapper) {
-    return;
-  }
-
-
-  wrapper.classList.remove(
-    "valid",
-    "error"
-  );
-
-
-  if (
-    input.value.trim() === ""
-  ) {
-
-    return;
-
-  }
-
-
-  wrapper.classList.add(
-    valido
-      ? "valid"
-      : "error"
-  );
-
-}
-
-
-/* =========================================================
-   VALIDAR ENDEREÇO
-========================================================= */
-
-function validarEndereco(
-  mostrarErros = false
-) {
-
-  const validacoes = {
-
-    cep:
-      cepValido(
-        cep?.value
-      ),
-
-    cidade:
-      String(
-        cidade?.value || ""
-      ).trim().length >= 2,
-
-    estado:
-      /^[A-Za-z]{2}$/
-        .test(
-          String(
-            estado?.value || ""
-          ).trim()
-        ),
-
-    bairro:
-      String(
-        bairro?.value || ""
-      ).trim().length >= 2,
-
-    endereco:
-      String(
-        endereco?.value || ""
-      ).trim().length >= 3,
-
-    numero:
-      String(
-        numero?.value || ""
-      ).trim().length >= 1
-
-  };
-
-
-  if (
-    mostrarErros
-  ) {
-
-    marcarCampo(
-      cep,
-      validacoes.cep
-    );
-
-    marcarCampo(
-      cidade,
-      validacoes.cidade
-    );
-
-    marcarCampo(
-      estado,
-      validacoes.estado
-    );
-
-    marcarCampo(
-      bairro,
-      validacoes.bairro
-    );
-
-    marcarCampo(
-      endereco,
-      validacoes.endereco
-    );
-
-    marcarCampo(
-      numero,
-      validacoes.numero
-    );
-
-  }
-
-
-  return Object.values(
-    validacoes
-  ).every(Boolean);
-
-}
-
-
-/* =========================================================
-   PAGAMENTO SELECIONADO
-========================================================= */
-
-function obterFormaPagamento() {
-
-  const selecionado =
-    document.querySelector(
-      'input[name="formaPagamento"]:checked'
-    );
-
-
-  return selecionado
-    ? selecionado.value
-    : "";
-
-}
-
-
-/* =========================================================
-   CARTÃO
-========================================================= */
-
-function somenteNumeros(valor) {
-
-  return String(valor || "")
-    .replace(
-      /\D/g,
-      ""
-    );
-
-}
-
-
-function formatarNumeroCartao(
-  valor
-) {
-
-  return somenteNumeros(
-    valor
-  )
-    .slice(
-      0,
-      16
-    )
-    .replace(
-      /(\d{4})(?=\d)/g,
-      "$1 "
-    );
-
-}
-
-
-function formatarValidadeCartao(
-  valor
-) {
-
-  const numeros =
-    somenteNumeros(
-      valor
-    )
-      .slice(
-        0,
-        4
-      );
-
-
-  if (
-    numeros.length <= 2
-  ) {
-
-    return numeros;
-
-  }
-
-
-  return (
-    numeros.slice(0,2) +
-    "/" +
-    numeros.slice(2)
-  );
-
-}
-
-
-/* =========================================================
-   VALIDAÇÃO DE CARTÃO
-
-   Validação simples de interface.
-   Processamento real deve ser feito por gateway.
-========================================================= */
-
-function validarCartao(
-  mostrarErros = false
-) {
-
-  const numeroCartao =
-    somenteNumeros(
-      cardNumber?.value
-    );
-
-
-  const nomeTitular =
-    String(
-      cardName?.value || ""
-    ).trim();
-
-
-  const validade =
-    String(
-      cardExpiry?.value || ""
-    ).trim();
-
-
-  const cvv =
-    somenteNumeros(
-      cardCvv?.value
-    );
-
-
-  const validoNumero =
-    numeroCartao.length === 16;
-
-
-  const validoNome =
-    nomeTitular.length >= 3;
-
-
-  const matchValidade =
-    validade.match(
-      /^(\d{2})\/(\d{2})$/
-    );
-
-
-  let validoValidade =
-    false;
-
-
-  if (matchValidade) {
-
-    const mes =
-      Number(
-        matchValidade[1]
-      );
-
-
-    validoValidade =
-      mes >= 1 &&
-      mes <= 12;
-
-  }
-
-
-  const validoCvv =
-    cvv.length >= 3 &&
-    cvv.length <= 4;
-
-
-  if (
-    mostrarErros
-  ) {
-
-    marcarCampo(
-      cardNumber,
-      validoNumero
-    );
-
-    marcarCampo(
-      cardName,
-      validoNome
-    );
-
-    marcarCampo(
-      cardExpiry,
-      validoValidade
-    );
-
-    marcarCampo(
-      cardCvv,
-      validoCvv
-    );
-
-  }
-
-
-  return (
-    validoNumero &&
-    validoNome &&
-    validoValidade &&
-    validoCvv
-  );
-
-}
-
-
-/* =========================================================
-   VALIDAR PAGAMENTO
-========================================================= */
-
-function validarPagamento(
-  mostrarErros = false
-) {
-
-  const forma =
-    obterFormaPagamento();
-
-
-  if (!forma) {
-    return false;
-  }
-
-
-  if (
-    forma === "Cartão"
-  ) {
-
-    return validarCartao(
-      mostrarErros
-    );
-
-  }
-
-
-  return true;
-
-}
-
-
-/* =========================================================
-   MOSTRAR / ESCONDER CARTÃO
-========================================================= */
-
-function atualizarCamposPagamento() {
-
-  const forma =
-    obterFormaPagamento();
-
-
-  const mostrarCartao =
-    forma === "Cartão";
-
-
-  if (
-    cardPaymentFields
-  ) {
-
-    if (
-      mostrarCartao
-    ) {
-
-      cardPaymentFields.hidden =
-        false;
-
-
-      animar(
-        cardPaymentFields,
-        [
-          {
-            opacity: 0,
-            transform:
-              "translateY(-10px) scale(.985)"
-          },
-          {
-            opacity: 1,
-            transform:
-              "translateY(0) scale(1)"
-          }
-        ],
-        {
-          duration: 430,
-          easing:
-            "cubic-bezier(.16,1,.3,1)"
-        }
-      );
-
-    } else {
-
-      cardPaymentFields.hidden =
-        true;
-
-    }
-
-  }
-
-
-  if (
-    paymentStatus
-  ) {
-
-    paymentStatus.textContent =
-      forma ||
-      "Selecione";
-
-
-    paymentStatus.classList.toggle(
-      "ready",
-      Boolean(forma)
-    );
-
-  }
-
-
-  atualizarReadiness();
-
-}
-
-
-/* =========================================================
-   ESTOQUE
-========================================================= */
-
-function validarEstoqueCarrinho() {
-
-  const carrinho =
-    obterCarrinho();
-
-
-  for (
-    const item of carrinho
-  ) {
-
-    const dados =
-      obterDadosItem(
-        item
-      );
-
-
-    const quantidade =
-      numeroSeguro(
-        item.quantidade
-      );
-
-
-    if (
-      dados.estoque <= 0 ||
-      quantidade >
-        dados.estoque
-    ) {
-
-      return {
-        valido: false,
-        item,
-        dados
-      };
-
-    }
-
-  }
-
-
-  return {
-    valido: true
-  };
-
-}
-
-
-/* =========================================================
-   CALCULAR TOTAL
-========================================================= */
-
-function calcularTotais() {
-
-  const carrinho =
-    obterCarrinho();
-
-
-  let subtotal = 0;
-
-  let quantidade = 0;
-
-
-  carrinho.forEach(
-    item => {
-
-      const dados =
-        obterDadosItem(
-          item
-        );
-
-
-      const qtd =
-        Math.max(
-          1,
-          numeroSeguro(
-            item.quantidade
-          )
-        );
-
-
-      subtotal +=
-        dados.preco *
-        qtd;
-
-
-      quantidade +=
-        qtd;
-
-    }
-  );
-
-
-  let desconto = 0;
-
-
-  if (
-    checkoutPreview &&
-    numeroSeguro(
-      checkoutPreview.desconto
-    ) > 0
-  ) {
-
-    /*
-      Mantemos o desconto calculado pelo Smart Cart
-      somente para demonstração frontend.
-
-      Quando existir backend de cupons,
-      o servidor deve recalcular tudo.
-    */
-
-    desconto =
-      Math.min(
-        numeroSeguro(
-          checkoutPreview.desconto
-        ),
-        subtotal
-      );
-
-  }
-
-
-  const total =
-    Math.max(
-      subtotal -
-      desconto,
-      0
-    );
-
-
-  return {
-
-    subtotal,
-    desconto,
-    total,
-    quantidade
-
-  };
-
-}
-
-
-/* =========================================================
-   ANIMAÇÃO DE MOEDA
-========================================================= */
-
-function animarMoeda(
-  elemento,
-  valorFinal
-) {
-
-  if (!elemento) {
-    return;
-  }
-
-
-  const inicial =
-    numeroSeguro(
-      elemento.dataset.valor
-    );
-
-
-  const final =
-    numeroSeguro(
-      valorFinal
-    );
-
-
-  const inicio =
-    performance.now();
-
-
-  const duracao = 520;
-
-
-  function frame(tempo) {
-
-    const progresso =
-      Math.min(
-        (
-          tempo -
-          inicio
-        ) /
-        duracao,
-        1
-      );
-
-
-    const easing =
-      1 -
-      Math.pow(
-        1 - progresso,
-        3
-      );
-
-
-    const atual =
-      inicial +
-      (
-        final -
-        inicial
-      ) *
-      easing;
-
-
-    elemento.textContent =
-      formatarMoeda(
-        atual
-      );
-
-
-    if (
-      progresso < 1
-    ) {
-
-      requestAnimationFrame(
-        frame
-      );
-
-    } else {
-
-      elemento.dataset.valor =
-        String(final);
-
-    }
-
-  }
-
-
-  requestAnimationFrame(
-    frame
-  );
-
-}
-
-
-/* =========================================================
-   RESUMO
-========================================================= */
-
-function atualizarResumo(
-  animado = true
-) {
-
-  const totais =
-    calcularTotais();
-
-
-  const textoItens =
-    `${totais.quantidade} ${
-      totais.quantidade === 1
-        ? "item"
-        : "itens"
-    }`;
-
-
-  if (
-    animado
-  ) {
-
-    animarMoeda(
-      checkoutSubtotal,
-      totais.subtotal
-    );
-
-    animarMoeda(
-      checkoutDiscount,
-      totais.desconto
-    );
-
-    animarMoeda(
-      checkoutTotal,
-      totais.total
-    );
-
-  } else {
-
-    if (
-      checkoutSubtotal
-    ) {
-
-      checkoutSubtotal.textContent =
-        formatarMoeda(
-          totais.subtotal
-        );
-
-      checkoutSubtotal.dataset.valor =
-        String(
-          totais.subtotal
-        );
-
-    }
-
-
-    if (
-      checkoutDiscount
-    ) {
-
-      checkoutDiscount.textContent =
-        formatarMoeda(
-          totais.desconto
-        );
-
-      checkoutDiscount.dataset.valor =
-        String(
-          totais.desconto
-        );
-
-    }
-
-
-    if (
-      checkoutTotal
-    ) {
-
-      checkoutTotal.textContent =
-        formatarMoeda(
-          totais.total
-        );
-
-      checkoutTotal.dataset.valor =
-        String(
-          totais.total
-        );
-
-    }
-
-  }
-
-
-  if (
-    checkoutItemCount
-  ) {
-
-    checkoutItemCount.textContent =
-      textoItens;
-
-  }
-
-
-  /*
-    Frete real ainda não está implementado
-    no backend.
-  */
-
-  if (
-    checkoutShipping
-  ) {
-
-    checkoutShipping.textContent =
-      cepValido(
-        cep?.value
-      )
-        ? "A definir"
-        : "A definir";
-
-  }
-
-}
-
-
-/* =========================================================
-   RENDERIZAR ITENS
-========================================================= */
-
-function renderizarItens() {
-
-  if (!checkoutItems) {
-    return;
-  }
-
-
-  checkoutItems.innerHTML =
-    "";
-
-
-  const carrinho =
-    obterCarrinho();
-
-
-  carrinho.forEach(
-    (
-      item,
-      indice
-    ) => {
-
-      const dados =
-        obterDadosItem(
-          item
-        );
-
-
-      const quantidade =
-        Math.max(
-          1,
-          numeroSeguro(
-            item.quantidade
-          )
-        );
-
-
-      const subtotal =
-        dados.preco *
-        quantidade;
-
-
-      const article =
-        document.createElement(
-          "article"
-        );
-
-
-      article.className =
-        "checkout-review-item";
-
-
-      /* ===================================================
-         IMAGE
-      =================================================== */
-
-      const imageWrapper =
-        document.createElement(
-          "div"
-        );
-
-
-      imageWrapper.className =
-        "checkout-review-image";
-
-
-      const img =
-        document.createElement(
-          "img"
-        );
-
-
-      img.src =
-        obterImagemProduto(
-          dados.imagem
-        );
-
-
-      img.alt =
-        dados.nome;
-
-
-      img.loading =
-        "lazy";
-
-
-      img.addEventListener(
-        "error",
-        () => {
-
-          if (
-            img.src.includes(
-              "placeholder.webp"
-            )
-          ) {
-
-            imageWrapper.innerHTML =
-              '<i class="fa-solid fa-gears"></i>';
-
-
-            return;
-
-          }
-
-
-          img.src =
-            PLACEHOLDER_PRODUTO;
-
-        }
-      );
-
-
-      imageWrapper.appendChild(
-        img
-      );
-
-
-      /* ===================================================
-         INFO
-      =================================================== */
-
-      const info =
-        document.createElement(
-          "div"
-        );
-
-
-      info.className =
-        "checkout-review-info";
-
-
-      info.innerHTML = `
-        <span>
-          COD ${dados.codigo}
-        </span>
-
-        <h3>
-          ${dados.nome}
-        </h3>
-
-        <small>
-          ${quantidade}
-          ${
-            quantidade === 1
-              ? "unidade"
-              : "unidades"
-          }
-          ×
-          ${formatarMoeda(
-            dados.preco
-          )}
-        </small>
-      `;
-
-
-      /* ===================================================
-         PRICE
-      =================================================== */
-
-      const price =
-        document.createElement(
-          "div"
-        );
-
-
-      price.className =
-        "checkout-review-price";
-
-
-      price.innerHTML = `
-        <span>
-          SUBTOTAL
-        </span>
-
-        <strong>
-          ${formatarMoeda(
-            subtotal
-          )}
-        </strong>
-      `;
-
-
-      article.append(
-        imageWrapper,
-        info,
-        price
-      );
-
-
-      checkoutItems.appendChild(
-        article
-      );
-
-
-      animar(
-        article,
-        [
-          {
-            opacity: 0,
-            transform:
-              "translateY(15px)"
-          },
-          {
-            opacity: 1,
-            transform:
-              "translateY(0)"
-          }
-        ],
-        {
-          duration: 460,
-          delay:
-            indice * 70,
-          easing:
-            "cubic-bezier(.16,1,.3,1)",
-          fill:
-            "both"
-        }
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   READINESS
-========================================================= */
-
-function atualizarItemReadiness(
-  elemento,
-  pronto
-) {
-
-  if (!elemento) {
-    return;
-  }
-
-
-  elemento.classList.toggle(
-    "ready",
-    pronto
-  );
-
-
-  elemento.innerHTML =
-    pronto
-      ? `
-          <i class="fa-solid fa-circle-check"></i>
-          ${elemento.dataset.label || obterTextoReadiness(elemento)}
-        `
-      : `
-          <i class="fa-regular fa-circle"></i>
-          ${elemento.dataset.label || obterTextoReadiness(elemento)}
-        `;
-
-}
-
-
-function obterTextoReadiness(
-  elemento
-) {
-
-  if (
-    elemento === readyIdentity
-  ) {
-    return "Identificação";
-  }
-
-
-  if (
-    elemento === readyAddress
-  ) {
-    return "Entrega";
-  }
-
-
-  if (
-    elemento === readyPayment
-  ) {
-    return "Pagamento";
-  }
-
-
-  return "";
-}
-
-
-/* =========================================================
-   STEPS
-========================================================= */
-
-function atualizarFlowSteps(
-  identidade,
-  enderecoPronto,
-  pagamentoPronto
-) {
-
-  const identification =
-    document.querySelector(
-      '[data-step="identification"]'
-    );
-
-  const payment =
-    document.querySelector(
-      '[data-step="payment"]'
-    );
-
-  const confirmation =
-    document.querySelector(
-      '[data-step="confirmation"]'
-    );
-
-
-  identification?.classList.toggle(
-    "completed",
-    identidade &&
-    enderecoPronto
-  );
-
-
-  identification?.classList.toggle(
-    "active",
-    identidade &&
-    !enderecoPronto
-  );
-
-
-  payment?.classList.toggle(
-    "active",
-    enderecoPronto &&
-    !pagamentoPronto
-  );
-
-
-  payment?.classList.toggle(
-    "completed",
-    pagamentoPronto
-  );
-
-
-  confirmation?.classList.toggle(
-    "active",
-    identidade &&
-    enderecoPronto &&
-    pagamentoPronto
-  );
-
-}
-
-
-/* =========================================================
-   READINESS PRINCIPAL
-========================================================= */
-
-function atualizarReadiness() {
-
-  const identidade =
-    Boolean(
-      clienteLogado &&
-      clienteLogado.id_cliente
-    );
-
-
-  const enderecoPronto =
-    validarEndereco(
-      false
-    );
-
-
-  const pagamentoPronto =
-    validarPagamento(
-      false
-    );
-
-
-  atualizarItemReadiness(
-    readyIdentity,
-    identidade
-  );
-
-
-  atualizarItemReadiness(
-    readyAddress,
-    enderecoPronto
-  );
-
-
-  atualizarItemReadiness(
-    readyPayment,
-    pagamentoPronto
-  );
-
-
-  let percentual = 0;
-
-
-  /*
-    25% carrinho já concluído.
-  */
-
-  percentual += 25;
-
-
-  if (
-    identidade
-  ) {
-
-    percentual += 20;
-
-  }
-
-
-  if (
-    enderecoPronto
-  ) {
-
-    percentual += 30;
-
-  }
-
-
-  if (
-    pagamentoPronto
-  ) {
-
-    percentual += 25;
-
-  }
-
-
-  if (
-    checkoutReadinessBar
-  ) {
-
-    checkoutReadinessBar.style.width =
-      `${percentual}%`;
-
-  }
-
-
-  if (
-    checkoutReadinessPercent
-  ) {
-
-    checkoutReadinessPercent.textContent =
-      `${percentual}%`;
-
-  }
-
-
-  /* =====================================================
-     ADDRESS STATUS
-  ===================================================== */
-
-  if (
-    addressStatus
-  ) {
-
-    addressStatus.textContent =
-      enderecoPronto
-        ? "Completo"
-        : "Pendente";
-
-
-    addressStatus.classList.toggle(
-      "ready",
-      enderecoPronto
-    );
-
-  }
-
-
-  /* =====================================================
-     PAYMENT STATUS
-  ===================================================== */
-
-  if (
-    paymentStatus
-  ) {
-
-    const forma =
-      obterFormaPagamento();
-
-
-    paymentStatus.textContent =
-      pagamentoPronto
-        ? forma
-        : forma
-          ? "Incompleto"
-          : "Selecione";
-
-
-    paymentStatus.classList.toggle(
-      "ready",
-      pagamentoPronto
-    );
-
-  }
-
-
-  atualizarFlowSteps(
-    identidade,
-    enderecoPronto,
-    pagamentoPronto
-  );
-
-
-  const estoque =
-    validarEstoqueCarrinho();
-
-
-  if (
-    btnFinalizarPedido
-  ) {
-
-    btnFinalizarPedido.disabled =
-      !identidade ||
-      !enderecoPronto ||
-      !pagamentoPronto ||
-      !estoque.valido ||
-      obterCarrinho().length === 0 ||
-      pedidoEmProcessamento;
-
-  }
-
-}
-
-
-/* =========================================================
-   SALVAR ENDEREÇO TEMPORÁRIO
-========================================================= */
-
-function salvarEnderecoTemporario() {
-
-  const dados = {
-
-    cep:
-      cep?.value.trim() || "",
-
-    cidade:
-      cidade?.value.trim() || "",
-
-    estado:
-      estado?.value.trim().toUpperCase() || "",
-
-    bairro:
-      bairro?.value.trim() || "",
-
-    endereco:
-      endereco?.value.trim() || "",
-
-    numero:
-      numero?.value.trim() || "",
-
-    complemento:
-      complemento?.value.trim() || ""
-
-  };
-
-
-  sessionStorage.setItem(
-    "checkoutEndereco",
-    JSON.stringify(
-      dados
-    )
-  );
-
-}
-
-
-/* =========================================================
-   RECUPERAR ENDEREÇO
-========================================================= */
-
-function recuperarEnderecoTemporario() {
-
-  try {
-
-    const salvo =
-      sessionStorage.getItem(
-        "checkoutEndereco"
-      );
-
-
-    if (!salvo) {
-      return;
-    }
-
-
-    const dados =
-      JSON.parse(
-        salvo
-      );
-
-
-    if (
-      cep &&
-      dados.cep
-    ) {
-
-      cep.value =
-        formatarCep(
-          dados.cep
-        );
-
-    }
-
-
-    if (cidade) {
-
-      cidade.value =
-        dados.cidade || "";
-
-    }
-
-
-    if (estado) {
-
-      estado.value =
-        dados.estado || "";
-
-    }
-
-
-    if (bairro) {
-
-      bairro.value =
-        dados.bairro || "";
-
-    }
-
-
-    if (endereco) {
-
-      endereco.value =
-        dados.endereco || "";
-
-    }
-
-
-    if (numero) {
-
-      numero.value =
-        dados.numero || "";
-
-    }
-
-
-    if (complemento) {
-
-      complemento.value =
-        dados.complemento || "";
-
-    }
-
-  } catch {
-
-    sessionStorage.removeItem(
-      "checkoutEndereco"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   PROCESSAMENTO VISUAL
-========================================================= */
-
-function abrirProcessamento() {
-
-  if (
-    !checkoutProcessing
-  ) {
-    return;
-  }
-
-
-  checkoutProcessing.hidden =
-    false;
-
-
-  document.body.style.overflow =
-    "hidden";
-
-
-  if (
-    processingProgressBar
-  ) {
-
-    processingProgressBar.style.width =
-      "4%";
-
-  }
-
-}
-
-
-function fecharProcessamento() {
-
-  if (
-    checkoutProcessing
-  ) {
-
-    checkoutProcessing.hidden =
-      true;
-
-  }
-
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-/* =========================================================
-   ATUALIZAR PROCESSAMENTO
-========================================================= */
-
-async function atualizarProcessamento(
-  percentual,
-  status,
-  titulo = null,
-  descricao = null,
-  pausa = 280
-) {
-
-  if (
-    processingProgressBar
-  ) {
-
-    processingProgressBar.style.width =
-      `${percentual}%`;
-
-  }
-
-
-  if (
-    processingStatus
-  ) {
-
-    processingStatus.textContent =
-      status;
-
-  }
-
-
-  if (
-    titulo &&
-    processingTitle
-  ) {
-
-    processingTitle.textContent =
-      titulo;
-
-  }
-
-
-  if (
-    descricao &&
-    processingDescription
-  ) {
-
-    processingDescription.textContent =
-      descricao;
-
-  }
-
-
-  await esperar(
-    pausa
-  );
-
-}
-
-
-/* =========================================================
-   SUCESSO
-========================================================= */
-
-function mostrarSucesso(
-  idPedido
-) {
-
-  fecharProcessamento();
-
-
-  if (
-    successOrderNumber
-  ) {
-
-    successOrderNumber.textContent =
-      `#${idPedido}`;
-
-  }
-
-
-  if (
-    checkoutSuccess
-  ) {
-
-    checkoutSuccess.hidden =
-      false;
-
-  }
-
-
-  document.body.style.overflow =
-    "hidden";
-
-}
-
-
-/* =========================================================
-   ERRO DA API
-========================================================= */
-
-async function extrairErroResposta(
-  resposta
-) {
-
-  try {
-
-    const dados =
-      await resposta.json();
-
-
-    return (
-      dados.erro ||
-      dados.error ||
-      dados.message ||
-      `Erro HTTP ${resposta.status}`
-    );
-
-  } catch {
-
-    return (
-      `Erro HTTP ${resposta.status}`
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   CRIAR PEDIDO NO BACKEND
-========================================================= */
-
-async function criarPedidoBackend(
-  formaPagamento
-) {
-
-  const resposta =
-    await fetch(
-      `${API}/pedidos`,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body:
-          JSON.stringify({
-            id_cliente:
-              clienteLogado.id_cliente,
-
-            forma_pagamento:
-              formaPagamento,
-
-            status_pedido:
-              "Pendente",
-
-            /*
-              Mantemos 0 porque seu backend
-              já calcula os itens/pedido.
-            */
-            total_pedido: 0
-          })
-      }
-    );
-
-
-  if (
-    !resposta.ok
-  ) {
-
-    throw new Error(
-      await extrairErroResposta(
-        resposta
-      )
-    );
-
-  }
-
-
-  const dados =
-    await resposta.json();
-
-
-  const idPedido =
-    dados.id_pedido ??
-    dados.pedido?.id_pedido;
-
-
-  if (
-    !idPedido
-  ) {
-
-    throw new Error(
-      "O servidor criou o pedido, mas não retornou o ID."
-    );
-
-  }
-
-
-  return {
-    ...dados,
-    id_pedido:
-      idPedido
-  };
-
-}
-
-
-/* =========================================================
-   ADICIONAR ITEM AO PEDIDO
-========================================================= */
-
-async function adicionarItemPedido(
-  idPedido,
-  item
-) {
-
-  const resposta =
-    await fetch(
-      `${API}/pedidos/${idPedido}/itens`,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body:
-          JSON.stringify({
-            id_produto:
-              item.id_produto,
-
-            quantidade:
-              numeroSeguro(
-                item.quantidade
-              )
-          })
-      }
-    );
-
-
-  if (
-    !resposta.ok
-  ) {
-
-    throw new Error(
-      await extrairErroResposta(
-        resposta
-      )
-    );
-
-  }
-
-
-  return resposta.json();
-
-}
-
-
-/* =========================================================
-   VALIDAR ANTES DE FINALIZAR
-========================================================= */
-
-function validarCheckoutCompleto() {
-
-  const carrinho =
-    obterCarrinho();
-
-
-  if (
-    carrinho.length === 0
-  ) {
-
-    mostrarToast(
-      "Seu carrinho está vazio.",
-      "warning"
-    );
-
-
-    return false;
-
-  }
-
-
-  if (
-    !clienteLogado ||
-    !clienteLogado.id_cliente
-  ) {
-
-    mostrarToast(
-      "Entre na sua conta para finalizar a compra.",
-      "warning"
-    );
-
-
-    checkoutGuestRequired
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-
-    return false;
-
-  }
-
-
-  if (
-    !validarEndereco(
-      true
-    )
-  ) {
-
-    mostrarToast(
-      "Confira os dados de entrega.",
-      "warning"
-    );
-
-
-    document
-      .getElementById(
-        "checkoutSectionAddress"
-      )
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-
-    return false;
-
-  }
-
-
-  if (
-    !obterFormaPagamento()
-  ) {
-
-    mostrarToast(
-      "Escolha uma forma de pagamento.",
-      "warning"
-    );
-
-
-    document
-      .getElementById(
-        "checkoutSectionPayment"
-      )
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-
-    return false;
-
-  }
-
-
-  if (
-    !validarPagamento(
-      true
-    )
-  ) {
-
-    mostrarToast(
-      "Confira os dados de pagamento.",
-      "warning"
-    );
-
-
-    return false;
-
-  }
-
-
-  const estoque =
-    validarEstoqueCarrinho();
-
-
-  if (
-    !estoque.valido
-  ) {
-
-    mostrarToast(
-      `O estoque de "${estoque.dados.nome}" mudou. Volte ao carrinho e ajuste a quantidade.`,
-      "error"
-    );
-
-
-    return false;
-
-  }
-
-
-  return true;
-
-}
-
-
-/* =========================================================
-   FINALIZAR PEDIDO
-========================================================= */
-
-async function finalizarPedido() {
-
-  if (
-    pedidoEmProcessamento
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    !validarCheckoutCompleto()
-  ) {
-
-    atualizarReadiness();
-
-    return;
-
-  }
-
-
-  const carrinho =
-    obterCarrinho();
-
-
-  const formaPagamento =
-    obterFormaPagamento();
-
-
-  pedidoEmProcessamento =
-    true;
-
-
-  atualizarReadiness();
-
-
-  salvarEnderecoTemporario();
-
-
-  abrirProcessamento();
-
-
-  try {
-
-    /* =====================================================
-       ETAPA 1
-    ===================================================== */
-
-    await atualizarProcessamento(
-      12,
-      "Validando sessão...",
-      "Validando sua compra",
-      "Estamos conferindo sua sessão e os dados básicos do pedido.",
-      350
-    );
-
-
-    /* =====================================================
-       ETAPA 2
-    ===================================================== */
-
-    const estoque =
-      validarEstoqueCarrinho();
-
-
-    if (
-      !estoque.valido
-    ) {
-
-      throw new Error(
-        `Estoque insuficiente para ${estoque.dados.nome}.`
-      );
-
-    }
-
-
-    await atualizarProcessamento(
-      26,
-      "Estoque verificado",
-      "Conferindo produtos",
-      "Os itens selecionados estão sendo validados.",
-      350
-    );
-
-
-    /* =====================================================
-       ETAPA 3
-    ===================================================== */
-
-    await atualizarProcessamento(
-      40,
-      "Criando pedido...",
-      "Registrando pedido",
-      "Criando sua compra no sistema.",
-      250
-    );
-
-
-    const pedido =
-      await criarPedidoBackend(
-        formaPagamento
-      );
-
-
-    const idPedido =
-      pedido.id_pedido;
-
-
-    /* =====================================================
-       ETAPA 4 — ITENS
-    ===================================================== */
-
-    const totalItens =
-      carrinho.length;
-
-
-    for (
-      let i = 0;
-      i < totalItens;
-      i++
-    ) {
-
-      const item =
-        carrinho[i];
-
-
-      const porcentagem =
-        48 +
-        Math.round(
-          (
-            (i + 1) /
-            totalItens
-          ) *
-          35
-        );
-
-
-      await atualizarProcessamento(
-        porcentagem,
-        `Adicionando item ${i + 1} de ${totalItens}...`,
-        "Montando seu pedido",
-        "Registrando os produtos selecionados.",
-        100
-      );
-
-
-      await adicionarItemPedido(
-        idPedido,
-        item
-      );
-
-    }
-
-
-    /* =====================================================
-       ETAPA 5
-    ===================================================== */
-
-    await atualizarProcessamento(
-      90,
-      "Produtos registrados",
-      "Finalizando operação",
-      "Estamos concluindo os últimos detalhes.",
-      400
-    );
-
-
-    await atualizarProcessamento(
-      100,
-      "Pedido confirmado",
-      "Tudo pronto",
-      "Sua compra foi registrada com sucesso.",
-      550
-    );
-
-
-    /* =====================================================
-       LIMPEZA
-    ===================================================== */
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify([])
-    );
-
-
-    localStorage.removeItem(
-      "cupomCarrinho"
-    );
-
-
-    localStorage.removeItem(
-      "cepCarrinho"
-    );
-
-
-    sessionStorage.removeItem(
-      "checkoutPreview"
-    );
-
-
-    sessionStorage.removeItem(
-      "checkoutEndereco"
-    );
-
-
-    window.dispatchEvent(
-      new CustomEvent(
-        "carrinhoAtualizado"
-      )
-    );
-
-
-    if (
-      window.SiteUI &&
-      typeof window.SiteUI
-        .atualizarCarrinho ===
-        "function"
-    ) {
-
-      window.SiteUI
-        .atualizarCarrinho();
-
-    }
-
-
-    /* =====================================================
-       SUCCESS
-    ===================================================== */
-
-    mostrarSucesso(
-      idPedido
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      "Erro no checkout:",
-      erro
-    );
-
-
-    fecharProcessamento();
-
-
-    mostrarToast(
-      erro.message ||
-      "Não foi possível finalizar o pedido.",
-      "error"
-    );
-
-
-  } finally {
-
-    pedidoEmProcessamento =
-      false;
-
-
-    atualizarReadiness();
-
-  }
-
-}
-
-
-/* =========================================================
-   CATÁLOGO DA API
-========================================================= */
-
-async function carregarProdutos() {
-
-  try {
-
-    const resposta =
-      await fetch(
-        `${API}/produtos`
-      );
-
-
-    if (
-      !resposta.ok
-    ) {
-
-      throw new Error(
-        "API de produtos indisponível"
-      );
-
-    }
-
-
-    const dados =
-      await resposta.json();
-
-
-    if (
-      !Array.isArray(
-        dados
-      )
-    ) {
-
-      throw new Error(
-        "Resposta inválida da API de produtos."
-      );
-
-    }
-
-
-    produtosCatalogo =
-      dados;
-
-
-    localStorage.setItem(
-      "produtosMock",
-      JSON.stringify(
-        dados
-      )
-    );
-
-
-  } catch (erro) {
-
-    console.warn(
-      "Checkout usando cache local de produtos:",
-      erro
-    );
-
-
-    produtosCatalogo =
-      obterProdutosCache();
-
-  }
-
-}
-
-
-/* =========================================================
-   SINCRONIZAR CARRINHO COM CATÁLOGO
-========================================================= */
-
-function sincronizarCarrinho() {
-
-  const carrinho =
-    obterCarrinho();
-
-
-  if (
-    carrinho.length === 0 ||
-    produtosCatalogo.length === 0
-  ) {
-
-    return;
-
-  }
-
-
-  let alterado = false;
-
-
-  carrinho.forEach(
-    item => {
-
-      const produto =
-        encontrarProduto(
-          item.id_produto
-        );
-
-
-      if (!produto) {
-        return;
-      }
-
-
-      const novoPreco =
-        numeroSeguro(
-          produto.preco_produto
-        );
-
-
-      const novoEstoque =
-        numeroSeguro(
-          produto.quantidade_estoque
-        );
-
-
-      if (
-        numeroSeguro(
-          item.preco_produto
-        ) !==
-        novoPreco
-      ) {
-
-        item.preco_produto =
-          novoPreco;
-
-        alterado = true;
-
-      }
-
-
-      if (
-        numeroSeguro(
-          item.quantidade_estoque
-        ) !==
-        novoEstoque
-      ) {
-
-        item.quantidade_estoque =
-          novoEstoque;
-
-        alterado = true;
-
-      }
-
-
-      if (
-        produto.imagem &&
-        produto.imagem !==
-          item.imagem
-      ) {
-
-        item.imagem =
-          produto.imagem;
-
-        alterado = true;
-
-      }
-
-    }
-  );
-
-
-  if (
-    alterado
-  ) {
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify(
-        carrinho
-      )
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ANIMAÇÕES NO SCROLL
-========================================================= */
-
-function configurarAnimacoesScroll() {
-
-  if (
-    !(
-      "IntersectionObserver"
-      in window
-    )
-  ) {
-
-    document
-      .querySelectorAll(
-        ".checkout-module"
-      )
-      .forEach(
-        elemento =>
-          elemento.classList.add(
-            "checkout-visible"
-          )
-      );
-
-
-    return;
-
-  }
-
-
-  const observer =
-    new IntersectionObserver(
-      entradas => {
-
-        entradas.forEach(
-          entrada => {
-
-            if (
-              !entrada.isIntersecting
-            ) {
-
-              return;
-
-            }
-
-
-            entrada.target.classList.add(
-              "checkout-visible"
-            );
-
-
-            observer.unobserve(
-              entrada.target
-            );
-
-          }
-        );
-
-      },
-      {
-        threshold: 0.10
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      ".checkout-module"
-    )
-    .forEach(
-      elemento =>
-        observer.observe(
-          elemento
-        )
-    );
-
-}
-
-
-/* =========================================================
-   DEVICE PARALLAX
-========================================================= */
-
-function configurarDeviceInterativo() {
-
-  const device =
-    document.querySelector(
-      ".checkout-device"
-    );
-
-
-  if (
-    !device ||
-    window.matchMedia(
-      "(pointer: coarse)"
-    ).matches
-  ) {
-
-    return;
-
-  }
-
-
-  device.addEventListener(
-    "mousemove",
-    evento => {
-
-      const rect =
-        device
-          .getBoundingClientRect();
-
-
-      const x =
-        (
-          evento.clientX -
-          rect.left
-        ) /
-        rect.width;
-
-
-      const y =
-        (
-          evento.clientY -
-          rect.top
-        ) /
-        rect.height;
-
-
-      const rotacaoY =
-        (
-          x -
-          0.5
-        ) *
-        5;
-
-
-      const rotacaoX =
-        (
-          0.5 -
-          y
-        ) *
-        4;
-
-
-      device.style.transform =
-        `
-          perspective(900px)
-          rotateX(${rotacaoX}deg)
-          rotateY(${rotacaoY}deg)
-          translateY(-3px)
-        `;
-
-    }
-  );
-
-
-  device.addEventListener(
-    "mouseleave",
-    () => {
-
-      device.style.transform =
-        "";
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   EVENTOS ENDEREÇO
-========================================================= */
-
-if (cep) {
-
-  cep.addEventListener(
-    "input",
-    () => {
-
-      cep.value =
-        formatarCep(
-          cep.value
-        );
-
-
-      marcarCampo(
-        cep,
-        cepValido(
-          cep.value
-        )
-      );
-
-
-      salvarEnderecoTemporario();
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-if (estado) {
-
-  estado.addEventListener(
-    "input",
-    () => {
-
-      estado.value =
-        estado.value
-          .replace(
-            /[^a-zA-Z]/g,
-            ""
-          )
-          .slice(
-            0,
-            2
-          )
-          .toUpperCase();
-
-
-      marcarCampo(
-        estado,
-        /^[A-Z]{2}$/
-          .test(
-            estado.value
-          )
-      );
-
-
-      salvarEnderecoTemporario();
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-[
-  cidade,
-  bairro,
-  endereco,
-  numero,
-  complemento
-]
-  .filter(Boolean)
-  .forEach(
-    campo => {
-
-      campo.addEventListener(
-        "input",
-        () => {
-
-          if (
-            campo !== complemento
-          ) {
-
-            marcarCampo(
-              campo,
-              campo.value
-                .trim()
-                .length >= 1
-            );
-
-          }
-
-
-          salvarEnderecoTemporario();
-
-          atualizarReadiness();
-
-        }
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   EVENTOS PAGAMENTO
-========================================================= */
-
-paymentOptions.forEach(
-  input => {
-
-    input.addEventListener(
-      "change",
-      () => {
-
-        atualizarCamposPagamento();
-
-
-        const option =
-          input.closest(
-            ".payment-option"
-          );
-
-
-        animar(
-          option,
-          [
-            {
-              transform:
-                "scale(1)"
-            },
-            {
-              transform:
-                "scale(1.025)"
-            },
-            {
-              transform:
-                "scale(1)"
-            }
-          ],
-          {
-            duration: 300,
-            easing:
-              "cubic-bezier(.2,.8,.2,1)"
-          }
-        );
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   CARTÃO — FORMATADORES
-========================================================= */
-
-if (cardNumber) {
-
-  cardNumber.addEventListener(
-    "input",
-    () => {
-
-      cardNumber.value =
-        formatarNumeroCartao(
-          cardNumber.value
-        );
-
-
-      marcarCampo(
-        cardNumber,
-        somenteNumeros(
-          cardNumber.value
-        ).length === 16
-      );
-
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-if (cardName) {
-
-  cardName.addEventListener(
-    "input",
-    () => {
-
-      cardName.value =
-        cardName.value
-          .toUpperCase();
-
-
-      marcarCampo(
-        cardName,
-        cardName.value
-          .trim()
-          .length >= 3
-      );
-
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-if (cardExpiry) {
-
-  cardExpiry.addEventListener(
-    "input",
-    () => {
-
-      cardExpiry.value =
-        formatarValidadeCartao(
-          cardExpiry.value
-        );
-
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-if (cardCvv) {
-
-  cardCvv.addEventListener(
-    "input",
-    () => {
-
-      cardCvv.value =
-        somenteNumeros(
-          cardCvv.value
-        )
-          .slice(
-            0,
-            4
-          );
-
-
-      marcarCampo(
-        cardCvv,
-        cardCvv.value.length >= 3
-      );
-
-
-      atualizarReadiness();
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   FINALIZAR
-========================================================= */
-
-btnFinalizarPedido
-  ?.addEventListener(
-    "click",
-    finalizarPedido
-  );
-
-
-/* =========================================================
-   STORAGE ENTRE ABAS
-========================================================= */
-
-window.addEventListener(
-  "storage",
-  evento => {
-
-    if (
-      evento.key ===
-      "carrinho"
-    ) {
-
-      renderizarItens();
-
-      atualizarResumo(
-        true
-      );
-
-      atualizarReadiness();
-
-    }
-
-
-    if (
-      evento.key ===
-      "clienteLogado"
-    ) {
-
-      carregarCliente();
-
-      atualizarReadiness();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   VOLTAR PARA A ABA
-========================================================= */
-
-document.addEventListener(
-  "visibilitychange",
-  () => {
-
-    if (
-      document.hidden
-    ) {
-      return;
-    }
-
-
-    carregarCliente();
-
-    renderizarItens();
-
-    atualizarResumo(
-      false
-    );
-
-    atualizarReadiness();
-
-  }
-);
-
-
-/* =========================================================
-   CARRINHO VAZIO AO ACESSAR CHECKOUT
-========================================================= */
-
-function verificarCarrinhoInicial() {
-
-  if (
-    obterCarrinho().length > 0
-  ) {
-
-    return true;
-
-  }
-
-
-  if (
-    btnFinalizarPedido
-  ) {
-
-    btnFinalizarPedido.disabled =
-      true;
-
-  }
-
-
-  mostrarToast(
-    "Seu carrinho está vazio. Adicione produtos antes de finalizar uma compra.",
-    "warning"
-  );
-
-
-  setTimeout(
-    () => {
-
-      window.location.href =
-        "carrinho.html";
-
-    },
-    900
-  );
-
-
-  return false;
-
-}
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
-
-async function iniciarCheckout() {
-
-  checkoutBloqueado =
-    true;
-
-
-  /* =====================================================
-     CLIENTE
-  ===================================================== */
-
-  carregarCliente();
-
-
-  /* =====================================================
-     SMART CART
-  ===================================================== */
-
-  checkoutPreview =
-    carregarCheckoutPreview();
-
-
-  recuperarDadosSmartCart();
-
-
-  /* =====================================================
-     ENDEREÇO SALVO NA SESSÃO
-  ===================================================== */
-
-  recuperarEnderecoTemporario();
-
-
-  /*
-    Se o endereço temporário não tinha CEP,
-    mas Smart Cart tinha, mantém o CEP recuperado.
-  */
-
-  const cepSmartCart =
-    localStorage.getItem(
-      "cepCarrinho"
-    ) ||
-    checkoutPreview?.cep;
-
-
-  if (
-    cep &&
-    !cep.value &&
-    cepSmartCart
-  ) {
-
-    cep.value =
-      formatarCep(
-        cepSmartCart
-      );
-
-  }
-
-
-  /* =====================================================
-     PRODUTOS
-  ===================================================== */
-
-  await carregarProdutos();
-
-
-  sincronizarCarrinho();
-
-
-  /* =====================================================
-     VERIFICA CARRINHO
-  ===================================================== */
-
-  if (
-    !verificarCarrinhoInicial()
-  ) {
-
-    return;
-
-  }
-
-
-  /* =====================================================
-     ITENS
-  ===================================================== */
-
-  renderizarItens();
-
-
-  /* =====================================================
-     RESUMO
-  ===================================================== */
-
-  atualizarResumo(
-    false
-  );
-
-
-  /* =====================================================
-     PAGAMENTO
-  ===================================================== */
-
-  atualizarCamposPagamento();
-
-
-  /* =====================================================
-     READINESS
-  ===================================================== */
-
-  checkoutBloqueado =
-    false;
-
-
-  atualizarReadiness();
-
-
-  /* =====================================================
-     ANIMAÇÕES
-  ===================================================== */
-
-  configurarAnimacoesScroll();
-
-  configurarDeviceInterativo();
-
-
-  /* =====================================================
-     SITE UI
-  ===================================================== */
-
-  if (
-    window.SiteUI &&
-    typeof window.SiteUI
-      .atualizarCarrinho ===
-      "function"
-  ) {
-
-    window.SiteUI
-      .atualizarCarrinho();
-
-  }
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-iniciarCheckout();
+   ============================================================ */
+
+   "use strict";
+
+
+   /* ============================================================
+      01. CONFIGURAÇÃO
+      ============================================================ */
+   
+   const CHECKOUT_CONFIG = {
+   
+       apiBase: "http://localhost:3000/api",
+   
+       endpoints: {
+           pedidos: "/pedidos"
+       },
+   
+       storage: {
+           carrinho: "carrinho",
+           cliente: "clienteLogado",
+           clientePedido: "clientePedido",
+           ultimoPedido: "ultimoPedido"
+       },
+   
+       cepApi: "https://viacep.com.br/ws/",
+   
+       toastDuration: 3200
+   
+   };
+   
+   
+   /* ============================================================
+      02. ESTADO
+      ============================================================ */
+   
+   const checkoutState = {
+   
+       carrinho: [],
+   
+       cliente: null,
+   
+       subtotal: 0,
+   
+       desconto: 0,
+   
+       frete: 0,
+   
+       total: 0,
+   
+       shippingSelected: null,
+   
+       paymentSelected: null,
+   
+       processing: false,
+   
+       cepConsultado: null,
+   
+       pedidoCriado: null
+   
+   };
+   
+   
+   /* ============================================================
+      03. HELPERS DOM
+      ============================================================ */
+   
+   const $ = (selector, context = document) =>
+       context.querySelector(selector);
+   
+   const $$ = (selector, context = document) =>
+       Array.from(context.querySelectorAll(selector));
+   
+   
+   /* ============================================================
+      04. HELPERS STORAGE
+      ============================================================ */
+   
+   function safeJSONParse(value, fallback = null) {
+   
+       try {
+   
+           if (!value) {
+               return fallback;
+           }
+   
+           return JSON.parse(value);
+   
+       } catch (error) {
+   
+           console.warn(
+               "[Checkout] JSON inválido:",
+               error
+           );
+   
+           return fallback;
+   
+       }
+   
+   }
+   
+   
+   function getStorageJSON(key, fallback = null) {
+   
+       return safeJSONParse(
+           localStorage.getItem(key),
+           fallback
+       );
+   
+   }
+   
+   
+   function setStorageJSON(key, value) {
+   
+       try {
+   
+           localStorage.setItem(
+               key,
+               JSON.stringify(value)
+           );
+   
+           return true;
+   
+       } catch (error) {
+   
+           console.error(
+               "[Checkout] Erro ao salvar no localStorage:",
+               error
+           );
+   
+           return false;
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      05. NORMALIZAÇÃO DE NÚMEROS
+      ============================================================ */
+   
+   function toNumber(value) {
+   
+       if (typeof value === "number") {
+   
+           return Number.isFinite(value)
+               ? value
+               : 0;
+   
+       }
+   
+       if (typeof value !== "string") {
+           return 0;
+       }
+   
+       let clean = value
+           .replace(/[^\d,.-]/g, "")
+           .trim();
+   
+       if (!clean) {
+           return 0;
+       }
+   
+       /*
+           Exemplo:
+           1.299,90 -> 1299.90
+       */
+   
+       if (
+           clean.includes(",") &&
+           clean.includes(".")
+       ) {
+   
+           clean = clean
+               .replace(/\./g, "")
+               .replace(",", ".");
+   
+       } else if (clean.includes(",")) {
+   
+           clean = clean.replace(",", ".");
+   
+       }
+   
+       const number = Number(clean);
+   
+       return Number.isFinite(number)
+           ? number
+           : 0;
+   
+   }
+   
+   
+   /* ============================================================
+      06. MOEDA
+      ============================================================ */
+   
+   function formatCurrency(value) {
+   
+       return new Intl.NumberFormat(
+           "pt-BR",
+           {
+               style: "currency",
+               currency: "BRL"
+           }
+       ).format(
+           toNumber(value)
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      07. ESCAPE HTML
+      ============================================================ */
+   
+   function escapeHTML(value = "") {
+   
+       return String(value)
+           .replaceAll("&", "&amp;")
+           .replaceAll("<", "&lt;")
+           .replaceAll(">", "&gt;")
+           .replaceAll('"', "&quot;")
+           .replaceAll("'", "&#039;");
+   
+   }
+   
+   
+   /* ============================================================
+      08. IMAGEM SEGURA
+      ============================================================ */
+   
+   function normalizeImage(value) {
+   
+       if (!value) {
+           return "";
+       }
+   
+       return String(value).trim();
+   
+   }
+   
+   
+   /* ============================================================
+      09. IDENTIFICAR ID DO CLIENTE
+      ============================================================ */
+   
+   function getClienteId(cliente) {
+   
+       if (!cliente) {
+           return null;
+       }
+   
+       return (
+           cliente.id_cliente ??
+           cliente.id ??
+           cliente.cliente_id ??
+           null
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      10. IDENTIFICAR ID DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoId(produto) {
+   
+       return (
+           produto.id_produto ??
+           produto.produto_id ??
+           produto.id ??
+           null
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      11. NOME DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoNome(produto) {
+   
+       return (
+           produto.nome ??
+           produto.nome_produto ??
+           produto.titulo ??
+           produto.descricao ??
+           "Produto"
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      12. PREÇO DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoPreco(produto) {
+   
+       return toNumber(
+           produto.preco ??
+           produto.preco_unitario ??
+           produto.valor ??
+           produto.price ??
+           0
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      13. QUANTIDADE DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoQuantidade(produto) {
+   
+       const quantidade = Number(
+           produto.quantidade ??
+           produto.qtd ??
+           produto.quantity ??
+           1
+       );
+   
+       if (
+           !Number.isFinite(quantidade) ||
+           quantidade <= 0
+       ) {
+           return 1;
+       }
+   
+       return Math.floor(quantidade);
+   
+   }
+   
+   
+   /* ============================================================
+      14. IMAGEM DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoImagem(produto) {
+   
+       return normalizeImage(
+           produto.imagem ??
+           produto.image ??
+           produto.foto ??
+           produto.url_imagem ??
+           ""
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      15. SKU DO PRODUTO
+      ============================================================ */
+   
+   function getProdutoSku(produto) {
+   
+       return (
+           produto.sku ??
+           produto.codigo ??
+           produto.codigo_produto ??
+           produto.referencia ??
+           ""
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      16. NORMALIZAR CARRINHO
+      ============================================================ */
+   
+   function normalizeCart(rawCart) {
+   
+       if (!Array.isArray(rawCart)) {
+           return [];
+       }
+   
+       return rawCart
+           .filter(Boolean)
+           .map((produto) => {
+   
+               return {
+   
+                   ...produto,
+   
+                   id_produto:
+                       getProdutoId(produto),
+   
+                   nome:
+                       getProdutoNome(produto),
+   
+                   preco:
+                       getProdutoPreco(produto),
+   
+                   quantidade:
+                       getProdutoQuantidade(produto),
+   
+                   imagem:
+                       getProdutoImagem(produto),
+   
+                   sku:
+                       getProdutoSku(produto)
+   
+               };
+   
+           })
+           .filter((produto) => {
+   
+               return (
+                   produto.nome &&
+                   produto.quantidade > 0
+               );
+   
+           });
+   
+   }
+   
+   
+   /* ============================================================
+      17. CARREGAR CARRINHO
+      ============================================================ */
+   
+   function loadCart() {
+   
+       const possibleKeys = [
+           CHECKOUT_CONFIG.storage.carrinho,
+           "cart",
+           "carrinhoAPC"
+       ];
+   
+       let rawCart = [];
+   
+       for (const key of possibleKeys) {
+   
+           const value = getStorageJSON(
+               key,
+               null
+           );
+   
+           if (
+               Array.isArray(value) &&
+               value.length
+           ) {
+   
+               rawCart = value;
+               break;
+   
+           }
+   
+       }
+   
+       checkoutState.carrinho =
+           normalizeCart(rawCart);
+   
+   }
+   
+   
+   /* ============================================================
+      18. CARREGAR CLIENTE
+      ============================================================ */
+   
+   function loadCustomer() {
+   
+       checkoutState.cliente =
+           getStorageJSON(
+               CHECKOUT_CONFIG.storage.cliente,
+               null
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      19. ELEMENTOS
+      ============================================================ */
+   
+   const checkoutElements = {};
+   
+   
+   function cacheElements() {
+   
+       checkoutElements.heroCheckoutItems =
+           $("#heroCheckoutItems");
+   
+   
+       /* CLIENTE */
+   
+       checkoutElements.loggedCustomer =
+           $("#loggedCustomer");
+   
+       checkoutElements.checkoutLoginRequired =
+           $("#checkoutLoginRequired");
+   
+       checkoutElements.customerName =
+           $("#customerName");
+   
+       checkoutElements.customerEmail =
+           $("#customerEmail");
+   
+       checkoutElements.customerPhone =
+           $("#customerPhone");
+   
+       checkoutElements.customerDocument =
+           $("#customerDocument");
+   
+       checkoutElements.customerStatus =
+           $("#customerStatus");
+   
+       checkoutElements.checkoutCustomerAvatar =
+           $("#checkoutCustomerAvatar");
+   
+       checkoutElements.checkoutCustomerInitial =
+           $("#checkoutCustomerInitial");
+   
+       checkoutElements.checkoutCustomerName =
+           $("#checkoutCustomerName");
+   
+       checkoutElements.checkoutCustomerEmail =
+           $("#checkoutCustomerEmail");
+   
+       checkoutElements.headerAccountLabel =
+           $("#headerAccountLabel");
+   
+       checkoutElements.accountButton =
+           $("#accountButton");
+   
+   
+       /* ENDEREÇO */
+   
+       checkoutElements.addressCep =
+           $("#addressCep");
+   
+       checkoutElements.addressStreet =
+           $("#addressStreet");
+   
+       checkoutElements.addressNumber =
+           $("#addressNumber");
+   
+       checkoutElements.addressComplement =
+           $("#addressComplement");
+   
+       checkoutElements.addressDistrict =
+           $("#addressDistrict");
+   
+       checkoutElements.addressCity =
+           $("#addressCity");
+   
+       checkoutElements.addressState =
+           $("#addressState");
+   
+       checkoutElements.addressStatus =
+           $("#addressStatus");
+   
+       checkoutElements.saveAddress =
+           $("#saveAddress");
+   
+       checkoutElements.cepLoader =
+           $("#cepLoader");
+   
+   
+       /* ENTREGA */
+   
+       checkoutElements.shippingStatus =
+           $("#shippingStatus");
+   
+       checkoutElements.shippingPlaceholder =
+           $("#shippingPlaceholder");
+   
+       checkoutElements.shippingOptions =
+           $("#shippingOptions");
+   
+       checkoutElements.shippingError =
+           $("#shippingError");
+   
+   
+       /* PAGAMENTO */
+   
+       checkoutElements.paymentStatus =
+           $("#paymentStatus");
+   
+       checkoutElements.paymentError =
+           $("#paymentError");
+   
+   
+       /* OBSERVAÇÕES */
+   
+       checkoutElements.orderNotes =
+           $("#orderNotes");
+   
+       checkoutElements.notesCounter =
+           $("#notesCounter");
+   
+   
+       /* RESUMO */
+   
+       checkoutElements.checkoutSummaryProducts =
+           $("#checkoutSummaryProducts");
+   
+       checkoutElements.checkoutSubtotal =
+           $("#checkoutSubtotal");
+   
+       checkoutElements.checkoutDiscount =
+           $("#checkoutDiscount");
+   
+       checkoutElements.checkoutShipping =
+           $("#checkoutShipping");
+   
+       checkoutElements.checkoutTotal =
+           $("#checkoutTotal");
+   
+   
+       /* TERMOS */
+   
+       checkoutElements.acceptTerms =
+           $("#acceptTerms");
+   
+       checkoutElements.termsError =
+           $("#termsError");
+   
+   
+       /* BOTÃO */
+   
+       checkoutElements.finishOrderButton =
+           $("#finishOrderButton");
+   
+       checkoutElements.finishButtonLoader =
+           $("#finishButtonLoader");
+   
+   
+       /* CHECKOUT VAZIO */
+   
+       checkoutElements.checkoutEmpty =
+           $("#checkoutEmpty");
+   
+       checkoutElements.checkoutContent =
+           $(".checkout-content");
+   
+       checkoutElements.checkoutBenefits =
+           $(".checkout-benefits");
+   
+       checkoutElements.checkoutProgress =
+           $(".checkout-progress-section");
+   
+   
+       /* MODAL CONFIRMAÇÃO */
+   
+       checkoutElements.confirmationModal =
+           $("#confirmationModal");
+   
+       checkoutElements.confirmationModalClose =
+           $("#confirmationModalClose");
+   
+       checkoutElements.confirmationCancel =
+           $("#confirmationCancel");
+   
+       checkoutElements.confirmationConfirm =
+           $("#confirmationConfirm");
+   
+       checkoutElements.confirmationTotal =
+           $("#confirmationTotal");
+   
+   
+       /* MODAL SUCESSO */
+   
+       checkoutElements.successModal =
+           $("#successModal");
+   
+       checkoutElements.successOrderNumber =
+           $("#successOrderNumber");
+   
+       checkoutElements.viewOrderButton =
+           $("#viewOrderButton");
+   
+   
+       /* MODAL ERRO */
+   
+       checkoutElements.errorModal =
+           $("#errorModal");
+   
+       checkoutElements.errorModalClose =
+           $("#errorModalClose");
+   
+       checkoutElements.checkoutErrorButton =
+           $("#checkoutErrorButton");
+   
+       checkoutElements.checkoutErrorMessage =
+           $("#checkoutErrorMessage");
+   
+   
+       /* TOAST */
+   
+       checkoutElements.checkoutToast =
+           $("#checkoutToast");
+   
+       checkoutElements.checkoutToastText =
+           $("#checkoutToastText");
+   
+   
+       /* ANO */
+   
+       checkoutElements.currentYear =
+           $("#currentYear");
+   
+   }
+   
+   
+   /* ============================================================
+      20. QUANTIDADE TOTAL
+      ============================================================ */
+   
+   function getCartQuantity() {
+   
+       return checkoutState.carrinho.reduce(
+           (total, produto) => {
+   
+               return (
+                   total +
+                   getProdutoQuantidade(produto)
+               );
+   
+           },
+           0
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      21. CALCULAR SUBTOTAL
+      ============================================================ */
+   
+   function calculateSubtotal() {
+   
+       return checkoutState.carrinho.reduce(
+           (total, produto) => {
+   
+               const preco =
+                   getProdutoPreco(produto);
+   
+               const quantidade =
+                   getProdutoQuantidade(produto);
+   
+               return (
+                   total +
+                   preco * quantidade
+               );
+   
+           },
+           0
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      22. RECALCULAR TOTAIS
+      ============================================================ */
+   
+   function recalculateTotals() {
+   
+       checkoutState.subtotal =
+           calculateSubtotal();
+   
+       checkoutState.desconto =
+           Math.max(
+               0,
+               toNumber(checkoutState.desconto)
+           );
+   
+       checkoutState.frete =
+           Math.max(
+               0,
+               toNumber(checkoutState.frete)
+           );
+   
+       checkoutState.total =
+           Math.max(
+               0,
+               checkoutState.subtotal -
+               checkoutState.desconto +
+               checkoutState.frete
+           );
+   
+       updateSummaryValues();
+   
+   }
+   
+   
+   /* ============================================================
+      23. ATUALIZAR RESUMO
+      ============================================================ */
+   
+   function updateSummaryValues() {
+   
+       if (
+           checkoutElements.checkoutSubtotal
+       ) {
+   
+           checkoutElements.checkoutSubtotal.textContent =
+               formatCurrency(
+                   checkoutState.subtotal
+               );
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutDiscount
+       ) {
+   
+           checkoutElements.checkoutDiscount.textContent =
+               checkoutState.desconto > 0
+                   ? `- ${formatCurrency(checkoutState.desconto)}`
+                   : formatCurrency(0);
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutShipping
+       ) {
+   
+           checkoutElements.checkoutShipping.textContent =
+               checkoutState.shippingSelected
+                   ? (
+                       checkoutState.frete === 0
+                           ? "Grátis"
+                           : formatCurrency(
+                               checkoutState.frete
+                           )
+                   )
+                   : "A calcular";
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutTotal
+       ) {
+   
+           checkoutElements.checkoutTotal.textContent =
+               formatCurrency(
+                   checkoutState.total
+               );
+   
+       }
+   
+   
+       if (
+           checkoutElements.confirmationTotal
+       ) {
+   
+           checkoutElements.confirmationTotal.textContent =
+               formatCurrency(
+                   checkoutState.total
+               );
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      24. RENDERIZAR QUANTIDADE HERO
+      ============================================================ */
+   
+   function renderHeroQuantity() {
+   
+       const quantity =
+           getCartQuantity();
+   
+       if (
+           checkoutElements.heroCheckoutItems
+       ) {
+   
+           checkoutElements.heroCheckoutItems.textContent =
+               quantity === 1
+                   ? "1 item"
+                   : `${quantity} itens`;
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      25. RENDERIZAR PRODUTOS
+      ============================================================ */
+   
+   function renderSummaryProducts() {
+   
+       const container =
+           checkoutElements.checkoutSummaryProducts;
+   
+       if (!container) {
+           return;
+       }
+   
+       container.innerHTML = "";
+   
+       checkoutState.carrinho.forEach(
+           (produto, index) => {
+   
+               const item =
+                   document.createElement("article");
+   
+               item.className =
+                   "checkout-summary-product is-entering";
+   
+               item.style.animationDelay =
+                   `${index * 45}ms`;
+   
+               const nome =
+                   escapeHTML(
+                       getProdutoNome(produto)
+                   );
+   
+               const imagem =
+                   escapeHTML(
+                       getProdutoImagem(produto)
+                   );
+   
+               const quantidade =
+                   getProdutoQuantidade(produto);
+   
+               const preco =
+                   getProdutoPreco(produto);
+   
+               const sku =
+                   escapeHTML(
+                       getProdutoSku(produto)
+                   );
+   
+               const totalItem =
+                   preco * quantidade;
+   
+               item.innerHTML = `
+   
+                   <div class="checkout-summary-product-image">
+   
+                       ${
+                           imagem
+                               ? `
+                                   <img
+                                       src="${imagem}"
+                                       alt="${nome}"
+                                       loading="lazy"
+                                   >
+                               `
+                               : `
+                                   <i
+                                       class="fa-solid fa-gears"
+                                       aria-hidden="true"
+                                   ></i>
+                               `
+                       }
+   
+                       <span class="checkout-summary-product-quantity">
+                           ${quantidade}
+                       </span>
+   
+                   </div>
+   
+   
+                   <div class="checkout-summary-product-info">
+   
+                       <strong>
+                           ${nome}
+                       </strong>
+   
+                       ${
+                           sku
+                               ? `
+                                   <small>
+                                       Ref. ${sku}
+                                   </small>
+                               `
+                               : `
+                                   <small>
+                                       ${quantidade} ${
+                                           quantidade === 1
+                                               ? "unidade"
+                                               : "unidades"
+                                       }
+                                   </small>
+                               `
+                       }
+   
+                   </div>
+   
+   
+                   <strong class="checkout-summary-product-price">
+   
+                       ${formatCurrency(totalItem)}
+   
+                   </strong>
+   
+               `;
+   
+               container.appendChild(item);
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      26. CLIENTE
+      ============================================================ */
+   
+   function renderCustomer() {
+   
+       const cliente =
+           checkoutState.cliente;
+   
+       if (!cliente) {
+   
+           renderGuestCustomer();
+   
+           return;
+   
+       }
+   
+       const nome =
+           cliente.nome ??
+           cliente.nome_completo ??
+           cliente.name ??
+           "";
+   
+       const email =
+           cliente.email ??
+           "";
+   
+       const telefone =
+           cliente.telefone ??
+           cliente.celular ??
+           cliente.phone ??
+           "";
+   
+       const cpf =
+           cliente.cpf ??
+           cliente.documento ??
+           "";
+   
+       const foto =
+           cliente.foto ??
+           cliente.avatar ??
+           cliente.imagem ??
+           "";
+   
+       if (
+           checkoutElements.loggedCustomer
+       ) {
+   
+           checkoutElements.loggedCustomer.hidden =
+               false;
+   
+       }
+   
+       if (
+           checkoutElements.checkoutLoginRequired
+       ) {
+   
+           checkoutElements.checkoutLoginRequired.hidden =
+               true;
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutCustomerName
+       ) {
+   
+           checkoutElements.checkoutCustomerName.textContent =
+               nome || "Cliente";
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutCustomerEmail
+       ) {
+   
+           checkoutElements.checkoutCustomerEmail.textContent =
+               email || "";
+   
+       }
+   
+   
+       if (
+           checkoutElements.checkoutCustomerInitial
+       ) {
+   
+           checkoutElements.checkoutCustomerInitial.textContent =
+               nome
+                   ? nome.trim().charAt(0).toUpperCase()
+                   : "C";
+   
+       }
+   
+   
+       if (
+           foto &&
+           checkoutElements.checkoutCustomerAvatar
+       ) {
+   
+           checkoutElements.checkoutCustomerAvatar.src =
+               foto;
+   
+           checkoutElements.checkoutCustomerAvatar.hidden =
+               false;
+   
+           if (
+               checkoutElements.checkoutCustomerInitial
+           ) {
+   
+               checkoutElements.checkoutCustomerInitial.hidden =
+                   true;
+   
+           }
+   
+       }
+   
+   
+       setInputValue(
+           checkoutElements.customerName,
+           nome
+       );
+   
+       setInputValue(
+           checkoutElements.customerEmail,
+           email
+       );
+   
+       setInputValue(
+           checkoutElements.customerPhone,
+           telefone
+               ? maskPhone(telefone)
+               : ""
+       );
+   
+       setInputValue(
+           checkoutElements.customerDocument,
+           cpf
+               ? maskCPF(cpf)
+               : ""
+       );
+   
+   
+       if (
+           checkoutElements.headerAccountLabel
+       ) {
+   
+           checkoutElements.headerAccountLabel.textContent =
+               getFirstName(nome) || "Minha conta";
+   
+       }
+   
+   
+       if (
+           checkoutElements.accountButton
+       ) {
+   
+           checkoutElements.accountButton.href =
+               "perfil.html";
+   
+       }
+   
+   
+       restoreCustomerAddress(cliente);
+   
+       updateCustomerStatus();
+   
+   }
+   
+   
+   /* ============================================================
+      27. VISUAL VISITANTE
+      ============================================================ */
+   
+   function renderGuestCustomer() {
+   
+       if (
+           checkoutElements.loggedCustomer
+       ) {
+   
+           checkoutElements.loggedCustomer.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.checkoutLoginRequired
+       ) {
+   
+           checkoutElements.checkoutLoginRequired.hidden =
+               false;
+   
+       }
+   
+       if (
+           checkoutElements.headerAccountLabel
+       ) {
+   
+           checkoutElements.headerAccountLabel.textContent =
+               "Entrar";
+   
+       }
+   
+       if (
+           checkoutElements.accountButton
+       ) {
+   
+           checkoutElements.accountButton.href =
+               "login.html";
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      28. PRIMEIRO NOME
+      ============================================================ */
+   
+   function getFirstName(name) {
+   
+       if (!name) {
+           return "";
+       }
+   
+       return String(name)
+           .trim()
+           .split(/\s+/)[0];
+   
+   }
+   
+   
+   /* ============================================================
+      29. SET INPUT
+      ============================================================ */
+   
+   function setInputValue(element, value) {
+   
+       if (!element) {
+           return;
+       }
+   
+       if (
+           value === null ||
+           value === undefined
+       ) {
+           return;
+       }
+   
+       element.value =
+           String(value);
+   
+   }
+   
+   
+   /* ============================================================
+      30. RESTAURAR ENDEREÇO
+      ============================================================ */
+   
+   function restoreCustomerAddress(cliente) {
+   
+       const endereco =
+           cliente.endereco ??
+           cliente.address ??
+           cliente.endereco_entrega ??
+           null;
+   
+       if (!endereco) {
+           return;
+       }
+   
+       setInputValue(
+           checkoutElements.addressCep,
+           maskCEP(
+               endereco.cep ?? ""
+           )
+       );
+   
+       setInputValue(
+           checkoutElements.addressStreet,
+           endereco.rua ??
+           endereco.logradouro ??
+           ""
+       );
+   
+       setInputValue(
+           checkoutElements.addressNumber,
+           endereco.numero ??
+           ""
+       );
+   
+       setInputValue(
+           checkoutElements.addressComplement,
+           endereco.complemento ??
+           ""
+       );
+   
+       setInputValue(
+           checkoutElements.addressDistrict,
+           endereco.bairro ??
+           ""
+       );
+   
+       setInputValue(
+           checkoutElements.addressCity,
+           endereco.cidade ??
+           endereco.localidade ??
+           ""
+       );
+   
+       setInputValue(
+           checkoutElements.addressState,
+           endereco.estado ??
+           endereco.uf ??
+           ""
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      31. SOMENTE NÚMEROS
+      ============================================================ */
+   
+   function onlyNumbers(value) {
+   
+       return String(value || "")
+           .replace(/\D/g, "");
+   
+   }
+   
+   
+   /* ============================================================
+      32. MÁSCARA CPF
+      ============================================================ */
+   
+   function maskCPF(value) {
+   
+       const numbers =
+           onlyNumbers(value)
+               .slice(0, 11);
+   
+       return numbers
+           .replace(
+               /(\d{3})(\d)/,
+               "$1.$2"
+           )
+           .replace(
+               /(\d{3})(\d)/,
+               "$1.$2"
+           )
+           .replace(
+               /(\d{3})(\d{1,2})$/,
+               "$1-$2"
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      33. MÁSCARA CEP
+      ============================================================ */
+   
+   function maskCEP(value) {
+   
+       const numbers =
+           onlyNumbers(value)
+               .slice(0, 8);
+   
+       return numbers.replace(
+           /(\d{5})(\d)/,
+           "$1-$2"
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      34. MÁSCARA TELEFONE
+      ============================================================ */
+   
+   function maskPhone(value) {
+   
+       const numbers =
+           onlyNumbers(value)
+               .slice(0, 11);
+   
+       if (numbers.length <= 10) {
+   
+           return numbers
+               .replace(
+                   /(\d{2})(\d)/,
+                   "($1) $2"
+               )
+               .replace(
+                   /(\d{4})(\d)/,
+                   "$1-$2"
+               );
+   
+       }
+   
+       return numbers
+           .replace(
+               /(\d{2})(\d)/,
+               "($1) $2"
+           )
+           .replace(
+               /(\d{5})(\d)/,
+               "$1-$2"
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      35. VALIDAÇÃO CPF
+      ============================================================ */
+   
+   function validateCPF(value) {
+   
+       const cpf =
+           onlyNumbers(value);
+   
+       if (cpf.length !== 11) {
+           return false;
+       }
+   
+       if (/^(\d)\1{10}$/.test(cpf)) {
+           return false;
+       }
+   
+       let sum = 0;
+   
+       for (let i = 0; i < 9; i++) {
+   
+           sum +=
+               Number(cpf[i]) *
+               (10 - i);
+   
+       }
+   
+       let digit =
+           (sum * 10) % 11;
+   
+       if (digit === 10) {
+           digit = 0;
+       }
+   
+       if (
+           digit !== Number(cpf[9])
+       ) {
+           return false;
+       }
+   
+       sum = 0;
+   
+       for (let i = 0; i < 10; i++) {
+   
+           sum +=
+               Number(cpf[i]) *
+               (11 - i);
+   
+       }
+   
+       digit =
+           (sum * 10) % 11;
+   
+       if (digit === 10) {
+           digit = 0;
+       }
+   
+       return (
+           digit === Number(cpf[10])
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      36. VALIDAÇÃO EMAIL
+      ============================================================ */
+   
+   function validateEmail(email) {
+   
+       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+           .test(
+               String(email || "").trim()
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      37. ERRO DE CAMPO
+      ============================================================ */
+   
+   function setFieldError(
+       input,
+       message
+   ) {
+   
+       if (!input) {
+           return;
+       }
+   
+       const field =
+           input.closest(
+               ".checkout-field"
+           );
+   
+       if (field) {
+   
+           field.classList.add(
+               "is-error"
+           );
+   
+           field.classList.remove(
+               "is-valid"
+           );
+   
+       }
+   
+       const error =
+           document.querySelector(
+               `[data-error-for="${input.id}"]`
+           );
+   
+       if (error) {
+   
+           error.textContent =
+               message || "";
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      38. CAMPO VÁLIDO
+      ============================================================ */
+   
+   function setFieldValid(input) {
+   
+       if (!input) {
+           return;
+       }
+   
+       const field =
+           input.closest(
+               ".checkout-field"
+           );
+   
+       if (field) {
+   
+           field.classList.remove(
+               "is-error"
+           );
+   
+           field.classList.add(
+               "is-valid"
+           );
+   
+       }
+   
+       const error =
+           document.querySelector(
+               `[data-error-for="${input.id}"]`
+           );
+   
+       if (error) {
+   
+           error.textContent = "";
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      39. LIMPAR ESTADO DO CAMPO
+      ============================================================ */
+   
+   function clearFieldState(input) {
+   
+       if (!input) {
+           return;
+       }
+   
+       const field =
+           input.closest(
+               ".checkout-field"
+           );
+   
+       if (field) {
+   
+           field.classList.remove(
+               "is-error",
+               "is-valid"
+           );
+   
+       }
+   
+       const error =
+           document.querySelector(
+               `[data-error-for="${input.id}"]`
+           );
+   
+       if (error) {
+           error.textContent = "";
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      40. VALIDAR CLIENTE
+      ============================================================ */
+   
+   function validateCustomer() {
+   
+       let valid = true;
+   
+       const nome =
+           checkoutElements.customerName
+               ?.value
+               .trim() || "";
+   
+       const email =
+           checkoutElements.customerEmail
+               ?.value
+               .trim() || "";
+   
+       const telefone =
+           onlyNumbers(
+               checkoutElements.customerPhone
+                   ?.value
+           );
+   
+       const cpf =
+           checkoutElements.customerDocument
+               ?.value
+               .trim() || "";
+   
+   
+       if (nome.length < 3) {
+   
+           setFieldError(
+               checkoutElements.customerName,
+               "Informe seu nome completo."
+           );
+   
+           valid = false;
+   
+       } else {
+   
+           setFieldValid(
+               checkoutElements.customerName
+           );
+   
+       }
+   
+   
+       if (!validateEmail(email)) {
+   
+           setFieldError(
+               checkoutElements.customerEmail,
+               "Informe um e-mail válido."
+           );
+   
+           valid = false;
+   
+       } else {
+   
+           setFieldValid(
+               checkoutElements.customerEmail
+           );
+   
+       }
+   
+   
+       if (
+           telefone.length < 10 ||
+           telefone.length > 11
+       ) {
+   
+           setFieldError(
+               checkoutElements.customerPhone,
+               "Informe um telefone válido."
+           );
+   
+           valid = false;
+   
+       } else {
+   
+           setFieldValid(
+               checkoutElements.customerPhone
+           );
+   
+       }
+   
+   
+       if (!validateCPF(cpf)) {
+   
+           setFieldError(
+               checkoutElements.customerDocument,
+               "Informe um CPF válido."
+           );
+   
+           valid = false;
+   
+       } else {
+   
+           setFieldValid(
+               checkoutElements.customerDocument
+           );
+   
+       }
+   
+   
+       setSectionStatus(
+           checkoutElements.customerStatus,
+           valid
+               ? "Concluído"
+               : "Revisar",
+           valid
+               ? "valid"
+               : "error"
+       );
+   
+       return valid;
+   
+   }
+   
+   
+   /* ============================================================
+      41. STATUS CLIENTE DINÂMICO
+      ============================================================ */
+   
+   function updateCustomerStatus() {
+   
+       const nome =
+           checkoutElements.customerName
+               ?.value
+               .trim();
+   
+       const email =
+           checkoutElements.customerEmail
+               ?.value
+               .trim();
+   
+       const telefone =
+           onlyNumbers(
+               checkoutElements.customerPhone
+                   ?.value
+           );
+   
+       const cpf =
+           onlyNumbers(
+               checkoutElements.customerDocument
+                   ?.value
+           );
+   
+       const complete =
+           nome?.length >= 3 &&
+           validateEmail(email) &&
+           telefone.length >= 10 &&
+           cpf.length === 11;
+   
+       if (complete) {
+   
+           setSectionStatus(
+               checkoutElements.customerStatus,
+               "Preenchido",
+               "valid"
+           );
+   
+       } else {
+   
+           setSectionStatus(
+               checkoutElements.customerStatus,
+               "Aguardando"
+           );
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      42. VALIDAR ENDEREÇO
+      ============================================================ */
+   
+   function validateAddress() {
+   
+       let valid = true;
+   
+       const fields = [
+   
+           {
+               element:
+                   checkoutElements.addressCep,
+   
+               valid:
+                   onlyNumbers(
+                       checkoutElements.addressCep
+                           ?.value
+                   ).length === 8,
+   
+               message:
+                   "Informe um CEP válido."
+           },
+   
+           {
+               element:
+                   checkoutElements.addressStreet,
+   
+               valid:
+                   (
+                       checkoutElements.addressStreet
+                           ?.value
+                           .trim()
+                           .length || 0
+                   ) >= 3,
+   
+               message:
+                   "Informe a rua."
+           },
+   
+           {
+               element:
+                   checkoutElements.addressNumber,
+   
+               valid:
+                   Boolean(
+                       checkoutElements.addressNumber
+                           ?.value
+                           .trim()
+                   ),
+   
+               message:
+                   "Informe o número."
+           },
+   
+           {
+               element:
+                   checkoutElements.addressDistrict,
+   
+               valid:
+                   Boolean(
+                       checkoutElements.addressDistrict
+                           ?.value
+                           .trim()
+                   ),
+   
+               message:
+                   "Informe o bairro."
+           },
+   
+           {
+               element:
+                   checkoutElements.addressCity,
+   
+               valid:
+                   Boolean(
+                       checkoutElements.addressCity
+                           ?.value
+                           .trim()
+                   ),
+   
+               message:
+                   "Informe a cidade."
+           },
+   
+           {
+               element:
+                   checkoutElements.addressState,
+   
+               valid:
+                   Boolean(
+                       checkoutElements.addressState
+                           ?.value
+                   ),
+   
+               message:
+                   "Selecione o estado."
+           }
+   
+       ];
+   
+   
+       fields.forEach((field) => {
+   
+           if (!field.valid) {
+   
+               setFieldError(
+                   field.element,
+                   field.message
+               );
+   
+               valid = false;
+   
+           } else {
+   
+               setFieldValid(
+                   field.element
+               );
+   
+           }
+   
+       });
+   
+   
+       setSectionStatus(
+           checkoutElements.addressStatus,
+           valid
+               ? "Concluído"
+               : "Revisar",
+           valid
+               ? "valid"
+               : "error"
+       );
+   
+       return valid;
+   
+   }
+   
+   
+   /* ============================================================
+      43. ATUALIZAR STATUS ENDEREÇO
+      ============================================================ */
+   
+   function updateAddressStatus() {
+   
+       const cep =
+           onlyNumbers(
+               checkoutElements.addressCep
+                   ?.value
+           );
+   
+       const street =
+           checkoutElements.addressStreet
+               ?.value
+               .trim();
+   
+       const number =
+           checkoutElements.addressNumber
+               ?.value
+               .trim();
+   
+       const district =
+           checkoutElements.addressDistrict
+               ?.value
+               .trim();
+   
+       const city =
+           checkoutElements.addressCity
+               ?.value
+               .trim();
+   
+       const state =
+           checkoutElements.addressState
+               ?.value;
+   
+       const complete =
+           cep.length === 8 &&
+           street &&
+           number &&
+           district &&
+           city &&
+           state;
+   
+       if (complete) {
+   
+           setSectionStatus(
+               checkoutElements.addressStatus,
+               "Preenchido",
+               "valid"
+           );
+   
+       } else {
+   
+           setSectionStatus(
+               checkoutElements.addressStatus,
+               "Aguardando"
+           );
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      44. STATUS DE SEÇÃO
+      ============================================================ */
+   
+   function setSectionStatus(
+       element,
+       text,
+       type = ""
+   ) {
+   
+       if (!element) {
+           return;
+       }
+   
+       element.classList.remove(
+           "is-valid",
+           "is-error"
+       );
+   
+       if (type === "valid") {
+   
+           element.classList.add(
+               "is-valid"
+           );
+   
+       }
+   
+       if (type === "error") {
+   
+           element.classList.add(
+               "is-error"
+           );
+   
+       }
+   
+       element.innerHTML = `
+   
+           <i class="fa-solid fa-circle"></i>
+   
+           ${escapeHTML(text)}
+   
+       `;
+   
+   }
+   
+   
+   /* ============================================================
+      45. CONSULTAR CEP
+      ============================================================ */
+   
+   async function searchCEP() {
+   
+       const input =
+           checkoutElements.addressCep;
+   
+       if (!input) {
+           return;
+       }
+   
+       const cep =
+           onlyNumbers(
+               input.value
+           );
+   
+       if (cep.length !== 8) {
+   
+           checkoutState.cepConsultado =
+               null;
+   
+           resetShipping();
+   
+           return;
+   
+       }
+   
+       if (
+           checkoutState.cepConsultado === cep
+       ) {
+           return;
+       }
+   
+       checkoutState.cepConsultado =
+           cep;
+   
+       toggleCepLoader(true);
+   
+       try {
+   
+           const response =
+               await fetch(
+                   `${CHECKOUT_CONFIG.cepApi}${cep}/json/`
+               );
+   
+           if (!response.ok) {
+   
+               throw new Error(
+                   "Falha ao consultar CEP."
+               );
+   
+           }
+   
+           const data =
+               await response.json();
+   
+           if (data.erro) {
+   
+               throw new Error(
+                   "CEP não encontrado."
+               );
+   
+           }
+   
+   
+           setInputValue(
+               checkoutElements.addressStreet,
+               data.logradouro || ""
+           );
+   
+           setInputValue(
+               checkoutElements.addressDistrict,
+               data.bairro || ""
+           );
+   
+           setInputValue(
+               checkoutElements.addressCity,
+               data.localidade || ""
+           );
+   
+           setInputValue(
+               checkoutElements.addressState,
+               data.uf || ""
+           );
+   
+   
+           clearFieldState(
+               checkoutElements.addressCep
+           );
+   
+           setFieldValid(
+               checkoutElements.addressCep
+           );
+   
+   
+           updateAddressStatus();
+   
+   
+           /*
+               IMPORTANTE:
+   
+               Aqui não inventamos valor real de frete.
+   
+               Enquanto não houver integração com transportadora,
+               mostramos apenas uma opção que depende da cotação
+               real do backend.
+   
+               Se o seu backend já retornar frete, você poderá
+               substituir renderPendingShipping() por uma chamada
+               à API de frete.
+           */
+   
+           renderPendingShipping();
+   
+   
+           if (
+               checkoutElements.addressNumber
+           ) {
+   
+               checkoutElements.addressNumber.focus();
+   
+           }
+   
+       } catch (error) {
+   
+           console.error(
+               "[Checkout] CEP:",
+               error
+           );
+   
+           checkoutState.cepConsultado =
+               null;
+   
+           setFieldError(
+               input,
+               error.message ||
+               "Não foi possível consultar o CEP."
+           );
+   
+           showShippingError();
+   
+       } finally {
+   
+           toggleCepLoader(false);
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      46. LOADER CEP
+      ============================================================ */
+   
+   function toggleCepLoader(show) {
+   
+       if (
+           checkoutElements.cepLoader
+       ) {
+   
+           checkoutElements.cepLoader.hidden =
+               !show;
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      47. FRETE PENDENTE DE INTEGRAÇÃO
+      ============================================================ */
+   
+   function renderPendingShipping() {
+   
+       const container =
+           checkoutElements.shippingOptions;
+   
+       if (!container) {
+           return;
+       }
+   
+       if (
+           checkoutElements.shippingPlaceholder
+       ) {
+   
+           checkoutElements.shippingPlaceholder.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.shippingError
+       ) {
+   
+           checkoutElements.shippingError.hidden =
+               true;
+   
+       }
+   
+       container.hidden =
+           false;
+   
+       container.innerHTML = `
+   
+           <div class="shipping-placeholder">
+   
+               <span>
+   
+                   <i class="fa-solid fa-truck-fast"></i>
+   
+               </span>
+   
+   
+               <div>
+   
+                   <strong>
+                       Endereço identificado
+                   </strong>
+   
+                   <p>
+                       O valor e o prazo da entrega serão
+                       definidos pela integração de frete
+                       conectada ao sistema.
+                   </p>
+   
+               </div>
+   
+           </div>
+   
+       `;
+   
+       checkoutState.shippingSelected =
+           null;
+   
+       checkoutState.frete =
+           0;
+   
+       setSectionStatus(
+           checkoutElements.shippingStatus,
+           "Aguardando cotação"
+       );
+   
+       recalculateTotals();
+   
+   }
+   
+   
+   /* ============================================================
+      48. RENDERIZAR OPÇÕES REAIS DE FRETE
+      ============================================================ */
+   
+   function renderShippingOptions(options = []) {
+   
+       const container =
+           checkoutElements.shippingOptions;
+   
+       if (!container) {
+           return;
+       }
+   
+       if (!Array.isArray(options)) {
+           options = [];
+       }
+   
+       if (!options.length) {
+   
+           renderPendingShipping();
+   
+           return;
+   
+       }
+   
+       if (
+           checkoutElements.shippingPlaceholder
+       ) {
+   
+           checkoutElements.shippingPlaceholder.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.shippingError
+       ) {
+   
+           checkoutElements.shippingError.hidden =
+               true;
+   
+       }
+   
+       container.hidden =
+           false;
+   
+       container.innerHTML = "";
+   
+   
+       options.forEach(
+           (option, index) => {
+   
+               const id =
+                   option.id ??
+                   option.codigo ??
+                   `frete-${index}`;
+   
+               const nome =
+                   option.nome ??
+                   option.servico ??
+                   "Entrega";
+   
+               const prazo =
+                   option.prazo ??
+                   option.prazo_dias ??
+                   "";
+   
+               const valor =
+                   toNumber(
+                       option.valor ??
+                       option.preco ??
+                       0
+                   );
+   
+               const label =
+                   document.createElement(
+                       "label"
+                   );
+   
+               label.className =
+                   "shipping-option";
+   
+               label.innerHTML = `
+   
+                   <input
+                       type="radio"
+                       name="shippingMethod"
+                       value="${escapeHTML(id)}"
+                       data-price="${valor}"
+                   >
+   
+   
+                   <span class="shipping-option-card">
+   
+                       <span class="shipping-option-icon">
+   
+                           <i class="fa-solid fa-truck"></i>
+   
+                       </span>
+   
+   
+                       <span class="shipping-option-info">
+   
+                           <strong>
+                               ${escapeHTML(nome)}
+                           </strong>
+   
+                           <small>
+                               ${
+                                   prazo
+                                       ? escapeHTML(
+                                           `${prazo} dias úteis`
+                                       )
+                                       : "Prazo informado pela transportadora"
+                               }
+                           </small>
+   
+                       </span>
+   
+   
+                       <strong class="shipping-option-price">
+   
+                           ${
+                               valor === 0
+                                   ? "Grátis"
+                                   : formatCurrency(valor)
+                           }
+   
+                       </strong>
+   
+                   </span>
+   
+               `;
+   
+               container.appendChild(
+                   label
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      49. SELECIONAR FRETE
+      ============================================================ */
+   
+   function handleShippingChange(event) {
+   
+       const input =
+           event.target.closest(
+               'input[name="shippingMethod"]'
+           );
+   
+       if (!input) {
+           return;
+       }
+   
+       checkoutState.shippingSelected =
+           input.value;
+   
+       checkoutState.frete =
+           toNumber(
+               input.dataset.price
+           );
+   
+       setSectionStatus(
+           checkoutElements.shippingStatus,
+           "Selecionado",
+           "valid"
+       );
+   
+       recalculateTotals();
+   
+   }
+   
+   
+   /* ============================================================
+      50. RESET FRETE
+      ============================================================ */
+   
+   function resetShipping() {
+   
+       checkoutState.shippingSelected =
+           null;
+   
+       checkoutState.frete =
+           0;
+   
+       if (
+           checkoutElements.shippingOptions
+       ) {
+   
+           checkoutElements.shippingOptions.hidden =
+               true;
+   
+           checkoutElements.shippingOptions.innerHTML =
+               "";
+   
+       }
+   
+       if (
+           checkoutElements.shippingError
+       ) {
+   
+           checkoutElements.shippingError.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.shippingPlaceholder
+       ) {
+   
+           checkoutElements.shippingPlaceholder.hidden =
+               false;
+   
+       }
+   
+       setSectionStatus(
+           checkoutElements.shippingStatus,
+           "Aguardando CEP"
+       );
+   
+       recalculateTotals();
+   
+   }
+   
+   
+   /* ============================================================
+      51. ERRO FRETE
+      ============================================================ */
+   
+   function showShippingError() {
+   
+       if (
+           checkoutElements.shippingPlaceholder
+       ) {
+   
+           checkoutElements.shippingPlaceholder.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.shippingOptions
+       ) {
+   
+           checkoutElements.shippingOptions.hidden =
+               true;
+   
+       }
+   
+       if (
+           checkoutElements.shippingError
+       ) {
+   
+           checkoutElements.shippingError.hidden =
+               false;
+   
+       }
+   
+       setSectionStatus(
+           checkoutElements.shippingStatus,
+           "Erro",
+           "error"
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      52. PAGAMENTO
+      ============================================================ */
+   
+   function handlePaymentChange(event) {
+   
+       const input =
+           event.target.closest(
+               'input[name="paymentMethod"]'
+           );
+   
+       if (!input) {
+           return;
+       }
+   
+       checkoutState.paymentSelected =
+           input.value;
+   
+       if (
+           checkoutElements.paymentError
+       ) {
+   
+           checkoutElements.paymentError.textContent =
+               "";
+   
+       }
+   
+       setSectionStatus(
+           checkoutElements.paymentStatus,
+           "Selecionado",
+           "valid"
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      53. VALIDAR PAGAMENTO
+      ============================================================ */
+   
+   function validatePayment() {
+   
+       const checked =
+           $(
+               'input[name="paymentMethod"]:checked'
+           );
+   
+       if (!checked) {
+   
+           if (
+               checkoutElements.paymentError
+           ) {
+   
+               checkoutElements.paymentError.textContent =
+                   "Selecione uma forma de pagamento.";
+   
+           }
+   
+           setSectionStatus(
+               checkoutElements.paymentStatus,
+               "Revisar",
+               "error"
+           );
+   
+           return false;
+   
+       }
+   
+       checkoutState.paymentSelected =
+           checked.value;
+   
+       if (
+           checkoutElements.paymentError
+       ) {
+   
+           checkoutElements.paymentError.textContent =
+               "";
+   
+       }
+   
+       setSectionStatus(
+           checkoutElements.paymentStatus,
+           "Selecionado",
+           "valid"
+       );
+   
+       return true;
+   
+   }
+   
+   
+   /* ============================================================
+      54. VALIDAR TERMOS
+      ============================================================ */
+   
+   function validateTerms() {
+   
+       if (
+           !checkoutElements.acceptTerms
+               ?.checked
+       ) {
+   
+           if (
+               checkoutElements.termsError
+           ) {
+   
+               checkoutElements.termsError.textContent =
+                   "Confirme os dados antes de finalizar.";
+   
+           }
+   
+           return false;
+   
+       }
+   
+       if (
+           checkoutElements.termsError
+       ) {
+   
+           checkoutElements.termsError.textContent =
+               "";
+   
+       }
+   
+       return true;
+   
+   }
+   
+   
+   /* ============================================================
+      55. VALIDAR CARRINHO
+      ============================================================ */
+   
+   function validateCart() {
+   
+       if (
+           !checkoutState.carrinho.length
+       ) {
+   
+           showErrorModal(
+               "Seu carrinho está vazio."
+           );
+   
+           return false;
+   
+       }
+   
+       return true;
+   
+   }
+   
+   
+   /* ============================================================
+      56. VALIDAR LOGIN
+      ============================================================ */
+   
+   function validateLogin() {
+   
+       const clienteId =
+           getClienteId(
+               checkoutState.cliente
+           );
+   
+       if (!clienteId) {
+   
+           showErrorModal(
+               "Entre na sua conta antes de finalizar o pedido."
+           );
+   
+           return false;
+   
+       }
+   
+       return true;
+   
+   }
+   
+   
+   /* ============================================================
+      57. VALIDAÇÃO COMPLETA
+      ============================================================ */
+   
+   function validateCheckout() {
+   
+       const cartValid =
+           validateCart();
+   
+       if (!cartValid) {
+           return false;
+       }
+   
+       const loginValid =
+           validateLogin();
+   
+       if (!loginValid) {
+           return false;
+       }
+   
+       const customerValid =
+           validateCustomer();
+   
+       const addressValid =
+           validateAddress();
+   
+       const paymentValid =
+           validatePayment();
+   
+       const termsValid =
+           validateTerms();
+   
+   
+       const valid =
+           customerValid &&
+           addressValid &&
+           paymentValid &&
+           termsValid;
+   
+   
+       if (!valid) {
+   
+           scrollToFirstError();
+   
+           shakeInvalidCard();
+   
+       }
+   
+       return valid;
+   
+   }
+   
+   
+   /* ============================================================
+      58. SCROLL PRIMEIRO ERRO
+      ============================================================ */
+   
+   function scrollToFirstError() {
+   
+       const errorField =
+           $(".checkout-field.is-error");
+   
+       if (errorField) {
+   
+           errorField.scrollIntoView({
+               behavior: "smooth",
+               block: "center"
+           });
+   
+           return;
+   
+       }
+   
+       if (
+           checkoutElements.paymentError
+               ?.textContent
+       ) {
+   
+           const paymentCard =
+               checkoutElements.paymentError.closest(
+                   ".checkout-card"
+               );
+   
+           paymentCard?.scrollIntoView({
+               behavior: "smooth",
+               block: "center"
+           });
+   
+           return;
+   
+       }
+   
+       if (
+           checkoutElements.termsError
+               ?.textContent
+       ) {
+   
+           checkoutElements.acceptTerms
+               ?.closest(
+                   ".checkout-summary"
+               )
+               ?.scrollIntoView({
+                   behavior: "smooth",
+                   block: "center"
+               });
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      59. SHAKE
+      ============================================================ */
+   
+   function shakeInvalidCard() {
+   
+       const card =
+           $(".checkout-field.is-error")
+               ?.closest(
+                   ".checkout-card"
+               );
+   
+       if (!card) {
+           return;
+       }
+   
+       card.classList.remove(
+           "checkout-shake"
+       );
+   
+       void card.offsetWidth;
+   
+       card.classList.add(
+           "checkout-shake"
+       );
+   
+       window.setTimeout(
+           () => {
+   
+               card.classList.remove(
+                   "checkout-shake"
+               );
+   
+           },
+           500
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      60. DADOS DO CLIENTE
+      ============================================================ */
+   
+   function getCustomerFormData() {
+   
+       return {
+   
+           nome:
+               checkoutElements.customerName
+                   ?.value
+                   .trim() || "",
+   
+           email:
+               checkoutElements.customerEmail
+                   ?.value
+                   .trim() || "",
+   
+           telefone:
+               onlyNumbers(
+                   checkoutElements.customerPhone
+                       ?.value
+               ),
+   
+           cpf:
+               onlyNumbers(
+                   checkoutElements.customerDocument
+                       ?.value
+               )
+   
+       };
+   
+   }
+   
+   
+   /* ============================================================
+      61. DADOS ENDEREÇO
+      ============================================================ */
+   
+   function getAddressData() {
+   
+       return {
+   
+           cep:
+               onlyNumbers(
+                   checkoutElements.addressCep
+                       ?.value
+               ),
+   
+           rua:
+               checkoutElements.addressStreet
+                   ?.value
+                   .trim() || "",
+   
+           numero:
+               checkoutElements.addressNumber
+                   ?.value
+                   .trim() || "",
+   
+           complemento:
+               checkoutElements.addressComplement
+                   ?.value
+                   .trim() || "",
+   
+           bairro:
+               checkoutElements.addressDistrict
+                   ?.value
+                   .trim() || "",
+   
+           cidade:
+               checkoutElements.addressCity
+                   ?.value
+                   .trim() || "",
+   
+           estado:
+               checkoutElements.addressState
+                   ?.value || ""
+   
+       };
+   
+   }
+   
+   
+   /* ============================================================
+      62. ITENS PARA API
+      ============================================================ */
+   
+   function getOrderItems() {
+   
+       return checkoutState.carrinho.map(
+           (produto) => {
+   
+               return {
+   
+                   id_produto:
+                       getProdutoId(produto),
+   
+                   quantidade:
+                       getProdutoQuantidade(produto),
+   
+                   preco_unitario:
+                       getProdutoPreco(produto)
+   
+               };
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      63. PAYLOAD PEDIDO
+      ============================================================ */
+   
+   function buildOrderPayload() {
+   
+       const cliente =
+           getCustomerFormData();
+   
+       const endereco =
+           getAddressData();
+   
+       const idCliente =
+           getClienteId(
+               checkoutState.cliente
+           );
+   
+       return {
+   
+           id_cliente:
+               idCliente,
+   
+           itens:
+               getOrderItems(),
+   
+           endereco_entrega:
+               endereco,
+   
+           cliente:
+               cliente,
+   
+           forma_pagamento:
+               checkoutState.paymentSelected,
+   
+           frete: {
+   
+               metodo:
+                   checkoutState.shippingSelected,
+   
+               valor:
+                   checkoutState.frete
+   
+           },
+   
+           valores: {
+   
+               subtotal:
+                   checkoutState.subtotal,
+   
+               desconto:
+                   checkoutState.desconto,
+   
+               frete:
+                   checkoutState.frete,
+   
+               total:
+                   checkoutState.total
+   
+           },
+   
+           observacoes:
+               checkoutElements.orderNotes
+                   ?.value
+                   .trim() || ""
+   
+       };
+   
+   }
+   
+   
+   /* ============================================================
+      64. ABRIR CONFIRMAÇÃO
+      ============================================================ */
+   
+   function openConfirmationModal() {
+   
+       if (
+           !validateCheckout()
+       ) {
+           return;
+       }
+   
+       if (
+           checkoutElements.confirmationTotal
+       ) {
+   
+           checkoutElements.confirmationTotal.textContent =
+               formatCurrency(
+                   checkoutState.total
+               );
+   
+       }
+   
+       openModal(
+           checkoutElements.confirmationModal
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      65. CRIAR PEDIDO
+      ============================================================ */
+   
+   async function createOrder() {
+   
+       if (
+           checkoutState.processing
+       ) {
+           return;
+       }
+   
+       if (
+           !validateCheckout()
+       ) {
+   
+           closeModal(
+               checkoutElements.confirmationModal
+           );
+   
+           return;
+   
+       }
+   
+       checkoutState.processing =
+           true;
+   
+       setProcessingState(true);
+   
+       const payload =
+           buildOrderPayload();
+   
+       try {
+   
+           const response =
+               await fetch(
+                   CHECKOUT_CONFIG.apiBase +
+                   CHECKOUT_CONFIG.endpoints.pedidos,
+                   {
+                       method: "POST",
+   
+                       headers: {
+                           "Content-Type":
+                               "application/json"
+                       },
+   
+                       body:
+                           JSON.stringify(
+                               payload
+                           )
+                   }
+               );
+   
+   
+           const responseData =
+               await parseResponse(
+                   response
+               );
+   
+   
+           if (!response.ok) {
+   
+               const message =
+                   responseData?.message ??
+                   responseData?.erro ??
+                   responseData?.error ??
+                   `Erro ${response.status} ao criar o pedido.`;
+   
+               throw new Error(
+                   message
+               );
+   
+           }
+   
+   
+           const pedido =
+               normalizeCreatedOrder(
+                   responseData
+               );
+   
+   
+           checkoutState.pedidoCriado =
+               pedido;
+   
+   
+           saveLastOrder(
+               pedido,
+               payload
+           );
+   
+   
+           saveAddressIfNecessary();
+   
+   
+           clearCartAfterSuccess();
+   
+   
+           closeModal(
+               checkoutElements.confirmationModal
+           );
+   
+   
+           showSuccessModal(
+               pedido
+           );
+   
+       } catch (error) {
+   
+           console.error(
+               "[Checkout] Erro ao criar pedido:",
+               error
+           );
+   
+           closeModal(
+               checkoutElements.confirmationModal
+           );
+   
+           showErrorModal(
+               error.message ||
+               "Não foi possível criar o pedido."
+           );
+   
+       } finally {
+   
+           checkoutState.processing =
+               false;
+   
+           setProcessingState(false);
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      66. PARSE RESPONSE
+      ============================================================ */
+   
+   async function parseResponse(response) {
+   
+       const contentType =
+           response.headers.get(
+               "content-type"
+           ) || "";
+   
+       if (
+           contentType.includes(
+               "application/json"
+           )
+       ) {
+   
+           try {
+   
+               return await response.json();
+   
+           } catch {
+   
+               return null;
+   
+           }
+   
+       }
+   
+       try {
+   
+           const text =
+               await response.text();
+   
+           return text
+               ? { message: text }
+               : null;
+   
+       } catch {
+   
+           return null;
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      67. NORMALIZAR PEDIDO CRIADO
+      ============================================================ */
+   
+   function normalizeCreatedOrder(data) {
+   
+       if (!data) {
+   
+           return {
+               id: null
+           };
+   
+       }
+   
+       const pedido =
+           data.pedido ??
+           data.data ??
+           data;
+   
+   
+       return {
+   
+           ...pedido,
+   
+           id:
+               pedido.id_pedido ??
+               pedido.id ??
+               pedido.numero_pedido ??
+               null
+   
+       };
+   
+   }
+   
+   
+   /* ============================================================
+      68. SALVAR ÚLTIMO PEDIDO
+      ============================================================ */
+   
+   function saveLastOrder(
+       pedido,
+       payload
+   ) {
+   
+       const data = {
+   
+           pedido,
+   
+           payload,
+   
+           criado_em:
+               new Date().toISOString()
+   
+       };
+   
+       setStorageJSON(
+           CHECKOUT_CONFIG.storage.ultimoPedido,
+           data
+       );
+   
+   
+       /*
+           Compatibilidade com o fluxo anterior
+           da Auto Peça Certa.
+       */
+   
+       setStorageJSON(
+           CHECKOUT_CONFIG.storage.clientePedido,
+           {
+               id_cliente:
+                   payload.id_cliente,
+   
+               id_pedido:
+                   pedido.id ??
+                   null
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      69. SALVAR ENDEREÇO LOCALMENTE
+      ============================================================ */
+   
+   function saveAddressIfNecessary() {
+   
+       if (
+           !checkoutElements.saveAddress
+               ?.checked
+       ) {
+           return;
+       }
+   
+       if (
+           !checkoutState.cliente
+       ) {
+           return;
+       }
+   
+       const clienteAtualizado = {
+   
+           ...checkoutState.cliente,
+   
+           endereco:
+               getAddressData()
+   
+       };
+   
+       checkoutState.cliente =
+           clienteAtualizado;
+   
+       setStorageJSON(
+           CHECKOUT_CONFIG.storage.cliente,
+           clienteAtualizado
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      70. LIMPAR CARRINHO
+      ============================================================ */
+   
+   function clearCartAfterSuccess() {
+   
+       checkoutState.carrinho =
+           [];
+   
+       const possibleKeys = [
+           CHECKOUT_CONFIG.storage.carrinho,
+           "cart",
+           "carrinhoAPC"
+       ];
+   
+       possibleKeys.forEach(
+           (key) => {
+   
+               localStorage.removeItem(
+                   key
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      71. ESTADO PROCESSANDO
+      ============================================================ */
+   
+   function setProcessingState(processing) {
+   
+       if (
+           checkoutElements.finishOrderButton
+       ) {
+   
+           checkoutElements.finishOrderButton.disabled =
+               processing;
+   
+       }
+   
+       if (
+           checkoutElements.finishButtonLoader
+       ) {
+   
+           checkoutElements.finishButtonLoader.hidden =
+               !processing;
+   
+       }
+   
+       if (
+           checkoutElements.confirmationConfirm
+       ) {
+   
+           checkoutElements.confirmationConfirm.disabled =
+               processing;
+   
+           const text =
+               checkoutElements.confirmationConfirm.querySelector(
+                   "span"
+               );
+   
+           if (text) {
+   
+               text.textContent =
+                   processing
+                       ? "Enviando pedido..."
+                       : "Confirmar pedido";
+   
+           }
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      72. MODAL
+      ============================================================ */
+   
+   function openModal(modal) {
+   
+       if (!modal) {
+           return;
+       }
+   
+       modal.hidden =
+           false;
+   
+       document.body.style.overflow =
+           "hidden";
+   
+   }
+   
+   
+   function closeModal(modal) {
+   
+       if (!modal) {
+           return;
+       }
+   
+       modal.hidden =
+           true;
+   
+       const anyOpen =
+           $(
+               ".checkout-modal-overlay:not([hidden])"
+           );
+   
+       if (!anyOpen) {
+   
+           document.body.style.overflow =
+               "";
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      73. MODAL SUCESSO
+      ============================================================ */
+   
+   function showSuccessModal(pedido) {
+   
+       const numero =
+           pedido?.numero_pedido ??
+           pedido?.id_pedido ??
+           pedido?.id ??
+           "Registrado";
+   
+       if (
+           checkoutElements.successOrderNumber
+       ) {
+   
+           checkoutElements.successOrderNumber.textContent =
+               numero === "Registrado"
+                   ? numero
+                   : `#${numero}`;
+   
+       }
+   
+       openModal(
+           checkoutElements.successModal
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      74. MODAL ERRO
+      ============================================================ */
+   
+   function showErrorModal(message) {
+   
+       if (
+           checkoutElements.checkoutErrorMessage
+       ) {
+   
+           checkoutElements.checkoutErrorMessage.textContent =
+               message ||
+               "Confira seus dados e tente novamente.";
+   
+       }
+   
+       openModal(
+           checkoutElements.errorModal
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      75. TOAST
+      ============================================================ */
+   
+   let checkoutToastTimer =
+       null;
+   
+   
+   function showToast(message) {
+   
+       const toast =
+           checkoutElements.checkoutToast;
+   
+       if (!toast) {
+           return;
+       }
+   
+       if (
+           checkoutElements.checkoutToastText
+       ) {
+   
+           checkoutElements.checkoutToastText.textContent =
+               message;
+   
+       }
+   
+       window.clearTimeout(
+           checkoutToastTimer
+       );
+   
+       toast.classList.add(
+           "is-visible"
+       );
+   
+       checkoutToastTimer =
+           window.setTimeout(
+               () => {
+   
+                   toast.classList.remove(
+                       "is-visible"
+                   );
+   
+               },
+               CHECKOUT_CONFIG.toastDuration
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      76. CONTADOR OBSERVAÇÕES
+      ============================================================ */
+   
+   function updateNotesCounter() {
+   
+       if (
+           !checkoutElements.orderNotes ||
+           !checkoutElements.notesCounter
+       ) {
+           return;
+       }
+   
+       const length =
+           checkoutElements.orderNotes
+               .value
+               .length;
+   
+       checkoutElements.notesCounter.textContent =
+           `${length} / 500`;
+   
+   }
+   
+   
+   /* ============================================================
+      77. CHECKOUT VAZIO
+      ============================================================ */
+   
+   function handleEmptyCheckout() {
+   
+       const empty =
+           checkoutState.carrinho.length === 0;
+   
+       if (
+           checkoutElements.checkoutEmpty
+       ) {
+   
+           checkoutElements.checkoutEmpty.hidden =
+               !empty;
+   
+       }
+   
+       if (
+           checkoutElements.checkoutContent
+       ) {
+   
+           checkoutElements.checkoutContent.hidden =
+               empty;
+   
+       }
+   
+       if (
+           checkoutElements.checkoutBenefits
+       ) {
+   
+           checkoutElements.checkoutBenefits.hidden =
+               empty;
+   
+       }
+   
+       if (
+           checkoutElements.checkoutProgress
+       ) {
+   
+           checkoutElements.checkoutProgress.hidden =
+               empty;
+   
+       }
+   
+       return empty;
+   
+   }
+   
+   
+   /* ============================================================
+      78. EVENTO CPF
+      ============================================================ */
+   
+   function handleCPFInput(event) {
+   
+       event.target.value =
+           maskCPF(
+               event.target.value
+           );
+   
+       clearFieldState(
+           event.target
+       );
+   
+       updateCustomerStatus();
+   
+   }
+   
+   
+   /* ============================================================
+      79. EVENTO TELEFONE
+      ============================================================ */
+   
+   function handlePhoneInput(event) {
+   
+       event.target.value =
+           maskPhone(
+               event.target.value
+           );
+   
+       clearFieldState(
+           event.target
+       );
+   
+       updateCustomerStatus();
+   
+   }
+   
+   
+   /* ============================================================
+      80. EVENTO CEP
+      ============================================================ */
+   
+   function handleCEPInput(event) {
+   
+       const previousCEP =
+           checkoutState.cepConsultado;
+   
+       event.target.value =
+           maskCEP(
+               event.target.value
+           );
+   
+       const currentCEP =
+           onlyNumbers(
+               event.target.value
+           );
+   
+       clearFieldState(
+           event.target
+       );
+   
+       if (
+           previousCEP &&
+           previousCEP !== currentCEP
+       ) {
+   
+           checkoutState.cepConsultado =
+               null;
+   
+           resetShipping();
+   
+       }
+   
+       updateAddressStatus();
+   
+       if (
+           currentCEP.length === 8
+       ) {
+   
+           searchCEP();
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      81. EVENTOS CLIENTE
+      ============================================================ */
+   
+   function bindCustomerEvents() {
+   
+       checkoutElements.customerName
+           ?.addEventListener(
+               "input",
+               () => {
+   
+                   clearFieldState(
+                       checkoutElements.customerName
+                   );
+   
+                   updateCustomerStatus();
+   
+               }
+           );
+   
+   
+       checkoutElements.customerEmail
+           ?.addEventListener(
+               "input",
+               () => {
+   
+                   clearFieldState(
+                       checkoutElements.customerEmail
+                   );
+   
+                   updateCustomerStatus();
+   
+               }
+           );
+   
+   
+       checkoutElements.customerPhone
+           ?.addEventListener(
+               "input",
+               handlePhoneInput
+           );
+   
+   
+       checkoutElements.customerDocument
+           ?.addEventListener(
+               "input",
+               handleCPFInput
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      82. EVENTOS ENDEREÇO
+      ============================================================ */
+   
+   function bindAddressEvents() {
+   
+       checkoutElements.addressCep
+           ?.addEventListener(
+               "input",
+               handleCEPInput
+           );
+   
+   
+       checkoutElements.addressCep
+           ?.addEventListener(
+               "blur",
+               searchCEP
+           );
+   
+   
+       const fields = [
+   
+           checkoutElements.addressStreet,
+           checkoutElements.addressNumber,
+           checkoutElements.addressDistrict,
+           checkoutElements.addressCity,
+           checkoutElements.addressState
+   
+       ];
+   
+   
+       fields.forEach(
+           (field) => {
+   
+               field?.addEventListener(
+                   "input",
+                   () => {
+   
+                       clearFieldState(
+                           field
+                       );
+   
+                       updateAddressStatus();
+   
+                   }
+               );
+   
+   
+               field?.addEventListener(
+                   "change",
+                   () => {
+   
+                       clearFieldState(
+                           field
+                       );
+   
+                       updateAddressStatus();
+   
+                   }
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      83. EVENTOS FRETE
+      ============================================================ */
+   
+   function bindShippingEvents() {
+   
+       checkoutElements.shippingOptions
+           ?.addEventListener(
+               "change",
+               handleShippingChange
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      84. EVENTOS PAGAMENTO
+      ============================================================ */
+   
+   function bindPaymentEvents() {
+   
+       $$(
+           'input[name="paymentMethod"]'
+       ).forEach(
+           (input) => {
+   
+               input.addEventListener(
+                   "change",
+                   handlePaymentChange
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      85. EVENTOS OBSERVAÇÃO
+      ============================================================ */
+   
+   function bindNotesEvents() {
+   
+       checkoutElements.orderNotes
+           ?.addEventListener(
+               "input",
+               updateNotesCounter
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      86. EVENTOS TERMOS
+      ============================================================ */
+   
+   function bindTermsEvents() {
+   
+       checkoutElements.acceptTerms
+           ?.addEventListener(
+               "change",
+               () => {
+   
+                   if (
+                       checkoutElements.acceptTerms.checked &&
+                       checkoutElements.termsError
+                   ) {
+   
+                       checkoutElements.termsError.textContent =
+                           "";
+   
+                   }
+   
+               }
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      87. EVENTOS BOTÕES
+      ============================================================ */
+   
+   function bindButtonEvents() {
+   
+       checkoutElements.finishOrderButton
+           ?.addEventListener(
+               "click",
+               openConfirmationModal
+           );
+   
+   
+       checkoutElements.confirmationModalClose
+           ?.addEventListener(
+               "click",
+               () => {
+   
+                   closeModal(
+                       checkoutElements.confirmationModal
+                   );
+   
+               }
+           );
+   
+   
+       checkoutElements.confirmationCancel
+           ?.addEventListener(
+               "click",
+               () => {
+   
+                   closeModal(
+                       checkoutElements.confirmationModal
+                   );
+   
+               }
+           );
+   
+   
+       checkoutElements.confirmationConfirm
+           ?.addEventListener(
+               "click",
+               createOrder
+           );
+   
+   
+       checkoutElements.errorModalClose
+           ?.addEventListener(
+               "click",
+               () => {
+   
+                   closeModal(
+                       checkoutElements.errorModal
+                   );
+   
+               }
+           );
+   
+   
+       checkoutElements.checkoutErrorButton
+           ?.addEventListener(
+               "click",
+               () => {
+   
+                   closeModal(
+                       checkoutElements.errorModal
+                   );
+   
+               }
+           );
+   
+   
+       checkoutElements.viewOrderButton
+           ?.addEventListener(
+               "click",
+               () => {
+   
+                   window.location.href =
+                       "pedidos.html";
+   
+               }
+           );
+   
+   }
+   
+   
+   /* ============================================================
+      88. FECHAR MODAL PELO FUNDO
+      ============================================================ */
+   
+   function bindOverlayEvents() {
+   
+       [
+           checkoutElements.confirmationModal,
+           checkoutElements.errorModal
+   
+       ].forEach(
+           (overlay) => {
+   
+               overlay?.addEventListener(
+                   "click",
+                   (event) => {
+   
+                       if (
+                           event.target === overlay
+                       ) {
+   
+                           closeModal(
+                               overlay
+                           );
+   
+                       }
+   
+                   }
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      89. ESC
+      ============================================================ */
+   
+   function bindKeyboardEvents() {
+   
+       document.addEventListener(
+           "keydown",
+           (event) => {
+   
+               if (
+                   event.key !== "Escape"
+               ) {
+                   return;
+               }
+   
+               if (
+                   checkoutState.processing
+               ) {
+                   return;
+               }
+   
+               const modal =
+                   $(
+                       ".checkout-modal-overlay:not([hidden])"
+                   );
+   
+               if (
+                   modal &&
+                   modal !== checkoutElements.successModal
+               ) {
+   
+                   closeModal(
+                       modal
+                   );
+   
+               }
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      90. ANO
+      ============================================================ */
+   
+   function renderYear() {
+   
+       if (
+           checkoutElements.currentYear
+       ) {
+   
+           checkoutElements.currentYear.textContent =
+               new Date().getFullYear();
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      91. IMAGENS COM ERRO
+      ============================================================ */
+   
+   function bindImageFallback() {
+   
+       document.addEventListener(
+           "error",
+           (event) => {
+   
+               const image =
+                   event.target;
+   
+               if (
+                   !(image instanceof HTMLImageElement)
+               ) {
+                   return;
+               }
+   
+               if (
+                   !image.closest(
+                       ".checkout-summary-product-image"
+                   )
+               ) {
+                   return;
+               }
+   
+               const container =
+                   image.parentElement;
+   
+               image.remove();
+   
+               if (
+                   container &&
+                   !container.querySelector(
+                       ".fa-gears"
+                   )
+               ) {
+   
+                   const icon =
+                       document.createElement(
+                           "i"
+                       );
+   
+                   icon.className =
+                       "fa-solid fa-gears";
+   
+                   icon.setAttribute(
+                       "aria-hidden",
+                       "true"
+                   );
+   
+                   container.prepend(
+                       icon
+                   );
+   
+               }
+   
+           },
+           true
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      92. ANIMAÇÃO DOS CARDS AO SCROLL
+      ============================================================ */
+   
+   function setupScrollAnimations() {
+   
+       const cards =
+           $$(".checkout-card");
+   
+       if (
+           !("IntersectionObserver" in window)
+       ) {
+   
+           cards.forEach(
+               (card) => {
+   
+                   card.classList.add(
+                       "is-visible"
+                   );
+   
+               }
+           );
+   
+           return;
+   
+       }
+   
+       const observer =
+           new IntersectionObserver(
+               (entries) => {
+   
+                   entries.forEach(
+                       (entry) => {
+   
+                           if (
+                               entry.isIntersecting
+                           ) {
+   
+                               entry.target.classList.add(
+                                   "is-visible"
+                               );
+   
+                               observer.unobserve(
+                                   entry.target
+                               );
+   
+                           }
+   
+                       }
+                   );
+   
+               },
+               {
+                   threshold: 0.08,
+                   rootMargin:
+                       "0px 0px -40px 0px"
+               }
+           );
+   
+   
+       cards.forEach(
+           (card) => {
+   
+               observer.observe(
+                   card
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      93. VALIDAÇÃO PROGRESSIVA
+      ============================================================ */
+   
+   function setupProgressiveValidation() {
+   
+       const inputs =
+           $$(
+               ".checkout-field input, .checkout-field select"
+           );
+   
+       inputs.forEach(
+           (input) => {
+   
+               input.addEventListener(
+                   "blur",
+                   () => {
+   
+                       /*
+                           Não mostra erro agressivamente
+                           enquanto o cliente ainda está
+                           preenchendo.
+   
+                           Apenas remove o estado visual
+                           quando estiver vazio.
+                       */
+   
+                       if (!input.value.trim()) {
+   
+                           clearFieldState(
+                               input
+                           );
+   
+                       }
+   
+                   }
+               );
+   
+           }
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      94. API DE FRETE FUTURA
+      ============================================================ */
+   
+   /*
+       Quando o backend possuir rota de frete,
+       esta função poderá ser ativada.
+   
+       Exemplo esperado:
+   
+       POST /api/frete/calcular
+   
+       {
+           cep: "00000000",
+           itens: [...]
+       }
+   
+       Retorno:
+   
+       {
+           opcoes: [
+               {
+                   id: "normal",
+                   nome: "Entrega normal",
+                   prazo: 5,
+                   valor: 24.90
+               }
+           ]
+       }
+   */
+   
+   async function requestShippingFromBackend() {
+   
+       const cep =
+           onlyNumbers(
+               checkoutElements.addressCep
+                   ?.value
+           );
+   
+       if (cep.length !== 8) {
+           return [];
+       }
+   
+       try {
+   
+           const response =
+               await fetch(
+                   `${CHECKOUT_CONFIG.apiBase}/frete/calcular`,
+                   {
+                       method: "POST",
+   
+                       headers: {
+                           "Content-Type":
+                               "application/json"
+                       },
+   
+                       body:
+                           JSON.stringify({
+                               cep,
+                               itens:
+                                   getOrderItems()
+                           })
+                   }
+               );
+   
+           if (!response.ok) {
+               return [];
+           }
+   
+           const data =
+               await response.json();
+   
+           return (
+               data.opcoes ??
+               data.options ??
+               []
+           );
+   
+       } catch (error) {
+   
+           console.warn(
+               "[Checkout] Serviço de frete ainda não disponível:",
+               error
+           );
+   
+           return [];
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      95. SINCRONIZAÇÃO DO CARRINHO
+      ============================================================ */
+   
+   function handleStorageChange(event) {
+   
+       const cartKeys = [
+           CHECKOUT_CONFIG.storage.carrinho,
+           "cart",
+           "carrinhoAPC"
+       ];
+   
+       if (
+           !cartKeys.includes(
+               event.key
+           )
+       ) {
+           return;
+       }
+   
+       loadCart();
+   
+       if (
+           handleEmptyCheckout()
+       ) {
+           return;
+       }
+   
+       renderHeroQuantity();
+   
+       renderSummaryProducts();
+   
+       recalculateTotals();
+   
+   }
+   
+   
+   /* ============================================================
+      96. BIND STORAGE
+      ============================================================ */
+   
+   function bindStorageEvents() {
+   
+       window.addEventListener(
+           "storage",
+           handleStorageChange
+       );
+   
+   }
+   
+   
+   /* ============================================================
+      97. INICIALIZAR DADOS
+      ============================================================ */
+   
+   function initializeData() {
+   
+       loadCart();
+   
+       loadCustomer();
+   
+   }
+   
+   
+   /* ============================================================
+      98. RENDERIZAÇÃO INICIAL
+      ============================================================ */
+   
+   function initialRender() {
+   
+       renderYear();
+   
+       const empty =
+           handleEmptyCheckout();
+   
+       if (empty) {
+           return;
+       }
+   
+       renderHeroQuantity();
+   
+       renderSummaryProducts();
+   
+       renderCustomer();
+   
+       recalculateTotals();
+   
+       updateNotesCounter();
+   
+   }
+   
+   
+   /* ============================================================
+      99. BIND GERAL
+      ============================================================ */
+   
+   function bindEvents() {
+   
+       bindCustomerEvents();
+   
+       bindAddressEvents();
+   
+       bindShippingEvents();
+   
+       bindPaymentEvents();
+   
+       bindNotesEvents();
+   
+       bindTermsEvents();
+   
+       bindButtonEvents();
+   
+       bindOverlayEvents();
+   
+       bindKeyboardEvents();
+   
+       bindImageFallback();
+   
+       bindStorageEvents();
+   
+   }
+   
+   
+   /* ============================================================
+      100. INICIALIZAÇÃO
+      ============================================================ */
+   
+   function initCheckout() {
+   
+       try {
+   
+           cacheElements();
+   
+           initializeData();
+   
+           initialRender();
+   
+           bindEvents();
+   
+           setupScrollAnimations();
+   
+           setupProgressiveValidation();
+   
+           console.info(
+               "[Auto Peça Certa] Checkout inicializado."
+           );
+   
+       } catch (error) {
+   
+           console.error(
+               "[Auto Peça Certa] Falha ao iniciar checkout:",
+               error
+           );
+   
+       }
+   
+   }
+   
+   
+   /* ============================================================
+      101. DOM READY
+      ============================================================ */
+   
+   if (
+       document.readyState === "loading"
+   ) {
+   
+       document.addEventListener(
+           "DOMContentLoaded",
+           initCheckout
+       );
+   
+   } else {
+   
+       initCheckout();
+   
+   }
+   
+   
+   /* ============================================================
+      102. EXPORT INTERNO PARA INTEGRAÇÃO FUTURA
+      ============================================================ */
+   
+   window.AutoPecaCheckout = {
+   
+       getState() {
+   
+           return {
+               ...checkoutState
+           };
+   
+       },
+   
+   
+       refreshCart() {
+   
+           loadCart();
+   
+           handleEmptyCheckout();
+   
+           renderHeroQuantity();
+   
+           renderSummaryProducts();
+   
+           recalculateTotals();
+   
+       },
+   
+   
+       setShippingOptions(options) {
+   
+           renderShippingOptions(
+               options
+           );
+   
+       },
+   
+   
+       recalculate() {
+   
+           recalculateTotals();
+   
+       },
+   
+   
+       showToast(message) {
+   
+           showToast(message);
+   
+       }
+   
+   };
