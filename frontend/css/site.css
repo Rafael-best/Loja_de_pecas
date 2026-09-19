@@ -1057,143 +1057,135 @@ ol {
 
 
 /* ============================================================
- 15. MENU DO USUÁRIO
+   15. MENU DO USUÁRIO
 ============================================================ */
+
+.header-user-wrapper {
+  position: relative;
+}
 
 .user-dropdown {
 
-  position:
-      absolute;
+  position: absolute;
 
   top:
-      calc(100% + 13px);
+    calc(100% + 13px);
 
-  right:
-      0;
+  right: 0;
 
-  z-index:
-      1100;
+  z-index: 1100;
 
-  width:
-      230px;
+  width: 230px;
 
-  padding:
-      9px;
+  padding: 9px;
 
-  background:
-      #fff;
+  background: #fff;
 
   border:
-      1px solid
-      var(--apc-border);
+    1px solid
+    var(--apc-border);
 
-  border-radius:
-      16px;
+  border-radius: 16px;
 
   box-shadow:
-      var(--apc-shadow-lg);
+    var(--apc-shadow-lg);
 
-  opacity:
-      0;
+  opacity: 0;
 
-  visibility:
-      hidden;
+  visibility: hidden;
+
+  pointer-events: none;
 
   transform:
-      translateY(-8px)
-      scale(.98);
+    translateY(-8px)
+    scale(.98);
 
   transform-origin:
-      top right;
+    top right;
 
   transition:
-      opacity var(--apc-transition),
-      transform var(--apc-transition),
-      visibility var(--apc-transition);
+    opacity var(--apc-transition),
+    transform var(--apc-transition),
+    visibility var(--apc-transition);
 
 }
 
+
+/*
+  DROPDOWN ABERTO
+*/
 .header-user-wrapper.open
 .user-dropdown {
 
-  opacity:
-      1;
+  opacity: 1;
 
-  visibility:
-      visible;
+  visibility: visible;
+
+  pointer-events: auto;
 
   transform:
-      translateY(0)
-      scale(1);
+    translateY(0)
+    scale(1);
 
 }
+
 
 .user-dropdown a,
 .user-dropdown button {
 
-  width:
-      100%;
+  width: 100%;
 
-  min-height:
-      42px;
+  min-height: 42px;
 
-  display:
-      flex;
+  display: flex;
 
-  align-items:
-      center;
+  align-items: center;
 
-  gap:
-      11px;
+  gap: 11px;
 
   padding:
-      0 12px;
+    0 12px;
 
-  border:
-      0;
+  border: 0;
 
-  border-radius:
-      10px;
+  border-radius: 10px;
 
-  background:
-      transparent;
+  background: transparent;
 
   color:
-      var(--apc-text);
+    var(--apc-text);
 
-  font-size:
-      12px;
+  font-size: 12px;
 
-  font-weight:
-      600;
+  font-weight: 600;
 
-  text-align:
-      left;
+  text-align: left;
 
   transition:
-      background var(--apc-transition),
-      color var(--apc-transition);
+    background var(--apc-transition),
+    color var(--apc-transition);
 
 }
+
 
 .user-dropdown a:hover,
 .user-dropdown button:hover {
 
   background:
-      #f1f6fb;
+    #f1f6fb;
 
   color:
-      var(--apc-blue);
+    var(--apc-blue);
 
 }
 
+
 .user-dropdown i {
 
-  width:
-      20px;
+  width: 20px;
 
   color:
-      var(--apc-blue);
+    var(--apc-blue);
 
 }
 

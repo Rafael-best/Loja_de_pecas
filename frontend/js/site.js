@@ -508,20 +508,80 @@ function atualizarInterfaceCliente() {
 ========================================================= */
 
 function logoutCliente() {
+
   try {
+
+    /*
+      Remove o usuário logado.
+    */
     localStorage.removeItem(
       "clienteLogado"
     );
 
+    /*
+      Remove dados temporários
+      relacionados ao login.
+    */
     sessionStorage.removeItem(
       "destinoAposLogin"
     );
-  } catch {
-    /* vazio */
+
+  } catch (erro) {
+
+    console.warn(
+      "Erro ao limpar sessão:",
+      erro
+    );
+
   }
 
+
+  /*
+    Atualiza imediatamente a interface
+    caso o redirecionamento demore.
+  */
+  atualizarInterfaceCliente();
+
+
+  /*
+    Fecha o dropdown.
+  */
+  const userDropdown =
+    document.getElementById(
+      "userDropdown"
+    );
+
+  const userMenuWrapper =
+    document.getElementById(
+      "userMenuWrapper"
+    );
+
+  const userMenuButton =
+    document.getElementById(
+      "userMenuButton"
+    );
+
+
+  userDropdown?.classList.remove(
+    "open"
+  );
+
+  userMenuWrapper?.classList.remove(
+    "open"
+  );
+
+  userMenuButton?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+
+  /*
+    Volta para a página inicial.
+  */
   window.location.href =
     "index.html";
+
 }
 
 
@@ -530,6 +590,7 @@ function logoutCliente() {
 ========================================================= */
 
 function configurarDropdownUsuario() {
+
   const userMenuButton =
     document.getElementById(
       "userMenuButton"
@@ -545,6 +606,7 @@ function configurarDropdownUsuario() {
       "userMenuWrapper"
     );
 
+
   if (
     !userMenuButton ||
     !userDropdown
@@ -554,12 +616,18 @@ function configurarDropdownUsuario() {
 
 
   function fecharDropdown() {
+
     userDropdown.classList.remove(
       "open"
     );
 
+    /*
+      IMPORTANTE:
+      O CSS usa .header-user-wrapper.open
+      para mostrar o dropdown.
+    */
     userMenuWrapper?.classList.remove(
-      "dropdown-open"
+      "open"
     );
 
     userMenuButton.setAttribute(
@@ -570,12 +638,18 @@ function configurarDropdownUsuario() {
 
 
   function abrirDropdown() {
+
     userDropdown.classList.add(
       "open"
     );
 
+    /*
+      IMPORTANTE:
+      O CSS espera a classe "open"
+      no wrapper, não "dropdown-open".
+    */
     userMenuWrapper?.classList.add(
-      "dropdown-open"
+      "open"
     );
 
     userMenuButton.setAttribute(
@@ -588,12 +662,13 @@ function configurarDropdownUsuario() {
   userMenuButton.addEventListener(
     "click",
     function (event) {
+
       event.preventDefault();
 
       event.stopPropagation();
 
       const aberto =
-        userDropdown.classList.contains(
+        userMenuWrapper?.classList.contains(
           "open"
         );
 
@@ -602,6 +677,7 @@ function configurarDropdownUsuario() {
       } else {
         abrirDropdown();
       }
+
     }
   );
 
@@ -609,7 +685,9 @@ function configurarDropdownUsuario() {
   userDropdown.addEventListener(
     "click",
     function (event) {
+
       event.stopPropagation();
+
     }
   );
 
@@ -617,7 +695,9 @@ function configurarDropdownUsuario() {
   document.addEventListener(
     "click",
     function () {
+
       fecharDropdown();
+
     }
   );
 
@@ -625,11 +705,18 @@ function configurarDropdownUsuario() {
   document.addEventListener(
     "keydown",
     function (event) {
-      if (event.key === "Escape") {
+
+      if (
+        event.key === "Escape"
+      ) {
+
         fecharDropdown();
+
       }
+
     }
   );
+
 }
 
 

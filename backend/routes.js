@@ -39,17 +39,17 @@ router.post('/clientes', async (req, res) => {
         } = req.body;
 
         const sql = `
-    INSERT INTO clientes
-    (
-        nome_cliente,
-        endereco_cliente,
-        telefone_cliente,
-        email_cliente,
-        senha_cliente
-    )
-    VALUES ($1, $2, $3, $4, $5)
-    RETURNING *
-`;
+            INSERT INTO clientes
+            (
+                nome_cliente,
+                endereco_cliente,
+                telefone_cliente,
+                email_cliente,
+                senha_cliente
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *
+        `;
 
         const result = await db.query(sql, [
             nome_cliente,
@@ -158,14 +158,6 @@ router.post('/fornecedores', async (req, res) => {
 
         const sql = `
             INSERT INTO fornecedores
-            (
-                nome_fornecedor,
-                endereco_fornecedor,
-                telefone_fornecedor,
-                email_fornecedor
-            )
-            VALUES ($1, $2, $3, $4)
-            RETURNING *
             (
                 nome_fornecedor,
                 endereco_fornecedor,
@@ -379,21 +371,41 @@ router.post('/pedidos', async (req, res) => {
 
         const {
             id_cliente,
-            data_pedido,
-            forma_pagamento,
-            status_pedido,
-            total_pedido
+            forma_pagamento
         } = req.body;
 
 
-        // Verificar cliente
+        if (!id_cliente) {
+
+            return res.status(400).json({
+                erro: 'Cliente é obrigatório'
+            });
+
+        }
+
+
+        if (!forma_pagamento) {
+
+            return res.status(400).json({
+                erro: 'Forma de pagamento é obrigatória'
+            });
+
+        }
+
+
         const clienteResult = await db.query(
-            'SELECT * FROM clientes WHERE id_cliente = $1',
+            `
+                SELECT *
+                FROM clientes
+                WHERE id_cliente = $1
+            `,
             [id_cliente]
         );
 
 
-        if (clienteResult.rows.length === 0) {
+        if (
+            clienteResult.rows.length === 0
+        ) {
 
             return res.status(404).json({
                 erro: 'Cliente não encontrado'
@@ -415,25 +427,34 @@ router.post('/pedidos', async (req, res) => {
                 $1,
                 NOW(),
                 $2,
-                $3,
-                $4
+                'Pendente',
+                0
             )
             RETURNING *
         `;
 
 
-        const result = await db.query(sql, [
-            id_cliente,
-            forma_pagamento || null,
-            status_pedido || 'Pendente',
-            total_pedido || 0
-        ]);
+        const result =
+            await db.query(
+                sql,
+                [
+                    id_cliente,
+                    forma_pagamento
+                ]
+            );
 
 
         res.status(201).json({
-            message: 'Pedido criado com sucesso',
-            id_pedido: result.rows[0].id_pedido,
-            pedido: result.rows[0]
+
+            message:
+                'Pedido criado com sucesso',
+
+            id_pedido:
+                result.rows[0].id_pedido,
+
+            pedido:
+                result.rows[0]
+
         });
 
 
@@ -445,9 +466,15 @@ router.post('/pedidos', async (req, res) => {
         );
 
         res.status(500).json({
-            erro: err.message || 'Erro ao criar pedido'
+
+            erro:
+                err.message ||
+                'Erro ao criar pedido'
+
         });
+
     }
+
 });
 
 
@@ -862,16 +889,16 @@ router.post('/itens', async (req, res) => {
 
 
         const sql = `
-    INSERT INTO itens_pedido
-    (
-        id_pedido,
-        id_produto,
-        quantidade,
-        preco_unitario
-    )
-    VALUES ($1, $2, $3, $4)
-    RETURNING *
-`;
+            INSERT INTO itens_pedido
+            (
+                id_pedido,
+                id_produto,
+                quantidade,
+                preco_unitario
+            )
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
+        `;
 
 
         const result = await db.query(sql, [
