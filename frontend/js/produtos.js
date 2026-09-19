@@ -11,9 +11,8 @@
 ============================================================ */
 
 const APC_PRODUCTS_CONFIG = {
-    apiBase: "http://localhost:3000/api",
+    apiBase: "/api",
     productsEndpoint: "/produtos",
-    itemsPerPage: 12,
 
     storage: {
         cart: "carrinho",

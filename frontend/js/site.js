@@ -615,48 +615,25 @@ function configurarDropdownUsuario() {
   }
 
 
-  function fecharDropdown() {
-
-    userDropdown.classList.remove(
-      "open"
-    );
-
-    /*
-      IMPORTANTE:
-      O CSS usa .header-user-wrapper.open
-      para mostrar o dropdown.
-    */
-    userMenuWrapper?.classList.remove(
-      "open"
-    );
+function fecharDropdown() {
+    userDropdown.classList.remove("open");
+    userMenuWrapper?.classList.remove("open");
 
     userMenuButton.setAttribute(
-      "aria-expanded",
-      "false"
+        "aria-expanded",
+        "false"
     );
-  }
+}
 
-
-  function abrirDropdown() {
-
-    userDropdown.classList.add(
-      "open"
-    );
-
-    /*
-      IMPORTANTE:
-      O CSS espera a classe "open"
-      no wrapper, não "dropdown-open".
-    */
-    userMenuWrapper?.classList.add(
-      "open"
-    );
+function abrirDropdown() {
+    userDropdown.classList.add("open");
+    userMenuWrapper?.classList.add("open");
 
     userMenuButton.setAttribute(
-      "aria-expanded",
-      "true"
+        "aria-expanded",
+        "true"
     );
-  }
+}
 
 
   userMenuButton.addEventListener(
