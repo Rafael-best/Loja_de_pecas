@@ -5,7 +5,7 @@
 
 console.log("Login carregado.");
 
-const API = "https://loja-de-pecas.onrender.com";
+const API = "https://loja-de-pecas.onrender.com/api";
 
 
 /* =========================================================

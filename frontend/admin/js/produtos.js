@@ -3,7 +3,7 @@
 ========================================================= */
 
 const API =
-  "https://loja-de-pecas.onrender.com";
+  "https://loja-de-pecas.onrender.com/api";
 
 
 const IMAGENS_PRODUTOS =

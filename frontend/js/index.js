@@ -10,7 +10,7 @@
 ========================================================= */
 
 const API =
-  "https://loja-de-pecas.onrender.com";
+  "https://loja-de-pecas.onrender.com/api";
 
 const CAMINHO_IMAGENS =
   "assets/images/produtos";
