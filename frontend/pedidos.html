@@ -3,60 +3,74 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <!-- ======================================================
+         CONFIGURAÇÕES BÁSICAS
+    ======================================================= -->
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <meta charset="UTF-8">
 
-  <meta
-    name="description"
-    content="Acompanhe seus pedidos na Loja de Peças."
-  >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <title>Meus Pedidos | Loja de Peças</title>
+    <meta
+        name="description"
+        content="Acompanhe seus pedidos, entregas e compras na Auto Peça Certa."
+    >
 
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+    <title>Meus Pedidos | Auto Peça Certa</title>
 
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  >
+    <!-- ======================================================
+         FONTES
+    ======================================================= -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
+    <!-- ======================================================
+         ÍCONES
+    ======================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
 
-  <link
-    rel="stylesheet"
-    href="css/site.css"
-  >
+    <!-- ======================================================
+         CSS
+    ======================================================= -->
 
+    <link
+        rel="stylesheet"
+        href="css/site.css"
+    >
 
-  <link
-    rel="stylesheet"
-    href="css/pedidos.css"
-  >
+    <link
+        rel="stylesheet"
+        href="css/pedidos.css"
+    >
 
 </head>
 
@@ -64,1378 +78,1987 @@
 <body>
 
 
-
-<!-- =====================================================
-     TOPO
-===================================================== -->
-
-<div class="top-strip">
-
-  <div class="site-container top-strip-content">
-
-    <span>
-
-      <i class="fa-solid fa-shield-halved"></i>
-
-      Compra segura
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-box"></i>
-
-      Acompanhe seus pedidos
-
-    </span>
-
-
-    <span class="desktop-only">
-
-      <i class="fa-solid fa-headset"></i>
-
-      Suporte especializado
-
-    </span>
-
-  </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="site-header">
-
-
-  <div class="site-container header-main">
-
+    <!-- ======================================================
+         ACESSIBILIDADE
+    ======================================================= -->
 
     <a
-      href="index.html"
-      class="brand"
+        href="#mainContent"
+        class="skip-link"
     >
-
-      <img
-        src="assets/images/logo.png"
-        alt="Logo Loja de Peças"
-        class="brand-logo"
-
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-
-      <span class="brand-fallback">
-
-        <i class="fa-solid fa-gear"></i>
-
-      </span>
-
-
-      <span class="brand-text">
-
-        <strong>
-          Loja de Peças
-        </strong>
-
-        <small>
-          Autopeças & Acessórios
-        </small>
-
-      </span>
-
+        Ir para o conteúdo
     </a>
 
 
 
-    <!-- BUSCA -->
+    <!-- ======================================================
+         BARRA SUPERIOR
+    ======================================================= -->
 
-    <form
-      class="header-search"
-      id="headerSearchForm"
+    <div class="topbar">
+
+        <div class="container topbar-container">
+
+            <div class="topbar-left">
+
+                <span class="topbar-item">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Compra segura
+
+                </span>
+
+
+                <span class="topbar-divider"></span>
+
+
+                <span class="topbar-item">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                    Atendimento especializado
+
+                </span>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <a
+                    href="suporte.html"
+                    class="topbar-link"
+                >
+
+                    Central de ajuda
+
+                </a>
+
+
+                <span class="topbar-divider"></span>
+
+
+                <a
+                    href="pedidos.html"
+                    class="topbar-link"
+                >
+
+                    Meus pedidos
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ======================================================
+         HEADER
+    ======================================================= -->
+
+    <header
+        class="site-header"
+        id="siteHeader"
     >
 
-      <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="container header-container">
 
 
-      <input
-        id="headerSearchInput"
-        type="search"
-        placeholder="Buscar produtos..."
-      >
+            <!-- ==================================================
+                 LOGO
+            =================================================== -->
 
+            <a
+                href="index.html"
+                class="brand"
+                aria-label="Auto Peça Certa - Página inicial"
+            >
 
-      <button type="submit">
+                <img
+                    src="img/logo-auto-peca-certa.png"
+                    alt="Auto Peça Certa"
+                    class="brand-logo"
+                    id="brandLogo"
+                >
 
-        Buscar
+            </a>
 
-      </button>
 
-    </form>
 
+            <!-- ==================================================
+                 PESQUISA
+            =================================================== -->
 
+            <form
+                class="header-search"
+                id="headerSearchForm"
+                role="search"
+            >
 
-    <div class="header-actions">
+                <div class="header-search-box">
 
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                        aria-hidden="true"
+                    ></i>
 
-      <a
-        href="pedidos.html"
-        class="header-action desktop-action"
-      >
+                    <input
+                        type="search"
+                        id="headerSearchInput"
+                        placeholder="Buscar peças, marcas ou categorias..."
+                        autocomplete="off"
+                        aria-label="Pesquisar produtos"
+                    >
 
-        <i class="fa-solid fa-box"></i>
+                    <button
+                        type="submit"
+                        aria-label="Pesquisar"
+                    >
 
-        <span>
+                        Buscar
 
-          <small>
-            Acompanhar
-          </small>
+                    </button>
 
-          <strong>
-            Pedidos
-          </strong>
+                </div>
 
-        </span>
+            </form>
 
-      </a>
 
 
+            <!-- ==================================================
+                 AÇÕES HEADER
+            =================================================== -->
 
-      <a
-        href="perfil.html"
-        class="header-action desktop-action"
-      >
+            <div class="header-actions">
 
-        <i class="fa-regular fa-user"></i>
 
-        <span>
+                <!-- CONTA -->
 
-          <small>
-            Minha conta
-          </small>
+                <a
+                    href="login.html"
+                    class="header-action account-action"
+                    id="accountButton"
+                >
 
-          <strong>
-            Perfil
-          </strong>
+                    <div
+                        class="header-avatar"
+                        id="headerAvatar"
+                    >
 
-        </span>
+                        <img
+                            src=""
+                            alt=""
+                            id="headerAvatarImage"
+                            hidden
+                        >
 
-      </a>
+                        <span id="headerAvatarInitial">
 
+                            <i class="fa-regular fa-user"></i>
 
+                        </span>
 
-      <a
-        href="carrinho.html"
-        class="cart-button"
-      >
+                    </div>
 
-        <i class="fa-solid fa-cart-shopping"></i>
 
-        <span class="cart-text">
-          Carrinho
-        </span>
+                    <div class="header-action-text">
 
-        <span
-          id="cartCount"
-          class="cart-count"
-        >
-          0
-        </span>
+                        <small>
+                            Olá
+                        </small>
 
-      </a>
+                        <strong id="headerAccountLabel">
+                            Entrar
+                        </strong>
 
+                    </div>
 
+                </a>
 
-      <button
-        id="menuToggle"
-        class="menu-toggle"
-        type="button"
-      >
 
-        <span></span>
-        <span></span>
-        <span></span>
 
-      </button>
+                <!-- CARRINHO -->
 
+                <a
+                    href="carrinho.html"
+                    class="header-action cart-action"
+                    aria-label="Carrinho"
+                >
 
-    </div>
+                    <div class="cart-icon-wrapper">
 
+                        <i class="fa-solid fa-cart-shopping"></i>
 
-  </div>
+                        <span
+                            class="cart-count"
+                            id="headerCartCount"
+                        >
+                            0
+                        </span>
 
+                    </div>
 
 
-  <!-- MENU DESKTOP -->
+                    <div class="header-action-text">
 
-  <nav class="desktop-nav">
+                        <small>
+                            Meu
+                        </small>
 
+                        <strong>
+                            Carrinho
+                        </strong>
 
-    <div class="site-container desktop-nav-inner">
+                    </div>
 
+                </a>
 
-      <a
-        href="produtos.html"
-        class="category-highlight"
-      >
 
-        <i class="fa-solid fa-table-cells-large"></i>
 
-        Todos os produtos
+                <!-- TEMA -->
 
-      </a>
+                <button
+                    type="button"
+                    class="header-icon-button"
+                    id="themeToggle"
+                    aria-label="Alternar tema"
+                >
 
+                    <i class="fa-solid fa-moon"></i>
 
-      <a href="produtos.html?categoria=freios">
-        Freios
-      </a>
+                </button>
 
 
-      <a href="produtos.html?categoria=motor">
-        Motor
-      </a>
 
+                <!-- MENU MOBILE -->
 
-      <a href="produtos.html?categoria=suspensao">
-        Suspensão
-      </a>
+                <button
+                    type="button"
+                    class="header-icon-button mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                >
 
+                    <span></span>
+                    <span></span>
+                    <span></span>
 
-      <a href="produtos.html?categoria=eletrica">
-        Elétrica
-      </a>
+                </button>
 
-
-      <a href="produtos.html?categoria=filtros">
-        Filtros
-      </a>
-
-
-      <a
-        href="suporte.html"
-        class="nav-support"
-      >
-
-        <i class="fa-regular fa-circle-question"></i>
-
-        Suporte
-
-      </a>
-
-
-    </div>
-
-
-  </nav>
-
-
-
-  <!-- MOBILE -->
-
-  <div
-    id="mobileMenuBackdrop"
-    class="mobile-menu-backdrop"
-  ></div>
-
-
-  <aside
-    id="mobileMenu"
-    class="mobile-menu"
-  >
-
-
-    <div class="mobile-menu-header">
-
-
-      <div class="mobile-brand">
-
-        <span class="mobile-brand-icon">
-
-          <i class="fa-solid fa-gear"></i>
-
-        </span>
-
-
-        <div>
-
-          <strong>
-            Loja de Peças
-          </strong>
-
-          <small>
-            Menu principal
-          </small>
-
-        </div>
-
-      </div>
-
-
-      <button
-        id="menuClose"
-        class="menu-close"
-        type="button"
-      >
-
-        <i class="fa-solid fa-xmark"></i>
-
-      </button>
-
-
-    </div>
-
-
-
-    <div class="mobile-search">
-
-      <i class="fa-solid fa-magnifying-glass"></i>
-
-      <input
-        id="mobileSearchInput"
-        type="search"
-        placeholder="Buscar produtos..."
-      >
-
-    </div>
-
-
-
-    <nav class="mobile-nav">
-
-
-      <a href="index.html">
-
-        <i class="fa-solid fa-house"></i>
-
-        Início
-
-      </a>
-
-
-      <a href="produtos.html">
-
-        <i class="fa-solid fa-box-open"></i>
-
-        Produtos
-
-      </a>
-
-
-      <a href="carrinho.html">
-
-        <i class="fa-solid fa-cart-shopping"></i>
-
-        Carrinho
-
-      </a>
-
-
-      <a href="pedidos.html">
-
-        <i class="fa-solid fa-box"></i>
-
-        Meus pedidos
-
-      </a>
-
-
-      <a href="perfil.html">
-
-        <i class="fa-regular fa-user"></i>
-
-        Meu perfil
-
-      </a>
-
-
-      <a href="suporte.html">
-
-        <i class="fa-solid fa-headset"></i>
-
-        Suporte
-
-      </a>
-
-
-    </nav>
-
-
-  </aside>
-
-
-</header>
-
-
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section class="orders-hero">
-
-
-  <div class="site-container orders-hero-content">
-
-
-    <div>
-
-
-      <span class="orders-eyebrow">
-
-        <i class="fa-solid fa-box"></i>
-
-        Histórico de compras
-
-      </span>
-
-
-      <h1>
-
-        Acompanhe seus
-
-        <span>
-          pedidos em um só lugar.
-        </span>
-
-      </h1>
-
-
-      <p>
-
-        Consulte compras realizadas,
-        veja o status dos pedidos
-        e acompanhe cada etapa.
-
-      </p>
-
-
-    </div>
-
-
-
-    <div class="orders-hero-art">
-
-
-      <div class="orders-orbit orbit-one"></div>
-
-      <div class="orders-orbit orbit-two"></div>
-
-
-      <div class="orders-main-icon">
-
-        <i class="fa-solid fa-box-open"></i>
-
-      </div>
-
-
-      <span class="orders-float orders-float-one">
-
-        <i class="fa-solid fa-check"></i>
-
-        Pedido confirmado
-
-      </span>
-
-
-      <span class="orders-float orders-float-two">
-
-        <i class="fa-solid fa-truck-fast"></i>
-
-        Acompanhe a entrega
-
-      </span>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     STATUS GERAL
-===================================================== -->
-
-<section class="orders-status-strip">
-
-
-  <div class="site-container orders-status-grid">
-
-
-    <div>
-
-      <span class="status-icon status-blue">
-
-        <i class="fa-solid fa-receipt"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Pedidos
-        </strong>
-
-        <small>
-          Consulte seu histórico
-        </small>
-
-      </div>
-
-    </div>
-
-
-
-    <div>
-
-      <span class="status-icon status-yellow">
-
-        <i class="fa-solid fa-box"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Preparação
-        </strong>
-
-        <small>
-          Acompanhe o processamento
-        </small>
-
-      </div>
-
-    </div>
-
-
-
-    <div>
-
-      <span class="status-icon status-purple">
-
-        <i class="fa-solid fa-truck-fast"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Envio
-        </strong>
-
-        <small>
-          Veja quando for despachado
-        </small>
-
-      </div>
-
-    </div>
-
-
-
-    <div>
-
-      <span class="status-icon status-green">
-
-        <i class="fa-solid fa-circle-check"></i>
-
-      </span>
-
-
-      <div>
-
-        <strong>
-          Entrega
-        </strong>
-
-        <small>
-          Pedido concluído
-        </small>
-
-      </div>
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     CONTEÚDO
-===================================================== -->
-
-<main class="orders-main">
-
-
-  <div class="site-container">
-
-
-    <div class="orders-title-area">
-
-
-      <div>
-
-        <span class="section-label">
-
-          Minha conta
-
-        </span>
-
-
-        <h2>
-
-          Meus pedidos
-
-        </h2>
-
-
-        <p>
-
-          Veja suas compras recentes
-          e acompanhe cada pedido.
-
-        </p>
-
-      </div>
-
-
-
-      <a
-        href="produtos.html"
-        class="new-order-button"
-      >
-
-        <i class="fa-solid fa-plus"></i>
-
-        Fazer nova compra
-
-      </a>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         FILTRO VISUAL
-    ================================================= -->
-
-    <div class="orders-filter-bar">
-
-
-      <div class="orders-search">
-
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input
-          id="buscaPedidoVisual"
-          type="text"
-          placeholder="Buscar pelo número do pedido..."
-        >
-
-      </div>
-
-
-
-      <select id="filtroPedidoVisual">
-
-        <option value="">
-
-          Todos os pedidos
-
-        </option>
-
-
-        <option value="Pendente">
-
-          Pendentes
-
-        </option>
-
-
-        <option value="Enviado">
-
-          Enviados
-
-        </option>
-
-
-        <option value="Entregue">
-
-          Entregues
-
-        </option>
-
-
-        <option value="Cancelado">
-
-          Cancelados
-
-        </option>
-
-
-      </select>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         LISTA REAL
-         ID ORIGINAL PRESERVADO
-    ================================================= -->
-
-    <section class="orders-list-wrapper">
-
-
-      <div class="orders-list-header">
-
-
-        <div>
-
-
-          <h3>
-
-            <i class="fa-solid fa-clock-rotate-left"></i>
-
-            Histórico de pedidos
-
-          </h3>
-
-
-          <p>
-
-            Suas compras aparecem abaixo.
-
-          </p>
+            </div>
 
         </div>
 
 
-        <span>
 
-          <i class="fa-solid fa-shield-halved"></i>
+        <!-- ======================================================
+             NAVEGAÇÃO
+        ======================================================= -->
 
-          Área do cliente
+        <nav
+            class="main-navigation"
+            id="mainNavigation"
+        >
 
-        </span>
+            <div class="container navigation-container">
+
+                <a href="index.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Início
+
+                </a>
 
 
-      </div>
+                <a href="produtos.html">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                    Produtos
+
+                </a>
+
+
+                <a href="produtos.html?categoria=motor">
+
+                    Motor
+
+                </a>
+
+
+                <a href="produtos.html?categoria=freios">
+
+                    Freios
+
+                </a>
+
+
+                <a href="produtos.html?categoria=suspensao">
+
+                    Suspensão
+
+                </a>
+
+
+                <a href="produtos.html?categoria=eletrica">
+
+                    Elétrica
+
+                </a>
+
+
+                <a
+                    href="pedidos.html"
+                    class="active"
+                >
+
+                    <i class="fa-solid fa-box"></i>
+
+                    Pedidos
+
+                </a>
+
+
+                <a href="suporte.html">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                    Suporte
+
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
 
 
 
-      <div
-        id="listaPedidos"
-        class="orders-list"
-      ></div>
+    <!-- ======================================================
+         MENU MOBILE
+    ======================================================= -->
 
-
-      <div
-        id="ordersEmptyState"
-        class="orders-empty"
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
         hidden
-      >
+    ></div>
 
-        <span>
 
-          <i class="fa-solid fa-box-open"></i>
+    <aside
+        class="mobile-menu"
+        id="mobileMenu"
+        aria-hidden="true"
+    >
 
-        </span>
+        <div class="mobile-menu-header">
 
+            <img
+                src="img/logo-auto-peca-certa.png"
+                alt="Auto Peça Certa"
+            >
 
-        <h3>
+            <button
+                type="button"
+                id="mobileMenuClose"
+                aria-label="Fechar menu"
+            >
 
-          Nenhum pedido encontrado
+                <i class="fa-solid fa-xmark"></i>
 
-        </h3>
-
-
-        <p>
-
-          Quando você realizar uma compra,
-          ela aparecerá aqui.
-
-        </p>
-
-
-        <a href="produtos.html">
-
-          Ver produtos
-
-          <i class="fa-solid fa-arrow-right"></i>
-
-        </a>
-
-
-      </div>
-
-
-    </section>
-
-
-  </div>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     COMO FUNCIONA
-===================================================== -->
-
-<section class="tracking-section">
-
-
-  <div class="site-container">
-
-
-    <div class="tracking-heading">
-
-      <span class="section-label">
-
-        Acompanhamento
-
-      </span>
-
-      <h2>
-
-        Entenda o status do seu pedido
-
-      </h2>
-
-    </div>
-
-
-
-    <div class="tracking-flow">
-
-
-      <div class="tracking-step">
-
-        <span>
-
-          <i class="fa-solid fa-receipt"></i>
-
-        </span>
-
-        <strong>
-
-          Pedido recebido
-
-        </strong>
-
-        <p>
-
-          Seu pedido foi registrado
-          no sistema.
-
-        </p>
-
-      </div>
-
-
-
-      <div class="tracking-arrow">
-
-        <i class="fa-solid fa-arrow-right"></i>
-
-      </div>
-
-
-
-      <div class="tracking-step">
-
-        <span>
-
-          <i class="fa-solid fa-box"></i>
-
-        </span>
-
-        <strong>
-
-          Em preparação
-
-        </strong>
-
-        <p>
-
-          Os produtos estão sendo
-          separados.
-
-        </p>
-
-      </div>
-
-
-
-      <div class="tracking-arrow">
-
-        <i class="fa-solid fa-arrow-right"></i>
-
-      </div>
-
-
-
-      <div class="tracking-step">
-
-        <span>
-
-          <i class="fa-solid fa-truck-fast"></i>
-
-        </span>
-
-        <strong>
-
-          Enviado
-
-        </strong>
-
-        <p>
-
-          O pedido saiu para
-          entrega.
-
-        </p>
-
-      </div>
-
-
-
-      <div class="tracking-arrow">
-
-        <i class="fa-solid fa-arrow-right"></i>
-
-      </div>
-
-
-
-      <div class="tracking-step">
-
-        <span>
-
-          <i class="fa-solid fa-circle-check"></i>
-
-        </span>
-
-        <strong>
-
-          Entregue
-
-        </strong>
-
-        <p>
-
-          A compra foi
-          concluída.
-
-        </p>
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     SUPORTE
-===================================================== -->
-
-<section class="orders-support">
-
-
-  <div class="site-container orders-support-box">
-
-
-    <span class="orders-support-icon">
-
-      <i class="fa-solid fa-headset"></i>
-
-    </span>
-
-
-    <div>
-
-      <span>
-
-        PRECISA DE AJUDA?
-
-      </span>
-
-      <h2>
-
-        Algum problema com seu pedido?
-
-      </h2>
-
-      <p>
-
-        Entre em contato com nossa equipe
-        e informe o número do pedido.
-
-      </p>
-
-    </div>
-
-
-    <a href="suporte.html">
-
-      Falar com suporte
-
-      <i class="fa-solid fa-arrow-right"></i>
-
-    </a>
-
-
-  </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="site-footer">
-
-
-  <div class="site-container footer-grid">
-
-
-    <div class="footer-brand">
-
-
-      <div class="footer-logo">
-
-        <span>
-
-          <i class="fa-solid fa-gear"></i>
-
-        </span>
-
-        <div>
-
-          <strong>
-            Loja de Peças
-          </strong>
-
-          <small>
-            Autopeças & Acessórios
-          </small>
+            </button>
 
         </div>
 
-      </div>
+
+        <nav class="mobile-menu-navigation">
+
+            <a href="index.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Início
+
+            </a>
 
 
-      <p>
+            <a href="produtos.html">
 
-        Peças e acessórios automotivos
-        com qualidade, tecnologia,
-        praticidade e confiança.
+                <i class="fa-solid fa-gears"></i>
 
-      </p>
+                Produtos
+
+            </a>
 
 
-      <div class="social-links">
+            <a
+                href="pedidos.html"
+                class="active"
+            >
 
-        <a href="#">
+                <i class="fa-solid fa-box"></i>
 
-          <i class="fa-brands fa-instagram"></i>
+                Meus pedidos
 
-        </a>
+            </a>
 
-        <a href="#">
 
-          <i class="fa-brands fa-facebook-f"></i>
+            <a href="carrinho.html">
 
-        </a>
+                <i class="fa-solid fa-cart-shopping"></i>
 
-        <a href="#">
+                Carrinho
 
-          <i class="fa-brands fa-whatsapp"></i>
+            </a>
 
-        </a>
 
-      </div>
+            <a href="perfil.html">
 
+                <i class="fa-solid fa-user"></i>
+
+                Minha conta
+
+            </a>
+
+
+            <a href="suporte.html">
+
+                <i class="fa-solid fa-headset"></i>
+
+                Suporte
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- ======================================================
+         MAIN
+    ======================================================= -->
+
+    <main
+        id="mainContent"
+        class="orders-page"
+    >
+
+
+        <!-- ======================================================
+             BREADCRUMB
+        ======================================================= -->
+
+        <section class="orders-breadcrumb-section">
+
+            <div class="container">
+
+                <nav
+                    class="orders-breadcrumb"
+                    aria-label="Navegação estrutural"
+                >
+
+                    <a href="index.html">
+                        Início
+                    </a>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <a href="perfil.html">
+                        Minha conta
+                    </a>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <span>
+                        Meus pedidos
+                    </span>
+
+                </nav>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+             HERO
+        ======================================================= -->
+
+        <section class="orders-hero">
+
+            <div class="orders-hero-decoration orders-decoration-one"></div>
+
+            <div class="orders-hero-decoration orders-decoration-two"></div>
+
+
+            <div class="container orders-hero-container">
+
+                <div class="orders-hero-content">
+
+
+                    <div class="orders-hero-label">
+
+                        <span class="orders-hero-label-icon">
+
+                            <i class="fa-solid fa-box-open"></i>
+
+                        </span>
+
+                        <span>
+                            Área do cliente
+                        </span>
+
+                    </div>
+
+
+                    <h1>
+
+                        Seus pedidos,
+                        <span>em um só lugar.</span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Consulte suas compras, acompanhe o andamento
+                        dos pedidos e encontre rapidamente tudo o que
+                        precisar após a compra.
+
+                    </p>
+
+
+                    <div class="orders-hero-actions">
+
+                        <a
+                            href="produtos.html"
+                            class="orders-primary-button"
+                        >
+
+                            <i class="fa-solid fa-bag-shopping"></i>
+
+                            Continuar comprando
+
+                        </a>
+
+
+                        <a
+                            href="suporte.html"
+                            class="orders-secondary-button"
+                        >
+
+                            <i class="fa-solid fa-headset"></i>
+
+                            Preciso de ajuda
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     HERO VISUAL
+                =================================================== -->
+
+                <div class="orders-hero-visual">
+
+                    <div class="orders-visual-glow"></div>
+
+
+                    <div class="orders-visual-main-card">
+
+                        <div class="orders-visual-card-top">
+
+                            <div class="orders-visual-icon">
+
+                                <i class="fa-solid fa-box"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <small>
+                                    Auto Peça Certa
+                                </small>
+
+                                <strong>
+                                    Meus pedidos
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="orders-visual-progress">
+
+                            <div class="orders-visual-progress-line">
+
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="orders-visual-progress-points">
+
+                                <span class="complete">
+
+                                    <i class="fa-solid fa-check"></i>
+
+                                </span>
+
+                                <span class="complete">
+
+                                    <i class="fa-solid fa-check"></i>
+
+                                </span>
+
+                                <span class="current">
+
+                                    <i class="fa-solid fa-truck"></i>
+
+                                </span>
+
+                                <span>
+
+                                    <i class="fa-solid fa-house"></i>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="orders-visual-labels">
+
+                            <span>
+                                Pedido
+                            </span>
+
+                            <span>
+                                Preparação
+                            </span>
+
+                            <span>
+                                Transporte
+                            </span>
+
+                            <span>
+                                Entrega
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CARD FLUTUANTE 1 -->
+
+                    <div class="orders-floating-card orders-floating-card-one">
+
+                        <span>
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                        </span>
+
+                        <div>
+
+                            <small>
+                                Compra
+                            </small>
+
+                            <strong>
+                                Protegida
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CARD FLUTUANTE 2 -->
+
+                    <div class="orders-floating-card orders-floating-card-two">
+
+                        <span>
+
+                            <i class="fa-solid fa-headset"></i>
+
+                        </span>
+
+                        <div>
+
+                            <small>
+                                Suporte
+                            </small>
+
+                            <strong>
+                                Pós-venda
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+             ÁREA PRINCIPAL DE PEDIDOS
+        ======================================================= -->
+
+        <section class="orders-dashboard-section">
+
+            <div class="container">
+
+
+                <!-- ==================================================
+                     CABEÇALHO
+                =================================================== -->
+
+                <div class="orders-dashboard-header">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            MINHAS COMPRAS
+                        </span>
+
+                        <h2>
+                            Histórico de pedidos
+                        </h2>
+
+                        <p>
+
+                            Consulte pedidos atuais e compras
+                            anteriores vinculadas à sua conta.
+
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="orders-refresh-button"
+                        id="refreshOrdersButton"
+                    >
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        <span>
+                            Atualizar
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     RESUMO
+                =================================================== -->
+
+                <div
+                    class="orders-stats"
+                    id="ordersStats"
+                >
+
+
+                    <!-- TODOS -->
+
+                    <button
+                        type="button"
+                        class="orders-stat-card active"
+                        data-order-filter="todos"
+                    >
+
+                        <span class="orders-stat-icon">
+
+                            <i class="fa-solid fa-boxes-stacked"></i>
+
+                        </span>
+
+
+                        <span class="orders-stat-content">
+
+                            <small>
+                                Todos
+                            </small>
+
+                            <strong id="ordersTotalCount">
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- EM ANDAMENTO -->
+
+                    <button
+                        type="button"
+                        class="orders-stat-card"
+                        data-order-filter="andamento"
+                    >
+
+                        <span class="orders-stat-icon">
+
+                            <i class="fa-solid fa-truck-fast"></i>
+
+                        </span>
+
+
+                        <span class="orders-stat-content">
+
+                            <small>
+                                Em andamento
+                            </small>
+
+                            <strong id="ordersProgressCount">
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- ENTREGUES -->
+
+                    <button
+                        type="button"
+                        class="orders-stat-card"
+                        data-order-filter="entregue"
+                    >
+
+                        <span class="orders-stat-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </span>
+
+
+                        <span class="orders-stat-content">
+
+                            <small>
+                                Entregues
+                            </small>
+
+                            <strong id="ordersDeliveredCount">
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- CANCELADOS -->
+
+                    <button
+                        type="button"
+                        class="orders-stat-card"
+                        data-order-filter="cancelado"
+                    >
+
+                        <span class="orders-stat-icon">
+
+                            <i class="fa-solid fa-ban"></i>
+
+                        </span>
+
+
+                        <span class="orders-stat-content">
+
+                            <small>
+                                Cancelados
+                            </small>
+
+                            <strong id="ordersCanceledCount">
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     FERRAMENTAS
+                =================================================== -->
+
+                <div class="orders-toolbar">
+
+
+                    <!-- BUSCA -->
+
+                    <div class="orders-search">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="search"
+                            id="ordersSearchInput"
+                            placeholder="Buscar por pedido ou produto..."
+                            autocomplete="off"
+                            aria-label="Buscar pedido"
+                        >
+
+                        <button
+                            type="button"
+                            id="ordersSearchClear"
+                            aria-label="Limpar busca"
+                            hidden
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- FILTRO -->
+
+                    <div class="orders-filter-wrapper">
+
+                        <label for="ordersStatusFilter">
+
+                            <i class="fa-solid fa-filter"></i>
+
+                            Filtrar por
+
+                        </label>
+
+
+                        <select id="ordersStatusFilter">
+
+                            <option value="todos">
+                                Todos os pedidos
+                            </option>
+
+                            <option value="andamento">
+                                Em andamento
+                            </option>
+
+                            <option value="entregue">
+                                Entregues
+                            </option>
+
+                            <option value="cancelado">
+                                Cancelados
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- ORDENAÇÃO -->
+
+                    <div class="orders-filter-wrapper">
+
+                        <label for="ordersSort">
+
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+
+                            Ordenar
+
+                        </label>
+
+
+                        <select id="ordersSort">
+
+                            <option value="recentes">
+                                Mais recentes
+                            </option>
+
+                            <option value="antigos">
+                                Mais antigos
+                            </option>
+
+                            <option value="maior-valor">
+                                Maior valor
+                            </option>
+
+                            <option value="menor-valor">
+                                Menor valor
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     INFO DE RESULTADOS
+                =================================================== -->
+
+                <div
+                    class="orders-results-info"
+                    id="ordersResultsInfo"
+                    hidden
+                >
+
+                    <span>
+
+                        <strong id="ordersVisibleCount">
+                            0
+                        </strong>
+
+                        <span id="ordersResultsLabel">
+                            pedidos encontrados
+                        </span>
+
+                    </span>
+
+
+                    <button
+                        type="button"
+                        id="clearAllFiltersButton"
+                        hidden
+                    >
+
+                        Limpar filtros
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     LOADING
+                =================================================== -->
+
+                <div
+                    class="orders-loading"
+                    id="ordersLoading"
+                    aria-live="polite"
+                >
+
+                    <div class="orders-loading-header">
+
+                        <div class="skeleton skeleton-small"></div>
+
+                        <div class="skeleton skeleton-mini"></div>
+
+                    </div>
+
+
+                    <div class="orders-loading-card">
+
+                        <div class="orders-loading-product">
+
+                            <div class="skeleton skeleton-image"></div>
+
+
+                            <div>
+
+                                <div class="skeleton skeleton-title"></div>
+
+                                <div class="skeleton skeleton-text"></div>
+
+                                <div class="skeleton skeleton-text-short"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="skeleton skeleton-button"></div>
+
+                    </div>
+
+
+                    <div class="orders-loading-card">
+
+                        <div class="orders-loading-product">
+
+                            <div class="skeleton skeleton-image"></div>
+
+
+                            <div>
+
+                                <div class="skeleton skeleton-title"></div>
+
+                                <div class="skeleton skeleton-text"></div>
+
+                                <div class="skeleton skeleton-text-short"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="skeleton skeleton-button"></div>
+
+                    </div>
+
+
+                    <div class="orders-loading-card">
+
+                        <div class="orders-loading-product">
+
+                            <div class="skeleton skeleton-image"></div>
+
+
+                            <div>
+
+                                <div class="skeleton skeleton-title"></div>
+
+                                <div class="skeleton skeleton-text"></div>
+
+                                <div class="skeleton skeleton-text-short"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="skeleton skeleton-button"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     LISTA DE PEDIDOS
+
+                     O JS VAI INSERIR OS PEDIDOS AQUI.
+                     NÃO COLOCAMOS PEDIDOS FALSOS.
+                =================================================== -->
+
+                <div
+                    class="orders-list"
+                    id="ordersList"
+                    hidden
+                    aria-live="polite"
+                ></div>
+
+
+
+                <!-- ==================================================
+                     SEM PEDIDOS
+                =================================================== -->
+
+                <div
+                    class="orders-empty-state"
+                    id="ordersEmptyState"
+                    hidden
+                >
+
+                    <div class="orders-empty-visual">
+
+                        <div class="orders-empty-circle">
+
+                            <i class="fa-solid fa-box-open"></i>
+
+                        </div>
+
+
+                        <span class="orders-empty-decoration decoration-one">
+
+                            <i class="fa-solid fa-wrench"></i>
+
+                        </span>
+
+
+                        <span class="orders-empty-decoration decoration-two">
+
+                            <i class="fa-solid fa-gears"></i>
+
+                        </span>
+
+                    </div>
+
+
+                    <span class="orders-empty-eyebrow">
+                        NENHUMA COMPRA AINDA
+                    </span>
+
+
+                    <h3>
+                        Seus pedidos aparecerão aqui
+                    </h3>
+
+
+                    <p>
+
+                        Quando você concluir uma compra na
+                        Auto Peça Certa, poderá acompanhar
+                        o pedido por esta página.
+
+                    </p>
+
+
+                    <a
+                        href="produtos.html"
+                        class="orders-primary-button"
+                    >
+
+                        <i class="fa-solid fa-bag-shopping"></i>
+
+                        Explorar produtos
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     SEM RESULTADOS
+                =================================================== -->
+
+                <div
+                    class="orders-no-results"
+                    id="ordersNoResults"
+                    hidden
+                >
+
+                    <div class="orders-no-results-icon">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Nenhum pedido encontrado
+                    </h3>
+
+
+                    <p>
+
+                        Não encontramos pedidos correspondentes
+                        aos filtros ou à busca informada.
+
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="orders-secondary-button"
+                        id="resetOrdersSearchButton"
+                    >
+
+                        <i class="fa-solid fa-rotate-left"></i>
+
+                        Limpar pesquisa
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     ERRO
+                =================================================== -->
+
+                <div
+                    class="orders-error-state"
+                    id="ordersErrorState"
+                    hidden
+                >
+
+                    <div class="orders-error-icon">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    </div>
+
+
+                    <span class="orders-error-eyebrow">
+                        NÃO FOI POSSÍVEL CARREGAR
+                    </span>
+
+
+                    <h3>
+                        Tivemos um problema ao buscar seus pedidos
+                    </h3>
+
+
+                    <p id="ordersErrorMessage">
+
+                        Verifique sua conexão e tente novamente.
+
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="orders-primary-button"
+                        id="retryOrdersButton"
+                    >
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Tentar novamente
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     LOGIN NECESSÁRIO
+                =================================================== -->
+
+                <div
+                    class="orders-login-required"
+                    id="ordersLoginRequired"
+                    hidden
+                >
+
+                    <div class="orders-login-visual">
+
+                        <span>
+
+                            <i class="fa-solid fa-user-lock"></i>
+
+                        </span>
+
+                    </div>
+
+
+                    <span class="orders-login-eyebrow">
+                        ÁREA DO CLIENTE
+                    </span>
+
+
+                    <h3>
+                        Entre para visualizar seus pedidos
+                    </h3>
+
+
+                    <p>
+
+                        Seus pedidos são vinculados à sua conta.
+                        Faça login para acessar o histórico e
+                        acompanhar suas compras.
+
+                    </p>
+
+
+                    <div class="orders-login-actions">
+
+                        <a
+                            href="login.html?redirect=pedidos.html"
+                            class="orders-primary-button"
+                        >
+
+                            <i class="fa-solid fa-right-to-bracket"></i>
+
+                            Entrar na minha conta
+
+                        </a>
+
+
+                        <a
+                            href="produtos.html"
+                            class="orders-secondary-button"
+                        >
+
+                            Continuar navegando
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+             BENEFÍCIOS
+        ======================================================= -->
+
+        <section class="orders-benefits">
+
+            <div class="container">
+
+                <div class="orders-benefits-grid">
+
+
+                    <!-- BENEFÍCIO -->
+
+                    <article class="orders-benefit-card">
+
+                        <div class="orders-benefit-icon">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Compra protegida
+                            </strong>
+
+                            <p>
+                                Seus dados e informações de compra
+                                ficam vinculados à sua conta.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- BENEFÍCIO -->
+
+                    <article class="orders-benefit-card">
+
+                        <div class="orders-benefit-icon">
+
+                            <i class="fa-solid fa-box"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Histórico organizado
+                            </strong>
+
+                            <p>
+                                Consulte pedidos atuais e compras
+                                anteriores em um só lugar.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- BENEFÍCIO -->
+
+                    <article class="orders-benefit-card">
+
+                        <div class="orders-benefit-icon">
+
+                            <i class="fa-solid fa-headset"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Suporte pós-venda
+                            </strong>
+
+                            <p>
+                                Precisa de ajuda com uma compra?
+                                Nossa central continua disponível.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+             SUPORTE CTA
+        ======================================================= -->
+
+        <section class="orders-support-cta">
+
+            <div class="container">
+
+                <div class="orders-support-card">
+
+                    <div class="orders-support-content">
+
+                        <span class="section-eyebrow">
+                            PRECISA DE AJUDA?
+                        </span>
+
+
+                        <h2>
+                            Conte com nosso suporte
+                        </h2>
+
+
+                        <p>
+
+                            Se tiver alguma dúvida sobre um pedido,
+                            pagamento, produto ou entrega, acesse
+                            nossa central de atendimento.
+
+                        </p>
+
+
+                        <a
+                            href="suporte.html"
+                            class="orders-primary-button"
+                        >
+
+                            <i class="fa-solid fa-headset"></i>
+
+                            Acessar suporte
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="orders-support-visual">
+
+                        <div class="orders-support-icon-main">
+
+                            <i class="fa-solid fa-headset"></i>
+
+                        </div>
+
+
+                        <span class="orders-support-bubble bubble-one">
+
+                            <i class="fa-solid fa-comment-dots"></i>
+
+                        </span>
+
+
+                        <span class="orders-support-bubble bubble-two">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                        </span>
+
+
+                        <span class="orders-support-bubble bubble-three">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ======================================================
+         MODAL DETALHES DO PEDIDO
+    ======================================================= -->
+
+    <div
+        class="order-modal-overlay"
+        id="orderDetailsModal"
+        hidden
+    >
+
+        <div
+            class="order-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="orderDetailsTitle"
+        >
+
+
+            <!-- HEADER MODAL -->
+
+            <div class="order-modal-header">
+
+                <div>
+
+                    <span class="order-modal-eyebrow">
+                        DETALHES DA COMPRA
+                    </span>
+
+                    <h2 id="orderDetailsTitle">
+                        Pedido
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="order-modal-close"
+                    id="orderDetailsClose"
+                    aria-label="Fechar"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- CONTEÚDO -->
+
+            <div
+                class="order-modal-content"
+                id="orderDetailsContent"
+            ></div>
+
+        </div>
 
     </div>
 
 
 
-    <div class="footer-column">
+    <!-- ======================================================
+         MODAL CANCELAMENTO
+    ======================================================= -->
 
-      <h3>
-        Atendimento
-      </h3>
+    <div
+        class="order-modal-overlay"
+        id="cancelOrderModal"
+        hidden
+    >
 
-      <a href="suporte.html">
-        Fale com o suporte
-      </a>
+        <div
+            class="order-modal order-confirmation-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cancelOrderTitle"
+        >
 
-      <a href="pedidos.html">
-        Acompanhar pedido
-      </a>
+            <div class="order-confirmation-icon">
 
-      <a href="perfil.html">
-        Minha conta
-      </a>
+                <i class="fa-solid fa-triangle-exclamation"></i>
 
-      <a href="#">
-        Trocas e devoluções
-      </a>
+            </div>
+
+
+            <h2 id="cancelOrderTitle">
+                Cancelar pedido?
+            </h2>
+
+
+            <p>
+
+                O cancelamento dependerá da situação atual
+                do pedido e das regras aplicáveis à compra.
+
+            </p>
+
+
+            <div
+                class="cancel-order-message"
+                id="cancelOrderMessage"
+                hidden
+            ></div>
+
+
+            <div class="order-confirmation-actions">
+
+                <button
+                    type="button"
+                    class="orders-secondary-button"
+                    id="cancelOrderBackButton"
+                >
+
+                    Voltar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="order-danger-button"
+                    id="cancelOrderConfirmButton"
+                >
+
+                    <i class="fa-solid fa-ban"></i>
+
+                    Confirmar cancelamento
+
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
 
-    <div class="footer-column">
+    <!-- ======================================================
+         TOAST
+    ======================================================= -->
 
-      <h3>
-        Institucional
-      </h3>
+    <div
+        class="orders-toast"
+        id="ordersToast"
+        role="status"
+        aria-live="polite"
+    >
 
-      <a href="#">
-        Sobre a loja
-      </a>
+        <div class="orders-toast-icon">
 
-      <a href="#">
-        Política de privacidade
-      </a>
+            <i class="fa-solid fa-circle-check"></i>
 
-      <a href="#">
-        Termos de uso
-      </a>
-
-      <a href="#">
-        Dúvidas frequentes
-      </a>
-
-    </div>
+        </div>
 
 
-
-    <div class="footer-column footer-contact">
-
-      <h3>
-        Contato
-      </h3>
-
-      <p>
-
-        <i class="fa-solid fa-location-dot"></i>
-
-        <span>
-
-          Rua da sua loja, 000
-
-          <br>
-
-          Sua Cidade - UF
-
+        <span id="ordersToastText">
+            Atualizado
         </span>
 
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-phone"></i>
-
-        <a href="tel:+5500000000000">
-
-          (00) 00000-0000
-
-        </a>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-solid fa-envelope"></i>
-
-        <a href="mailto:contato@sualoja.com.br">
-
-          contato@sualoja.com.br
-
-        </a>
-
-      </p>
-
-
-      <p>
-
-        <i class="fa-regular fa-clock"></i>
-
-        <span>
-
-          Segunda a sexta
-
-          <br>
-
-          08:00 às 18:00
-
-        </span>
-
-      </p>
-
     </div>
 
 
-  </div>
+
+    <!-- ======================================================
+         BOTÃO VOLTAR AO TOPO
+    ======================================================= -->
+
+    <button
+        type="button"
+        class="back-to-top"
+        id="backToTop"
+        aria-label="Voltar ao topo"
+    >
+
+        <i class="fa-solid fa-arrow-up"></i>
+
+    </button>
 
 
 
-  <div class="footer-bottom">
+    <!-- ======================================================
+         FOOTER
+    ======================================================= -->
 
-    <div class="site-container footer-bottom-content">
+    <footer class="site-footer">
 
-      <span>
+        <div class="container footer-main">
 
-        © <span id="currentYear"></span>
-        Loja de Peças.
-        Todos os direitos reservados.
+            <!-- MARCA -->
 
-      </span>
+            <div class="footer-brand">
 
-
-      <span>
-
-        Autopeças & Acessórios
-
-      </span>
-
-    </div>
-
-  </div>
+                <img
+                    src="img/logo-auto-peca-certa.png"
+                    alt="Auto Peça Certa"
+                    class="footer-logo"
+                >
 
 
-</footer>
+                <p>
 
+                    Peças automotivas com uma experiência
+                    simples, segura e preparada para ajudar
+                    você a encontrar a peça certa.
 
+                </p>
 
-<script src="js/site.js"></script>
-
-
-<!-- SEU JS ORIGINAL -->
-
-<script src="js/pedidos.js"></script>
+            </div>
 
 
 
-<!-- =====================================================
-     JS VISUAL
-===================================================== -->
+            <!-- NAVEGAÇÃO -->
 
-<script>
+            <div class="footer-column">
 
-  const headerSearchForm =
-    document.getElementById(
-      "headerSearchForm"
-    );
+                <h3>
+                    Navegação
+                </h3>
 
 
-  const headerSearchInput =
-    document.getElementById(
-      "headerSearchInput"
-    );
+                <a href="index.html">
+                    Início
+                </a>
 
+                <a href="produtos.html">
+                    Produtos
+                </a>
 
-  headerSearchForm
-    ?.addEventListener(
+                <a href="carrinho.html">
+                    Carrinho
+                </a>
 
-      "submit",
+                <a href="pedidos.html">
+                    Meus pedidos
+                </a>
 
-      event => {
-
-        event.preventDefault();
-
-
-        const termo =
-          headerSearchInput
-            ?.value
-            .trim();
-
-
-        window.location.href =
-          termo
-            ? `produtos.html?busca=${encodeURIComponent(termo)}`
-            : "produtos.html";
-
-      }
-
-    );
+            </div>
 
 
 
-  const mobileSearchInput =
-    document.getElementById(
-      "mobileSearchInput"
-    );
+            <!-- CONTA -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Minha conta
+                </h3>
 
 
-  mobileSearchInput
-    ?.addEventListener(
+                <a href="login.html">
+                    Entrar
+                </a>
 
-      "keydown",
+                <a href="perfil.html">
+                    Meu perfil
+                </a>
 
-      event => {
+                <a href="pedidos.html">
+                    Histórico de compras
+                </a>
 
-        if (
-          event.key === "Enter"
-        ) {
-
-          const termo =
-            mobileSearchInput
-              .value
-              .trim();
+            </div>
 
 
-          window.location.href =
-            termo
-              ? `produtos.html?busca=${encodeURIComponent(termo)}`
-              : "produtos.html";
 
-        }
+            <!-- SUPORTE -->
 
-      }
+            <div class="footer-column">
 
-    );
+                <h3>
+                    Atendimento
+                </h3>
 
-</script>
 
+                <a href="suporte.html">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                    Central de suporte
+
+                </a>
+
+
+                <span>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    atendimento@autopecacerta.com.br
+
+                </span>
+
+
+                <span>
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    Brasil
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FOOTER FINAL -->
+
+        <div class="footer-bottom">
+
+            <div class="container footer-bottom-container">
+
+                <p>
+
+                    ©
+                    <span id="currentYear"></span>
+                    Auto Peça Certa.
+                    Todos os direitos reservados.
+
+                </p>
+
+
+                <div class="footer-security">
+
+                    <span>
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Ambiente seguro
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ======================================================
+         JAVASCRIPT
+    ======================================================= -->
+
+    <script
+        src="js/site.js"
+        defer
+    ></script>
+
+    <script
+        src="js/pedidos.js"
+        defer
+    ></script>
 
 </body>
 
