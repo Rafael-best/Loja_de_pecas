@@ -136,11 +136,44 @@
             <input type="search" id="catalogSearchInput" placeholder="Ex.: pastilha de freio, Bosch, FR-001..." autocomplete="off">
             <button type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
           </form>
+          <div class="products-hero-features">
+            <span><i class="fa-solid fa-circle-check"></i> Peças para manutenção</span>
+            <span><i class="fa-solid fa-tags"></i> Marcas selecionadas</span>
+            <span><i class="fa-solid fa-truck-fast"></i> Compra prática</span>
+          </div>
+        </div>
+
+        <div class="products-hero-visual" aria-hidden="true">
+          <div class="catalog-orbit orbit-one"></div>
+          <div class="catalog-orbit orbit-two"></div>
+          <div class="catalog-main-icon"><i class="fa-solid fa-car-side"></i></div>
+          <div class="catalog-floating-card card-freio"><span><i class="fa-solid fa-circle-stop"></i></span><strong>Freios</strong><small>Segurança</small></div>
+          <div class="catalog-floating-card card-motor"><span><i class="fa-solid fa-gears"></i></span><strong>Motor</strong><small>Performance</small></div>
+          <div class="catalog-floating-card card-eletrica"><span><i class="fa-solid fa-bolt"></i></span><strong>Elétrica</strong><small>Energia</small></div>
+          <div class="catalog-floating-card card-suspensao"><span><i class="fa-solid fa-car-side"></i></span><strong>Suspensão</strong><small>Conforto</small></div>
         </div>
       </div>
     </section>
 
-    <section class="products-catalog-section">
+    <section class="quick-categories">
+      <div class="site-container">
+        <div class="quick-categories-header">
+          <div><span class="section-eyebrow"><i class="fa-solid fa-layer-group"></i> Encontre rapidamente</span><h2>Categorias de produtos</h2></div>
+          <button type="button" class="clear-category-button" id="clearCategoryButton"><i class="fa-solid fa-xmark"></i> Todas as categorias</button>
+        </div>
+        <div class="quick-categories-grid" id="quickCategoriesGrid">
+          <button type="button" class="quick-category active" data-category=""><i class="fa-solid fa-table-cells-large"></i><span>Todos</span></button>
+          <button type="button" class="quick-category" data-category="freios"><i class="fa-solid fa-circle-stop"></i><span>Freios</span></button>
+          <button type="button" class="quick-category" data-category="motor"><i class="fa-solid fa-gears"></i><span>Motor</span></button>
+          <button type="button" class="quick-category" data-category="suspensao"><i class="fa-solid fa-car-side"></i><span>Suspensão</span></button>
+          <button type="button" class="quick-category" data-category="eletrica"><i class="fa-solid fa-bolt"></i><span>Elétrica</span></button>
+          <button type="button" class="quick-category" data-category="filtros"><i class="fa-solid fa-filter"></i><span>Filtros</span></button>
+          <button type="button" class="quick-category" data-category="oleos"><i class="fa-solid fa-oil-can"></i><span>Óleos e fluidos</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-section">
       <div class="site-container">
         <div class="catalog-heading">
           <div>
@@ -148,58 +181,52 @@
             <h2 id="catalogTitle">Todos os produtos</h2>
             <p id="catalogDescription">Confira as peças disponíveis em nosso catálogo.</p>
           </div>
-          <div class="catalog-heading-result"><strong id="productsResultCount">0</strong><span>produtos encontrados</span></div>
-        </div>
-
-        <div class="quick-categories" id="quickCategoriesGrid">
-          <button type="button" class="quick-category" data-category=""><i class="fa-solid fa-table-cells-large"></i><span>Todos</span></button>
-          <button type="button" class="quick-category" data-category="freios"><i class="fa-solid fa-circle-stop"></i><span>Freios</span></button>
-          <button type="button" class="quick-category" data-category="motor"><i class="fa-solid fa-gears"></i><span>Motor</span></button>
-          <button type="button" class="quick-category" data-category="suspensao"><i class="fa-solid fa-car-side"></i><span>Suspensão</span></button>
-          <button type="button" class="quick-category" data-category="eletrica"><i class="fa-solid fa-bolt"></i><span>Elétrica</span></button>
-          <button type="button" class="quick-category" data-category="filtros"><i class="fa-solid fa-filter"></i><span>Filtros</span></button>
-          <button type="button" class="quick-category" data-category="oleos"><i class="fa-solid fa-oil-can"></i><span>Óleos</span></button>
+          
         </div>
 
         <div class="catalog-layout">
           <aside class="catalog-filters" id="catalogFilters">
-            <div class="catalog-filters-header">
-              <div><span>Filtrar</span><strong>Produtos</strong></div>
+            <div class="filters-mobile-header">
+              <div><small>FILTROS</small><strong>Filtrar produtos</strong></div>
               <button type="button" id="closeFiltersButton" aria-label="Fechar filtros"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div class="filter-group">
+            <div class="filter-block">
               <label for="filterSearchInput">Pesquisar</label>
               <div class="filter-search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="filterSearchInput" placeholder="Nome, código ou marca"></div>
             </div>
 
-            <div class="filter-group">
-              <div class="filter-group-title">Disponibilidade</div>
+            <div class="filter-block">
+              <div class="filter-title"><strong>Disponibilidade</strong></div>
               <label class="filter-check"><input type="checkbox" id="availableOnlyFilter"><span></span> Apenas em estoque</label>
               <label class="filter-check"><input type="checkbox" id="offersOnlyFilter"><span></span> Apenas ofertas</label>
             </div>
 
-            <div class="filter-group">
-              <div class="filter-group-title">Preço</div>
-              <div class="price-inputs"><input type="number" id="minPriceInput" min="0" step="0.01" placeholder="Mín."><input type="number" id="maxPriceInput" min="0" step="0.01" placeholder="Máx."></div>
+            <div class="filter-block">
+              <div class="filter-title"><strong>Preço</strong></div>
+              <div class="price-filter-inputs"><input type="number" id="minPriceInput" min="0" step="0.01" placeholder="Mín."><input type="number" id="maxPriceInput" min="0" step="0.01" placeholder="Máx."></div>
               <button type="button" class="filter-apply-button" id="applyPriceButton">Aplicar preço</button>
             </div>
 
-            <div class="filter-group">
-              <div class="filter-group-title">Marcas</div>
+            <div class="filter-block">
+              <div class="filter-title"><strong>Marcas</strong></div>
               <div class="brand-filters" id="brandFilters"></div>
             </div>
 
             <button type="button" class="clear-filters-button" id="clearFiltersButton"><i class="fa-solid fa-rotate-left"></i> Limpar filtros</button>
           </aside>
 
-          <div class="catalog-results">
+          <div class="catalog-products">
             <div class="catalog-toolbar">
-              <div class="toolbar-left">
+              <div class="catalog-result-info">
+                <strong id="productsResultCount">0</strong>
+                <span>produtos encontrados</span>
+              </div>
+              <div class="catalog-toolbar-actions">
                 <button type="button" class="mobile-filter-button" id="mobileFilterButton"><i class="fa-solid fa-sliders"></i> Filtros <span id="mobileFilterCount">0</span></button>
                 <div class="active-filters" id="activeFilters" hidden><span>Filtros:</span><div id="activeFilterTags"></div></div>
               </div>
-              <div class="toolbar-right">
+              <div class="catalog-sort">
                 <label for="sortProducts">Ordenar:</label>
                 <select id="sortProducts">
                   <option value="relevancia">Relevância</option>
@@ -208,7 +235,7 @@
                   <option value="nome">Nome</option>
                   <option value="avaliacao">Melhor avaliação</option>
                 </select>
-                <div class="view-buttons"><button type="button" id="gridViewButton" class="active" aria-label="Visualização em grade"><i class="fa-solid fa-grip"></i></button><button type="button" id="listViewButton" aria-label="Visualização em lista"><i class="fa-solid fa-list"></i></button></div>
+                <div class="view-mode-buttons"><button type="button" id="gridViewButton" class="active" aria-label="Visualização em grade"><i class="fa-solid fa-grip"></i></button><button type="button" id="listViewButton" aria-label="Visualização em lista"><i class="fa-solid fa-list"></i></button></div>
               </div>
             </div>
 
@@ -237,28 +264,37 @@
     </section>
 
     <section class="compatibility-section">
-      <div class="site-container compatibility-content">
+      <div class="compatibility-grid-background"></div>
+      <div class="site-container compatibility-container">
+        <div class="compatibility-content">
         <div><span class="section-eyebrow"><i class="fa-solid fa-circle-info"></i> Compra consciente</span><h2>Confirme a compatibilidade antes de comprar.</h2><p>Consulte código, aplicação, marca e demais informações do produto antes de finalizar seu pedido.</p></div>
-        <div class="compatibility-visual"><i class="fa-solid fa-car"></i><i class="fa-solid fa-arrow-right"></i><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <div class="compatibility-actions"><a href="suporte.html" class="compatibility-primary-button"><i class="fa-solid fa-headset"></i> Falar com suporte</a><a href="perfil.html#veiculos" class="compatibility-secondary-button"><i class="fa-solid fa-car"></i> Meus veículos</a></div>
+        </div>
+        <div class="compatibility-visual">
+          <div class="compatibility-car"><i class="fa-solid fa-car-side"></i></div>
+          <div class="compatibility-scan-line"></div>
+          <div class="compatibility-status"><span><i class="fa-solid fa-circle-check"></i></span><div><small>VERIFICAÇÃO</small><strong>Compatibilidade conferida</strong></div></div>
+        </div>
       </div>
     </section>
 
     <section class="products-benefits">
-      <div class="site-container">
-        <article><i class="fa-solid fa-shield-halved"></i><div><strong>Compra segura</strong><span>Dados protegidos durante a navegação.</span></div></article>
-        <article><i class="fa-solid fa-box"></i><div><strong>Produtos organizados</strong><span>Encontre por categoria, marca ou código.</span></div></article>
-        <article><i class="fa-solid fa-headset"></i><div><strong>Atendimento</strong><span>Conte com suporte quando precisar.</span></div></article>
-        <article><i class="fa-solid fa-cart-shopping"></i><div><strong>Carrinho integrado</strong><span>Adicione produtos e continue sua compra.</span></div></article>
+      <div class="site-container products-benefits-grid">
+        <article><span><i class="fa-solid fa-shield-halved"></i></span><div><strong>Compra segura</strong><p>Dados protegidos durante a navegação.</p></div></article>
+        <article><span><i class="fa-solid fa-box"></i></span><div><strong>Produtos organizados</strong><p>Encontre por categoria, marca ou código.</p></div></article>
+        <article><span><i class="fa-solid fa-headset"></i></span><div><strong>Atendimento</strong><p>Conte com suporte quando precisar.</p></div></article>
+        <article><span><i class="fa-solid fa-cart-shopping"></i></span><div><strong>Carrinho integrado</strong><p>Adicione produtos e continue sua compra.</p></div></article>
       </div>
     </section>
   </main>
 
   <div class="filters-backdrop" id="filtersBackdrop"></div>
 
-  <div class="product-modal" id="productModal" hidden>
-    <div class="product-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="productModalName">
+  <div class="product-modal-overlay" id="productModal" hidden>
+    <div class="product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalName">
+      <div class="product-modal-layout">
       <button type="button" class="product-modal-close" id="productModalClose" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
-      <div class="product-modal-image"><img id="productModalImage" src="" alt="Produto"></div>
+      <div class="product-modal-image-area"><img id="productModalImage" src="" alt="Produto"></div>
       <div class="product-modal-content">
         <span class="product-modal-badge" id="productModalBadge" hidden></span>
         <span class="product-modal-category" id="productModalCategory"></span>
@@ -266,9 +302,9 @@
         <span class="product-modal-code" id="productModalCode"></span>
         <p id="productModalDescription"></p>
         <div class="product-modal-stock"><span class="stock-indicator" id="productModalStockIndicator"></span><span id="productModalStock">Em estoque</span></div>
-        <div class="product-modal-price"><span id="productModalOldPrice" hidden></span><strong id="productModalPrice">R$ 0,00</strong><small id="productModalInstallment">ou 6x de R$ 0,00</small></div>
-        <div class="product-modal-buy">
-          <div class="quantity-control"><button type="button" id="modalQuantityDecrease" aria-label="Diminuir quantidade">−</button><input type="number" id="modalQuantity" value="1" min="1"><button type="button" id="modalQuantityIncrease" aria-label="Aumentar quantidade">+</button></div>
+        <div class="product-modal-price-area"><div><span class="old-price" id="productModalOldPrice" hidden></span><strong id="productModalPrice">R$ 0,00</strong><span id="productModalInstallment">ou 6x de R$ 0,00</span></div></div>
+        <div class="product-modal-purchase">
+          <div class="product-quantity"><button type="button" id="modalQuantityDecrease" aria-label="Diminuir quantidade">−</button><input type="number" id="modalQuantity" value="1" min="1"><button type="button" id="modalQuantityIncrease" aria-label="Aumentar quantidade">+</button></div>
           <button type="button" id="modalAddToCartButton"><i class="fa-solid fa-cart-plus"></i> Adicionar ao carrinho</button>
         </div>
       </div>
