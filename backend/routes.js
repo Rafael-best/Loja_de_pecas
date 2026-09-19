@@ -39,26 +39,17 @@ router.post('/clientes', async (req, res) => {
         } = req.body;
 
         const sql = `
-            INSERT INTO clientes
-            (
-                nome_cliente,
-                endereco_cliente,
-                telefone_cliente,
-                email_cliente,
-                senha_cliente
-            )
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING *
-            (
-                nome_cliente,
-                endereco_cliente,
-                telefone_cliente,
-                email_cliente,
-                senha_cliente
-            )
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING *
-        `;
+    INSERT INTO clientes
+    (
+        nome_cliente,
+        endereco_cliente,
+        telefone_cliente,
+        email_cliente,
+        senha_cliente
+    )
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *
+`;
 
         const result = await db.query(sql, [
             nome_cliente,
@@ -81,19 +72,15 @@ router.post('/clientes', async (req, res) => {
 
 
 // LOGIN CLIENTE
+// =====================================================
 router.post('/login', async (req, res) => {
     try {
-
         const {
             email_cliente,
             senha_cliente
         } = req.body;
 
         const sql = `
-            SELECT *
-            FROM clientes
-            WHERE email_cliente = $1
-            AND senha_cliente = $2
             SELECT *
             FROM clientes
             WHERE email_cliente = $1
@@ -120,7 +107,6 @@ router.post('/login', async (req, res) => {
             });
 
         }
-
 
     } catch (err) {
 
@@ -223,9 +209,6 @@ router.get('/produtos', async (req, res) => {
             SELECT
                 p.*,
                 f.nome_fornecedor
-            SELECT
-                p.*,
-                f.nome_fornecedor
             FROM produtos p
             LEFT JOIN fornecedores f
                 ON p.id_fornecedor = f.id_fornecedor
@@ -315,9 +298,6 @@ router.get('/pedidos', async (req, res) => {
     try {
 
         const sql = `
-            SELECT
-                p.*,
-                c.nome_cliente
             SELECT
                 p.*,
                 c.nome_cliente
@@ -844,9 +824,6 @@ router.get('/itens', async (req, res) => {
             SELECT
                 i.*,
                 p.nome_produto
-            SELECT
-                i.*,
-                p.nome_produto
             FROM itens_pedido i
             LEFT JOIN produtos p
                 ON i.id_produto = p.id_produto
@@ -885,24 +862,16 @@ router.post('/itens', async (req, res) => {
 
 
         const sql = `
-            INSERT INTO itens_pedido
-            (
-                id_pedido,
-                id_produto,
-                quantidade,
-                preco_unitario
-            )
-            VALUES ($1, $2, $3, $4)
-            RETURNING *
-            (
-                id_pedido,
-                id_produto,
-                quantidade,
-                preco_unitario
-            )
-            VALUES ($1, $2, $3, $4)
-            RETURNING *
-        `;
+    INSERT INTO itens_pedido
+    (
+        id_pedido,
+        id_produto,
+        quantidade,
+        preco_unitario
+    )
+    VALUES ($1, $2, $3, $4)
+    RETURNING *
+`;
 
 
         const result = await db.query(sql, [

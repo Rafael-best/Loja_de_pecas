@@ -637,58 +637,5 @@
 
 <script src="js/login.js"></script>
 
-
-<!-- Apenas comportamento visual.
-     Não interfere na autenticação da API. -->
-
-<script>
-
-  const btnMostrarSenha =
-    document.getElementById(
-      "btnMostrarSenha"
-    );
-
-
-  const senhaInput =
-    document.getElementById(
-      "senha"
-    );
-
-
-  btnMostrarSenha?.addEventListener(
-    "click",
-    () => {
-
-      const mostrando =
-        senhaInput.type === "text";
-
-
-      senhaInput.type =
-        mostrando
-          ? "password"
-          : "text";
-
-
-      const icone =
-        btnMostrarSenha.querySelector(
-          "i"
-        );
-
-
-      if (icone) {
-
-        icone.className =
-          mostrando
-            ? "fa-regular fa-eye"
-            : "fa-regular fa-eye-slash";
-
-      }
-
-    }
-  );
-
-</script>
-
-
 </body>
 </html>
