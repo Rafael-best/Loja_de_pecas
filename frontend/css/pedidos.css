@@ -3294,3 +3294,218 @@ body[data-theme="dark"]
     font-size: 10px;
   }
 }
+
+
+
+/* ============================================================
+   42. REFINO VISUAL — ESPAÇAMENTO E DENSIDADE
+   Reduz espaços excessivos e deixa a página mais objetiva.
+============================================================ */
+
+.orders-hero {
+  min-height: 330px;
+}
+
+.orders-hero-content {
+  gap: 52px;
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
+.orders-hero-copy > p {
+  margin-top: 17px;
+  line-height: 1.6;
+}
+
+.orders-hero-features {
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.orders-hero-card {
+  padding: 22px;
+  border-radius: 18px;
+}
+
+.orders-hero-card-icon {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 16px;
+}
+
+.orders-content-section {
+  padding: 48px 0 58px;
+}
+
+.orders-section-header {
+  margin-bottom: 22px;
+  gap: 20px;
+}
+
+.orders-section-header p {
+  margin-top: 5px;
+}
+
+.orders-summary {
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.orders-summary-card {
+  min-height: 84px;
+  padding: 14px;
+  gap: 11px;
+  border-radius: 14px;
+}
+
+.orders-summary-icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+}
+
+.orders-toolbar {
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 10px;
+  border-radius: 13px;
+}
+
+.orders-search {
+  height: 42px;
+}
+
+.orders-filter-buttons {
+  gap: 4px;
+}
+
+.order-filter {
+  min-height: 34px;
+  padding: 0 11px;
+}
+
+.orders-list {
+  gap: 12px;
+}
+
+.order-card {
+  border-radius: 15px;
+}
+
+.order-card-header {
+  min-height: 68px;
+  padding: 13px 17px;
+}
+
+.order-card-body {
+  gap: 20px;
+  padding: 17px;
+}
+
+.order-info-grid {
+  gap: 10px;
+}
+
+.order-info-item {
+  min-height: 58px;
+  padding: 9px 11px;
+}
+
+.order-progress {
+  padding: 0 17px 17px;
+}
+
+.order-card-footer {
+  min-height: 50px;
+  padding: 9px 17px;
+}
+
+.orders-process {
+  padding: 55px 0;
+}
+
+.orders-process-heading {
+  margin-bottom: 25px;
+}
+
+.orders-process-grid {
+  gap: 10px;
+}
+
+.orders-process-grid article {
+  min-height: 185px;
+  padding: 20px 18px;
+}
+
+.orders-process-icon {
+  margin-bottom: 18px;
+}
+
+.orders-message {
+  min-height: 250px;
+  padding: 32px 22px;
+}
+
+.orders-message-icon {
+  margin-bottom: 13px;
+}
+
+@media (max-width: 900px) {
+  .orders-hero {
+    min-height: 300px;
+  }
+
+  .orders-hero-content {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
+
+  .orders-hero-card {
+    display: none;
+  }
+
+  .orders-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .orders-content-section {
+    padding: 34px 0 42px;
+  }
+
+  .orders-summary {
+    gap: 8px;
+  }
+
+  .orders-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .orders-search {
+    width: 100%;
+  }
+
+  .order-card-header {
+    padding: 12px 14px;
+  }
+
+  .order-card-body {
+    padding: 14px;
+  }
+
+  .order-progress {
+    padding: 0 14px 14px;
+  }
+
+  .order-card-footer {
+    padding: 9px 14px;
+  }
+
+  .orders-process {
+    padding: 45px 0;
+  }
+}
