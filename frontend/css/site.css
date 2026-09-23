@@ -3442,9 +3442,9 @@ body :where(p, li, label, td, th) {
 
 .brand,
 .brand-auto-peca {
-  width: 200px;
-  min-width: 200px;
-  height: 72px;
+  width: 225px;
+  min-width: 225px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -3453,9 +3453,9 @@ body :where(p, li, label, td, th) {
 
 .brand-logo,
 .brand-logo-apc {
-  width: 185px !important;
-  max-width: 185px !important;
-  height: 60px !important;
+  width: 215px !important;
+  max-width: 215px !important;
+  height: 66px !important;
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
@@ -3465,15 +3465,15 @@ body :where(p, li, label, td, th) {
 @media (max-width: 700px) {
   .brand,
   .brand-auto-peca {
-    width: 150px;
-    min-width: 130px;
-    height: 58px;
+    width: 165px;
+    min-width: 145px;
+    height: 60px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 145px !important;
-    max-width: 145px !important;
-    height: 50px !important;
+    width: 158px !important;
+    max-width: 158px !important;
+    height: 54px !important;
   }
 }
