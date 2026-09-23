@@ -203,6 +203,15 @@
             </div>
 
             <div class="filter-block">
+              <div class="filter-title"><strong>Seu CEP</strong></div>
+              <div class="price-filter-inputs">
+                <input type="text" id="cepFilterInput" inputmode="numeric" maxlength="9" placeholder="00000-000">
+                <button type="button" class="filter-apply-button" id="cepFilterButton" style="margin:0;">Ver distância</button>
+              </div>
+              <small id="cepFilterResult" style="display:block;margin-top:6px;color:var(--text-muted,#718197);"></small>
+            </div>
+
+            <div class="filter-block">
               <div class="filter-title"><strong>Preço</strong></div>
               <div class="price-filter-inputs"><input type="number" id="minPriceInput" min="0" step="0.01" placeholder="Mín."><input type="number" id="maxPriceInput" min="0" step="0.01" placeholder="Máx."></div>
               <button type="button" class="filter-apply-button" id="applyPriceButton">Aplicar preço</button>
