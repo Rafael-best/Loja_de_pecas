@@ -3305,3 +3305,138 @@ body[data-theme="dark"]
   }
 
 }
+
+/* ============================================================
+   40. TIPOGRAFIA E LEGIBILIDADE
+   Ajuste global para melhorar leitura em desktop e mobile.
+   Mantém títulos grandes e garante que textos de interface
+   não fiquem menores que o tamanho recomendado para leitura.
+============================================================ */
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Textos corridos e elementos de interface */
+body :where(p, li, label, td, th, a, button, input, select, textarea) {
+  font-size: max(14px, 1em);
+}
+
+/* Elementos pequenos continuam menores, mas nunca microscópicos */
+body :where(small, .top-strip, .desktop-nav a, .header-action small,
+.header-login-button small, .header-user-data small, .footer-bottom-content) {
+  font-size: max(12px, 1em);
+}
+
+/* Navegação e ações principais */
+.desktop-nav a {
+  font-size: 13px !important;
+}
+
+.header-action strong,
+.header-login-button strong,
+.header-user-data strong,
+.cart-text {
+  font-size: 13px !important;
+}
+
+.header-action small,
+.header-login-button small,
+.header-user-data small {
+  font-size: 11px !important;
+}
+
+.header-search input {
+  font-size: 15px !important;
+}
+
+.header-search button {
+  font-size: 13px !important;
+}
+
+.header-register-button {
+  font-size: 13px !important;
+}
+
+.header-cart {
+  font-size: 14px !important;
+}
+
+/* Dropdown do usuário */
+.user-dropdown a,
+.user-dropdown button {
+  font-size: 14px !important;
+}
+
+.user-dropdown-header strong {
+  font-size: 14px !important;
+}
+
+.user-dropdown-header small {
+  font-size: 12px !important;
+}
+
+/* Botões globais */
+.apc-button {
+  font-size: 14px !important;
+}
+
+/* Mobile */
+.mobile-nav a {
+  font-size: 14px !important;
+}
+
+.mobile-user-area a {
+  font-size: 14px !important;
+}
+
+/* Textos muito pequenos usados em componentes das páginas */
+.card,
+.product-card,
+.product-card *,
+.catalog-card,
+.catalog-card *,
+.form-group,
+.form-group *,
+.checkout-card,
+.checkout-card *,
+.cart-item,
+.cart-item *,
+.order-card,
+.order-card * {
+  font-size: max(14px, 1em);
+}
+
+/* Não aumentar ícones automaticamente */
+body i,
+body svg {
+  font-size: revert-layer;
+}
+
+/* Evita textos excessivamente compactados */
+body :where(p, li, label, td, th) {
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 16px;
+  }
+
+  body :where(p, li, label, td, th, a, button, input, select, textarea) {
+    font-size: max(14px, 1em);
+  }
+
+  .header-search input {
+    font-size: 15px !important;
+  }
+
+  .mobile-nav a {
+    font-size: 15px !important;
+  }
+}
