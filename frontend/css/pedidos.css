@@ -3162,3 +3162,135 @@ body[data-theme="dark"]
   }
 
 }
+
+/* ============================================================
+   CORREÇÃO DO HEADER DA PÁGINA DE PEDIDOS
+   O HTML desta página usa classes próprias (topbar/container)
+   enquanto o restante do projeto usa o header global.
+============================================================ */
+
+.orders-page .topbar {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #04101c 0%, #081a2a 50%, #04101c 100%);
+  color: rgba(255,255,255,.78);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.orders-page .topbar-container {
+  width: min(calc(100% - 48px), 1420px);
+  min-height: 34px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.orders-page .topbar-left,
+.orders-page .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.orders-page .topbar-item,
+.orders-page .topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.orders-page .topbar-item i {
+  color: #32c7ff;
+  font-size: 12px;
+}
+
+.orders-page .topbar-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255,255,255,.15);
+}
+
+.orders-page .topbar-link {
+  color: rgba(255,255,255,.68);
+  transition: color .2s ease;
+}
+
+.orders-page .topbar-link:hover {
+  color: #fff;
+}
+
+.orders-page .main-navigation {
+  width: 100%;
+  min-height: 50px;
+  display: block;
+  background: #fff;
+  border-top: 1px solid #edf2f6;
+  border-bottom: 1px solid #dce6ef;
+  box-shadow: 0 3px 12px rgba(5,24,42,.04);
+}
+
+.orders-page .navigation-container {
+  width: min(calc(100% - 48px), 1420px);
+  min-height: 50px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.orders-page .navigation-container > a {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 18px;
+  color: #53667a;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background .2s ease, color .2s ease;
+}
+
+.orders-page .navigation-container > a:hover,
+.orders-page .navigation-container > a.active {
+  background: #1268e8;
+  color: #fff;
+}
+
+.orders-page .navigation-container > a i {
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .orders-page .topbar-container,
+  .orders-page .navigation-container {
+    width: min(calc(100% - 28px), 1420px);
+  }
+
+  .orders-page .topbar-right {
+    display: none;
+  }
+
+  .orders-page .navigation-container {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .orders-page .navigation-container > a {
+    padding: 0 14px;
+    font-size: 12px;
+  }
+
+  .orders-page .topbar {
+    font-size: 10px;
+  }
+}
