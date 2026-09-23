@@ -1,11 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="340" height="90" viewBox="0 0 340 90" role="img" aria-labelledby="title desc">
-  <title id="title">Auto Peça Certa</title>
-  <desc id="desc">Logo Auto Peça Certa com carro e engrenagem à esquerda e nome da marca à direita.</desc>
-  <rect width="340" height="90" fill="#ffffff" fill-opacity="0"/>
-  <svg x="0" y="5" width="132" height="80" viewBox="215 193 850 495" preserveAspectRatio="xMidYMid meet">
-    <image href="logo_auto_peca_certa.png" x="0" y="0" width="1254" height="1254" preserveAspectRatio="none"/>
-  </svg>
-  <svg x="137" y="8" width="200" height="74" viewBox="102 650 1057 395" preserveAspectRatio="xMidYMid meet">
-    <image href="logo_auto_peca_certa.png" x="0" y="0" width="1254" height="1254" preserveAspectRatio="none"/>
-  </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="90" viewBox="0 0 340 90">
+  <defs>
+    <clipPath id="carCrop"><rect x="0" y="0" width="125" height="82"/></clipPath>
+    <clipPath id="textCrop"><rect x="120" y="0" width="215" height="90"/></clipPath>
+  </defs>
+  <image href="./logo_auto_peca_certa.png" x="-52" y="-46" width="300" height="300" preserveAspectRatio="none" clip-path="url(#carCrop)"/>
+  <image href="./logo_auto_peca_certa.png" x="-24" y="-157" width="300" height="300" preserveAspectRatio="none" clip-path="url(#textCrop)"/>
 </svg>
