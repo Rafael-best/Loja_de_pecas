@@ -3437,13 +3437,15 @@ body :where(p, li, label, td, th) {
 
 /* ============================================================
    AJUSTE FINAL DA LOGO DO HEADER
-   Logo única, proporcional e sem recorte em todas as páginas.
+   Logo mais ampla e horizontal para melhorar a leitura.
+   A imagem original é quadrada; aqui ela ocupa um espaço
+   retangular maior no header para ficar visualmente mais larga.
 ============================================================ */
 
 .brand,
 .brand-auto-peca {
-  width: 225px;
-  min-width: 225px;
+  width: 290px;
+  min-width: 290px;
   height: 76px;
   display: flex;
   align-items: center;
@@ -3453,27 +3455,83 @@ body :where(p, li, label, td, th) {
 
 .brand-logo,
 .brand-logo-apc {
-  width: 215px !important;
-  max-width: 215px !important;
-  height: 66px !important;
-  object-fit: contain !important;
+  width: 280px !important;
+  max-width: 280px !important;
+  height: 68px !important;
+  object-fit: fill !important;
   object-position: center !important;
   display: block !important;
   margin: 0 !important;
 }
 
+.header-main {
+  grid-template-columns: 290px minmax(280px, 1fr) auto;
+}
+
+@media (max-width: 1280px) {
+  .header-main {
+    grid-template-columns: 255px minmax(260px, 1fr) auto;
+  }
+
+  .brand,
+  .brand-auto-peca {
+    width: 255px;
+    min-width: 255px;
+  }
+
+  .brand-logo,
+  .brand-logo-apc {
+    width: 245px !important;
+    max-width: 245px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-main {
+    grid-template-columns: 205px 1fr auto;
+  }
+
+  .brand,
+  .brand-auto-peca {
+    width: 200px;
+    min-width: 190px;
+  }
+
+  .brand-logo,
+  .brand-logo-apc {
+    width: 190px !important;
+    max-width: 190px !important;
+    height: 58px !important;
+  }
+}
+
 @media (max-width: 700px) {
   .brand,
   .brand-auto-peca {
-    width: 165px;
-    min-width: 145px;
+    width: 175px;
+    min-width: 160px;
     height: 60px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 158px !important;
-    max-width: 158px !important;
+    width: 170px !important;
+    max-width: 170px !important;
     height: 54px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand,
+  .brand-auto-peca {
+    width: 150px;
+    min-width: 140px;
+  }
+
+  .brand-logo,
+  .brand-logo-apc {
+    width: 145px !important;
+    max-width: 145px !important;
+    height: 48px !important;
   }
 }
