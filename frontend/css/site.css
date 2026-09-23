@@ -3437,25 +3437,26 @@ body :where(p, li, label, td, th) {
 
 /* ============================================================
    AJUSTE FINAL DA LOGO DO HEADER
-   Usa a versão horizontal da marca, sem deformar a arte original.
+   Volta a usar o PNG original para evitar imagem quebrada.
+   O CSS preserva a proporção e aumenta a presença visual.
 ============================================================ */
 
 .brand,
 .brand-auto-peca {
-  width: 300px;
-  min-width: 300px;
+  width: 250px;
+  min-width: 250px;
   height: 78px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .brand-logo,
 .brand-logo-apc {
-  width: 295px !important;
-  max-width: 295px !important;
-  height: 76px !important;
+  width: 250px !important;
+  max-width: 250px !important;
+  height: 78px !important;
   object-fit: contain !important;
   object-position: left center !important;
   display: block !important;
@@ -3463,42 +3464,42 @@ body :where(p, li, label, td, th) {
 }
 
 .header-main {
-  grid-template-columns: 300px minmax(280px, 1fr) auto;
+  grid-template-columns: 250px minmax(280px, 1fr) auto;
 }
 
 @media (max-width: 1280px) {
   .header-main {
-    grid-template-columns: 265px minmax(260px, 1fr) auto;
+    grid-template-columns: 220px minmax(260px, 1fr) auto;
   }
 
   .brand,
   .brand-auto-peca {
-    width: 265px;
-    min-width: 265px;
+    width: 220px;
+    min-width: 220px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 260px !important;
-    max-width: 260px !important;
+    width: 220px !important;
+    max-width: 220px !important;
   }
 }
 
 @media (max-width: 900px) {
   .header-main {
-    grid-template-columns: 215px 1fr auto;
+    grid-template-columns: 190px 1fr auto;
   }
 
   .brand,
   .brand-auto-peca {
-    width: 210px;
-    min-width: 200px;
+    width: 185px;
+    min-width: 175px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 205px !important;
-    max-width: 205px !important;
+    width: 185px !important;
+    max-width: 185px !important;
     height: 62px !important;
   }
 }
@@ -3506,15 +3507,15 @@ body :where(p, li, label, td, th) {
 @media (max-width: 700px) {
   .brand,
   .brand-auto-peca {
-    width: 180px;
-    min-width: 165px;
+    width: 165px;
+    min-width: 150px;
     height: 60px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 175px !important;
-    max-width: 175px !important;
+    width: 160px !important;
+    max-width: 160px !important;
     height: 54px !important;
   }
 }
@@ -3522,14 +3523,14 @@ body :where(p, li, label, td, th) {
 @media (max-width: 420px) {
   .brand,
   .brand-auto-peca {
-    width: 155px;
-    min-width: 145px;
+    width: 145px;
+    min-width: 135px;
   }
 
   .brand-logo,
   .brand-logo-apc {
-    width: 150px !important;
-    max-width: 150px !important;
+    width: 140px !important;
+    max-width: 140px !important;
     height: 50px !important;
   }
 }
