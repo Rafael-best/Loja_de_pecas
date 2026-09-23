@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db'); // conexão com PostgreSQL
+const cepService = require('./services/cepService');
+
+// =====================================================
+// INTEGRAÇÕES EXTERNAS (ViaCEP, CNPJá, FIPE, Brasil API)
+// Fica tudo acessível em /api/integracoes/...
+// =====================================================
+router.use('/integracoes', require('./routes/integracoes'));
 
 // =====================================================
 // CLIENTES
@@ -153,8 +160,14 @@ router.post('/fornecedores', async (req, res) => {
             nome_fornecedor,
             endereco_fornecedor,
             telefone_fornecedor,
-            email_fornecedor
+            email_fornecedor,
+            cep_fornecedor
         } = req.body;
+
+        // Se um CEP foi informado, já geocodificamos aqui (Brasil API)
+        // e guardamos lat/lon. Assim a disponibilidade por CEP do
+        // cliente não precisa geocodificar o fornecedor a cada request.
+        const localizacao = await geocodarCepOuNulo(cep_fornecedor);
 
         const sql = `
             INSERT INTO fornecedores
@@ -162,9 +175,12 @@ router.post('/fornecedores', async (req, res) => {
                 nome_fornecedor,
                 endereco_fornecedor,
                 telefone_fornecedor,
-                email_fornecedor
+                email_fornecedor,
+                cep_fornecedor,
+                latitude_fornecedor,
+                longitude_fornecedor
             )
-            VALUES ($1, $2, $3, $4)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *
         `;
 
@@ -172,7 +188,10 @@ router.post('/fornecedores', async (req, res) => {
             nome_fornecedor,
             endereco_fornecedor,
             telefone_fornecedor,
-            email_fornecedor
+            email_fornecedor,
+            localizacao.cep,
+            localizacao.latitude,
+            localizacao.longitude
         ]);
 
         res.status(201).json(result.rows[0]);
@@ -188,11 +207,127 @@ router.post('/fornecedores', async (req, res) => {
 });
 
 
+// ATUALIZAR FORNECEDOR (inclui reprocessar o CEP se ele mudar)
+router.patch('/fornecedores/:id', async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const {
+            nome_fornecedor,
+            endereco_fornecedor,
+            telefone_fornecedor,
+            email_fornecedor,
+            cep_fornecedor
+        } = req.body;
+
+        const atual = await db.query(
+            'SELECT * FROM fornecedores WHERE id_fornecedor = $1',
+            [id]
+        );
+
+        if (atual.rows.length === 0) {
+            return res.status(404).json({
+                erro: 'Fornecedor não encontrado'
+            });
+        }
+
+        const cepMudou =
+            cep_fornecedor !== undefined &&
+            cepService.limparCep(cep_fornecedor) !==
+                cepService.limparCep(atual.rows[0].cep_fornecedor);
+
+        const localizacao = cepMudou
+            ? await geocodarCepOuNulo(cep_fornecedor)
+            : {
+                cep: atual.rows[0].cep_fornecedor,
+                latitude: atual.rows[0].latitude_fornecedor,
+                longitude: atual.rows[0].longitude_fornecedor
+            };
+
+        const sql = `
+            UPDATE fornecedores
+            SET
+                nome_fornecedor = COALESCE($1, nome_fornecedor),
+                endereco_fornecedor = COALESCE($2, endereco_fornecedor),
+                telefone_fornecedor = COALESCE($3, telefone_fornecedor),
+                email_fornecedor = COALESCE($4, email_fornecedor),
+                cep_fornecedor = $5,
+                latitude_fornecedor = $6,
+                longitude_fornecedor = $7
+            WHERE id_fornecedor = $8
+            RETURNING *
+        `;
+
+        const result = await db.query(sql, [
+            nome_fornecedor,
+            endereco_fornecedor,
+            telefone_fornecedor,
+            email_fornecedor,
+            localizacao.cep,
+            localizacao.latitude,
+            localizacao.longitude,
+            id
+        ]);
+
+        res.json(result.rows[0]);
+
+    } catch (err) {
+
+        console.error('Erro ao atualizar fornecedor:', err);
+
+        res.status(500).json({
+            erro: err.message
+        });
+    }
+});
+
+
+// Geocodifica um CEP e devolve { cep, latitude, longitude }.
+// Nunca lança erro: se o CEP vier vazio ou inválido, ou se a API
+// externa falhar, devolve tudo null — o cadastro não pode travar
+// por causa de uma integração externa fora do ar.
+async function geocodarCepOuNulo(cepBruto) {
+
+    if (!cepBruto) {
+        return { cep: null, latitude: null, longitude: null };
+    }
+
+    try {
+
+        const endereco = await cepService.buscarCep(cepBruto);
+
+        return {
+            cep: endereco.cep,
+            latitude: endereco.latitude,
+            longitude: endereco.longitude
+        };
+
+    } catch (err) {
+
+        console.warn(
+            'Não foi possível geocodificar o CEP do fornecedor:',
+            err.message
+        );
+
+        return {
+            cep: cepService.formatarCep(cepBruto),
+            latitude: null,
+            longitude: null
+        };
+
+    }
+
+}
+
+
 // =====================================================
 // PRODUTOS
 // =====================================================
 
 // LISTAR PRODUTOS
+// Aceita ?cep=00000-000 opcional: quando informado, cada produto
+// volta com a distância até o fornecedor que o abastece.
 router.get('/produtos', async (req, res) => {
 
     try {
@@ -200,7 +335,10 @@ router.get('/produtos', async (req, res) => {
         const sql = `
             SELECT
                 p.*,
-                f.nome_fornecedor
+                f.nome_fornecedor,
+                f.cep_fornecedor,
+                f.latitude_fornecedor,
+                f.longitude_fornecedor
             FROM produtos p
             LEFT JOIN fornecedores f
                 ON p.id_fornecedor = f.id_fornecedor
@@ -214,7 +352,12 @@ router.get('/produtos', async (req, res) => {
             result.rows.length
         );
 
-        res.json(result.rows);
+        const produtos = await anexarDisponibilidadePorCep(
+            result.rows,
+            req.query.cep
+        );
+
+        res.json(produtos);
 
     } catch (err) {
 
@@ -231,6 +374,174 @@ router.get('/produtos', async (req, res) => {
 });
 
 
+// DISPONIBILIDADE DE UM PRODUTO ESPECÍFICO PARA UM CEP
+// GET /api/produtos/:id/disponibilidade?cep=00000-000
+router.get('/produtos/:id/disponibilidade', async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+        const { cep } = req.query;
+
+        if (!cep) {
+            return res.status(400).json({
+                erro: 'Informe o CEP na query string (?cep=00000-000).'
+            });
+        }
+
+        const sql = `
+            SELECT
+                p.*,
+                f.nome_fornecedor,
+                f.cep_fornecedor,
+                f.latitude_fornecedor,
+                f.longitude_fornecedor
+            FROM produtos p
+            LEFT JOIN fornecedores f
+                ON p.id_fornecedor = f.id_fornecedor
+            WHERE p.id_produto = $1
+        `;
+
+        const result = await db.query(sql, [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                erro: 'Produto não encontrado'
+            });
+        }
+
+        const [produto] = await anexarDisponibilidadePorCep(
+            result.rows,
+            cep
+        );
+
+        res.json(produto);
+
+    } catch (err) {
+
+        console.error('Erro ao calcular disponibilidade:', err);
+
+        res.status(500).json({
+            erro: err.message
+        });
+    }
+});
+
+
+// =====================================================
+// DISPONIBILIDADE POR CEP — helpers
+// =====================================================
+
+// Recebe as linhas já com os dados do fornecedor (JOIN) e, se um CEP
+// de cliente for informado, calcula a distância até o fornecedor de
+// cada produto. Geocodifica o CEP do cliente apenas UMA vez por
+// request (os fornecedores já ficam geocodificados no cadastro).
+async function anexarDisponibilidadePorCep(linhas, cepClienteBruto) {
+
+    if (!cepClienteBruto) {
+
+        return linhas.map(linha => ({
+            ...linha,
+            disponibilidade: null
+        }));
+
+    }
+
+    let cliente = null;
+
+    try {
+
+        cliente = await cepService.buscarCep(cepClienteBruto);
+
+    } catch (err) {
+
+        console.warn(
+            'CEP do cliente inválido/indisponível:',
+            err.message
+        );
+
+        return linhas.map(linha => ({
+            ...linha,
+            disponibilidade: {
+                status: 'erro',
+                mensagem: 'Não foi possível localizar esse CEP.'
+            }
+        }));
+
+    }
+
+    return linhas.map(linha => ({
+        ...linha,
+        disponibilidade: calcularDisponibilidade(linha, cliente)
+    }));
+
+}
+
+
+function calcularDisponibilidade(produto, clienteEndereco) {
+
+    const temEstoque =
+        Number(produto.quantidade_estoque) > 0;
+
+    const fornecedorTemCoordenadas =
+        produto.latitude_fornecedor !== null &&
+        produto.latitude_fornecedor !== undefined &&
+        produto.longitude_fornecedor !== null &&
+        produto.longitude_fornecedor !== undefined;
+
+    const clienteTemCoordenadas =
+        clienteEndereco.latitude !== null &&
+        clienteEndereco.longitude !== null;
+
+    // Caso ideal: dá pra calcular a distância real em km
+    if (fornecedorTemCoordenadas && clienteTemCoordenadas) {
+
+        const distanciaKm = cepService.calcularDistanciaKm(
+            Number(produto.latitude_fornecedor),
+            Number(produto.longitude_fornecedor),
+            clienteEndereco.latitude,
+            clienteEndereco.longitude
+        );
+
+        return {
+            status: temEstoque ? 'disponivel' : 'sem_estoque',
+            distancia_km: Number(distanciaKm.toFixed(1)),
+            loja: produto.nome_fornecedor || null,
+            mensagem: temEstoque
+                ? `Disponível em ${produto.nome_fornecedor || 'loja parceira'} — ${distanciaKm.toFixed(1)} km do seu CEP`
+                : `Sem estoque em ${produto.nome_fornecedor || 'loja parceira'} (${distanciaKm.toFixed(1)} km do seu CEP)`
+        };
+
+    }
+
+    // Fallback: sem coordenadas de um dos dois lados, comparamos
+    // cidade/UF (funciona mesmo sem nenhuma API paga de geolocalização)
+    if (produto.cep_fornecedor) {
+
+        return {
+            status: temEstoque ? 'disponivel_sem_distancia' : 'sem_estoque',
+            distancia_km: null,
+            loja: produto.nome_fornecedor || null,
+            mensagem: temEstoque
+                ? `Disponível em ${produto.nome_fornecedor || 'loja parceira'} (distância exata indisponível para esse CEP)`
+                : `Sem estoque em ${produto.nome_fornecedor || 'loja parceira'}`
+        };
+
+    }
+
+    // Fornecedor sem CEP cadastrado ainda
+    return {
+        status: temEstoque ? 'disponivel_sem_distancia' : 'sem_estoque',
+        distancia_km: null,
+        loja: produto.nome_fornecedor || null,
+        mensagem: temEstoque
+            ? 'Produto em estoque (loja de origem sem CEP cadastrado)'
+            : 'Sem estoque no momento'
+    };
+
+}
+
+
 
 // CADASTRAR PRODUTO
 router.post('/produtos', async (req, res) => {
@@ -242,7 +553,11 @@ router.post('/produtos', async (req, res) => {
             preco_produto,
             quantidade_estoque,
             id_fornecedor,
-            imagem_produto
+            imagem_produto,
+            marca_veiculo,
+            modelo_veiculo,
+            ano_veiculo,
+            tipo_veiculo
         } = req.body;
 
         const sql = `
@@ -253,9 +568,13 @@ router.post('/produtos', async (req, res) => {
                 preco_produto,
                 quantidade_estoque,
                 id_fornecedor,
-                imagem_produto
+                imagem_produto,
+                marca_veiculo,
+                modelo_veiculo,
+                ano_veiculo,
+                tipo_veiculo
             )
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING *
         `;
 
@@ -265,7 +584,11 @@ router.post('/produtos', async (req, res) => {
             preco_produto,
             quantidade_estoque,
             id_fornecedor,
-            imagem_produto || null
+            imagem_produto || null,
+            marca_veiculo || null,
+            modelo_veiculo || null,
+            ano_veiculo || null,
+            tipo_veiculo || null
         ]);
 
         res.status(201).json(result.rows[0]);

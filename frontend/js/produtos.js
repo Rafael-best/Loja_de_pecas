@@ -14,9 +14,17 @@ const APC_PRODUCTS_CONFIG = {
     apiBase: "/api",
     productsEndpoint: "/produtos",
 
+    // BUGFIX: esta chave não existia antes. Sem ela,
+    // (page - 1) * itemsPerPage virava NaN e
+    // products.slice(NaN, NaN) sempre retornava um array
+    // vazio — por isso o contador mostrava resultados mas
+    // nenhum card era desenhado.
+    itemsPerPage: 12,
+
     storage: {
         cart: "carrinho",
-        cartLegacy: "clienteCarrinho"
+        cartLegacy: "clienteCarrinho",
+        cep: "clienteCep"
     }
 };
 
@@ -438,7 +446,9 @@ const productsState = {
 
     selectedProduct: null,
 
-    usingFallback: false
+    usingFallback: false,
+
+    cep: ""
 
 };
 
@@ -485,6 +495,12 @@ const elements = {
     mobileSearchInput: $("mobileSearchInput"),
 
     filterSearchInput: $("filterSearchInput"),
+
+    cepInput: $("cepFilterInput"),
+
+    cepButton: $("cepFilterButton"),
+
+    cepResult: $("cepFilterResult"),
 
     sortProducts: $("sortProducts"),
 
@@ -900,7 +916,12 @@ function normalizeProduct(product, index = 0) {
         descricao:
             product.descricao ??
             product.description ??
-            "Consulte as informações e a compatibilidade antes da compra."
+            "Consulte as informações e a compatibilidade antes da compra.",
+
+        // Preenchido pela API quando a listagem é feita com ?cep=.
+        // Fica null quando nenhum CEP foi informado.
+        disponibilidade:
+            product.disponibilidade ?? null
 
     };
 
@@ -917,8 +938,12 @@ async function loadProducts() {
 
     try {
 
+        const query = productsState.cep
+            ? `?cep=${encodeURIComponent(productsState.cep)}`
+            : "";
+
         const response = await fetch(
-            `${APC_PRODUCTS_CONFIG.apiBase}${APC_PRODUCTS_CONFIG.productsEndpoint}`,
+            `${APC_PRODUCTS_CONFIG.apiBase}${APC_PRODUCTS_CONFIG.productsEndpoint}${query}`,
             {
                 method: "GET",
                 headers: {
@@ -1087,6 +1112,165 @@ function updateURL() {
         "",
         newURL
     );
+
+}
+
+
+/* ============================================================
+   CEP DO CLIENTE (disponibilidade)
+============================================================ */
+
+function readCepFromStorage() {
+
+    try {
+
+        const saved = localStorage.getItem(
+            APC_PRODUCTS_CONFIG.storage.cep
+        );
+
+        if (saved) {
+
+            productsState.cep = saved;
+
+            if (elements.cepInput) {
+
+                elements.cepInput.value = saved;
+
+            }
+
+        }
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Não foi possível ler o CEP salvo.",
+            error
+        );
+
+    }
+
+}
+
+
+function formatCepInput(value) {
+
+    const digits = String(value || "")
+        .replace(/\D/g, "")
+        .slice(0, 8);
+
+    if (digits.length <= 5) {
+
+        return digits;
+
+    }
+
+    return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+
+}
+
+
+async function setCep(rawValue) {
+
+    const formatted = formatCepInput(rawValue);
+
+    if (elements.cepInput) {
+
+        elements.cepInput.value = formatted;
+
+    }
+
+    if (formatted.replace(/\D/g, "").length !== 8) {
+
+        if (elements.cepResult) {
+
+            elements.cepResult.textContent =
+                "Informe um CEP válido (00000-000).";
+
+        }
+
+        return;
+
+    }
+
+    productsState.cep = formatted;
+
+    try {
+
+        localStorage.setItem(
+            APC_PRODUCTS_CONFIG.storage.cep,
+            formatted
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Não foi possível salvar o CEP.",
+            error
+        );
+
+    }
+
+    if (elements.cepResult) {
+
+        elements.cepResult.textContent =
+            "Calculando disponibilidade...";
+
+    }
+
+    await loadProducts();
+
+    if (elements.cepResult) {
+
+        elements.cepResult.textContent =
+            productsState.usingFallback
+                ? "Catálogo local — disponibilidade por CEP requer a API conectada."
+                : `Mostrando disponibilidade para ${formatted}.`;
+
+    }
+
+}
+
+
+function bindCepEvents() {
+
+    if (elements.cepButton) {
+
+        elements.cepButton.addEventListener(
+            "click",
+            () => {
+
+                setCep(
+                    elements.cepInput
+                        ?.value
+                );
+
+            }
+        );
+
+    }
+
+    if (elements.cepInput) {
+
+        elements.cepInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    setCep(
+                        elements.cepInput.value
+                    );
+
+                }
+
+            }
+        );
+
+    }
 
 }
 
@@ -1505,6 +1689,18 @@ function createProductCard(product, index) {
     const stars =
         createStars(product.avaliacao);
 
+    const disponibilidadeCep =
+        product.disponibilidade &&
+        product.disponibilidade.distancia_km !== null &&
+        product.disponibilidade.distancia_km !== undefined
+            ? `
+                <span class="product-cep-badge">
+                    <i class="fa-solid fa-location-dot"></i>
+                    ${product.disponibilidade.distancia_km} km do seu CEP
+                </span>
+            `
+            : "";
+
     return `
         <article
             class="product-card"
@@ -1553,6 +1749,7 @@ function createProductCard(product, index) {
                     ${escapeHtml(product.marca)}
                 </span>
 
+                ${disponibilidadeCep}
 
                 <div class="product-rating">
 
@@ -2606,7 +2803,10 @@ function openProductModal(id) {
     if (elements.modalStock) {
 
         elements.modalStock.textContent =
-            stock.fullText;
+            product.disponibilidade &&
+            product.disponibilidade.mensagem
+                ? product.disponibilidade.mensagem
+                : stock.fullText;
 
     }
 
@@ -4089,6 +4289,8 @@ async function initializeProductsPage() {
 
     bindFilterEvents();
 
+    bindCepEvents();
+
     bindPaginationEvents();
 
     bindViewEvents();
@@ -4102,6 +4304,8 @@ async function initializeProductsPage() {
     updateCartCounters();
 
     initializeScrollAnimations();
+
+    readCepFromStorage();
 
     await loadProducts();
 

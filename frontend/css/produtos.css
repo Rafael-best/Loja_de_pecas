@@ -1742,6 +1742,28 @@
   font-weight: 600;
 }
 
+.product-cep-badge {
+  margin-top: 6px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+
+  padding: 3px 9px;
+  border-radius: 999px;
+
+  background: #eef6ff;
+  color: #1471ff;
+
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.product-cep-badge i {
+  font-size: .62rem;
+}
+
 .product-rating {
   margin-top: 10px;
 
