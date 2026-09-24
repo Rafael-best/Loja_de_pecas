@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="90" viewBox="0 0 340 90">
+  <defs>
+    <clipPath id="carCrop"><rect x="0" y="0" width="125" height="82"/></clipPath>
+    <clipPath id="textCrop"><rect x="120" y="0" width="215" height="90"/></clipPath>
+  </defs>
+  <image href="./logo_auto_peca_certa.png" x="-52" y="-46" width="300" height="300" preserveAspectRatio="none" clip-path="url(#carCrop)"/>
+  <image href="./logo_auto_peca_certa.png" x="-24" y="-157" width="300" height="300" preserveAspectRatio="none" clip-path="url(#textCrop)"/>
+</svg>

@@ -3305,3 +3305,396 @@ body[data-theme="dark"]
   }
 
 }
+
+/* ============================================================
+   40. TIPOGRAFIA E LEGIBILIDADE
+   Ajuste global para melhorar leitura em desktop e mobile.
+   Mantém títulos grandes e garante que textos de interface
+   não fiquem menores que o tamanho recomendado para leitura.
+============================================================ */
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Textos corridos e elementos de interface */
+body :where(p, li, label, td, th, a, button, input, select, textarea) {
+  font-size: max(14px, 1em);
+}
+
+/* Elementos pequenos continuam menores, mas nunca microscópicos */
+body :where(small, .top-strip, .desktop-nav a, .header-action small,
+.header-login-button small, .header-user-data small, .footer-bottom-content) {
+  font-size: max(12px, 1em);
+}
+
+/* Navegação e ações principais */
+.desktop-nav a {
+  font-size: 13px !important;
+}
+
+.header-action strong,
+.header-login-button strong,
+.header-user-data strong,
+.cart-text {
+  font-size: 13px !important;
+}
+
+.header-action small,
+.header-login-button small,
+.header-user-data small {
+  font-size: 11px !important;
+}
+
+.header-search input {
+  font-size: 15px !important;
+}
+
+.header-search button {
+  font-size: 13px !important;
+}
+
+.header-register-button {
+  font-size: 13px !important;
+}
+
+.header-cart {
+  font-size: 14px !important;
+}
+
+/* Dropdown do usuário */
+.user-dropdown a,
+.user-dropdown button {
+  font-size: 14px !important;
+}
+
+.user-dropdown-header strong {
+  font-size: 14px !important;
+}
+
+.user-dropdown-header small {
+  font-size: 12px !important;
+}
+
+/* Botões globais */
+.apc-button {
+  font-size: 14px !important;
+}
+
+/* Mobile */
+.mobile-nav a {
+  font-size: 14px !important;
+}
+
+.mobile-user-area a {
+  font-size: 14px !important;
+}
+
+/* Tipografia mínima para o conteúdo das páginas.
+   1em usa o tamanho herdado; max() impede textos menores que 14px. */
+main :where(div, span, p, li, label, td, th, a, button, input, select, textarea) {
+  font-size: max(14px, 1em) !important;
+}
+
+/* Títulos continuam grandes */
+main :where(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.15;
+}
+
+/* Rótulos pequenos podem ser compactos, mas continuam legíveis */
+main :where(.kicker, .eyebrow, .badge, .tag, .caption) {
+  font-size: max(12px, 1em) !important;
+}
+
+/* Evita textos excessivamente compactados */
+body :where(p, li, label, td, th) {
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 16px;
+  }
+
+  body :where(p, li, label, td, th, a, button, input, select, textarea) {
+    font-size: max(14px, 1em);
+  }
+
+  .header-search input {
+    font-size: 15px !important;
+  }
+
+  .mobile-nav a {
+    font-size: 15px !important;
+  }
+}
+
+
+/* ============================================================
+   AJUSTE FINAL DA LOGO DO HEADER
+   Composição horizontal feita em CSS usando a logo original.
+   Não altera nem deforma o arquivo PNG.
+============================================================ */
+
+.brand,
+.brand-auto-peca {
+  width: 315px;
+  min-width: 315px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow: visible;
+  position: relative;
+}
+
+.brand > img,
+.brand-auto-peca > img {
+  display: none !important;
+}
+
+.brand::before,
+.brand-auto-peca::before {
+  content: "";
+  display: block;
+  flex: 0 0 130px;
+  width: 130px;
+  height: 78px;
+  background-image: url("../img/logo_auto_peca_certa.png");
+  background-repeat: no-repeat;
+  background-size: 178px 178px;
+  background-position: -28px -26px;
+}
+
+.brand::after,
+.brand-auto-peca::after {
+  content: "";
+  display: block;
+  flex: 0 0 175px;
+  width: 175px;
+  height: 66px;
+  background-image: url("../img/logo_auto_peca_certa.png");
+  background-repeat: no-repeat;
+  background-size: 193px 193px;
+  background-position: -14px -108px;
+}
+
+.header-main {
+  grid-template-columns: 315px minmax(280px, 1fr) auto;
+  min-height: 82px;
+}
+
+@media (max-width: 1280px) {
+  .header-main {
+    grid-template-columns: 285px minmax(250px, 1fr) auto;
+    min-height: 80px;
+  }
+
+  .brand,
+  .brand-auto-peca {
+    width: 285px;
+    min-width: 285px;
+    height: 80px;
+  }
+
+  .brand::before,
+  .brand-auto-peca::before {
+    flex-basis: 115px;
+    width: 115px;
+    height: 70px;
+    background-size: 158px 158px;
+    background-position: -25px -23px;
+  }
+
+  .brand::after,
+  .brand-auto-peca::after {
+    flex-basis: 158px;
+    width: 158px;
+    height: 60px;
+    background-size: 174px 174px;
+    background-position: -13px -97px;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-main {
+    grid-template-columns: 220px 1fr auto;
+    min-height: 74px;
+  }
+
+  .brand,
+  .brand-auto-peca {
+    width: 215px;
+    min-width: 205px;
+    height: 74px;
+    gap: 5px;
+  }
+
+  .brand::before,
+  .brand-auto-peca::before {
+    flex-basis: 92px;
+    width: 92px;
+    height: 62px;
+    background-size: 127px 127px;
+    background-position: -20px -19px;
+  }
+
+  .brand::after,
+  .brand-auto-peca::after {
+    flex-basis: 125px;
+    width: 125px;
+    height: 50px;
+    background-size: 138px 138px;
+    background-position: -10px -77px;
+  }
+}
+
+@media (max-width: 700px) {
+  .brand,
+  .brand-auto-peca {
+    width: 175px;
+    min-width: 160px;
+    height: 62px;
+    gap: 4px;
+  }
+
+  .brand::before,
+  .brand-auto-peca::before {
+    flex-basis: 68px;
+    width: 68px;
+    height: 50px;
+    background-size: 94px 94px;
+    background-position: -15px -14px;
+  }
+
+  .brand::after,
+  .brand-auto-peca::after {
+    flex-basis: 98px;
+    width: 98px;
+    height: 40px;
+    background-size: 108px 108px;
+    background-position: -8px -60px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand,
+  .brand-auto-peca {
+    width: 155px;
+    min-width: 145px;
+  }
+
+  .brand::before,
+  .brand-auto-peca::before {
+    flex-basis: 58px;
+    width: 58px;
+  }
+
+  .brand::after,
+  .brand-auto-peca::after {
+    flex-basis: 88px;
+    width: 88px;
+  }
+}
+
+
+/* ============================================================
+   REFINO GLOBAL — DENSIDADE E ESPAÇAMENTO
+   Deixa o layout mais compacto, legível e profissional sem
+   alterar a identidade visual das páginas.
+============================================================ */
+
+.site-container {
+  width: min(calc(100% - 32px), 1420px);
+}
+
+.header-main {
+  gap: 20px;
+}
+
+.header-actions {
+  gap: 6px;
+}
+
+.header-action {
+  padding: 5px 7px;
+}
+
+.header-search {
+  height: 50px;
+}
+
+@media (max-width: 900px) {
+  .site-container {
+    width: min(calc(100% - 28px), 1420px);
+  }
+
+  .header-main {
+    gap: 14px;
+  }
+}
+
+/* Evita que blocos de conteúdo fiquem visualmente distantes */
+main > section + section {
+  margin-top: 0;
+}
+
+/* Cards e grades comuns */
+main :where(.grid, .cards-grid, .products-grid, .features-grid) {
+  gap: 16px;
+}
+
+/* Formulários: campos próximos, mas ainda com respiro */
+main :where(form, .form-grid, .form-row) {
+  row-gap: 14px;
+}
+
+main :where(.form-group, .field, .input-group) {
+  margin-bottom: 12px;
+}
+
+/* Tabelas/listagens */
+main :where(table) {
+  margin-top: 12px;
+}
+
+main :where(.table-wrapper, .table-responsive) {
+  margin-top: 14px;
+}
+
+/* Seções internas muito espaçadas */
+main :where(.section-header, .page-header) {
+  margin-bottom: 22px;
+}
+
+main :where(.section-header p, .page-header p) {
+  margin-top: 6px;
+}
+
+/* Botões e controles mais equilibrados */
+main :where(button, .button, .btn, .apc-button) {
+  min-height: 38px;
+}
+
+/* Evita blocos vazios gigantes em áreas de conteúdo */
+main :where(.content-section, .section-content) {
+  padding-top: 48px;
+  padding-bottom: 56px;
+}
+
+@media (max-width: 700px) {
+  main :where(.content-section, .section-content) {
+    padding-top: 34px;
+    padding-bottom: 42px;
+  }
+
+  main :where(.grid, .cards-grid, .products-grid, .features-grid) {
+    gap: 12px;
+  }
+}

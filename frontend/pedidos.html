@@ -75,7 +75,7 @@
 </head>
 
 
-<body>
+<body class="orders-page">
 
 
     <!-- ======================================================
@@ -199,31 +199,25 @@
                 role="search"
             >
 
-                <div class="header-search-box">
+                <i
+                    class="fa-solid fa-magnifying-glass"
+                    aria-hidden="true"
+                ></i>
 
-                    <i
-                        class="fa-solid fa-magnifying-glass"
-                        aria-hidden="true"
-                    ></i>
+                <input
+                    type="search"
+                    id="headerSearchInput"
+                    placeholder="Buscar peças, marcas ou categorias..."
+                    autocomplete="off"
+                    aria-label="Pesquisar produtos"
+                >
 
-                    <input
-                        type="search"
-                        id="headerSearchInput"
-                        placeholder="Buscar peças, marcas ou categorias..."
-                        autocomplete="off"
-                        aria-label="Pesquisar produtos"
-                    >
-
-                    <button
-                        type="submit"
-                        aria-label="Pesquisar"
-                    >
-
-                        Buscar
-
-                    </button>
-
-                </div>
+                <button
+                    type="submit"
+                    aria-label="Pesquisar"
+                >
+                    Buscar
+                </button>
 
             </form>
 
