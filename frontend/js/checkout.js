@@ -12,7 +12,7 @@
    
    const CHECKOUT_CONFIG = {
    
-       apiBase: "http://localhost:3000/api",
+       apiBase: "/api",
    
        endpoints: {
            pedidos: "/pedidos"

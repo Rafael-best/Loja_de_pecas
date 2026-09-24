@@ -174,7 +174,7 @@
   
     color: #718198;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   
@@ -239,7 +239,7 @@
   
     color: #55aaff;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -263,7 +263,7 @@
   
     color: #8695a9;
   
-    font-size: 11px;
+    font-size: 12px;
   
     line-height: 1.7;
   }
@@ -278,7 +278,7 @@
   
     color: #bac4d0;
   
-    font-size: 9px;
+    font-size: 12px;
   
     font-weight: 700;
   }
@@ -334,7 +334,7 @@
   
     color: white;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .input-wrapper input::placeholder {
@@ -371,7 +371,7 @@
   
     color: white;
   
-    font-size: 10px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -399,7 +399,7 @@
   
     border-radius: 9px;
   
-    font-size: 8px;
+    font-size: 12px;
   
     line-height: 1.5;
   }
@@ -460,7 +460,7 @@
   }
   
   .recovery-info strong {
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .recovery-info span {
@@ -468,7 +468,7 @@
   
     color: #708094;
   
-    font-size: 7px;
+    font-size: 12px;
   
     line-height: 1.4;
   }
@@ -486,7 +486,7 @@
   
     color: #8291a5;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 700;
   }
@@ -514,7 +514,7 @@
   
     color: #566578;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .recovery-footer a:hover {

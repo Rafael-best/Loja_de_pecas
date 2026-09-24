@@ -1,13 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const db = require('./db'); // conexão com PostgreSQL
 const cepService = require('./services/cepService');
+
+// Nº de "voltas" do hash. 10 é o padrão recomendado pelo bcrypt.
+const BCRYPT_SALT_ROUNDS = 10;
+
+// Remove a senha (hash) de qualquer objeto de cliente antes de
+// devolver ao frontend — nunca deve trafegar pela rede/localStorage.
+function removerSenha(cliente) {
+    if (!cliente) return cliente;
+    const { senha_cliente, ...resto } = cliente;
+    return resto;
+}
 
 // =====================================================
 // INTEGRAÇÕES EXTERNAS (ViaCEP, CNPJá, FIPE, Brasil API)
 // Fica tudo acessível em /api/integracoes/...
 // =====================================================
 router.use('/integracoes', require('./routes/integracoes'));
+router.use('/recuperar-senha', require('./routes/recuperarSenha'));
 
 // =====================================================
 // CLIENTES
@@ -20,7 +33,7 @@ router.get('/clientes', async (req, res) => {
             'SELECT * FROM clientes ORDER BY id_cliente'
         );
 
-        res.json(result.rows);
+        res.json(result.rows.map(removerSenha));
 
     } catch (err) {
         console.error('Erro ao listar clientes:', err);
@@ -45,6 +58,17 @@ router.post('/clientes', async (req, res) => {
             senha_cliente
         } = req.body;
 
+        if (!senha_cliente) {
+            return res.status(400).json({
+                erro: 'Senha é obrigatória.'
+            });
+        }
+
+        const senhaHash = await bcrypt.hash(
+            senha_cliente,
+            BCRYPT_SALT_ROUNDS
+        );
+
         const sql = `
             INSERT INTO clientes
             (
@@ -63,13 +87,22 @@ router.post('/clientes', async (req, res) => {
             endereco_cliente,
             telefone_cliente,
             email_cliente,
-            senha_cliente
+            senhaHash
         ]);
 
-        res.status(201).json(result.rows[0]);
+        res.status(201).json(
+            removerSenha(result.rows[0])
+        );
 
     } catch (err) {
         console.error('Erro ao cadastrar cliente:', err);
+
+        // e-mail duplicado (constraint UNIQUE), se existir no schema
+        if (err.code === '23505') {
+            return res.status(409).json({
+                erro: 'Já existe uma conta com este e-mail.'
+            });
+        }
 
         res.status(500).json({
             erro: err.message
@@ -87,23 +120,71 @@ router.post('/login', async (req, res) => {
             senha_cliente
         } = req.body;
 
+        if (!email_cliente || !senha_cliente) {
+            return res.json({
+                success: false,
+                message: 'Informe e-mail e senha.'
+            });
+        }
+
         const sql = `
             SELECT *
             FROM clientes
             WHERE email_cliente = $1
-            AND senha_cliente = $2
         `;
 
         const result = await db.query(sql, [
-            email_cliente,
-            senha_cliente
+            email_cliente
         ]);
 
-        if (result.rows.length > 0) {
+        const cliente = result.rows[0];
+
+        if (!cliente) {
+            return res.json({
+                success: false,
+                message: 'Login inválido'
+            });
+        }
+
+        const hashArmazenado = cliente.senha_cliente || '';
+
+        // bcrypt hashes sempre começam com $2 (ex.: $2a$, $2b$).
+        // Se não começar assim, é uma senha antiga em texto puro
+        // (contas criadas antes desta correção) — comparamos direto
+        // e, se bater, migramos silenciosamente para um hash.
+        const pareceHash = hashArmazenado.startsWith('$2');
+
+        let autenticado = false;
+
+        if (pareceHash) {
+
+            autenticado = await bcrypt.compare(
+                senha_cliente,
+                hashArmazenado
+            );
+
+        } else if (hashArmazenado === senha_cliente) {
+
+            autenticado = true;
+
+            // migra a senha antiga (texto puro) para hash agora que
+            // sabemos que o cliente digitou a senha certa
+            const novoHash = await bcrypt.hash(
+                senha_cliente,
+                BCRYPT_SALT_ROUNDS
+            );
+
+            await db.query(
+                'UPDATE clientes SET senha_cliente = $1 WHERE id_cliente = $2',
+                [novoHash, cliente.id_cliente]
+            );
+        }
+
+        if (autenticado) {
 
             res.json({
                 success: true,
-                user: result.rows[0]
+                user: removerSenha(cliente)
             });
 
         } else {

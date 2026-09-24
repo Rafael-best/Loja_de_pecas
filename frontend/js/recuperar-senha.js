@@ -68,18 +68,63 @@ formRecuperacao?.addEventListener(
     }
 
 
-    /*
-      Não inventamos envio real.
+    fetch(
+      "/api/recuperar-senha",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email_cliente: email
+        })
+      }
+    )
+      .then(async resposta => {
 
-      Depois conectaremos com algo como:
+        const dados =
+          await resposta.json().catch(() => ({}));
 
-      POST /api/auth/recuperar-senha
-    */
+        if (!resposta.ok) {
+          throw new Error(
+            dados.erro ||
+            "Não foi possível processar sua solicitação."
+          );
+        }
 
-    mostrarMensagem(
-      "E-mail validado. O envio do link de recuperação será conectado ao backend na etapa de autenticação.",
-      "info"
-    );
+        mostrarMensagem(
+          dados.message ||
+          "Se este e-mail estiver cadastrado, você vai receber um link de redefinição.",
+          "success"
+        );
+
+        // Modo dev (sem SMTP configurado): o backend devolve o link
+        // direto na resposta pra dar pra testar sem precisar de e-mail.
+        if (dados.link_dev) {
+
+          console.info(
+            "[MODO DEV] Link de redefinição de senha:",
+            dados.link_dev
+          );
+
+          mostrarMensagem(
+            `${dados.message}<br><small>Modo de desenvolvimento (sem e-mail configurado): ` +
+            `<a href="${dados.link_dev}">clique aqui para redefinir agora</a>.</small>`,
+            "success"
+          );
+
+        }
+
+      })
+      .catch(erro => {
+
+        mostrarMensagem(
+          erro.message ||
+          "Não foi possível processar sua solicitação.",
+          "error"
+        );
+
+      });
 
   }
 );

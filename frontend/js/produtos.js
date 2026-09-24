@@ -830,6 +830,7 @@ function normalizeProduct(product, index = 0) {
     const price =
         Number(
             product.preco ??
+            product.preco_produto ??
             product.valor ??
             product.price ??
             0

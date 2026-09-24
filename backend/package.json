@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^4.22.2",
-    "fetch": "^1.1.0",
     "mysql2": "^3.6.0",
     "pg": "^8.23.0"
+  },
+  "optionalDependencies": {
+    "nodemailer": "^6.9.14"
   },
   "description": "",
   "scripts": {

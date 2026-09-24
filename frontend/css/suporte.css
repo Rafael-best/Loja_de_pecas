@@ -99,7 +99,7 @@
     display: block;
     margin-top: 1px;
     color: #8997aa;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: .08em;
     text-transform: uppercase;
   }
@@ -181,7 +181,7 @@
     background: #1677ff;
     color: white;
   
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
   }
   
@@ -296,7 +296,7 @@
   
     color: #76adff;
   
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .12em;
   }
@@ -402,7 +402,7 @@
   
   .hero-links span {
     color: #718096;
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .hero-links button {
@@ -414,7 +414,7 @@
     background: rgba(255,255,255,.04);
     color: #9facbc;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .hero-links button:hover {
@@ -446,7 +446,7 @@
   
     color: #1268f3;
   
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .14em;
   }
@@ -544,7 +544,7 @@
   
   .support-card span {
     color: #1268f3;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
   }
   
@@ -635,7 +635,7 @@
   .contact-card small {
     color: #929dab;
   
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .1em;
   }
@@ -656,7 +656,7 @@
   
     color: #8b96a5;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   
@@ -835,7 +835,7 @@
     display: block;
     margin-top: 2px;
     color: #8b95a4;
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .ticket-form-card {
@@ -861,7 +861,7 @@
   .form-header small {
     color: #1268f3;
   
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .1em;
   }
@@ -897,7 +897,7 @@
   
     color: #526071;
   
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
   }
   
@@ -941,7 +941,7 @@
     bottom: 6px;
   
     color: #9ba5b2;
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .submit-ticket {
@@ -995,7 +995,7 @@
   .support-message {
     padding: 12px 14px;
     border-radius: 10px;
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .support-message.success {
@@ -1060,7 +1060,7 @@
   
   .store-content small {
     color: #5f9ff9;
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .12em;
   }
@@ -1073,7 +1073,7 @@
   .store-content p {
     margin: 0;
     color: #93a2b5;
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .store-hours {
@@ -1089,11 +1089,11 @@
   .store-hours span {
     margin-bottom: 4px;
     color: #8291a5;
-    font-size: 9px;
+    font-size: 12px;
   }
   
   .store-hours strong {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   
@@ -1124,7 +1124,7 @@
   
     color: #748296;
   
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.7;
   }
   
@@ -1133,7 +1133,7 @@
   
     color: #e8edf5;
   
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .08em;
   }
@@ -1147,7 +1147,7 @@
     color: #7f8da0;
     text-decoration: none;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .footer-grid > div > a:hover {
@@ -1159,7 +1159,7 @@
   
     color: #7f8da0;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .security-item i {
@@ -1177,7 +1177,7 @@
   
     color: #5f6e81;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   

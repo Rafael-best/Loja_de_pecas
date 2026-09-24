@@ -453,7 +453,7 @@
   
     color: #7fa4c6;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -489,7 +489,7 @@
   .velocity-kicker strong {
     color: #4e7598;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   
@@ -870,7 +870,7 @@
     color:
       rgba(255,255,255,.66);
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .11em;
   }
@@ -879,7 +879,7 @@
   .hero-primary-action strong {
     margin-top: 3px;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   
@@ -934,7 +934,7 @@
   
     color: #c0d3e5;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 700;
   
@@ -1044,7 +1044,7 @@
   
     color: #607d99;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .11em;
   }
@@ -1087,7 +1087,7 @@
   
     color: #5d7f9d;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .12em;
   
@@ -1108,7 +1108,7 @@
   .hero-visual-index span {
     color: #7ebcf5;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   
@@ -1497,7 +1497,7 @@
     transform:
       rotate(90deg);
   
-    font-size: 5px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -1562,7 +1562,7 @@
   
     color: #587a98;
   
-    font-size: 5px;
+    font-size: 12px;
   
     letter-spacing: .13em;
   }
@@ -1575,7 +1575,7 @@
   
     color: #a7c8e5;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   
@@ -1713,7 +1713,7 @@
   
     color: #577793;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .12em;
   
@@ -1802,7 +1802,7 @@
   .hero-search-heading span {
     color: #1268f3;
   
-    font-size: 6px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -1871,7 +1871,7 @@
   
     color: #34465a;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   
@@ -1902,7 +1902,7 @@
   
     color: white;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   }
@@ -1959,14 +1959,14 @@
     font-family:
       "Space Grotesk";
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   
   .section-heading > div:nth-child(2) > span {
     color: #1268f3;
   
-    font-size: 6px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -1996,7 +1996,7 @@
   
     color: #8493a3;
   
-    font-size: 8px;
+    font-size: 12px;
   
     line-height: 1.6;
   }
@@ -2011,7 +2011,7 @@
   
     color: #1268f3;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -2137,7 +2137,7 @@
   .category-code {
     color: #9babb9;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -2191,7 +2191,7 @@
   .category-content small {
     color: #1268f3;
   
-    font-size: 5px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -2212,7 +2212,7 @@
   .category-content > span {
     color: #8c99a7;
   
-    font-size: 7px;
+    font-size: 12px;
   
     line-height: 1.5;
   }
@@ -2584,7 +2584,7 @@
   .velocity-product-category {
     color: #5a91c2;
   
-    font-size: 6px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -2600,7 +2600,7 @@
   
     color: #b8cfe2;
   
-    font-size: 11px;
+    font-size: 12px;
   
     line-height: 1.4;
   }
@@ -2627,7 +2627,7 @@
   .velocity-product-price small {
     color: #4d6b85;
   
-    font-size: 5px;
+    font-size: 12px;
   }
   
   
@@ -2709,7 +2709,7 @@
   
     color: #5d819f;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .11em;
   }
@@ -2718,7 +2718,7 @@
   .showcase-bottom > span i {
     color: #3bd58f;
   
-    font-size: 5px;
+    font-size: 12px;
   
     animation:
       stockLive
@@ -2743,7 +2743,7 @@
   
     color: #6db9ff;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   }
@@ -2875,7 +2875,7 @@
   
     color: #7790a7;
   
-    font-size: 7px;
+    font-size: 12px;
   
     opacity: 0;
   
@@ -2995,7 +2995,7 @@
   
     color: #8b9dad;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .12em;
   }
@@ -3092,7 +3092,7 @@
   
     color: #8ea0b0;
   
-    font-size: 5px;
+    font-size: 12px;
   
     letter-spacing: .11em;
   }
@@ -3105,7 +3105,7 @@
   
     color: #1268f3;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   
@@ -3176,7 +3176,7 @@
   .experience-label {
     color: #1268f3;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -3217,7 +3217,7 @@
   
     color: #7f8f9f;
   
-    font-size: 10px;
+    font-size: 12px;
   
     line-height: 1.75;
   }
@@ -3291,7 +3291,7 @@
   
     color: #1268f3;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   }
@@ -3300,7 +3300,7 @@
   .experience-features strong {
     color: #44566a;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   
@@ -3310,7 +3310,7 @@
   
     color: #8c99a6;
   
-    font-size: 7px;
+    font-size: 12px;
   
     line-height: 1.5;
   }
@@ -3353,7 +3353,7 @@
   .brands-heading span {
     color: #1268f3;
   
-    font-size: 6px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -3364,7 +3364,7 @@
   .brands-heading strong {
     color: #637589;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   
@@ -3483,7 +3483,7 @@
   .benefits-head span {
     color: #1268f3;
   
-    font-size: 6px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -3515,7 +3515,7 @@
   
     color: #8896a5;
   
-    font-size: 8px;
+    font-size: 12px;
   
     line-height: 1.6;
   }
@@ -3622,7 +3622,7 @@
   
     color: #9ba9b7;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .12em;
   }
@@ -3643,7 +3643,7 @@
   
     color: #8b99a7;
   
-    font-size: 7px;
+    font-size: 12px;
   
     line-height: 1.55;
   }
@@ -3781,7 +3781,7 @@
   .final-cta-index span {
     color: #5b82a4;
   
-    font-size: 5px;
+    font-size: 12px;
   
     letter-spacing: .12em;
   }
@@ -3797,7 +3797,7 @@
   .final-cta-copy > span {
     color: #5a8bb4;
   
-    font-size: 6px;
+    font-size: 12px;
   
     letter-spacing: .14em;
   }
@@ -3830,7 +3830,7 @@
   
     color: #7790a7;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   
@@ -3899,14 +3899,14 @@
     color:
       rgba(255,255,255,.65);
   
-    font-size: 6px;
+    font-size: 12px;
   }
   
   
   .final-cta-action strong {
     margin-top: 3px;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   
@@ -3964,7 +3964,7 @@
   
     color: #438565;
   
-    font-size: 8px;
+    font-size: 12px;
   
     box-shadow:
       0 20px 50px

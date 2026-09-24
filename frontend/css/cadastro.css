@@ -176,7 +176,7 @@
   .register-brand small {
     margin-top: 4px;
     color: #718198;
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: .1em;
   }
   
@@ -212,7 +212,7 @@
   
     color: #70b9ff;
   
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .1em;
   }
@@ -291,13 +291,13 @@
   }
   
   .feature-list strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .feature-list small {
     margin-top: 3px;
     color: #6e7c90;
-    font-size: 8px;
+    font-size: 12px;
   }
   
   
@@ -397,7 +397,7 @@
   
     color: #b9c4d1;
   
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 700;
   }
   
@@ -450,7 +450,7 @@
   
     color: #1268f3;
   
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .12em;
   }
@@ -467,7 +467,7 @@
   .register-heading p {
     margin: 0;
     color: #8995a4;
-    font-size: 10px;
+    font-size: 12px;
   }
   
   
@@ -500,7 +500,7 @@
   
     color: #475467;
   
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
   }
   
@@ -555,7 +555,7 @@
   
     color: #344054;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .password-toggle {
@@ -599,7 +599,7 @@
   
     margin-bottom: 8px;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .strength-header span {
@@ -660,7 +660,7 @@
   
     color: #8d98a6;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .password-rules span {
@@ -672,7 +672,7 @@
   }
   
   .password-rules i {
-    font-size: 5px;
+    font-size: 12px;
   }
   
   .password-rules span.valid {
@@ -725,7 +725,7 @@
   
     color: transparent;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .terms input:checked + span {
@@ -741,7 +741,7 @@
   
     color: #7b8795;
   
-    font-size: 8px;
+    font-size: 12px;
   
     line-height: 1.6;
   }
@@ -765,7 +765,7 @@
   
     border-radius: 9px;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .register-alert.error {
@@ -818,7 +818,7 @@
   
     color: white;
   
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
   
     box-shadow:
@@ -855,7 +855,7 @@
   
     color: #8995a4;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .login-link a {
@@ -884,7 +884,7 @@
   
     color: #9da7b3;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .register-footer a:hover {
@@ -935,13 +935,13 @@
   }
   
   .mobile-brand strong {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .mobile-brand small {
     margin-top: 3px;
     color: #8995a4;
-    font-size: 7px;
+    font-size: 12px;
   }
   
   

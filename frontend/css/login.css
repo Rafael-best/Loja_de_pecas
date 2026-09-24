@@ -220,7 +220,7 @@
   
     color: #718198;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 600;
   
@@ -269,7 +269,7 @@
     color:
       #72b9ff;
   
-    font-size: 9px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -378,7 +378,7 @@
   }
   
   .visual-benefits strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .visual-benefits small {
@@ -386,7 +386,7 @@
   
     color: #677589;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   
@@ -528,7 +528,7 @@
   
     color: #bac6d4;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 700;
   }
@@ -573,7 +573,7 @@
   
     color: #68778b;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .visual-footer span {
@@ -627,7 +627,7 @@
   
     color: #1268f3;
   
-    font-size: 9px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -653,7 +653,7 @@
   
     color: #8793a2;
   
-    font-size: 11px;
+    font-size: 12px;
   }
   
   
@@ -677,7 +677,7 @@
   
     color: #445064;
   
-    font-size: 9px;
+    font-size: 12px;
   
     font-weight: 800;
   }
@@ -694,7 +694,7 @@
   
     color: #1268f3;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 700;
   }
@@ -755,7 +755,7 @@
   
     color: #29364a;
   
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .input-wrapper input::placeholder {
@@ -767,7 +767,7 @@
   
     color: #15905d;
   
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .password-button {
@@ -820,7 +820,7 @@
   
     color: #647184;
   
-    font-size: 9px;
+    font-size: 12px;
   
     cursor: pointer;
   }
@@ -851,7 +851,7 @@
   
     color: transparent;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .remember-option input:checked
@@ -872,7 +872,7 @@
   
     color: #8793a2;
   
-    font-size: 8px;
+    font-size: 12px;
   }
   
   .secure-login i {
@@ -909,7 +909,7 @@
   
     color: white;
   
-    font-size: 11px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -952,7 +952,7 @@
   
     border-radius: 9px;
   
-    font-size: 9px;
+    font-size: 12px;
   
     line-height: 1.5;
   }
@@ -1014,7 +1014,7 @@
   .login-divider small {
     color: #a0a9b5;
   
-    font-size: 7px;
+    font-size: 12px;
   
     font-weight: 800;
   }
@@ -1069,7 +1069,7 @@
   .register-box strong {
     display: block;
   
-    font-size: 9px;
+    font-size: 12px;
   }
   
   .register-box p {
@@ -1078,7 +1078,7 @@
   
     color: #8995a4;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .register-box > a {
@@ -1090,7 +1090,7 @@
   
     color: #1268f3;
   
-    font-size: 8px;
+    font-size: 12px;
   
     font-weight: 800;
   
@@ -1141,7 +1141,7 @@
   }
   
   .login-security strong {
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .login-security small,
@@ -1150,7 +1150,7 @@
   
     color: #8e99a7;
   
-    font-size: 6px;
+    font-size: 12px;
   }
   
   
@@ -1169,7 +1169,7 @@
   
     color: #a0a9b4;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   .auth-footer div {
@@ -1227,7 +1227,7 @@
   }
   
   .mobile-brand strong {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .mobile-brand small {
@@ -1235,7 +1235,7 @@
   
     color: #8995a4;
   
-    font-size: 7px;
+    font-size: 12px;
   }
   
   

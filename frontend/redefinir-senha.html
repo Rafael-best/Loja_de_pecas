@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Recuperar Senha | Loja de Peças</title>
+  <title>Redefinir Senha | Loja de Peças</title>
 
   <link
     rel="preconnect"
@@ -87,55 +87,80 @@
 
     <div class="recovery-icon">
 
-      <i class="fa-solid fa-key"></i>
+      <i class="fa-solid fa-lock"></i>
 
     </div>
 
 
     <span class="recovery-label">
 
-      RECUPERAÇÃO DE ACESSO
+      REDEFINIÇÃO DE SENHA
 
     </span>
 
 
-    <h1>
+    <h1 id="tituloRedefinicao">
 
-      Esqueceu sua senha?
+      Crie sua nova senha
 
     </h1>
 
 
-    <p>
+    <p id="descricaoRedefinicao">
 
-      Informe o e-mail cadastrado.
-      Vamos te enviar um link para criar uma nova senha.
+      Escolha uma nova senha com pelo menos 8 caracteres.
 
     </p>
 
 
 
-    <form id="formRecuperacao">
+    <form id="formRedefinicao">
 
 
       <div class="form-group">
 
-        <label for="emailRecuperacao">
+        <label for="senhaRedefinicao">
 
-          E-mail
+          Nova senha
 
         </label>
 
 
         <div class="input-wrapper">
 
-          <i class="fa-regular fa-envelope"></i>
+          <i class="fa-solid fa-lock"></i>
 
           <input
-            type="email"
-            id="emailRecuperacao"
-            placeholder="Digite seu e-mail"
-            autocomplete="email"
+            type="password"
+            id="senhaRedefinicao"
+            placeholder="Digite a nova senha"
+            autocomplete="new-password"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="confirmarSenhaRedefinicao">
+
+          Confirmar nova senha
+
+        </label>
+
+
+        <div class="input-wrapper">
+
+          <i class="fa-solid fa-lock"></i>
+
+          <input
+            type="password"
+            id="confirmarSenhaRedefinicao"
+            placeholder="Digite a nova senha novamente"
+            autocomplete="new-password"
             required
           >
 
@@ -146,7 +171,7 @@
 
 
       <div
-        id="mensagemRecuperacao"
+        id="mensagemRedefinicao"
         class="recovery-message"
       ></div>
 
@@ -154,12 +179,12 @@
 
       <button
         type="submit"
-        id="btnRecuperarSenha"
+        id="btnRedefinirSenha"
         class="recovery-button"
       >
 
         <span>
-          Continuar
+          Salvar nova senha
         </span>
 
         <i class="fa-solid fa-arrow-right"></i>
@@ -168,26 +193,6 @@
 
 
     </form>
-
-
-
-    <div class="recovery-info">
-
-      <i class="fa-solid fa-shield-halved"></i>
-
-      <div>
-
-        <strong>
-          Segurança da conta
-        </strong>
-
-        <span>
-          Nunca compartilhe sua senha ou código de recuperação.
-        </span>
-
-      </div>
-
-    </div>
 
 
 
@@ -228,7 +233,7 @@
 </main>
 
 
-<script src="js/recuperar-senha.js"></script>
+<script src="js/redefinir-senha.js"></script>
 
 </body>
 

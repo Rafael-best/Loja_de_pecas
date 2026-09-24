@@ -522,20 +522,75 @@ formCadastro?.addEventListener(
 
 
     /*
-      Não fingimos cadastro no banco.
-
-      Quando chegarmos ao backend,
-      aqui entra:
-
-      POST /api/clientes
-      ou
-      POST /api/auth/cadastro
+      Envia o cadastro para o backend.
     */
 
-    mostrarMensagemCadastro(
-      "Formulário validado. A criação da conta será conectada ao backend na etapa de integração.",
-      "info"
-    );
+    const botaoSubmit =
+      formCadastro.querySelector(
+        "button[type=submit]"
+      );
+
+    if (botaoSubmit) {
+      botaoSubmit.disabled = true;
+    }
+
+    fetch(
+      "/api/clientes",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nome_cliente: nome,
+          email_cliente: email,
+          senha_cliente: senha,
+          telefone_cliente:
+            telefoneCadastro?.value || null,
+          endereco_cliente: null
+        })
+      }
+    )
+      .then(async resposta => {
+
+        const dados =
+          await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+
+          throw new Error(
+            dados.erro ||
+            "Não foi possível criar sua conta. Tente novamente."
+          );
+
+        }
+
+        mostrarMensagemCadastro(
+          "Conta criada com sucesso! Redirecionando para o login...",
+          "success"
+        );
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
+
+      })
+      .catch(erro => {
+
+        mostrarMensagemCadastro(
+          erro.message ||
+          "Não foi possível criar sua conta. Tente novamente.",
+          "error"
+        );
+
+      })
+      .finally(() => {
+
+        if (botaoSubmit) {
+          botaoSubmit.disabled = false;
+        }
+
+      });
 
   }
 );

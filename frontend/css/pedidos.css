@@ -174,7 +174,7 @@
   color:
       rgba(255,255,255,.64);
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .16em;
@@ -322,7 +322,7 @@
   color:
       rgba(255,255,255,.37);
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .09em;
@@ -334,7 +334,7 @@
   color:
       rgba(255,255,255,.88);
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -433,7 +433,7 @@
 .orders-hero-card > div:nth-child(2) > span {
   color: #49b8ff;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .12em;
@@ -459,7 +459,7 @@
   color:
       rgba(255,255,255,.55);
 
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.7;
 }
 
@@ -507,7 +507,7 @@
 
   color: #47b8ff;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .orders-hero-card-info span {
@@ -519,7 +519,7 @@
   color:
       rgba(255,255,255,.32);
 
-  font-size: 7px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .08em;
@@ -531,7 +531,7 @@
   color:
       rgba(255,255,255,.78);
 
-  font-size: 9px;
+  font-size: 12px;
 }
 
 
@@ -574,7 +574,7 @@
 
   color: #1268e8;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .16em;
@@ -624,7 +624,7 @@
 
   color: #fff;
 
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 
   box-shadow:
@@ -773,7 +773,7 @@
 .orders-summary-card span {
   color: #7a8b9c;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -879,7 +879,7 @@
 
   color: #14263a;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .orders-search input::placeholder {
@@ -913,7 +913,7 @@
 
   color: #718295;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 
   transition:
@@ -1081,7 +1081,7 @@
 
   color: #8796a6;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .08em;
@@ -1126,7 +1126,7 @@
 
   border-radius: 999px;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 800;
 
   white-space: nowrap;
@@ -1223,7 +1223,7 @@
 
   color: #8a99a8;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .06em;
@@ -1238,7 +1238,7 @@
 
   color: #24384d;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 
@@ -1259,7 +1259,7 @@
 .order-total-area small {
   color: #8a99a8;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -1366,7 +1366,7 @@
 
   color: #9aa8b5;
 
-  font-size: 8px;
+  font-size: 12px;
 
   transition:
       all .3s ease;
@@ -1390,7 +1390,7 @@
 
   color: #8998a7;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -1429,7 +1429,7 @@
 
   color: #8191a1;
 
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .order-card-footer > span i {
@@ -1457,7 +1457,7 @@
 
   border-radius: 9px;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 800;
 
   transition:
@@ -1554,7 +1554,7 @@
 
   color: #8a99a8;
 
-  font-size: 10px;
+  font-size: 12px;
 }
 
 
@@ -1614,7 +1614,7 @@
 
   color: #1268e8;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .15em;
@@ -1642,7 +1642,7 @@
 
   color: #7d8d9d;
 
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.7;
 }
 
@@ -1667,7 +1667,7 @@
 
   color: #fff;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 
   transition:
@@ -1818,7 +1818,7 @@
 .orders-process-heading > span {
   color: #1268e8;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .15em;
@@ -1980,7 +1980,7 @@
 
   color: #8191a1;
 
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.7;
 }
 
@@ -2062,7 +2062,7 @@
 .orders-support-content > div > span {
   color: #45b9ff;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .15em;
@@ -2094,7 +2094,7 @@
   color:
       rgba(255,255,255,.52);
 
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.7;
 }
 
@@ -2176,7 +2176,7 @@
   color:
       rgba(255,255,255,.40);
 
-  font-size: 7px;
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: .09em;
@@ -2185,13 +2185,13 @@
 .orders-support-button strong {
   margin-top: 3px;
 
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .orders-support-button > i {
   color: #4dbaff;
 
-  font-size: 11px;
+  font-size: 12px;
 
   transition:
       transform .3s ease;
@@ -2288,7 +2288,7 @@
 .order-modal-header span {
   color: #1268e8;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: .14em;
@@ -2377,7 +2377,7 @@
 
   color: #8494a4;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 800;
 
   text-transform: uppercase;
@@ -2390,7 +2390,7 @@
 
   color: #1c3349;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .order-modal-section {
@@ -2402,7 +2402,7 @@
 
   color: #193249;
 
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -2457,7 +2457,7 @@
 
   color: #1a3248;
 
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .order-modal-item-data small {
@@ -2467,13 +2467,13 @@
 
   color: #8796a6;
 
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .order-modal-item-price {
   color: #10263b;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -2509,7 +2509,7 @@
       0 20px 55px
       rgba(0,0,0,.25);
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 
   opacity: 0;
